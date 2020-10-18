@@ -1,0 +1,104 @@
+.personalInfo{
+    display: none;
+}
+.page{
+    width: 50%;
+    height: 500px;
+    border-radius:10px;
+    margin-left: 20%;
+}
+.page img{
+    float: left;
+    margin: 40px 0 40px 43%;
+}
+.page h1{
+    font-size: 28px;
+    margin: auto;
+    font-weight: bolder;
+    text-align: center;
+}
+.page form{
+    margin-top: 40px;
+    text-align: center;
+}
+.page label{
+    font-size: 20px;
+    font-weight: bolder;
+}
+.page input{
+    width: 200px;
+    border: 1px solid #707070;
+    border-radius: 3px;
+    margin-bottom: 40px;
+    padding: 5px;
+    font-size: 15px;
+    font-family: 微軟正黑體;
+    outline:none;
+}
+.link{
+    text-decoration:underline;
+    margin-left: 33%;
+    float: left;
+    margin-top: 5px;
+    color: #707070;
+}
+.page button{
+    background-color: #49BE8B;
+    border: 0.5px solid #707070;
+    border-radius: 3px;
+    width: 70px;
+    color:#FFFFFF;
+    font-size: 14px;
+    padding: 5px;
+    float: left;
+    margin-left: 70px;
+    font-family: 微軟正黑體;
+    outline:none;
+}
+@media (max-width: 768px) {
+    .page input{
+        margin-top: 10px;
+    }
+    .page button{
+        margin-top: 10px;
+    }
+    .page{
+        /* background: #000; */
+        width: 100%;
+        margin: 0;
+        margin-top: 20%;
+        height: auto;
+        
+    }
+    .submit_btn{
+        /* background: #000; */
+        width: 40%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .submit_btn .link{
+        margin: 0;
+        width: 50%;
+        margin: 4% 0;
+    }
+    .submit_btn button{
+        margin:0 15%;
+        width: 20%;
+    }
+}
+@media (max-width: 425px) {
+    .submit_btn{
+        /* background: #000; */
+        width: 50%;
+        margin: 0 auto;
+        /* text-align: center; */
+    }
+    .submit_btn .link{
+        margin: 0;
+        width: 50%;
+    }
+    .submit_btn button{
+        margin:0 13%;
+        width: 24%;
+    }
+}

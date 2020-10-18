@@ -1,0 +1,171 @@
+.content{
+    background-color: #F7F7F7;
+    padding-top: 40px;
+    height: 100vh;
+    padding-left: 7%;
+    /* position: relative;  */
+}
+.breadcrumb{
+    margin-top: 10px;
+}
+.breadcrumb a{  
+    float: left;
+    font-size: 16px;
+    color: black;
+}
+.breadcrumb-item::after{
+    content: "\00a0 >\00a0 ";
+    color: black;
+}
+.page{
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 30px;  
+    margin-right: 20%;
+}
+.detail{
+  width: 75%;
+  margin-left: 8%;
+  margin-top: 30px;
+  background-color: #E9E9E982;
+  padding-bottom: 50px;
+}
+.detail h2{
+  font-size: 22px;
+  line-height: 33px;
+  font-weight: bold;
+  float: left;
+}
+.detail button{
+  float: right;
+  margin-top: 10px;
+}
+.leftContent{
+  float: left;
+  margin-left: 50px;
+  margin-top: 40px;
+}
+.rightContent{
+  margin-top: 20px;
+  margin-left: 70px;
+  float: left;
+  width: 70%;
+}
+.rightContent li {
+  font-size: 18px;
+  margin-left: 40px;
+  line-height: 25px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.personalDetail{
+  width: 100%;
+  background-color: #FFFFFF;
+  margin-top: 15px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.contactInfo{
+  width: 100%;
+  background-color: #FFFFFF;
+  margin-top: 15px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.private{
+  width: 100%;
+  background-color: #FFFFFF;
+  margin-top: 15px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+.rightContent input{
+  border: none;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 25px;
+  font-family: 微軟正黑體;
+  outline: none;
+}
+.fa{
+	color:black;
+	z-index: 2;
+	margin-top: 26.5px;
+	margin-right: 95px;
+}
+@media (max-width: 768px) {
+  .contentCenter{
+    /* background: blue; */
+    width: 100%;
+    margin-top: 30px;
+  }
+  .detail{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #F7F7F7;
+    margin-bottom: 50px;
+  }
+  .leftContent{
+    width: 100%;
+    margin: 25px auto;
+    text-align:center;
+  }
+  .rightContent{
+    background-color: #F7F7F7;
+    width: 90%;
+    margin:auto;
+    float: none;
+  }
+  .rightContent h2{
+    /* background: red; */
+    margin: 10px 0;
+  
+  }
+  .rightContent li{
+    width: 80%;
+    margin: 0 10%;
+    padding: 5px 0;
+    /* background: #000; */
+  }
+  .personalDetail{
+    background: #FFFFFF;
+    margin: 0;
+    padding: 5px 0;
+  }
+  .contactInfo{
+    background: #FFFFFF;
+    margin: 0;
+    padding: 5px 0;
+  }
+  .private{
+    background: #FFFFFF;
+    margin: 0;
+    padding: 5px 0;
+  }
+  .rightContent input{
+    margin: 3px 0;
+    padding: 3px 5px;
+    font-weight:normal;
+    width: 150px;
+  }
+  .contactInfo input{
+    width: 205px;
+  }
+}
+@media (max-width: 375px) {
+  .rightContent li{
+    width: 86%;
+    margin: 0 7%;
+    padding: 5px 0;
+  }
+}
+@media (max-width: 320px) {
+  .rightContent li{
+    width: 90%;
+    margin: 0 5%;
+    padding: 5px 0;
+  }
+}
