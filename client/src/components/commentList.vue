@@ -6,7 +6,7 @@
       </div>
       <div class="editArea">
         <!-- <span class="editSpan">編輯</span> -->
-        <button class="editButton" @click="editFUn">
+        <button class="editButton" @click="editFun">
           <img src="../assets/icon/edit.png" />
         </button>
         <div class="edit">
@@ -256,6 +256,7 @@
 <script>
 // import { filter } from 'vue/types/umd'
 import axios from "axios";
+import dateTime from "../assets/js/dateTime";
 import $ from "jquery";
 
 export default {
@@ -266,15 +267,14 @@ export default {
   data() {
     return {
       // table data area
-      companyName: "",
+      companyName: '',
+      employeeNumber: '',
       commentData: [],
       selectedArr: [],
-      // labelchoose: [],
       checkedtags: [],
       newComment: [],
       checkedtagsALL: false,
       oneTag: "",
-      // oneTagData: [],
       columns: [
         {
           label: "正/負評",
@@ -402,13 +402,21 @@ export default {
       ],
       conditionChoosen: [],
       conditionModify: "",
+      conditionModifytoHistory: {
+        employeeNumber: '',
+        commentID: '',
+        title: '',
+        modify: '',
+        time: '',
+        old: '',
+        new: ''
+      },
       typeChoosen: [],
       replyChoosen: [],
       replyModify: "",
       start: "",
       end: "",
       count: 0,
-      // reveal: false
     };
   },
   // 在一個條件後面會跟著一個問號 (?)
@@ -425,6 +433,7 @@ export default {
       var logining = localStorage.getItem("token");
       var loginData = JSON.parse(logining);
       self.companyName = loginData.companyName;
+      self.employeeNumber = loginData.id
     }
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/comment/" + self.companyName)
@@ -556,7 +565,7 @@ export default {
         condition: self.conditionChoosen,
         reply: self.replyChoosen,
       };
-      if (self.oneTag.length !== 0) {
+      if (self.oneTag.length !== 0 && self.oneTag !== 'all') {
         arr = self.selectedArr.filter((item) => {
           return item.labels[self.oneTag] === 1;
         });
@@ -705,36 +714,27 @@ export default {
     },
     conditionUpdate: function (id) {
       let self = this;
-      self.commentData.forEach((item) => {
+      // foreach改成filter
+      self.commentData.filter((item) => {
         if (item._id === id) {
+          self.conditionModifytoHistory.commentID = id
+          self.conditionModifytoHistory.title = item.text.substr(0, 10) + "...";
+          self.conditionModifytoHistory.old = item.labels.condition
           if (item.labels.condition === 0) {
             item.labels.condition = 1;
           } else {
-            item.labels.condition = 2;
+            self.conditionModifytoHistory.old = item.labels.condition
+            item.labels.condition = 2
           }
+          self.conditionModifytoHistory.new = item.labels.condition
           self.newComment = item;
           self.updateComment(id);
+          self.updateHistory()
         }
       });
       return self.commentData;
     },
-    replyUpdate: function (id) {
-      let self = this;
-      self.commentData.forEach((item) => {
-        if (item._id === id) {
-          if (item.labels.reply === 0) {
-            item.labels.reply = 1;
-          } else {
-            item.labels.reply = 0;
-          }
-          self.newComment = item;
-          console.log(self.newComment);
-          self.updateComment(id);
-        }
-      });
-      return self.commentData;
-    },
-    editFUn: function () {
+    editFun: function () {
       // let self = this
       event.stopPropagation();
       $(".edit").toggle("fast");
@@ -755,30 +755,37 @@ export default {
       } else {
         self.conditionModify = 2;
       }
-      if (self.conditionModify.length !== 0) {
+      var x = self.conditionModify
+      self.conditionModifytoHistory.new = x
+      if (x.length !== 0) {
         self.$refs["commentdataTable"].selectedRows.forEach((item) => {
-          item.labels.condition = self.conditionModify;
+          self.conditionModifytoHistory.old = item.labels.condition
+          self.conditionModifytoHistory.commentID = item._id
+          self.conditionModifytoHistory.title = item.text.substr(0, 10) + "..."
+          item.labels.condition = x;
+          console.log(item.labels.condition)
           self.newComment = item;
           self.updateComment(item._id);
+          self.updateHistory()
         });
       }
-      if (self.replyModify.length !== 0) {
-        if (self.replyModify === "是") {
-          self.$refs["commentdataTable"].selectedRows.forEach((item) => {
-            item.labels.reply = 1;
-            self.newComment = item;
-            console.log(item.labels.reply);
-            self.updateComment(item._id);
-          });
-        } else {
-          self.$refs["commentdataTable"].selectedRows.forEach((item) => {
-            item.labels.reply = 0;
-            console.log(item.labels.reply);
-            self.newComment = item;
-            self.updateComment(item._id);
-          });
-        }
-      }
+      // if (self.replyModify.length !== 0) {
+      //   if (self.replyModify === "是") {
+      //     self.$refs["commentdataTable"].selectedRows.forEach((item) => {
+      //       item.labels.reply = 1;
+      //       self.newComment = item;
+      //       console.log(item.labels.reply);
+      //       self.updateComment(item._id);
+      //     });
+      //   } else {
+      //     self.$refs["commentdataTable"].selectedRows.forEach((item) => {
+      //       item.labels.reply = 0;
+      //       console.log(item.labels.reply);
+      //       self.newComment = item;
+      //       self.updateComment(item._id);
+      //     });
+      //   }
+      // }
     },
     updateComment: function (id) {
       let self = this;
@@ -796,6 +803,18 @@ export default {
           console.log(err);
         });
       self.editCancle();
+    },
+    updateHistory: function(){
+      let self = this
+      let record = 'condition'
+      self.conditionModifytoHistory.time = dateTime.recordDate() + " " + dateTime.recordTime();
+      self.conditionModifytoHistory.employeeNumber = self.employeeNumber
+      self.conditionModifytoHistory.modify = '修改'
+      axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" + self.companyName + '/' + record, self.conditionModifytoHistory).then((response) => {
+        console.log(response)
+      }).catch((error) => {
+        console.log(error)
+      })
     },
     editCancle: function () {
       let self = this;
@@ -864,3 +883,9 @@ export default {
 };
 </script>
 <style scoped src= '../assets/css/commentList.css'></style>
+<style>
+table.vgt-table td{
+    vertical-align: middle;
+}
+
+</style>
