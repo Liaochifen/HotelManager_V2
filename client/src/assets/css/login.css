@@ -70,35 +70,16 @@
         height: auto;
         
     }
-    .submit_btn{
-        /* background: #000; */
-        width: 40%;
-        margin: 0 auto;
-        text-align: center;
-    }
-    .submit_btn .link{
+    .link{
+        width: 100%;
         margin: 0;
-        width: 50%;
-        margin: 4% 0;
+        font-size: 14px;
     }
-    .submit_btn button{
-        margin:0 15%;
-        width: 20%;
+    .btn{
+        width: 100%;
     }
-}
-@media (max-width: 425px) {
-    .submit_btn{
-        /* background: #000; */
-        width: 50%;
-        margin: 0 auto;
-        /* text-align: center; */
-    }
-    .submit_btn .link{
-        margin: 0;
-        width: 50%;
-    }
-    .submit_btn button{
-        margin:0 13%;
-        width: 24%;
+    .btn button{
+        margin: 10px 0;
+        float: none;
     }
 }

@@ -71,13 +71,85 @@
           </ul>
           <div class="clear"></div>
         </div>
+        <!-- 側邊選單 -->
+        <div class="left_menu">
+          <!-- <p>功能列</p> -->
+          <div class="close_btn">X</div>
+          <ul class="leftul" id="menuUl">
+            <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
+            <li>
+              <router-link :to="{ name: 'accountList' }"
+                ><img
+                  src="https://fakeimg.pl/15x15/"
+                  alt=""
+                />帳號管理</router-link
+              >
+            </li>
+            <!-- <img src="./assets/icon/comment.svg" class="icons" alt=""> -->
+            <li>
+              <router-link
+                :to="{
+                  name: 'commentList',
+                  params: { collections: companyName },
+                }"
+                ><img
+                  src="https://fakeimg.pl/15x15/"
+                  alt=""
+                />評論管理</router-link
+              >
+            </li>
+            <li>
+              <router-link
+                :to="{
+                  name: 'statistic',
+                  params: { collections: companyName },
+                }"
+                ><img
+                  src="https://fakeimg.pl/15x15/"
+                  alt=""
+                />統計結果</router-link
+              >
+            </li>
+            <li>
+              <router-link
+                :to="{
+                  name: 'competition',
+                  params: { collections: companyName },
+                }"
+                ><img
+                  src="https://fakeimg.pl/15x15/"
+                  alt=""
+                />競爭對手</router-link
+              >
+            </li>
+            <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
+            <li>
+              <router-link
+                :to="{ name: 'history', params: { company: companyName } }"
+                ><img
+                  src="https://fakeimg.pl/15x15/"
+                  alt=""
+                />歷史紀錄</router-link
+              >
+            </li>
+            <li >
+              <button class="left_logout"
+                  v-on:click="logouted()"
+                >
+                  登出
+                </button>
+            </li>
+            <div class="clear"></div>
+          </ul>
+          <div class="clear"></div>
+        </div>
         <div class="clear"></div>
       </div>
       <div class="clear"></div>
     </div>
     <div class="content">
       <div class="contentTop">
-        <a class="showMenu" href="#"
+        <a id="menubtn" class="showMenu" href="#"
           ><img src="https://fakeimg.pl/15x15/" alt=""
         /></a>
         <div class="breadcrumb" id="breadcrumb">
@@ -640,6 +712,9 @@ a {
 .clear {
   clear: both;
 }
+.left_menu {
+  display: none;
+}
 @media (max-width: 768px) {
   .page {
     font-size: 18px;
@@ -649,6 +724,8 @@ a {
   }
   .header {
     height: 0;
+    position: relative;
+    z-index: 2;
   }
   .headerContent {
     display: inline;
@@ -657,6 +734,21 @@ a {
     height: 0;
     padding: 0;
     position: relative;
+    z-index: 1;
+    /* display: none; */
+  }
+  .content {
+    width: 100%;
+    padding: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .contentTop {
+    position: fixed;
+    background-color: rgb(47, 58, 76);
+    height: 39px;
+    margin: 0;
+    padding: 0;
     z-index: 1;
   }
   .companyImg {
@@ -678,66 +770,77 @@ a {
   .breadcrumb {
     display: none;
   }
-  .menu {
-    /*隱藏選單開始*/
-    max-height: 0;
-    overflow: hidden;
-    /*隱藏選單結束*/
-    /*漸變效果*/
-    transition: max-height 0.5s;
-    margin-top: 0px;
-    margin-right: 0px;
-    /*絕對定位疊在網頁上*/
-    position: fixed;
-    /*權重*/
-    z-index: 100;
-    /*header 40px-1px boder 線條*/
-    top: 39px;
-    /* left:0 right:0表示滿版 */
-    left: 0;
-    right: 0;
-    background-color: rgb(192, 214, 250);
-    margin: 0;
-  }
-  .menu p {
+  .personalInfo {
     display: none;
   }
-  .menu li {
-    width: 100%;
-    /* float: none; */
-    text-align: center;
-    border-top: white solid 1px;
-    background: rgb(47, 58, 76);
-    padding: 20px 0;
-    float: left;
-    margin: 0;
-  }
-  .menu li a {
-    padding: 10px;
-    transition: all 0.3s;
-    font-size: 24px;
-  }
-  .menu li a:hover {
-    background: rgb(182, 96, 96);
-    color: #fff;
+  /* 側邊選單 */
+  .menu{
+    display: none;
   }
   .showMenu {
     display: block;
     width: 20%;
     line-height: 39px;
     text-align: center;
-    float: left;
+    position: absolute;
+    left: 1%;
+  }
+  .close_btn {
+    position: relative;
+    margin: 16px;
+    text-align: right;
+    font-size: 1.5em;
+  }
+  .close_btn:hover {
+    cursor: pointer;
+    color: rgb(182, 96, 96);
+  }
+  .left_menu {
+    display: block;
+    background-color: rgb(47, 58, 76);
+    color: white;
+    height: 100%;
+    width: 60vw;
+    z-index: 4;
+    position: fixed;
+    left: -100%;
+    transition: all 0.5s;
+  }
+  .left_menu.active {
+    position: fixed;
+    top: 0;
+    left: 0%;
+    transition: all 0.5s;
+  }
+  .leftul li {
+    list-style: none;
+    font-size: 1.5em;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .leftul li:hover {
+    background: rgb(182, 96, 96);
+    cursor: pointer;
+  }
+  .leftul li a{
+    color: white;
   }
   #logout {
     display: block;
   }
-  /*jQuery點擊後動態在 body 加上 class */
-  .menu-show {
-    max-height: 500px;
+  .left_logout{
+    border:0;
+    background-color:none;
+    background:none;
+    color: white;
+    font-size: 1em;
+    padding: 0;
+    text-align: center;
   }
-  .menu-hide {
-    display: none;
-    /* max-height: 500px; */
+  /* 底部選單 */
+  .footer{
+    position: relative;
+    z-index: 1;
   }
   .phoneMenu {
     width: 100%;
@@ -753,27 +856,6 @@ a {
     padding-bottom: 5px;
     float: left;
     text-align: center;
-  }
-  .content {
-    width: 100%;
-    padding: 0;
-  }
-  .contentTop {
-    position: fixed;
-    background-color: rgb(47, 58, 76);
-    height: 39px;
-    margin: 0;
-    padding: 0;
-    z-index: 2;
-  }
-  .personalInfo {
-    /* background: red; */
-    color: white;
-    width: 20%;
-    height: 100%;
-    line-height: 39px;
-    text-align: center;
-    float: right;
   }
 }
 @media (max-width: 425px) {
@@ -795,17 +877,6 @@ a {
   }
   .breadcrumb {
     display: none;
-  }
-
-  .menu li a {
-    padding: 0px;
-    font-size: 20px;
-  }
-  .showMenu {
-    width: 10%;
-    display: block;
-    float: left;
-    margin-left: 7%;
   }
 }
 </style>

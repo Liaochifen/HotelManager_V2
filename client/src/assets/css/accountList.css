@@ -145,7 +145,6 @@
     /* background: blue; */
     width: 100%;
     margin-top: 30px;
-    
   }
   .page{
     font-size: 25px;
@@ -192,10 +191,13 @@
     grid-template-columns: 1fr;
     padding: 10px 0px;
     grid-row-gap:10px;
+    width: 100%;
   }
   .left_btn div{
+    width: 90%;
     align-self: center;
     justify-self: center;
+    text-align: center;
   }
   .account_select_phone .selectBox{
     margin: 0;
@@ -203,6 +205,8 @@
   .functionButton{
     padding: 0;
     margin: 0;
+    width: 90%;
+    float: unset;
   }
   /* 新增帳號 */
   .addUser{
