@@ -1,8 +1,13 @@
 <template>
   <div>
     <div class="contentCenter">
+      <span class="selection_btn_phone">篩選</span>
       <div class="page">
         <span>評論列表</span>
+      </div>
+      <div class="selection_phone">
+        <span class="select_btn1">篩選一</span>
+        <span class="select_btn2">篩選二</span>
       </div>
       <div class="editArea">
         <!-- <span class="editSpan">編輯</span> -->
@@ -58,7 +63,7 @@
             </div>
           </button>
         </li>
-        <li>
+        <li class="custom">
           <button @click="tagCustom()">
             <div class="labelDiv">
               <img src="https://fakeimg.pl/20x20/" alt="" />

@@ -262,6 +262,9 @@ tr:hover td{
 .el-table a{
     color: rgb(39, 30, 165);
 }
+.selection_phone,.select_btn{
+    display: none;
+}
 @media (max-width: 768px) {
     .contentCenter{
         width: 100%;
@@ -277,10 +280,66 @@ tr:hover td{
         display: none;
         background: #000;
     }
+    /* 篩選器 */
+    .selection_btn_phone{
+        display: block;
+        position: fixed;
+        right: 20px;
+        top: 13px;
+        z-index: 2;
+        color: white;
+    }
+    .selection_phone {
+        color: white;
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+        position: fixed;
+    }
+    .selection_phone span{
+        background-color: rgba(47, 58, 76);
+        display: block;
+        font-size: 20px;
+        width: 50%;
+        float: left;
+        padding: 10px 0;
+        text-align: center;
+    }
+    /* .select_btn1.active,.select_btn2.active{
+        background: rgb(182, 96, 96);
+    } */
+    .selection_phone.active {
+        background-color: rgba(47, 58, 76, 1);
+        display: block;
+        position: fixed;
+        top: 38px;
+    }
     .filter{
         display: none;
-        background: orange;
+        background-color: rgb(218, 226, 236);
         margin: 0;
+    }
+    .filter li{
+        width: 25%;
+        margin: 0;
+    }
+    .filter li:hover{
+        background:  rgb(196, 205, 226);
+        border: none;
+        color: #000;
+    }
+    .focus{
+        color: #000;
+        border: none;
+    }
+    .filter .all,.filter .custom{
+        width: 100%;
+    }
+    .filter.active{
+        display: block;
+        position: fixed;
+        /* top: 20%; */
+        z-index: 3;
     }
     .dataArea{
         width: 100%;
@@ -288,14 +347,43 @@ tr:hover td{
         margin-bottom: 50px;
     }
     .MultiFilterArea{
-        background: yellow;
+        background-color: rgb(218, 226, 236);
+        border: none;
+        border-radius: unset;
         width: 100%;
         height: unset;
+        /* bottom: 50px; */
+        /* top: 50%; */
         display: none;
+        margin: 0;
+        padding: 10px 0;
+    }
+    .MultiFilterArea .slot_div{
+        width: 100%;
+    }
+    .filterP{
+        margin-left: 10px;
+    }
+    .clearall{
+        margin: 0 10px;
+        float: right;
+    }
+    .MultiFilterArea .slot_div p{
+        background: rgb(196, 205, 226);
+        margin: 10px 0;
+        padding: 5px 10px;
+    }
+    .MultiFilterArea.active{
+        display: block;
+        position: fixed;
+        z-index: 3;
     }
     .dataRightArea{
         width: 90%;
         margin: 0 5%;
+    }
+    #reportrange{
+        margin-left: 15px;
     }
     .el-table{
         margin: 0;
