@@ -3,14 +3,6 @@ label{
     padding-top: 5px;
 }
 
-/* .dataArea{
-    position: relative;
-    float: left;
-    width: 100%;
-    margin-left: 20px;
-    overflow: hidden;
-} */
-
 .editArea{
     display: inline-block;
     position: relative;
@@ -183,20 +175,10 @@ label{
     float: left;
     margin-right: 7%;
 }
-.el-table a{
-    color: blue;
-}
-table.vgt-table td{
-    vertical-align: middle;
-}
-.vgt-table thead th{
-    padding-right: 0px;
-    background: rgba(233, 233, 233, 0.5);
-}
+
 .slot_div{
     float: left;
 }
-
 
 tr:hover td{
     background-color: #CCCCCC;
@@ -214,12 +196,6 @@ tr:hover td{
     font-size: 12px;
 }
 
-
-.vgt-table th.line-numbers, .vgt-table th.vgt-checkbox-col{
-    border-bottom: 1px solid #dcdfe6;
-    border-right: none;
-    background-color: rgba(51,68,109,.03);
-}
 .none{
     background-color: #106697c5;
     color: white;
@@ -287,9 +263,16 @@ tr:hover td{
     color: rgb(39, 30, 165);
 }
 @media (max-width: 768px) {
-    /* .display_ipad{
-        display: none;
-    } */
+    .contentCenter{
+        width: 100%;
+        margin-top: 30px;
+    }
+    .page{
+        font-size: 25px;
+        font-weight: bold;
+        margin-top: 30px;  
+        margin-right: 20%;
+    }
     .editArea{
         display: none;
         background: #000;

@@ -134,12 +134,14 @@
 <script>
 import axios from "axios";
 import $ from "jquery";
+import dateTime from "../assets/js/dateTime";
 
 export default {
   name: "commentDetails",
   data() {
     return {
       companyName: "",
+      employeeNumber: '',
       commentDetailsID: this.$route.params._id,
       commentData: [],
       newComment: [],
@@ -180,6 +182,21 @@ export default {
       label_tags: [],
       label_no_tags: [],
       TagsAdd: "",
+      conditionModifytoHistory: {
+        employeeNumber: '',
+        commentID: '',
+        modify: '',
+        time: '',
+        old: '',
+        new: ''
+      },
+      tagsModifytoHistory: {
+        employeeNumber: '',
+        commentID: '',
+        modify: '',
+        time: '',
+        new: ''
+      }
       // addLabel: '',
       // editLabel: '',
       // currentPage: 1,
@@ -233,6 +250,11 @@ export default {
     },
     submitAdd: function () {
       let self = this;
+      self.labelchoose.filter((item) => {
+        if(self.TagsAdd === item.field){
+          self.tagsModifytoHistory.new = item.label
+        }
+      })
       self.commentData.labels[self.TagsAdd] = 1;
       self.newComment = self.commentData;
       self.updateComment();
@@ -248,12 +270,15 @@ export default {
     conditionUpdate: function (data) {
       let self = this;
       if (data === 0) {
+        self.conditionModifytoHistory.old = data
         self.commentData.labels.condition = 1;
       } else {
         self.commentData.labels.condition = 2;
       }
+      self.conditionModifytoHistory.new = self.commentData.labels.condition
       self.newComment = self.commentData;
       self.updateComment();
+      self.updateHistory(0)
     },
     // replyUpdate: function (data) {
     //   let self = this
@@ -298,6 +323,34 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    updateHistory: function(value){
+      let self = this
+      self.conditionModifytoHistory.time = dateTime.recordDate() + " " + dateTime.recordTime();
+      self.conditionModifytoHistory.employeeNumber = self.employeeNumber
+      self.conditionModifytoHistory.commentID = self.commentDetailsID
+      if(value === 0){
+        let record = 'condition'
+        self.conditionModifytoHistory.modify = '修改'
+        axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" + self.companyName + '/' + record, self.conditionModifytoHistory).then((response) => {
+          console.log(response)
+        }).catch((error) => {
+          console.log(error)
+        })
+      }else{
+        let record = 'tags'
+        if(value === 1){
+          self.conditionModifytoHistory.modify = '新增'
+        }else{
+          self.tagsModifytoHistory.modify = '刪除'
+        }
+        axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" + self.companyName + '/' + record, self.tagsModifytoHistory).then((response) => {
+          console.log(response)
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+
     },
     handleSizeChange: function (size) {
       this.pagesize = size;

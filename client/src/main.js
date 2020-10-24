@@ -17,9 +17,7 @@ import './assets/css/svgMap.css'
 import './assets/css/demo.css'
 // JS
 import './registerServiceWorker'
-// import './assets/js/require.min.js'
 import './assets/js/jquery-3.4.1.min.js'
-
 import './assets/js/basic.js'
 
 import {

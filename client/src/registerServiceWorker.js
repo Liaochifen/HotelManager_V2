@@ -22,6 +22,7 @@ if (process.env.NODE_ENV === 'production') {
             //      console.log(event)
         },
         registered() {
+            console.log('successful')
             //      console.log('[Service Worker Registered] Service worker has been registered.')
             //      console.log(event)
 

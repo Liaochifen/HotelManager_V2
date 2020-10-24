@@ -50,127 +50,97 @@
                     </span>
                   </template>
                 </template>
-                <!-- <template v-if="props.column.type === input"> -->
-                <!-- <el-button>QQ</el-button> -->
-                <!-- </template> -->
-                <!-- <template v-if="props.column.field === 'favorite'">
-              <template>
-                <span v-if="props.row.favorite===true">
-                  <input type="checkbox" :value="[props.row.companyID]" class="checkbox" v-model="favoriteList" @change="favoriteFn">
-                  <span class="btn-box">
-                    <span class="btn1"></span>
-                  </span>
-                </span>
-                <span v-else-if="props.row.favorite===false">
-                  <input type="checkbox" :name="[props.row.companyID]" :value="[props.row.companyID]" class="checkbox" v-model="favoriteList" @change="favoriteFn($event)">
-                  <span class="btn-box">
-                    <span class="btn"></span>
-                  </span>
-                </span>
-              </template>
-            </template> -->
-                <!-- <template v-else-if="props.column.field === 'goComment'" class="goCommentDiv">
-                  <el-button class="goCommentBtn"><router-link :to="{ name: 'competitionCommentList', params: { collections: props.row.hotelName}}">→評論列表</router-link></el-button>
-                </template> -->
-                <!--  class="goCommentDiv" -->
-                <template v-else-if="props.column.field === 'hotelName'">
-                  <!-- <el-button class="goCommentBtn"> -->
+                <!-- <template v-else-if="props.column.field === 'hotelName'">
                   <router-link
                     :to="{
                       name: 'competitionCommentList',
                       params: { collections: props.row.hotelName },
                     }"
-                    >{{ props.row.hotelName }}</router-link
+                    ></router-link
                   >
-                </template>
+                </template> -->
               </template>
             </vue-good-table>
           </span>
-          <!-- </template> -->
-          <!-- :select-options="{enabled: true ,selectOnCheckboxOnly: true, disableSelectInfo: true}" -->
-          <!-- <template > -->
         </template>
       </div>
     </div>
-    <!-- <div class="clear"></div>
-          <div v-for="item in companyData" :key="item._id" class="competitionList">
-            <div>
-              <label :for="[item.companyID]">
-                <template>
-                  <span v-if="item.favorite===true">
-                    <input type="checkbox" :value="[item.companyID]" class="checkbox" v-model="favoriteList" @change="favoriteFn">
-                    <span class="btn-box">
-                      <span class="btn1"></span>
-                    </span>
-                  </span>
-                  <span v-else-if="item.favorite===false">
-                    <input type="checkbox" :name="[item.companyID]" :value="[item.companyID]" class="checkbox" v-model="favoriteList" @change="favoriteFn($event)">
-                    <span class="btn-box">
-                      <span class="btn"></span>
-                    </span>
-                  </span>
-                </template>
-                <span>{{item.area}}</span>
-                <span><router-link :to="{ name: 'competitionCommentList', params: { companyID: item.companyID }}">{{item.company}}</router-link></span>
-                <span>{{item.rating}}</span>
-              </label>
-            </div>
-          </div> -->
-    <!-- <div class="labelchoose" id="LabelArea">
-          <button class="favButton"  @click="favoriteFilter">已釘選</button>
-           @change="ALLFilterFunction"
-          <el-select  class="formInputCss" placeholder="地區" v-model="areaChoosen">
-            <el-option v-for="item in areas" :key="item" :value="item"></el-option>
-          </el-select>
-      </div> -->
-    <!-- <div class="favDiv" v-for="item in favoriteData" :key="item.companyID">
-          <div>
-            <label :for="[item.companyID]">
-              <input type="checkbox" :value="[item.companyID]" class="checkbox" v-model="favoriteList" @change="favoriteFn">
-              <span class="btn-box">
-                <span class="btn"></span>
-              </span>
-              <span>{{item.area}}</span>
-              <span><router-link :to="{ name: 'competitionCommentList', params: { collection: item.hotelName }}">{{item.hotelName}}</router-link></span>
-              <span>{{item.rating}}</span>
-            </label>
-          </div>
-      </div> -->
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import dateTime from "../assets/js/dateTime";
 
 export default {
   name: "competition",
+  components: {
+    "vue-good-table": require("vue-good-table").VueGoodTable,
+  },
   data() {
     return {
       columns: [
         {
           label: "收藏",
-          field: "favorite",
+          field: "favorite"
         },
         {
           label: "公司名稱",
-          field: "hotelName",
+          field: this.fieldFn
         },
         {
           label: "分數",
-          field: "avg_rating",
-        },
+          field: "avg_rating"
+        }
         // {
         //   label: '排名',
         //   field: 'ranking'
-        // },
-        // {
-        //   label: '連結',
-        //   field: 'goComment',
-        //   thClass: 'custom-th-class',
-        //   tdClass: 'custom-td-class'
         // }
       ],
-      companyName: this.$route.params.companyName,
+      companyList: [
+        {
+          field: "GrandHotelTaipei",
+          label: "台北圓山大飯店"
+        },
+        {
+          field: "GrandHyattTaipei",
+          label: "台北君悅酒店"
+        },
+        {
+          field: "RegentTaipei",
+          label: "台北晶華酒店"
+        },
+        {
+          field: "W_Taipei",
+          label: "台北W飯店"
+        },
+        {
+          field: "RoyalNikkoTaipei",
+          label: "台北老爺大酒店"
+        },
+        {
+          field: "PalaisDeChineHotel",
+          label: "君品酒店"
+        },
+        {
+          field: "EasternPlazaHotelTaipei",
+          label: "香格里拉台北遠東國際大飯店"
+        },
+        {
+          field: "SheratonGrandTaipei",
+          label: "台北喜來登大飯店"
+        },
+        {
+          field: "OkuraPrestigeTaipei",
+          label: "大倉久和大飯店"
+        },
+        {
+          field: "GaiaHotelTaipei",
+          label: "大地酒店"
+        }
+      ],
+      companyName: '',
+      employeeNumber: '',
       loginData: [],
       account: [],
       companyData: [],
@@ -181,6 +151,12 @@ export default {
       favoriteData: [],
       favoriteOpen: false,
       count: 0,
+      favoriteModifytoHistory: {
+        employeeNumber: '',
+        modify: '',
+        company: '',
+        time: ''
+      }
     };
   },
   mounted() {
@@ -188,7 +164,8 @@ export default {
     var logining = localStorage.getItem("token");
     self.loginData = JSON.parse(logining);
     if (!self.companyName) {
-      self.companyName = self.loginData.companyName;
+      self.companyName = self.loginData.companyName
+      self.employeeNumber = self.loginData.id
     }
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.loginData.id)
@@ -213,6 +190,16 @@ export default {
       });
   },
   methods: {
+    fieldFn(rowObj){
+      let self = this
+      var x = ''
+      self.companyList.filter((item) => {
+        if(item.field === rowObj.hotelName){
+          x = item.label
+        }
+      })
+      return x
+    },
     favorite: function () {
       let self = this;
       self.companyData.forEach((item) => {
@@ -254,6 +241,22 @@ export default {
       self.companyData.sort(function (a, b) {
         return b.avg_rating - a.avg_rating;
       });
+    },
+    updateHistory: function(value){
+      let self = this
+      let record = 'favorite'
+      self.favoriteModifytoHistory.employeeNumber = self.employeeNumber
+      self.conditionModifytoHistory.time = dateTime.recordDate() + " " + dateTime.recordTime();
+      if(value === 0){
+        self.favoriteModifytoHistory.modify = '刪除'
+      }else{
+        self.favoriteModifytoHistory.modify = '加入'
+      }
+      axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" + self.companyName + '/' + record, self.favoriteModifytoHistory).then((response) => {
+        console.log(response)
+      }).catch((error) => {
+        console.log(error)
+      })
     },
     selectionChanged() {},
   },
