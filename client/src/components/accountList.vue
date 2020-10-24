@@ -236,7 +236,7 @@ export default {
       logingAccount: {}, //登入者的資訊
       company: "",
       record: "UserListModify",
-      deleteRecord: [],
+      deleteEmployee: [],
     };
   },
   mounted() {
@@ -270,12 +270,11 @@ export default {
       let k;
       let self = this;
       this.checkedAccount = [];
+      this.deleteEmployee = [];
       this.rowSelection = params.selectedRows;
       for (k = 0; k < self.rowSelection.length; k++) {
         this.checkedAccount.push(this.rowSelection[k]._id);
-        console.log("selectionChanged");
-        console.log(this.checkedAccount);
-        console.log(this.rowSelection);
+        this.deleteEmployee.push(this.rowSelection[k].employeeNumber);
         // console.log(this.checkedAccount._id);
       }
     },
@@ -296,10 +295,9 @@ export default {
         cancelButtonColor: "#d33",
         confirmButtonText: "對!刪掉!!",
         cancelButtonText: "取消",
-      }).then((result) => {
-        this.deleteRecord = this.rowSelection;
-        this.deletedRecord();
+      }).then((result) => {        
         if (result.value) {
+          this.deletedRecord();
           for (k = 0; k < self.checkedAccount.length; k++) {
             //console.log("id:"+self.checkedAccount[k])
             //var check = new String(self.checkedAccount[k]);
@@ -427,7 +425,6 @@ export default {
       //return this.accountList;
     },
     close: function () {
-      console.log("close");
       document.getElementById("addNewUser").style.visibility = "hidden";
       document.getElementById("employeeNumber").removeAttribute("required");
       document.getElementById("email").removeAttribute("required");
@@ -436,8 +433,7 @@ export default {
       this.newAccount = {};
       this.newAccount.department = "資訊部";
       this.newAccount.employeeLimit = "一般使用者";
-
-      console.log("close");
+      this.newAccount.lastLoginDate = "New User";
     },
     open: function () {
       document.getElementById("employeeNumber").required = true;
@@ -445,31 +441,29 @@ export default {
       document.getElementById("password").required = true;
       document.getElementById("userName").required = true;
       document.getElementById("addNewUser").style.visibility = "visible";
-      console.log("open");
     },
     deletedRecord: function () {
-      let newUser = this.newAccount;
-      this.UserListModify.modify = "刪除";
-      this.UserListModify.employeeNumber = newUser.employeeNumber;
-      this.UserListModify.time =
-        dateTime.recordDate() + " " + dateTime.recordTime();
-      console.log(this.UserListModify);
-      axios
+      console.log("deleteRecord");
+      console.log(this.deleteEmployee);
+      let i ,self = this;
+      self.UserListModify.modify = "刪除";  
+      self.UserListModify.time = dateTime.recordDate() + " " + dateTime.recordTime();
+      console.log(self.UserListModify);
+      for(i=0 ; i<self.deleteEmployee.length ; i++){
+        self.UserListModify.employeeNumber = self.deleteEmployee[i];
+        console.log(self.UserListModify);
+        axios
         .put(
-          "https://hotelapi.im.nuk.edu.tw/api/history/" +
-            this.company +
-            "/" +
-            this.record,
-          this.UserListModify
-        )
-        .then((responseRecord) => {
+          "https://hotelapi.im.nuk.edu.tw/api/history/" +self.company +"/" +self.record,self.UserListModify
+        ).then((responseRecord) => {
           console.log(responseRecord);
-        })
-        .catch((errorRecord) => {
+        }).catch((errorRecord) => {
           console.log(errorRecord);
         });
-    },
-  },
+      }
+      
+    }
+  }
   // compoted:{
   //   countID:function(){
   //     let i;

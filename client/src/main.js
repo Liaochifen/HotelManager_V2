@@ -8,6 +8,7 @@ import dateTime from '../src/assets/js/dateTime'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import VueSimpleAlert from 'vue-simple-alert'
 // CSS
 import 'vue-good-table/dist/vue-good-table.css';
 import 'element-ui/lib/theme-chalk/index.css'
@@ -42,7 +43,7 @@ Vue.component(Option.name, Option)
 Vue.component(Checkbox.name, Checkbox)
 Vue.component(CheckboxGroup.name, CheckboxGroup)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-
+Vue.use(VueSimpleAlert);
 Vue.config.productionTip = false
 
 new Vue({
