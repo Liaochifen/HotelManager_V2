@@ -263,6 +263,7 @@
 import axios from "axios";
 import dateTime from "../assets/js/dateTime";
 import $ from "jquery";
+import util from "../assets/js/utility";
 
 export default {
   name: "commentList",
@@ -274,6 +275,7 @@ export default {
       // table data area
       companyName: '',
       employeeNumber: '',
+      networkDataReceived: false,
       commentData: [],
       selectedArr: [],
       checkedtags: [],
@@ -434,6 +436,8 @@ export default {
     var moment = require("moment");
     var start = moment().subtract(6, "month");
     var end = moment();
+    self.start = start;
+    self.end = end;
     if (!self.companyName) {
       var logining = localStorage.getItem("token");
       var loginData = JSON.parse(logining);
@@ -443,14 +447,25 @@ export default {
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/comment/" + self.companyName)
       .then((response) => {
+        console.log('From web', response.data);
+        self.networkDataReceived = true;
         self.commentData = response.data;
         self.selectedArr = response.data;
       })
       .catch((error) => {
         console.log(error);
       });
-    self.start = start;
-    self.end = end;
+
+	if ("indexedDB" in window) {
+      console.log("Reading indexedDB...");
+      util.readAllData("comment").then(function (data) {
+        if (!self.networkDataReceived) {
+          console.log("From cache", data);
+          self.commentData = data;
+          self.selectedArr = data;
+        }
+      });
+    }
   },
   // 剩多重篩選&分數
   computed: {
