@@ -456,7 +456,6 @@ export default {
             Date.parse(item.time) <= Date.parse(end._d)
           ) {
             arr1.push(item.data.countries_count);
-            console.log("!!!!!!!!!!!!");
             console.log(arr1);
           }
         });
