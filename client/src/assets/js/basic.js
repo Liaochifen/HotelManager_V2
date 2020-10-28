@@ -21,7 +21,7 @@ $(document).ready(function () {
         event.preventDefault()
         $('.left_menu').toggleClass('active')
     })
-    $('.close_btn').on('click', function (event) {
+    $('.close_btn a').on('click', function (event) {
         event.preventDefault()
         $('.left_menu').toggleClass('active')
     })
@@ -44,7 +44,7 @@ $(document).ready(function () {
         event.preventDefault()
         $('.MultiFilterArea').css('display', 'block')
         $('.filter').css('display', 'none')
-        $('.selection_phone').css('background', 'rgb(47, 58, 76, 0.85)')
+        $('.selection_phone').css('background', 'rgb(218, 226, 236)')
         $('.select_btn1').css('background', 'rgb(182, 96, 96)')
         $('.select_btn2').css('background', 'rgb(47, 58, 76)')
     })
@@ -52,7 +52,7 @@ $(document).ready(function () {
         event.preventDefault()
         $('.MultiFilterArea').css('display', 'none')
         $('.filter').css('display', 'block')
-        $('.selection_phone').css('background', 'rgb(47, 58, 76, 0.85)')
+        $('.selection_phone').css('background', 'rgb(218, 226, 236)')
         $('.select_btn1').css('background', 'rgb(47, 58, 76)')
         $('.select_btn2').css('background', 'rgb(182, 96, 96)')
     })
