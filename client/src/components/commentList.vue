@@ -466,6 +466,10 @@ export default {
         }
       });
     }
+    if ('Notification' in window && 'serviceWorker' in navigator) {
+      self.askForNotificationPermission();
+    }
+
   },
   // 剩多重篩選&分數
   computed: {
@@ -510,6 +514,16 @@ export default {
     // selectionChanged(params){
 
     // },
+    askForNotificationPermission() {
+      Notification.requestPermission(function (result) {
+        console.log('User choice', result);
+        if (result !== 'granted') {
+          console.log('No notification permission granted!');
+        } else {
+          //configurePushSub();
+        }
+      }); 
+    },
     clearALL() {
       let self = this;
       self.typeChoosen = [];
