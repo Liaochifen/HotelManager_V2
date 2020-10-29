@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.1fd38dcf686085dfb2fe746ee7c89c63.js"
+  "/precache-manifest.bbfc904cabd75f48315dd5d38c102fd0.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -147,6 +147,20 @@ self.addEventListener('fetch', function (event) {
           }
         })
     );
+  }
+});
+
+self.addEventListener('notificationclick', function (event) {
+  var notification = event.notification;
+  var action = event.action;
+
+  console.log(notification);
+  if (action === 'confirm') {
+    console.log('Confirm was chosen');
+    notification.close();
+  } else {
+    console.log(action);
+    notification.close();
   }
 });
 
