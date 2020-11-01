@@ -43,6 +43,13 @@ export default {
         employeeNumber: "",
         loginTime: "",
       },
+      user: {
+        employeeNumber: "",
+        forgetPassword: {
+          verification: true,
+          verificationTime: ""
+        }
+      }
     };
   },
   mounted() {
@@ -94,14 +101,16 @@ export default {
     },
     confirm() {
       if (this.check == this.certification) {
+        this.forgetPasswordRecord(true);
         var currentTime = new Date().getTime(); //取得從 1970-01-01 00:00:00 UTC 累計的毫秒數
         this.recordLogingTime();
+        console.log("currentTime"+currentTime)
         // localStorage.setItem('token', JSON.stringify({id:this.userID,time:currentTime}));
         localStorage.setItem(
           "token",
           JSON.stringify({
             id: this.userAccountDetail._id,
-            time: currentTime,
+            time: currentTime+1,
             companyName: this.userAccountDetail.companyName,
           })
         );
@@ -111,6 +120,7 @@ export default {
         window.location.reload();
       } else {
         //alert('驗證碼錯誤!!請重新輸入或點選『重新寄送』按鈕');
+        this.forgetPasswordRecord(false);
         this.$fire({
           title: "Error !!",
           text: "驗證碼錯誤!!請重新輸入或點選『重新寄送』按鈕",
@@ -161,6 +171,21 @@ export default {
       this.userAccountDetail.lastLoginDate = dateTime.recordDate();
       this.userAccountDetail.lastLoginTime = dateTime.recordTime();
     },
+    forgetPasswordRecord:function(verificate){
+      var company = this.userAccountDetail.companyName;
+      var record="user";
+      this.user.employeeNumber = this.userAccountDetail.employeeNumber;
+      this.user.forgetPassword.verification = verificate;
+      this.user.forgetPassword.verificationTime = dateTime.recordDate() + " " + dateTime.recordTime();
+      console.log(this.user);
+       axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" +company +"/" +record,this.user)
+        .then((responseRecord) => {
+          console.log(responseRecord);
+        })
+        .catch((errorRecord) => {
+          console.log(errorRecord);
+        });
+    }
   },
 };
 </script>
