@@ -17,12 +17,9 @@
         <div class="personalDetail">
           <ul>
             <li>
-              所屬單位&nbsp;:&nbsp;<input
-                type="text"
-                readonly="readonly"
-                v-model="userAccountDetail.department"
-                id="department"
-              />
+              所屬單位&nbsp;:&nbsp;
+              <input type="text" readonly="readonly" v-model="userAccountDetail.department" id="department" />
+              
             </li>
             <li>
               姓名&nbsp;:&nbsp;<input
@@ -59,28 +56,37 @@
                 type="text"
                 readonly="readonly"
                 v-model="userAccountDetail.email"
-                id="email"
+                id="email" style="width: 85%;"
               />
             </li>
           </ul>
         </div>
         <h2>隱私權</h2>
+        <button v-on:click="editPrivateInfo()" id="private">編輯</button>
         <div class="clear"></div>
         <div class="private">
           <ul>
             <li>
-              權限&nbsp;:&nbsp;<input
+              權限&nbsp;:&nbsp;
+              <!-- <input
                 type="text"
                 readonly="readonly"
                 :value="userAccountDetail.employeeLimit"
-              />
+                id="limit"
+              /> -->
+              <select v-model="userAccountDetail.employeeLimit" disabled id="limit">
+              <option>一般使用者</option>
+              <option>主管使用者</option>
+              <option>後台管理者</option>
+            </select>
             </li>
             <li>
               密碼&nbsp;:&nbsp;<input
                 class="form-control"
                 type="password"
                 readonly="readonly"
-                :value="userAccountDetail.password"
+                v-model="userAccountDetail.password"
+                id="password"
               />
               <span v-on:click="changePassword" v-if="pass_type === 'password'"
                 ><font-awesome-icon icon="eye"
@@ -110,6 +116,9 @@ export default {
       editPersonalBtn: false,
       editContactInfoBtn: false,
       pass_type: "password",
+      editPrivateInfoBtn:false,
+      oldPassword:"",
+      checkPassword:""
     };
   },
   mounted() {
@@ -120,6 +129,7 @@ export default {
         console.log(response.data);
         self.userAccountDetail = response.data;
         console.log(self.userAccountDetail);
+        self.oldPassword = self.userAccountDetail.password;
         // self.id=response.data.id;
         // self.name=response.data.name;
       })
@@ -145,7 +155,7 @@ export default {
     editPersonal: function () {
       if (this.editPersonalBtn) {
         console.log("true 編輯");
-        this.updateAccount();
+        // this.updateAccount();
         console.log(this.userAccountDetail);
         document.getElementById("personal").innerHTML = "編輯";
         document.getElementById("department").setAttribute("readOnly", true);
@@ -177,12 +187,12 @@ export default {
     editContactInfo: function () {
       if (this.editContactInfoBtn) {
         console.log("true 編輯");
-        this.updateAccount();
+        // this.updateAccount();
         document.getElementById("contact").innerHTML = "編輯";
         document.getElementById("phone").setAttribute("readOnly", true);
         document.getElementById("phone").style.cssText = "border:none;";
         document.getElementById("email").setAttribute("readOnly", true);
-        document.getElementById("email").style.cssText = "border:none;";
+        document.getElementById("email").style.cssText = "border:none; width: 85%;";
         this.updateAccount();
 
         this.editContactInfoBtn = false;
@@ -192,7 +202,7 @@ export default {
         document.getElementById("phone").removeAttribute("readOnly");
         document.getElementById("phone").style.cssText = "border:1px solid;";
         document.getElementById("email").removeAttribute("readOnly");
-        document.getElementById("email").style.cssText = "border:1px solid;";
+        document.getElementById("email").style.cssText = "border:1px solid; width: 85%;";
         this.editContactInfoBtn = true;
       }
     },
@@ -205,6 +215,65 @@ export default {
         this.pass_type = "password";
       }
     },
+    editPrivateInfo: function(){
+      if(this.editPrivateInfoBtn){
+        console.log("unchange"+this.oldPassword);
+         if(this.oldPassword != this.userAccountDetail.password){
+          this.$fire({
+            type: 'warning',
+            title: "請再輸入一次新密碼!!",
+            input: "text",
+            inputPlaceholder: 'New password',
+            inputValidator: (value) => {
+              return new Promise((resolve) => {
+                if (value != this.userAccountDetail.password) {
+                  // this.updateAccount();
+                  resolve('密碼不同請在確認一次!!!!!')
+                }else{
+                  this.checkPassword = value;
+                  resolve()
+                } 
+              })
+            }
+          }).then(r => {
+            console.log(r.value);
+            if(this.checkPassword == r.value){
+              //當v-model修改時即會寫入資料庫
+              // this.updateAccount();
+              this.oldPassword = this.userAccountDetail.password;
+              this.$fire({
+                title: "Success !!",
+                text: "成功修改密碼~",
+                type: "success",
+              });
+            }else{
+              //沒有驗證成功(ex點空白關掉alert)改回本來的密碼
+              this.userAccountDetail.password = this.oldPassword;
+              this.updateAccount();
+              this.$fire({
+                title: "Error !!",
+                text: "密碼沒有修改成功!!!!",
+                type: "error",
+              });
+            }
+          });
+         }
+        this.updateAccount();
+        document.getElementById("private").innerHTML = "編輯";
+        document.getElementById("limit").setAttribute("disabled", true);
+        // document.getElementById("limit").style.cssText = "border:none;";
+        document.getElementById("password").setAttribute("readOnly", true);
+        document.getElementById("password").style.cssText = "border:none;";
+        this.editPrivateInfoBtn = false;
+      } else {
+        document.getElementById("private").innerHTML = "儲存";
+        document.getElementById("limit").removeAttribute("disabled", false);
+        // document.getElementById("limit").style.cssText = "border:none;";
+        document.getElementById("password").removeAttribute("readOnly");
+        document.getElementById("password").style.cssText = "border:1px solid;";
+        this.editPrivateInfoBtn = true;
+      }
+    }
   },
 };
 </script>
