@@ -21,6 +21,9 @@ import './assets/css/demo.css'
 import './registerServiceWorker'
 import './assets/js/jquery-3.4.1.min.js'
 import './assets/js/basic.js'
+import './assets/js/material.min.js'
+import './assets/js/promise.js'
+import './assets/js/fetch.js'
 
 import {
   Select,

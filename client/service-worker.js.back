@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.bbfc904cabd75f48315dd5d38c102fd0.js"
+  "/precache-manifest.7ff046e4046476272139807230e0f9d9.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -85,22 +85,14 @@ self.addEventListener('fetch', function (event) {
   var targetApi = event.request.url.match(new RegExp('\/api\/[a-zA-z]*'));
   if (event.request.url.match(re)) {
     var idbName = targetApi[0].substring(5);
-//    console.log(event.request.url);
-//    console.log(targetApi[0]);
-//    console.log(idbName);
     console.log('[Service Worker] Match ' + event.request.url);
 //  if (event.request.url.indexOf(url) > -1) {
     event.respondWith(fetch(event.request)
       .then(function (res) {
         var clonedRes = res.clone();
-//        clonedRes.json()
-//          .then(function(data) {
-//            console.log(typeof(data));
-//            console.log(data);
-//            console.log(data.length); 
-//        console.log(tmp);
         clearAllData(idbName)
           .then(function () {
+            console.log('[Service Worker] Clear', idbName);
             return clonedRes.json();
           })
           .then(function (data) {
@@ -115,6 +107,7 @@ self.addEventListener('fetch', function (event) {
             }
           })
           .catch(function(err) {
+            console.log('[Service Worker] Clear', idbName);
             console.log(err);
           });
 //          });
@@ -163,6 +156,37 @@ self.addEventListener('notificationclick', function (event) {
     notification.close();
   }
 });
+
+self.addEventListener('notificationclose', function (event) {
+    console.log('Notification was closed', event);
+});
+
+self.addEventListener('push', function (event) {
+  console.log('Push Notification received', event);
+
+  var data = {
+    title: 'New!',
+    content: 'Somthing new happened',
+    openUrl: '/'
+  };
+  if (event.data) {
+    data = JSON.parse(event.data.text());
+  }
+
+  var options = {
+    body: data.content,
+    icon: './img/icons/apple-touch-icon-76x76.png',
+    badge: './img/icons/apple-touch-icon-76x76.png',
+    data: {
+      url: data.openUrl
+    }
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, options)
+  );
+});
+
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
