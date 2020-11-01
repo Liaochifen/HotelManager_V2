@@ -84,9 +84,9 @@ router.beforeEach((to, from, next) => {
   if (localStorage.getItem('token')) {
     //判斷當前時間與登入時間差異
     var currentTime = new Date().getTime();
-    if(loginData.time== null){
-      loginData.time = 0;
-    }
+    // if(loginData.time == null){
+    //   loginData.time = 0;
+    // }
     if ((currentTime - loginData.time) > 7200000) {   
       localStorage.removeItem('token');
       let record = 'logout';

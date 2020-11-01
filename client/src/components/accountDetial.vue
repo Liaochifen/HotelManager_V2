@@ -106,6 +106,7 @@
 <script>
 import axios from "axios";
 import $ from "jquery";
+import dateTime from "../assets/js/dateTime";
 
 export default {
   name: "accountDetial",
@@ -118,7 +119,21 @@ export default {
       pass_type: "password",
       editPrivateInfoBtn:false,
       oldPassword:"",
-      checkPassword:""
+      oldEmail:"",
+      oldUserName:"",
+      oldEmployeeLimit:"",
+      oldDepartment:"",
+      checkPassword:"",
+      // userDetailModify: {
+      //   modifyPerson: "",
+      //   employeeNumber: "",
+      //   modifyInfo: "",
+      //   new: "",
+      //   old: "",
+      //   time: ""
+      // },
+      company:"",
+      record:"userDetailModify"
     };
   },
   mounted() {
@@ -130,8 +145,11 @@ export default {
         self.userAccountDetail = response.data;
         console.log(self.userAccountDetail);
         self.oldPassword = self.userAccountDetail.password;
-        // self.id=response.data.id;
-        // self.name=response.data.name;
+        self.oldEmail = self.userAccountDetail.email;
+        self.oldUserName = self.userAccountDetail.userName;
+        self.oldEmployeeLimit = self.userAccountDetail.employeeLimit;
+        self.oldDepartment = self.userAccountDetail.department;
+        self.company = self.userAccountDetail.companyName;
       })
       .catch((error) => {
         console.log(error);
@@ -155,19 +173,28 @@ export default {
     editPersonal: function () {
       if (this.editPersonalBtn) {
         console.log("true 編輯");
-        // this.updateAccount();
+        if(this.oldUserName != this.userAccountDetail.userName){
+          var userName = this.oldUserName;
+          this.recordUserDetailModify('修改姓名',userName,this.userAccountDetail.userName);
+          this.oldUserName = this.userAccountDetail.userName; 
+        }
+        if(this.oldDepartment != this.userAccountDetail.department){
+          var department = this.oldDepartment;
+          this.recordUserDetailModify('修改所屬單位',department,this.userAccountDetail.department);
+          this.oldDepartment = this.userAccountDetail.department; 
+        }
         console.log(this.userAccountDetail);
         document.getElementById("personal").innerHTML = "編輯";
         document.getElementById("department").setAttribute("readOnly", true);
         document.getElementById("department").style.cssText = "border:none;";
         document.getElementById("userName").setAttribute("readOnly", true);
         document.getElementById("userName").style.cssText = "border:none;";
-        document
-          .getElementById("employeeNumber")
-          .setAttribute("readOnly", true);
-        document.getElementById("employeeNumber").style.cssText =
-          "border:none;";
-
+        // document
+        //   .getElementById("employeeNumber")
+        //   .setAttribute("readOnly", true);
+        // document.getElementById("employeeNumber").style.cssText =
+        //   "border:none;";
+        this.updateAccount();
         this.editPersonalBtn = false;
       } else {
         console.log("false 儲存");
@@ -177,15 +204,20 @@ export default {
           "border:1px solid;";
         document.getElementById("userName").removeAttribute("readOnly");
         document.getElementById("userName").style.cssText = "border:1px solid;";
-        document.getElementById("employeeNumber").removeAttribute("readOnly");
-        document.getElementById("employeeNumber").style.cssText =
-          "border:1px solid;";
+        // document.getElementById("employeeNumber").removeAttribute("readOnly");
+        // document.getElementById("employeeNumber").style.cssText =
+        //   "border:1px solid;";
         console.log(this.userAccountDetail);
         this.editPersonalBtn = true;
       }
     },
     editContactInfo: function () {
       if (this.editContactInfoBtn) {
+        if(this.oldEmail != this.userAccountDetail.email){
+          var email = this.oldEmail;
+          this.recordUserDetailModify('修改Email',email,this.userAccountDetail.email);
+          this.oldEmail = this.userAccountDetail.email; 
+        }
         console.log("true 編輯");
         // this.updateAccount();
         document.getElementById("contact").innerHTML = "編輯";
@@ -217,7 +249,7 @@ export default {
     },
     editPrivateInfo: function(){
       if(this.editPrivateInfoBtn){
-        console.log("unchange"+this.oldPassword);
+        console.log(this.oldPassword);
          if(this.oldPassword != this.userAccountDetail.password){
           this.$fire({
             type: 'warning',
@@ -240,15 +272,19 @@ export default {
             if(this.checkPassword == r.value){
               //當v-model修改時即會寫入資料庫
               // this.updateAccount();
+              this.userDetailModify.old=this.oldPassword;
+              this.userDetailModify.new=this.userAccountDetail.password;
+              this.userDetailModify.modifyInfo='修改密碼';
               this.oldPassword = this.userAccountDetail.password;
               this.$fire({
                 title: "Success !!",
                 text: "成功修改密碼~",
                 type: "success",
               });
+              this.recordUserDetailModify();
             }else{
               //沒有驗證成功(ex點空白關掉alert)改回本來的密碼
-              this.userAccountDetail.password = this.oldPassword;
+              this.userAccountDetail.password = this.userDetailChange.password;
               this.updateAccount();
               this.$fire({
                 title: "Error !!",
@@ -258,6 +294,13 @@ export default {
             }
           });
          }
+        if(this.oldEmployeeLimit != this.userAccountDetail.employeeLimit){
+          this.userDetailModify.old=this.oldEmployeeLimit;
+          this.userDetailModify.new=this.userAccountDetail.employeeLimit;
+          this.userDetailModify.modifyInfo='修改權限';
+          this.oldEmployeeLimit = this.userAccountDetail.employeeLimit;    
+          this.recordUserDetailModify();
+        }
         this.updateAccount();
         document.getElementById("private").innerHTML = "編輯";
         document.getElementById("limit").setAttribute("disabled", true);
@@ -273,7 +316,33 @@ export default {
         document.getElementById("password").style.cssText = "border:1px solid;";
         this.editPrivateInfoBtn = true;
       }
-    }
+    },
+    recordUserDetailModify:function(change,oldInfo,newInfo){
+      var userDetailModify = new Object();
+      userDetailModify.modifyPerson = "";
+      userDetailModify.employeeNumber = this.userAccountDetail.employeeNumber;
+      userDetailModify.modifyInfo= change;
+      userDetailModify.new= newInfo;
+      userDetailModify.old= oldInfo;  
+      userDetailModify.time =dateTime.recordDate() + " " + dateTime.recordTime();
+      var loginData = JSON.parse(localStorage.getItem("token"));
+      var userID = loginData.id;
+      axios.get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
+        .then((response) => {
+          userDetailModify.modifyPerson = response.data.employeeNumber;
+          axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" +this.company +"/" +this.record,userDetailModify)
+          .then((responseRecord) => {
+            console.log(responseRecord);
+          })
+          .catch((errorRecord) => {
+            console.log(errorRecord);
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        console.log(userDetailModify);       
+      }     
   },
 };
 </script>
