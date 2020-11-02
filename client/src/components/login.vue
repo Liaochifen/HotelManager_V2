@@ -85,7 +85,7 @@ export default {
             "token",
             JSON.stringify({
               id: this.logingAccount._id,
-              time: currentTime,
+              time: currentTime+1,
               companyName: this.logingAccount.companyName,
             })
           );
@@ -96,6 +96,7 @@ export default {
 
           if (this.accountInfo[i].firstLogin) {
             this.$router.push({ name: "changePassword" });
+            window.location.reload();
             break;
           } else {
             this.$router.push({

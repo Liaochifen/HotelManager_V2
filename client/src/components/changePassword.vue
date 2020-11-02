@@ -19,7 +19,7 @@
 
 <script>
 import axios from "axios";
-
+import dateTime from "../assets/js/dateTime";
 export default {
   name: "changePassword",
   data() {
@@ -52,10 +52,17 @@ export default {
         for (i = 0; i < this.accountInfo.length; i++) {
           if (this.userID == this.accountInfo[i]._id) {
             this.logingAccount = this.accountInfo[i];
+            var oldPassword= this.logingAccount.password;
             this.logingAccount.password = this.password;
-            this.logingAccount.firstLogin = false;
-            this.updateAccount();
-
+            if(this.logingAccount.firstLogin==true){
+              this.logingAccount.firstLogin = false;
+              this.updateAccount();
+              this.recordUserDetailModify("修改密碼","第一次登入",this.password);
+            }else{
+              this.updateAccount();
+              this.recordUserDetailModify("修改密碼",oldPassword,this.password);
+            }
+            
             break;
           }
         }
@@ -91,13 +98,32 @@ export default {
               name: "commentList",
               params: { collections: this.logingAccount.companyName },
             });
+            
           });
         })
         .catch((error) => {
           console.log(error);
         });
     },
-  },
+    recordUserDetailModify:function(change,oldInfo,newInfo){
+      var userDetailModify = new Object();
+      userDetailModify.modifyPerson = this.logingAccount.employeeNumber;
+      userDetailModify.employeeNumber = this.logingAccount.employeeNumber;
+      userDetailModify.modifyInfo= change;
+      userDetailModify.new= newInfo;
+      userDetailModify.old= oldInfo;  
+      userDetailModify.time =dateTime.recordDate() + " " + dateTime.recordTime();
+      var company = this.logingAccount.companyName;
+      var record = "userDetailModify";
+      axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" +company +"/" +record,userDetailModify)
+          .then((responseRecord) => {
+            console.log(responseRecord);
+          })
+          .catch((errorRecord) => {
+            console.log(errorRecord);
+          });    
+      }     
+  }
 };
 </script>
 
