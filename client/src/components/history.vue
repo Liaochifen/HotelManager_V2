@@ -1,6 +1,6 @@
 <template>
   <div class="historyContent">
-    <button @click="changePage(0)" class="pageButton0">評論動態</button>
+    <button @click="changePage(0)" class="pageButton0 pageButtonStart">評論動態</button>
     <button @click="changePage(1)" class="pageButton1">個人動態</button>
     <div class="clear"></div>
     <div class="historydataArea">
@@ -8,6 +8,7 @@
         <span v-if="page === 0">
           <template>
             <div>
+              <!-- .condition -->
               <div v-for="(item, index) in commentFilter[0].condition" :key="index" class="commentArea">
                 <!-- 放大頭照 -->
                 <!-- <p>{{item.employeeNumber}}</p> -->
@@ -16,6 +17,12 @@
                 <!-- 手機板變成在評論底下，縮小 -->
                 <span class="commentTimeHistory">{{item.time}}</span>
               </div>
+              <div v-for="(item, index1) in commentFilter[0].tags" :key="index1" class="commentArea">
+                <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
+                <span class="commentTimeHistory">{{item.time}}</span>
+              </div>
+
             </div>
           </template>
         </span>
@@ -62,6 +69,7 @@ export default {
       .then((response) => {
         var arr = ['old', 'new']
         self.historyData = response.data;
+        console.log(self.historyData)
         self.commentFilter.push({
           condition: self.historyData.condition,
           tags: self.historyData.tags
@@ -94,10 +102,12 @@ export default {
       if(value === 0){
         self.page = 0
         $(".pageButton0").addClass("focus");
+        $(".pageButton0").removeClass("pageButtonStart");
         $(".pageButton1").removeClass("focus");
       }else{
         self.page = 1
         $(".pageButton1").addClass("focus");
+        $(".pageButton0").removeClass("pageButtonStart");
         $(".pageButton0").removeClass("focus");
       }
     },

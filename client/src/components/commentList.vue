@@ -692,8 +692,8 @@ export default {
           startDate: start,
           endDate: end,
           ranges: {
-            Today: [moment(), moment()],
-            Yesterday: [moment().subtract(1, "days"), moment()],
+            "Today": [moment(), moment()],
+            "Yesterday": [moment().subtract(1, "days"), moment()],
             "Last Week": [moment().subtract(6, "days"), moment()],
             "Last Month": [moment().subtract(30, "days"), moment()],
             "Last Six Months": [moment().subtract(6, "month"), moment()],

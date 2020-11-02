@@ -185,6 +185,7 @@ export default {
       conditionModifytoHistory: {
         employeeNumber: '',
         commentID: '',
+        title: '',
         modify: '',
         time: '',
         old: '',
@@ -193,6 +194,7 @@ export default {
       tagsModifytoHistory: {
         employeeNumber: '',
         commentID: '',
+        title: '',
         modify: '',
         time: '',
         new: ''
@@ -209,6 +211,7 @@ export default {
       var logining = localStorage.getItem("token");
       var loginData = JSON.parse(logining);
       self.companyName = loginData.companyName;
+      self.employeeNumber = loginData.id
     }
     axios
       .get(
@@ -250,6 +253,7 @@ export default {
     },
     submitAdd: function () {
       let self = this;
+      // 現在先這樣寫，以後再改成0/1
       self.labelchoose.filter((item) => {
         if(self.TagsAdd === item.field){
           self.tagsModifytoHistory.new = item.label
@@ -266,6 +270,7 @@ export default {
           self.label_no_tags.push(item);
         }
       });
+      self.updateHistory(1, 1)
     },
     conditionUpdate: function (data) {
       let self = this;
@@ -324,11 +329,17 @@ export default {
           console.log(err);
         });
     },
-    updateHistory: function(value){
+    updateHistory: function(value, value1){
       let self = this
       self.conditionModifytoHistory.time = dateTime.recordDate() + " " + dateTime.recordTime();
       self.conditionModifytoHistory.employeeNumber = self.employeeNumber
       self.conditionModifytoHistory.commentID = self.commentDetailsID
+      self.conditionModifytoHistory.title = self.commentData.text.substr(0, 10) + "...";
+      self.tagsModifytoHistory.time = dateTime.recordDate() + " " + dateTime.recordTime();
+      self.tagsModifytoHistory.employeeNumber = self.employeeNumber
+      self.tagsModifytoHistory.commentID = self.commentDetailsID
+      self.tagsModifytoHistory.title = self.commentData.text.substr(0, 10) + "...";
+      console.log(self.tagsModifytoHistory)
       if(value === 0){
         let record = 'condition'
         self.conditionModifytoHistory.modify = '修改'
@@ -339,8 +350,8 @@ export default {
         })
       }else{
         let record = 'tags'
-        if(value === 1){
-          self.conditionModifytoHistory.modify = '新增'
+        if(value1 === 1){
+          self.tagsModifytoHistory.modify = '新增'
         }else{
           self.tagsModifytoHistory.modify = '刪除'
         }

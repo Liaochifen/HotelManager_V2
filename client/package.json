@@ -15,6 +15,7 @@
     "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
+    "daterangepicker": "^3.1.0",
     "element-ui": "^2.13.2",
     "emailjs-com": "^2.6.3",
     "jquery": "^3.5.1",

@@ -1351,11 +1351,11 @@ export default {
 };
 </script>
 
-<style type="text/css">
+<style scoped type="text/css">
 #showmonthMenu {
   display: none;
 }
-.daterangepicker {
+/* .daterangepicker {
   width: 140px;
   height: 160px;
 }
@@ -1367,7 +1367,7 @@ export default {
 }
 .daterangepicker.show-calendar .drp-buttons {
   display: none;
-}
+} */
 .svgMap-map-wrapper {
   background: white;
 }
