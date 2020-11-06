@@ -467,9 +467,9 @@ export default {
         }
       });
     }
-//    if ('Notification' in window && 'serviceWorker' in navigator) {
-//      self.askForNotificationPermission();
-//    }
+    if ('Notification' in window && 'serviceWorker' in navigator) {
+      self.askForNotificationPermission();
+    }
 
   },
   // 剩多重篩選&分數
@@ -911,17 +911,38 @@ export default {
       let self = this;
       let updateData = self.newComment;
       let updateId = id;
-      axios
-        .put(
-          "https://hotelapi.im.nuk.edu.tw/api/comment/" +
-            self.companyName +
-            "/" +
-            updateId,
-          updateData
-        )
-        .catch((err) => {
-          console.log(err);
+      
+      // axios
+      //   .put(
+      //     "https://hotelapi.im.nuk.edu.tw/api/comment/" +
+      //       self.companyName +
+      //       "/" +
+      //       updateId,
+      //     updateData
+      //   )
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+    
+      if ("serviceWorker" in navigator && "SyncManager" in window) {
+        navigator.serviceWorker.ready.then(function (sw) {
+          var post = {
+            id: updateId,
+            data: updateData,
+            companyName: self.companyName,
+          };
+          // Write the data into the indexedDB
+          util
+            .writeData("sync-comment-update", post)
+            .then(function () {
+              return sw.sync.register("sync-comment-update"); // 'sync-new-post' is the name to be identified by service worker while syncing the data
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
         });
+      }  
+
       self.editCancle();
     },
     updateHistory: function(){

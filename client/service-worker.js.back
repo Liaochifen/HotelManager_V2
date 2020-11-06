@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.7ff046e4046476272139807230e0f9d9.js"
+  "/precache-manifest.924bbb05345c1d91d09b37c0bbf8adb0.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -143,6 +143,38 @@ self.addEventListener('fetch', function (event) {
   }
 });
 
+self.addEventListener('sync', function (event) {
+  console.log('[Service Worker] Background syncing', event);
+  if (event.tag === 'sync-comment-update') {
+    event.waitUntil(
+      readAllData('sync-comment-update')
+        .then(function (data) {
+          for (var dt of data) {
+            fetch("https://hotelapi.im.nuk.edu.tw/api/comment/" + dt.companyName + "/" + dt.id, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(dt.data),
+            })
+              .then(function (res) {
+                if (res.ok) {
+                  res.json()
+                    .then(function (resData) {
+                      console.log('Send data', resData);
+                      deleteItemFromData('sync-comment-update', resData._id);
+                    })
+                }
+              })
+              .catch(function (err) {
+                console.log('Error while sending data', err);
+              });
+          }
+        })
+    );
+  }
+});
+
 self.addEventListener('notificationclick', function (event) {
   var notification = event.notification;
   var action = event.action;
@@ -153,7 +185,22 @@ self.addEventListener('notificationclick', function (event) {
     notification.close();
   } else {
     console.log(action);
-    notification.close();
+    event.waitUntil(
+      clients.matchAll()
+        .then((clis) => {
+          var client = clis.find((c) => {
+            return c.visibilityState === 'visible';
+          });
+
+          if (client !== undefined) {
+            client.navigate('https://hoteleye.im.nuk.edu.tw');
+            client.focus();
+          } else {
+            clients.openWindow('http://hoteleye.im.nuk.edu.tw');
+          }
+          notification.close()
+        })
+    );
   }
 });
 

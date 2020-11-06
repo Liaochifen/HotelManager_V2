@@ -2,14 +2,17 @@ import idb from "./idb";
 
 var dbPromise = idb.open('account', 1, function (db) {
     if (!db.objectStoreNames.contains('account')) {
-        db.createObjectStore('account', { keyPath: 'id' }); // db.createObjectStore actually accress the table
+        db.createObjectStore('account', { keyPath: '_id' });
     }
     if (!db.objectStoreNames.contains('comment')) {
-        db.createObjectStore('comment', { keyPath: 'id' }); // db.createObjectStore actually accress the table
+        db.createObjectStore('comment', { keyPath: '_id' });
     }
-    // if (!db.objectStoreNames.contains('sync-posts')) {
-    //     db.createObjectStore('sync-posts', { keyPath: 'id' });
-    // }
+    if (!db.objectStoreNames.contains('history')) {
+        db.createObjectStore('history', { keyPath: '_id' });
+    }
+    if (!db.objectStoreNames.contains('sync-comment-update')) {
+        db.createObjectStore('sync-comment-update', { keyPath: 'id' });
+    }
 });
 
 var util = {
