@@ -15,8 +15,8 @@ exports.storePostData = functions.https.onRequest(function (request, response) {
     response.send("Hello World!!");
 });
 
-// exports.scheduledFunctionCrontab = functions.pubsub.schedule('0 11 * * *')
-exports.scheduledFunctionCrontab = functions.pubsub.schedule('every 1 minutes')
+exports.scheduledFunctionCrontab = functions.pubsub.schedule('0 11 * * *')
+// exports.scheduledFunctionCrontab = functions.pubsub.schedule('every 1 minutes')
     .timeZone('Asia/Taipei')
     .onRun(() => {
       webpush.setVapidDetails('mailto:qazx62486@gmail.com', 'BDsoBTxagj-zJcEl50RUzykFqBd9SCnp_cup1UHnrsrWzKg4FBoiYzBrm8NGLq2Ca3U4EsjZ0nP-JwD8f9S4u9w', '_Phn7PTGLy3IDuLsPcbQ8uC1HRNTvBZP8XahCq6BzcY');
