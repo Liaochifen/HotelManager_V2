@@ -74,7 +74,7 @@
         <!-- 側邊選單 -->
         <div class="left_menu">
           <!-- <p>功能列</p> -->
-          <div class="close_btn">X</div>
+          <div class="close_btn"><a href="">X</a></div>
           <ul class="leftul" id="menuUl">
             <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
             <li>
@@ -791,7 +791,10 @@ a {
     text-align: right;
     font-size: 1.5em;
   }
-  .close_btn:hover {
+  .close_btn a{
+    color: white;
+  }
+  .close_btn a:hover {
     cursor: pointer;
     color: rgb(182, 96, 96);
   }

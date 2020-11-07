@@ -4,20 +4,22 @@
     margin-left: 40px;
     width: 93%;
 }
+
 .pageButton0, .pageButton1{
     all: unset;
     margin-right: 20px;
     font-size: 16px;
+}
+.pageButtonStart{
+    color: rgba(0, 81, 255, 0.712);
+    border-bottom: 1px solid rgba(0, 81, 255, 0.712);
 }
 .pageButton0:hover, .pageButton1:hover{
     cursor: pointer;
     color: rgba(0, 81, 255, 0.712);
     border-bottom: 1px solid rgba(0, 81, 255, 0.712);
 }
-.focus{
-    color: rgba(0, 81, 255, 0.712);
-    border-bottom: 1px solid rgba(0, 81, 255, 0.712);
-}
+
 .historydataArea{
     margin-top: 50px;
 }
@@ -26,6 +28,7 @@
     padding-top: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid gray;
+    position: relative;
 }
 .commentArea:hover{
     background-color: rgb(231, 231, 231);
@@ -33,12 +36,18 @@
 .commentHistoryContent{
     margin-left: 10px;
     letter-spacing: 3px;
+    
     font-size: 16px;
+
 }
 .commentTimeHistory{
     color: gray;
     position: absolute;
-    right: 4%;
+    right: 1%;
+}
+.focus{
+    color: rgba(0, 81, 255, 0.712);
+    border-bottom: 1px solid rgba(0, 81, 255, 0.712);
 }
 .clear{
     clear:both;

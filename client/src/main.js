@@ -20,6 +20,8 @@ import './assets/css/demo.css'
 // JS
 import './registerServiceWorker'
 import './assets/js/jquery-3.4.1.min.js'
+import '../node_modules/daterangepicker/daterangepicker'
+
 import './assets/js/basic.js'
 import './assets/js/material.min.js'
 import './assets/js/promise.js'
@@ -76,6 +78,7 @@ if (localStorage.getItem('token')) {
   userID = loginData.id;
   axios.get('https://hotelapi.im.nuk.edu.tw/api/account/' + userID).then((response) => {
     userAccountDetail = response.data;
+    logout.employeeNumber = userAccountDetail.employeeNumber;
   }).catch((error) => {
     console.log(error);
   })
@@ -87,13 +90,14 @@ router.beforeEach((to, from, next) => {
   if (localStorage.getItem('token')) {
     //判斷當前時間與登入時間差異
     var currentTime = new Date().getTime();
-    if ((currentTime - loginData.time) > 7200000) {
+    // if(loginData.time == null){
+    //   loginData.time = 0;
+    // }
+    if ((currentTime - loginData.time) > 7200000) {   
       localStorage.removeItem('token');
       let record = 'logout';
       let company = companyName;
-      logout.employeeNumber = userAccountDetail.employeeNumber;
       logout.logoutTime = dateTime.recordDate() + ' ' + dateTime.recordTime();
-      console.log(logout);
       axios.put('https://hotelapi.im.nuk.edu.tw/api/history/' + company + '/' + record, logout)
         .then((response) => {
           console.log(response);

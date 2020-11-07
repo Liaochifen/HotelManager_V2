@@ -262,7 +262,7 @@ tr:hover td{
 .el-table a{
     color: rgb(39, 30, 165);
 }
-.selection_phone,.select_btn{
+.selection_phone,.select_btn,.selection_btn_phone{
     display: none;
 }
 @media (max-width: 768px) {
