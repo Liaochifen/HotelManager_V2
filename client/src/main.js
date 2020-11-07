@@ -20,8 +20,6 @@ import './assets/css/demo.css'
 // JS
 import './registerServiceWorker'
 import './assets/js/jquery-3.4.1.min.js'
-import '../node_modules/daterangepicker/daterangepicker'
-
 import './assets/js/basic.js'
 import './assets/js/material.min.js'
 import './assets/js/promise.js'
