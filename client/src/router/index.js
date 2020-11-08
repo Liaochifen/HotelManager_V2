@@ -74,6 +74,11 @@ export default new Router({
             component: statistic
         },
         {
+            path: '/competition',
+            name: 'competition',
+            component: competition
+        },
+        {
             path: '/competition/:collections',
             name: 'competition',
             component: competition

@@ -165,14 +165,31 @@ label{
     margin-right: 10px;
     margin-bottom: 10px;
 }
-.deleteButton{
+
+.tags .el-button{
+    padding: 10px 15px;
+}
+/* .deleteButton{
     display: none;
 }
 .tags:hover + .deleteButton{
     display: block;
-}
+} */
 .addTagsArea{
     display: none;
+}
+.deleBtn{
+    all: unset;
+    display: none;
+
+}
+.tags:hover .el-button{
+    width: 60px;
+    padding: 10px 10px;
+}
+.tags:hover .deleBtn{
+    display: inline-block;
+    /* content: 'x'; */
 }
 
 /* .replyArea{
