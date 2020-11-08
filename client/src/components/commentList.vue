@@ -4,6 +4,7 @@
       <span class="selection_btn_phone">篩選</span>
       <div class="page">
         <span>評論列表</span>
+        <button @click="askForNotificationPermission">Notification</button>
       </div>
       <div class="selection_phone">
         <span class="select_btn1">篩選一</span>
@@ -268,6 +269,7 @@
 import axios from "axios";
 import dateTime from "../assets/js/dateTime";
 import $ from "jquery";
+import util from "../assets/js/utility";
 
 export default {
   name: "commentList",
@@ -279,6 +281,7 @@ export default {
       // table data area
       companyName: '',
       employeeNumber: '',
+      networkDataReceived: false,
       commentData: [],
       selectedArr: [],
       checkedtags: [],
@@ -441,6 +444,8 @@ export default {
     var moment = require("moment");
     var start = moment().subtract(6, "month");
     var end = moment();
+    self.start = start;
+    self.end = end;
     if (!self.companyName) {
       var logining = localStorage.getItem("token");
       var loginData = JSON.parse(logining);
@@ -450,14 +455,29 @@ export default {
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/comment/" + self.companyName)
       .then((response) => {
+        console.log('From web', response.data);
+        self.networkDataReceived = true;
         self.commentData = response.data;
         self.selectedArr = response.data;
       })
       .catch((error) => {
         console.log(error);
       });
-    self.start = start;
-    self.end = end;
+
+	if ("indexedDB" in window) {
+      console.log("Reading indexedDB...");
+      util.readAllData("comment").then(function (data) {
+        if (!self.networkDataReceived) {
+          console.log("From cache", data);
+          self.commentData = data;
+          self.selectedArr = data;
+        }
+      });
+    }
+    if ('Notification' in window && 'serviceWorker' in navigator) {
+      self.askForNotificationPermission();
+    }
+
   },
   // 剩多重篩選&分數
   computed: {
@@ -502,6 +522,101 @@ export default {
     // selectionChanged(params){
 
     // },
+    askForNotificationPermission() {
+      let self = this;
+      if ("Notification" in window && "serviceWorker" in navigator) {
+        Notification.requestPermission(function (result) {
+          console.log('User choice', result);
+          if (result !== 'granted') {
+            console.log('No notification permission granted!');
+          } else {
+            // self.displayConfirmNotification();
+            self.configurePushSub();
+          }
+        });
+      }
+    },
+    displayConfirmNotification: function () {
+      console.log("displayConfirmNotification");
+      if ("serviceWorker" in navigator) {
+        var options = {
+          body: "You successfully subscribed to our Notification service!",
+          icon: "img/icons/apple-touch-icon-76x76.png",
+          image: "img/icons/apple-touch-icon-76x76.png",
+          dir: "ltr",
+          lang: "zh-TW",
+          vibrate: [100, 50, 200],
+          badge: "img/icons/apple-touch-icon-76x76.png",
+          tag: "confirm-notification",
+          renotify: true,
+          actions: [
+            {
+              action: "confirm",
+              title: "Okay",
+              icon: "img/icons/apple-touch-icon-76x76.png",
+            },
+            {
+              action: "cancel",
+              title: "Cancel",
+              icon: "img/icons/apple-touch-icon-76x76.png",
+            },
+          ],
+        };
+        navigator.serviceWorker.ready.then(function (swreg) {
+          swreg.showNotification("Successfully subscribed", options);
+        });
+      }
+    },
+	configurePushSub() {
+      let self = this;
+      if (!("serviceWorker" in navigator)) {
+        return;
+      }
+
+      var reg;
+      navigator.serviceWorker.ready
+        .then(function (swreg) {
+          reg = swreg;
+          return swreg.pushManager.getSubscription();
+        })
+        .then(function (sub) {
+          if (sub === null) {
+            // Create a new subscription
+            var vapidPublicKey =
+              "BDsoBTxagj-zJcEl50RUzykFqBd9SCnp_cup1UHnrsrWzKg4FBoiYzBrm8NGLq2Ca3U4EsjZ0nP-JwD8f9S4u9w";
+            var convertedVapidPublicKey = util.urlBase64ToUint8Array(
+              vapidPublicKey
+            );
+            return reg.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: convertedVapidPublicKey,
+            });
+          } else {
+            // We have a subscription
+          }
+        })
+        .then(function (newSub) {
+          return fetch(
+            "https://hotelmanager-848af.firebaseio.com/subscriptions.json",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify(newSub),
+            }
+          );
+        })
+        .then(function (res) {
+          if (res.ok) {
+            self.displayConfirmNotification();
+          }
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    },
     clearALL() {
       let self = this;
       self.typeChoosen = [];
@@ -835,17 +950,38 @@ export default {
       let self = this;
       let updateData = self.newComment;
       let updateId = id;
-      axios
-        .put(
-          "https://hotelapi.im.nuk.edu.tw/api/comment/" +
-            self.companyName +
-            "/" +
-            updateId,
-          updateData
-        )
-        .catch((err) => {
-          console.log(err);
+      
+      // axios
+      //   .put(
+      //     "https://hotelapi.im.nuk.edu.tw/api/comment/" +
+      //       self.companyName +
+      //       "/" +
+      //       updateId,
+      //     updateData
+      //   )
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+    
+      if ("serviceWorker" in navigator && "SyncManager" in window) {
+        navigator.serviceWorker.ready.then(function (sw) {
+          var post = {
+            id: updateId,
+            data: updateData,
+            companyName: self.companyName,
+          };
+          // Write the data into the indexedDB
+          util
+            .writeData("sync-comment-update", post)
+            .then(function () {
+              return sw.sync.register("sync-comment-update"); // 'sync-new-post' is the name to be identified by service worker while syncing the data
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
         });
+      }  
+
       self.editCancle();
     },
     updateHistory: function(){

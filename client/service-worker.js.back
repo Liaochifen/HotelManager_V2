@@ -1,0 +1,244 @@
+/**
+ * Welcome to your Workbox-powered service worker!
+ *
+ * You'll need to register this file in your web app and you should
+ * disable HTTP caching for this file too.
+ * See https://goo.gl/nhQhGp
+ *
+ * The rest of the code is auto-generated. Please don't update this file
+ * directly; instead, make changes to your Workbox build configuration
+ * and re-run your build process.
+ * See https://goo.gl/2aRDsh
+ */
+
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts(
+  "/precache-manifest.924bbb05345c1d91d09b37c0bbf8adb0.js"
+);
+
+workbox.core.setCacheNameDetails({prefix: "test"});
+
+importScripts('./idb.js');
+importScripts('./utility.js');
+
+var CACHE_STATIC_NAME = 'static-v1';
+var CACHE_DYNAMIC_NAME = 'dynamic-v1';
+const CACHE_ORIGIN = 'test-precache-v2-https://hoteleye.im.nuk.edu.tw/';
+
+var STATIC_FILES = [
+  'https://fakeimg.pl/15x15/',
+  'https://fakeimg.pl/20x20/',
+  'https://fakeimg.pl/27x27/',
+  'https://fakeimg.pl/50x50/',
+  'https://fakeimg.pl/100x100/',
+  'https://hoteleye.im.nuk.edu.tw/img/icons/favicon-32x32.png',
+  'https://hoteleye.im.nuk.edu.tw/img/icons/favicon-16x16.png',
+  'https://hoteleye.im.nuk.edu.tw/img/icons/android-chrome-192x192.png'
+]
+
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+self.addEventListener('install', function (event) {
+  console.log('[Service Worker] Installing Service Worker ...', event);
+  event.waitUntil(
+    caches.open(CACHE_STATIC_NAME)
+      .then(function (cache) {
+        console.log('[Service Worker] Precaching App Shell');
+        cache.addAll(STATIC_FILES);
+      })
+  )
+});
+
+self.addEventListener('activate', function (event) {
+  console.log('[Service Worker] Activating Service Worker ....', event);
+  event.waitUntil(
+    caches.keys()
+      .then(function (keyList) {
+        return Promise.all(keyList.map(function (key) {
+          if (key !== CACHE_STATIC_NAME && key !== CACHE_DYNAMIC_NAME && key !== CACHE_ORIGIN) {
+            console.log('[Service Worker] Removing old cache.', key);
+            return caches.delete(key);
+          }
+        }));
+      })
+  );
+  return self.clients.claim();
+});
+
+function isInArray(string, array) {
+  var cachePath;
+  if (string.indexOf(self.origin) === 0) { // request targets domain where we serve the page from (i.e. NOT a CDN)
+    // console.log('matched ', string);
+    cachePath = string.substring(self.origin.length); // take the part of the URL AFTER the domain (e.g. after localhost:8080)
+  } else {
+    cachePath = string; // store the full request (for CDNs)
+  }
+  return array.indexOf(cachePath) > -1;
+}
+
+self.addEventListener('fetch', function (event) {
+  var re = new RegExp('https://hotelapi.im.nuk.edu.tw/api/');
+  var targetApi = event.request.url.match(new RegExp('\/api\/[a-zA-z]*'));
+  if (event.request.url.match(re)) {
+    var idbName = targetApi[0].substring(5);
+    console.log('[Service Worker] Match ' + event.request.url);
+//  if (event.request.url.indexOf(url) > -1) {
+    event.respondWith(fetch(event.request)
+      .then(function (res) {
+        var clonedRes = res.clone();
+        clearAllData(idbName)
+          .then(function () {
+            console.log('[Service Worker] Clear', idbName);
+            return clonedRes.json();
+          })
+          .then(function (data) {
+            if (data.length === undefined) {
+              writeData(idbName, data)
+            }
+            else {
+                for (var key in data) {
+//                  console.log(key, data[key]);
+                  writeData(idbName, data[key])
+                }
+            }
+          })
+          .catch(function(err) {
+            console.log('[Service Worker] Clear', idbName);
+            console.log(err);
+          });
+//          });
+        return res;
+      })
+    );
+  } else if (isInArray(event.request.url, STATIC_FILES)) {
+    event.respondWith(
+      caches.match(event.request)
+    );
+  } else {
+    event.respondWith(
+      caches.match(event.request)
+        .then(function (response) {
+          if (response) {
+            return response;
+          } else {
+            return fetch(event.request)
+              .then(function (res) {
+                return caches.open(CACHE_DYNAMIC_NAME)
+                  .then(function (cache) {
+                    // trimCache(CACHE_DYNAMIC_NAME, 3);
+                    cache.put(event.request.url, res.clone());
+                    return res;
+                  })
+              })
+              .catch(function (err) {
+                console.log(err);
+              });
+          }
+        })
+    );
+  }
+});
+
+self.addEventListener('sync', function (event) {
+  console.log('[Service Worker] Background syncing', event);
+  if (event.tag === 'sync-comment-update') {
+    event.waitUntil(
+      readAllData('sync-comment-update')
+        .then(function (data) {
+          for (var dt of data) {
+            fetch("https://hotelapi.im.nuk.edu.tw/api/comment/" + dt.companyName + "/" + dt.id, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(dt.data),
+            })
+              .then(function (res) {
+                if (res.ok) {
+                  res.json()
+                    .then(function (resData) {
+                      console.log('Send data', resData);
+                      deleteItemFromData('sync-comment-update', resData._id);
+                    })
+                }
+              })
+              .catch(function (err) {
+                console.log('Error while sending data', err);
+              });
+          }
+        })
+    );
+  }
+});
+
+self.addEventListener('notificationclick', function (event) {
+  var notification = event.notification;
+  var action = event.action;
+
+  console.log(notification);
+  if (action === 'confirm') {
+    console.log('Confirm was chosen');
+    notification.close();
+  } else {
+    console.log(action);
+    event.waitUntil(
+      clients.matchAll()
+        .then((clis) => {
+          var client = clis.find((c) => {
+            return c.visibilityState === 'visible';
+          });
+
+          if (client !== undefined) {
+            client.navigate('https://hoteleye.im.nuk.edu.tw');
+            client.focus();
+          } else {
+            clients.openWindow('http://hoteleye.im.nuk.edu.tw');
+          }
+          notification.close()
+        })
+    );
+  }
+});
+
+self.addEventListener('notificationclose', function (event) {
+    console.log('Notification was closed', event);
+});
+
+self.addEventListener('push', function (event) {
+  console.log('Push Notification received', event);
+
+  var data = {
+    title: 'New!',
+    content: 'Somthing new happened',
+    openUrl: '/'
+  };
+  if (event.data) {
+    data = JSON.parse(event.data.text());
+  }
+
+  var options = {
+    body: data.content,
+    icon: './img/icons/apple-touch-icon-76x76.png',
+    badge: './img/icons/apple-touch-icon-76x76.png',
+    data: {
+      url: data.openUrl
+    }
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(data.title, options)
+  );
+});
+
+
+/**
+ * The workboxSW.precacheAndRoute() method efficiently caches and responds to
+ * requests for URLs in the manifest.
+ * See https://goo.gl/S9QRab
+ */
+self.__precacheManifest = [].concat(self.__precacheManifest || []);
+workbox.precaching.precacheAndRoute(self.__precacheManifest, {});

@@ -169,6 +169,8 @@
 <script>
 import axios from "axios";
 import dateTime from "../assets/js/dateTime";
+import util from "../assets/js/utility";
+
 export default {
   name: "accountList",
   components: {
@@ -177,6 +179,8 @@ export default {
   data() {
     return {
       hotels: [],
+      networkDataReceived: false,
+      networkDataReceivedAll: false, 
       chooseDepartment: "請選擇",
       chooseLimit: "請選擇",
       checkedAccount: [],
@@ -241,19 +245,9 @@ export default {
   },
   mounted() {
     let self = this;
-    // var r = 0;
-    axios
-      .get("https://hotelapi.im.nuk.edu.tw/api/account")
-      .then((response) => {
-        //console.log(response.data);
-        self.hotels = response.data;
-        self.accountList = self.hotels;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
     var loginData = JSON.parse(localStorage.getItem("token"));
     var userID = loginData.id;
+
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
       .then((response) => {
@@ -264,6 +258,39 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+
+    axios
+      .get("https://hotelapi.im.nuk.edu.tw/api/account")
+      .then((response) => {
+        console.log('From web', response.data);
+        self.networkDataReceivedAll = true;
+        self.hotels = response.data;
+        self.accountList = self.hotels;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    if ("indexedDB" in window) {
+      console.log("Reading indexedDB...");
+      util.readAllData("account").then(function (data) {
+        if (!self.networkDataReceivedAll) {
+          console.log("From cache", data);
+          self.hotels = data;
+          self.accountList = self.hotels;
+        }
+        if (!self.networkDataReceived) {
+          for (let i = 0; i < self.hotels.length; i++) {
+            if (data[i]._id === userID) {
+              console.log("From web", data[i]);
+              self.logingAccount = data[i];
+              self.newAccount.companyName = self.logingAccount.companyName;
+              self.company = self.logingAccount.companyName;
+              break;
+            }
+          }
+        }
+      });
+    } 
   },
   methods: {
     selectionChanged(params) {

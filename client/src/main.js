@@ -5,6 +5,7 @@ import router from './router';
 import VueGoodTablePlugin from 'vue-good-table';
 import ElementUI from 'element-ui'
 import dateTime from '../src/assets/js/dateTime'
+import '../node_modules/daterangepicker/daterangepicker'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
@@ -19,8 +20,10 @@ import './assets/css/demo.css'
 // JS
 import './registerServiceWorker'
 import './assets/js/jquery-3.4.1.min.js'
-
 import './assets/js/basic.js'
+import './assets/js/material.min.js'
+import './assets/js/promise.js'
+import './assets/js/fetch.js'
 
 import {
   Select,
