@@ -63,8 +63,9 @@
             <!-- </div> -->
             <template>
               <div class="tags" v-for="item in label_tags" :key="item.field">
+                
                 <el-button
-                  ><div class="deleteButton">x</div>
+                  ><button class="deleBtn" @click="deleTag(item.field)">x</button>
                   {{ item.label }}</el-button
                 >
               </div>
@@ -182,6 +183,7 @@ export default {
       label_tags: [],
       label_no_tags: [],
       TagsAdd: "",
+      // TagsDel: "",
       conditionModifytoHistory: {
         employeeNumber: '',
         commentID: '',
@@ -250,6 +252,30 @@ export default {
     addTag: function () {
       // let self = this;
       $(".addTagsArea").css("display", "inline-block");
+    },
+    deleTag: function(TagsDel) {
+      let self = this;
+      self.labelchoose.filter((item) => {
+        if(TagsDel === item.field){
+          self.tagsModifytoHistory.new = item.label
+        }
+      })
+      console.log(TagsDel)
+      self.commentData.labels[TagsDel] = 0;
+      self.newComment = self.commentData;
+      // self.updataComment()
+      self.label_no_tags = [];
+      self.label_tags = self.labelchoose.filter((item) => {
+        if(self.commentData.labels[item.field] === 1){
+          return item;
+        }else{
+          self.label_no_tags.push(item)
+        }
+      })
+      console.log(self.commentData)
+      console.log(self.label_tags)
+      console.log(self.label_no_tags)
+      // self.updateHistory(1,1)
     },
     submitAdd: function () {
       let self = this;

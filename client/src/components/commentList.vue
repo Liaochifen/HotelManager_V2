@@ -154,6 +154,11 @@
         </div>
         <div slot="table-actions" class="slot_div">
           <p class="filterTitle">評論分數</p>
+          <!-- range slider -->
+          <div class="slidecontainer">
+            <input type="range" min="0" max="5" step="0.1" value="0" class="slider" id="myRange" @input="scoreHtml" @propertychange="scoreHtml" @change="scoreFilter(commentData)">
+            <span id="value">0</span>
+          </div>
           <!-- <el-select v-model="conditionChoosen" class="formInputCss" placeholder="狀態" @change="ALLFilterFunction">
               <el-option v-for="item in conditions" :key="item.value" :label="item.label" :value="item.field"></el-option>
             </el-select> -->
@@ -323,6 +328,8 @@ export default {
       // currentPage: 1,
       // pagesize: 10,
       // filter area
+      ishandleFilterData: false,
+      isscoreFilterData: false,
       TypescheckAll: false,
       ConditioncheckAll: false,
       ReplycheckAll: false,
@@ -615,9 +622,16 @@ export default {
       self.typeChoosen = [];
       self.conditionChoosen = [];
       self.replyChoosen = [];
-      this.TypesIndeterminate = false;
-      this.ConditionIndeterminate = false;
-      this.ReplyIndeterminate = false;
+      this.TypescheckAll = null;
+      this.ConditioncheckAll = null;
+      this.ReplycheckAll = null;
+      this.TypesIndeterminate = null;
+      this.ConditionIndeterminate = null;
+      this.ReplyIndeterminate = null;
+      this.ishandleFilterData = false;
+      this.isscoreFilterData = false;
+      document.getElementById("myRange").value = 0
+      document.getElementById('value').innerHTML = 0;
       self.commentData = self.selectedArr;
       $("#reportrange span").html("時間");
       return self.commentData;
@@ -689,9 +703,15 @@ export default {
         arr = self.selectedArr.filter((item) => {
           return item.labels[self.oneTag] === 1;
         });
+        
       } else {
         arr = self.selectedArr;
+        // if(self.isscoreFilterData === true){
+        //   // console.log(arr)
+        //   arr = self.scoreFilter(arr)
+        // }
       }
+      self.ishandleFilterData = true
       const filterKeys = Object.keys(filterObj);
       return arr.filter((item) => {
         return filterKeys.every((key) => {
@@ -727,11 +747,30 @@ export default {
       }
     },
     fieldFn3(rowObj) {
-      // let self = this
       if (rowObj.title === "") {
-        // self.titleField = rowObj.text.substr(0,10) + '...'
         rowObj.title = rowObj.text.substr(0, 10) + "...";
       }
+    },
+    // 分數篩選
+    scoreHtml: function(){
+      var output = document.getElementById("myRange").value;
+      document.getElementById('value').innerHTML = output;   
+    },
+    scoreFilter: function(arr){
+      let self = this;
+      var value = document.getElementById("myRange").value;
+      self.isscoreFilterData = true;
+      if(arr.length === 0 && (self.oneTag.length === 0 || self.oneTag === 'all') && self.ishandleFilterData === false){
+        arr = self.selectedArr
+      }else if(self.ishandleFilterData === true){
+        arr = self.handleFilterData()
+      }
+      // var arr = self.selectedArr
+      arr = arr.filter((item) => {
+        return item.rating <= value
+      })
+      self.commentData = arr;
+      return self.commentData;
     },
     timeFilter: function (arr, startData, endData) {
       let self = this;

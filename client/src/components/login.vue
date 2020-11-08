@@ -56,11 +56,14 @@ export default {
       .then((response) => {
         self.accountInfo = response.data;
         if (localStorage.getItem("token")) {
-          var logining = localStorage.getItem("token");
-          var loginData = JSON.parse(logining);
+          // var logining = localStorage.getItem("token");
+          // var loginData = JSON.parse(logining);
+          // this.$router.push({
+          //   name: "commentList",
+          //   params: { collections: loginData.companyName },
+          // });
           this.$router.push({
-            name: "commentList",
-            params: { collections: loginData.companyName },
+            name: "competition"
           });
         }
       })
@@ -100,9 +103,12 @@ export default {
             window.location.reload();
             break;
           } else {
+            // this.$router.push({
+            //   name: "commentList",
+            //   params: { collections: this.accountInfo[i].companyName },
+            // });
             this.$router.push({
-              name: "commentList",
-              params: { collections: this.accountInfo[i].companyName },
+              name: "competition"
             });
             window.location.reload();
             break;

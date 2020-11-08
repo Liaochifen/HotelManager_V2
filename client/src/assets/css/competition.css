@@ -102,6 +102,9 @@ button{
 .favDiv{
     display: none;
 }
+.selfCompany element.style{
+    background-color:green;
+}
 @media (max-width: 768px) {
     .phone {
         margin: 0 5%;

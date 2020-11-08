@@ -4,6 +4,10 @@
     <button @click="changePage(1)" class="pageButton1">個人動態</button>
     <div class="clear"></div>
     <div class="historydataArea">
+      <!-- 後臺管理員區塊 -->
+      <!-- <template v-if="===123>"> -->
+
+      <!-- </template> -->
       <template>
         <span v-if="page === 0">
           <template>
@@ -22,7 +26,6 @@
                 <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
               </div>
-
             </div>
           </template>
         </span>

@@ -13,10 +13,12 @@
               ref="competitionTable"
               class="el-table"
               styleClass="vgt-table striped"
+              :row-style-class="rowStyleClassFn"
               :rows="companyData"
               :columns="columns"
               @on-selected-rows-change="selectionChanged"
               :search-options="{ enabled: true }"
+              :select-options="{ enabled: true , selectOnCheckboxOnly: true,}"
             >
               <template slot="table-row" slot-scope="props">
                 <template v-if="props.column.field === 'favorite'">
@@ -50,15 +52,24 @@
                     </span>
                   </template>
                 </template>
-                <!-- <template v-else-if="props.column.field === 'hotelName'">
+                <template v-else-if="props.column.label === '公司名稱'">
+                  <span v-if="props.row.hotelName === companyName">
+                    <router-link
+                      :to="{
+                        name: 'competitionCommentList',
+                        params: { collections: props.row.hotelName },
+                      }"
+                      >{{props.row.hotelName}}</router-link
+                    >
+                  </span>
                   <router-link
                     :to="{
                       name: 'competitionCommentList',
                       params: { collections: props.row.hotelName },
                     }"
-                    ></router-link
+                    >{{props.row.hotelName}}</router-link
                   >
-                </template> -->
+                </template>
               </template>
             </vue-good-table>
           </span>
@@ -71,6 +82,7 @@
 <script>
 import axios from "axios";
 import dateTime from "../assets/js/dateTime";
+// import $ from "jquery";
 
 export default {
   name: "competition",
@@ -86,7 +98,9 @@ export default {
         },
         {
           label: "公司名稱",
-          field: this.fieldFn
+          field: "hotelName"
+          // field: this.fieldFn,
+          // html: true
         },
         {
           label: "分數",
@@ -171,7 +185,6 @@ export default {
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.loginData.id)
       .then((response) => {
         self.account = response.data;
-        console.log(self.account);
       })
       .catch((error) => {
         console.log(error);
@@ -179,14 +192,22 @@ export default {
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/competition/" + self.companyName)
       .then((response) => {
-        self.companyData = response.data;
-        self.selectedArr = self.companyData.data.filter((item) => {
-          return item.hotelName !== self.companyName;
-        });
-        self.companyData = self.selectedArr;
+        self.companyData = response.data.data;
+        // console.log()
+
+        // self.$refs["commentdataTable"].forEach((item) => {
+        //   if(item.hotelName === self.companyName){
+        //     $('')
+        //   }
+        // })
+        // self.selectedArr = self.companyData.data.filter((item) => {
+        //   return item.hotelName !== self.companyName;
+        // });
+        // self.companyData = self.selectedArr;
         self.rating();
         self.favorite();
         self.favoriteList = self.account.favorite;
+        self.trrr();
       });
   },
   methods: {
@@ -199,6 +220,18 @@ export default {
         }
       })
       return x
+      // return '<router-link :to="{name: ' + "'competitionCommentList'" + ', params: {collections:' + rowObj.hotelName + '}}">' + x + '</router-link>'
+    },
+    rowStyleClassFn: function(row){
+      let self = this;
+      // if(row.hotelName === self.companyName){
+      //   return $(row).addClass('selfCompany')
+      // }
+      return row.hotelName === self.companyName ? 'selfCompany' : '';
+    },
+    trrr: function(){
+      var q = document.getElementsByClassName('selfCompany');
+      q.item[0].style.backgroundColor = 'green'; 
     },
     favorite: function () {
       let self = this;
@@ -263,3 +296,8 @@ export default {
 };
 </script>
 <style scoped src= '../assets/css/competition.css'></style>
+<style scoped>
+  .selfCompany{
+    background-color:green;
+  }
+</style>

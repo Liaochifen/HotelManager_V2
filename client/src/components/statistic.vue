@@ -99,15 +99,13 @@
           </div>
         </div>
         <div class="demo-wrapper">
-        <div class="demo-container">
-          <div>
-            <!-- <button id="parentIframe" v-on:click="createMap()">GDP</button> -->
-            <p class="allP">各國留言數量</p>
-          </div>
+          <div class="demo-container">
+            <div>
+              <!-- <button id="parentIframe" v-on:click="createMap()">GDP</button> -->
+              <p class="allP">各國留言數量</p>
+            </div>
             <div id="svgMapGPD"></div>
-
-        </div>
-
+          </div>
         </div> 
         <!-- <div id="world-map" style="width: 600px; height: 400px"></div> -->
         <div class="statisticTop">
@@ -192,12 +190,12 @@
               <div class="clear"></div>
             </div>
           </div>
-          <div class="statisticWeb flex-1">
+          <!-- <div class="statisticWeb flex-1">
             <div>
               <p class="allP1">各國留言數量比</p>
-              <!-- <doughnut-chart :chart-data="countrycollection" :options="options2" style="width: 80%; height: 80%; margin-left: 30px;"></doughnut-chart> -->
+              <doughnut-chart :chart-data="countrycollection" :options="options2" style="width: 80%; height: 80%; margin-left: 30px;"></doughnut-chart>
             </div>
-          </div>
+          </div> -->
          
           <div class="clear"></div>
         </div>
@@ -730,7 +728,6 @@ export default {
       self.commentData(2);
       self.positiveData(2);
       self.negativeData(2);
-
       // self.fillData(2)
     },
     date() {

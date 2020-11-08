@@ -22,10 +22,19 @@
             </li>
             <!-- <img src="./assets/icon/comment.svg" class="icons" alt=""> -->
             <li>
-              <router-link
+              <!-- <router-link
                 :to="{
                   name: 'commentList',
                   params: { collections: companyName },
+                }"
+                ><img
+                  src="https://fakeimg.pl/15x15/"
+                  alt=""
+                />評論管理</router-link
+              > -->
+              <router-link
+                :to="{
+                  name: 'competition'
                 }"
                 ><img
                   src="https://fakeimg.pl/15x15/"
@@ -45,7 +54,7 @@
                 />統計結果</router-link
               >
             </li>
-            <li>
+            <!-- <li>
               <router-link
                 :to="{
                   name: 'competition',
@@ -56,7 +65,7 @@
                   alt=""
                 />競爭對手</router-link
               >
-            </li>
+            </li> -->
             <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
             <li>
               <router-link
