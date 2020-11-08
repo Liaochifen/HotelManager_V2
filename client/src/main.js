@@ -62,49 +62,57 @@ Vue.use(VueGoodTablePlugin);
 Vue.use(ElementUI);
 library.add(faEye, faEyeSlash);
 
-var companyName = '';
-var userID = '';
-var userAccountDetail = {}
-var logout = {
-  employeeNumber: "",
-  logoutTime: ""
-}
 
-var loginData = JSON.parse(localStorage.getItem('token'))
-if (localStorage.getItem('token')) {
-  companyName = loginData.companyName;
-  userID = loginData.id;
-  axios.get('https://hotelapi.im.nuk.edu.tw/api/account/' + userID).then((response) => {
-    userAccountDetail = response.data;
-    logout.employeeNumber = userAccountDetail.employeeNumber;
-  }).catch((error) => {
-    console.log(error);
-  })
-}
+
+
+// var loginData = JSON.parse(localStorage.getItem('token'))
+// if (localStorage.getItem('token')) {
+//   companyName = loginData.companyName;
+//   userID = loginData.id;
+//   axios.get('https://hotelapi.im.nuk.edu.tw/api/account/' + userID).then((response) => {
+//     userAccountDetail = response.data;
+//     logout.employeeNumber = userAccountDetail.employeeNumber;
+//   }).catch((error) => {
+//     console.log(error);
+//   })
+// }
 
 //檢查是否為登入狀態
 router.beforeEach((to, from, next) => {
   // 判斷token是否存在
+  var userAccountDetail = {}
+  var logout = {
+    employeeNumber: "",
+    logoutTime: ""
+  }
   if (localStorage.getItem('token')) {
     //判斷當前時間與登入時間差異
+    var loginData = JSON.parse(localStorage.getItem('token'))
+    logout.logoutTime = dateTime.recordDate() + ' ' + dateTime.recordTime();
+    var userID = loginData.id;
+    let record = 'logout';
+    let company = loginData.companyName;
     var currentTime = new Date().getTime();
     // if(loginData.time == null){
     //   loginData.time = 0;
     // }
     if ((currentTime - loginData.time) > 7200000) {   
-      localStorage.removeItem('token');
-      let record = 'logout';
-      let company = companyName;
-      logout.logoutTime = dateTime.recordDate() + ' ' + dateTime.recordTime();
+      axios.get('https://hotelapi.im.nuk.edu.tw/api/account/' + userID).then((response) => {
+      userAccountDetail = response.data;
+      logout.employeeNumber = userAccountDetail.employeeNumber;
       axios.put('https://hotelapi.im.nuk.edu.tw/api/history/' + company + '/' + record, logout)
-        .then((response) => {
-          console.log(response);
+        .then((responseData) => {
+          localStorage.removeItem('token');
+          console.log(responseData);
           alert('連線愈時，請重新登入');
           next('/login');
           window.location.reload();
-        }).catch((error) => {
-          console.log(error);
+        }).catch((error2) => {
+          console.log(error2);
         })
+    }).catch((error) => {
+      console.log(error);
+    }) 
     } else {
       next();
     }

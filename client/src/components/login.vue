@@ -80,7 +80,8 @@ export default {
           this.logingAccount = this.accountInfo[i];
           //var userID = this.accountInfo[i]._id;
           var currentTime = new Date().getTime(); //取得從 1970-01-01 00:00:00 UTC 累計的毫秒數
-          this.recordLogingTime();
+          this.logingAccount.lastLoginDate = dateTime.recordDate();
+          this.logingAccount.lastLoginTime = dateTime.recordTime();
           localStorage.setItem(
             "token",
             JSON.stringify({
@@ -133,10 +134,7 @@ export default {
       let record = "login";
       let company = this.logingAccount.companyName;
       this.login.employeeNumber = this.logingAccount.employeeNumber;
-      this.login.loginTime =
-        this.logingAccount.lastLoginDate +
-        " " +
-        this.logingAccount.lastLoginTime;
+      this.login.loginTime = dateTime.recordDate()+" "+ dateTime.recordTime();
       console.log(this.login);
       console.log(company);
       axios
@@ -153,11 +151,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
-    recordLogingTime: function () {
-      this.logingAccount.lastLoginDate = dateTime.recordDate();
-      this.logingAccount.lastLoginTime = dateTime.recordTime();
-      console.log(this.logingAccount);
     },
   },
 };
