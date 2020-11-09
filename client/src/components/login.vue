@@ -93,6 +93,14 @@ export default {
               companyName: this.logingAccount.companyName,
             })
           );
+          
+          if(this.logingAccount.employeeLimit === "一般使用者"){
+            document.getElementById("accountManage").style.display = "none"; 
+            document.getElementById("statisticalResults").style.display = "none";     
+          }else if(this.logingAccount.employeeLimit === "主管使用者"){
+            document.getElementById("accountManage").style.display = "none"; 
+          } 
+          document.getElementById("limitWord").innerHTML = this.logingAccount.employeeLimit; 
           document.getElementById("menu").style.visibility = "visible";
           document.getElementById("breadcrumb").style.visibility = "visible";
           this.updateAccount();

@@ -8,11 +8,11 @@
                 <p class="title">旅館評論管理系統</p>
                 <div class="clear"></div>
             </div> -->
-        <div class="menu" id="menu">
+        <div class="menu" id="menu" >
           <p>功能列</p>
           <ul>
             <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
-            <li>
+            <li id="accountManage">
               <router-link :to="{ name: 'accountList' }"
                 ><img
                   src="https://fakeimg.pl/15x15/"
@@ -21,8 +21,8 @@
               >
             </li>
             <!-- <img src="./assets/icon/comment.svg" class="icons" alt=""> -->
-            <li>
-              <!-- <router-link
+            <li> 
+              <router-link
                 :to="{
                   name: 'commentList',
                   params: { collections: companyName },
@@ -31,8 +31,8 @@
                   src="https://fakeimg.pl/15x15/"
                   alt=""
                 />評論管理</router-link
-              > -->
-              <router-link
+              >
+              <!-- <router-link
                 :to="{
                   name: 'competition'
                 }"
@@ -40,9 +40,9 @@
                   src="https://fakeimg.pl/15x15/"
                   alt=""
                 />評論管理</router-link
-              >
+              > -->
             </li>
-            <li>
+            <li id="statisticalResults">
               <router-link
                 :to="{
                   name: 'statistic',
@@ -54,7 +54,7 @@
                 />統計結果</router-link
               >
             </li>
-            <!-- <li>
+            <li>
               <router-link
                 :to="{
                   name: 'competition',
@@ -65,7 +65,7 @@
                   alt=""
                 />競爭對手</router-link
               >
-            </li> -->
+            </li>
             <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
             <li>
               <router-link
@@ -174,7 +174,7 @@
             alt=""
             v-on:click="personalState()"
           />
-          <p>後台管理員</p>
+          <p id="limitWord"></p>
           <div class="clear"></div>
         </div>
         <div class="loginingInfo" id="logining">
@@ -262,19 +262,31 @@ export default {
       var loginData = JSON.parse(localStorage.getItem("token"));
       self.companyName = loginData.companyName;
       self.userID = loginData.id;
-      document.getElementById("menu").style.visibility = "visible";
-      document.getElementById("breadcrumb").style.visibility = "visible";
+      
 
       axios
         .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
         .then((response) => {
           console.log(response.data);
           self.userAccountDetail = response.data;
+          if(self.userAccountDetail.employeeLimit === "一般使用者"){
+            document.getElementById("accountManage").style.display = "none"; 
+            document.getElementById("statisticalResults").style.display = "none"; 
+          }else if(self.userAccountDetail.employeeLimit === "主管使用者"){
+            console.log(self.userAccountDetail.employeeLimit);
+            document.getElementById("accountManage").style.display = "none"; 
+          }
+          document.getElementById("limitWord").innerHTML = self.userAccountDetail.employeeLimit;
+          document.getElementById("menu").style.visibility = "visible";
+          document.getElementById("breadcrumb").style.visibility = "visible";
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
+      $("#accountManage").show();
+      $("#statisticalResults").show();
+      document.getElementById("limitWord").innerHTML = " ";
       document.getElementById("menu").style.visibility = "hidden";
       document.getElementById("breadcrumb").style.visibility = "hidden";
     }
@@ -298,6 +310,9 @@ export default {
       this.userID = "";
       this.companyName = "";
       this.userAccountDetail = {};
+      $("#accountManage").show();
+      $("#statisticalResults").show();
+      document.getElementById("limitWord").innerHTML = " ";
       document.getElementById("menu").style.visibility = "hidden";
       document.getElementById("breadcrumb").style.visibility = "hidden";
       this.$router.push("/login");
@@ -552,6 +567,15 @@ a {
   z-index: 100;
   position: absolute;
 }
+#menu{
+  visibility: hidden;
+}
+/* #accountManage{
+  display: block;
+}
+#statisticalResults{
+  display: block;
+} */
 .menu li {
   margin: 20px 0px;
 }
