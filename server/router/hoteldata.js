@@ -107,6 +107,7 @@ router.get('/statistic/:time', (req, res) => {
 });
 
 router.get('/comment/:collection', (req, res) => {
+    console.log(req.body)
     q = require('../models/' + req.params.collection + 'Schema')
     q.find({})
         .limit(10)

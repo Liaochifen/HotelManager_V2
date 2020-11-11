@@ -207,7 +207,10 @@
         </div>
       </div>
       <div class="dataRightArea">
-        <vue-good-table
+        <!-- v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit" -->
+        <vue-good-table 
+          :fixed-header="true"
+          max-height="600px"
           ref="commentdataTable"
           class="el-table"
           styleClass="vgt-table striped"
@@ -219,6 +222,16 @@
             enabled: true,
             selectOnCheckboxOnly: true,
             disableSelectInfo: true,
+          }"
+          :pagination-options="{
+            enabled: true,
+            mode: 'pages',
+            perPage: 10,
+            position: 'bottom',
+            dropdownAllowAll: false,
+            setCurrentPage: 1,
+            nextLabel: 'next',
+            prevLabel: 'prev',
           }"
         >
           <template slot="table-row" slot-scope="props">
@@ -286,6 +299,8 @@ export default {
       selectedArr: [],
       checkedtags: [],
       newComment: [],
+      // busy: false,
+      // itemPerLoad: 5,
       checkedtagsALL: false,
       oneTag: "",
       columns: [
@@ -325,6 +340,8 @@ export default {
           thClass: "display",
         },
       ],
+      // limit: 10,
+      // busy: false,
       // currentPage: 1,
       // pagesize: 10,
       // filter area
@@ -453,6 +470,7 @@ export default {
       self.employeeNumber = loginData.id
     }
     axios
+    // , self.itemPerLoad
       .get("https://hotelapi.im.nuk.edu.tw/api/comment/" + self.companyName)
       .then((response) => {
         console.log('From web', response.data);
@@ -518,8 +536,36 @@ export default {
     //   }
     //   return self.commentData
   },
+  // created(){
+  //   this.loadMore()
+  // },
   methods: {
+    
     // selectionChanged(params){
+
+    // },
+    // loadMore: function(){
+    //   this.busy = true;
+    //   let self = this;
+    //   console.log('ww')
+    //   axios
+    //     .get("https://hotelapi.im.nuk.edu.tw/api/comment/" + self.companyName)
+    //     .then((response) => {
+    //       self.networkDataReceived = true;
+    //       // self.commentData = response.data;
+    //       // self.selectedArr = response.data;
+    //       const append = response.data.slice(this.selectedArr.length, this.selectedArr.length + this.limit);
+    //       this.commentData = this.selectedArr.concat(append);
+    //       console.log(this.commentData)
+    //       this.selectedArr = this.selectedArr.concat(append)
+    //       this.busy = false;
+    //       // console.log(self.itemPerLoad)
+
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    //     this.busy = false;
 
     // },
     askForNotificationPermission() {

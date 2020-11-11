@@ -24,8 +24,7 @@
             <li> 
               <router-link
                 :to="{
-                  name: 'commentList',
-                  params: { collections: companyName },
+                  name: 'competition',
                 }"
                 ><img
                   src="https://fakeimg.pl/15x15/"
@@ -54,7 +53,7 @@
                 />統計結果</router-link
               >
             </li>
-            <li>
+            <!-- <li>
               <router-link
                 :to="{
                   name: 'competition',
@@ -65,7 +64,7 @@
                   alt=""
                 />競爭對手</router-link
               >
-            </li>
+            </li> -->
             <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
             <li>
               <router-link
@@ -119,7 +118,7 @@
                 />統計結果</router-link
               >
             </li>
-            <li>
+            <!-- <li>
               <router-link
                 :to="{
                   name: 'competition',
@@ -130,7 +129,7 @@
                   alt=""
                 />競爭對手</router-link
               >
-            </li>
+            </li> -->
             <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
             <li>
               <router-link

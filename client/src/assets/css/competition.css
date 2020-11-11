@@ -5,9 +5,22 @@ label{
 button{
     all: unset;
 }
-.el-table{
-
+.eachCompany a{
+    all: unset;
+    color: black;
 }
+.eachCompany a:active{
+    all: unset;
+    color: black;
+}
+.eachCompany a:hover{
+    all: unset;
+    color: black;
+}
+.wholeArea{
+    width: 100%;
+}
+/* 
 .goCommentBtn{
     font-size: 14px;
     border-radius: 7px;
@@ -30,7 +43,7 @@ button{
     position:relative;
     top:1px;
     left:1px;
-}
+} */
 /* 
 .manageLabel{
     all: unset;
@@ -51,7 +64,83 @@ button{
 .competitionList{
     padding-top: 10px;
 } */
+.dataArea1{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+.eachCompany{
+    width: 100%;
+    color: black;
+    border-bottom: 0.3px solid rgba(128, 128, 128, 0.438);
+    border-radius: 3px;
+    box-sizing: border-box;
+    /* box-shadow:1px 1px 2px rgba(0, 0, 0, 0.192); */
+    /* background-color: #fff; */
+    padding: 1.5%;
+    margin: 1.5%;
+    position: relative;
+}
 
+.myCompany{
+    background-color: rgb(100, 59, 59);
+}
+
+.eachCompany:hover{
+    cursor: pointer;
+    /* -webkit-box-shadow: 2px 2px 0px #adadad; */
+    /* -moz-box-shadow: 2px 2px 0px #adadad; */
+    /* box-shadow: 1px 1px 0px #adadad; */
+    position:relative;
+    background: rgba(192, 192, 192, 0.397);
+    top:2px;
+    left:2px;
+}
+.eachCompany{
+    -webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.eachCompany{
+    -webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.eachCompany img{
+    /* width: 100%; */
+    float: left;
+    margin-bottom: 10px;
+}
+
+.companyInfo{
+    float: left;
+    margin: 0.5% 2%;
+}
+
+.name{
+    font-size: 20px;
+    font-weight: bold;
+}
+  
+.ratings {
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+    color: #ddd; /*背景星星顏色*/
+    overflow: hidden;
+    font-size: 25px; /*調整字體大小可放大縮小星星*/
+    text-shadow: 0px 1px 0 #999;
+}
+.full_star{
+    /* width: 100%; 調整寬度可變更星等 */
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #ffb732; /*前景星星顏色*/
+    }
 .btn-box {
     display:inline-block;
     vertical-align:middle;
@@ -87,6 +176,11 @@ button{
     position:absolute;
     opacity:0;
 }
+.favoriteArea{
+    position: absolute;
+    top: 10;
+    right: 5px;
+}
 .btn-box, .btn-box .btn, .checkbox:hover{
     cursor: pointer;
 }
@@ -102,9 +196,12 @@ button{
 .favDiv{
     display: none;
 }
-.selfCompany element.style{
-    background-color:green;
+.clear{
+    clear: both;
 }
+/* .selfCompany element.style{
+    background-color:green;
+} */
 @media (max-width: 768px) {
     .phone {
         margin: 0 5%;

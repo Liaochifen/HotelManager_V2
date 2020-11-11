@@ -1,13 +1,51 @@
 <template>
-  <div>
+  <div class="wholeArea">
     <div class="contentCenter">
       <div class="page">
         <span>競爭對手列表</span>
       </div>
     </div>
-    <div class="dataArea">
+    <div class="dataArea1">
       <div class="phone">
-        <template>
+         <!-- <router-link
+                      :to="{
+                        name: 'competitionCommentList',
+                        params: { collections: props.row.hotelName },
+                      }"
+                      >{{props.row.hotelName}}</router-link
+                    > -->
+        <router-link v-for="item in companyData" :key="item.id" :to="{name: fn(item.hotelName), params: {collections: item.hotelName}}">
+          <div class="eachCompany" :data-status="item.hotelName">
+            <img src="https://fakeimg.pl/230x150/">
+            <div class="companyInfo">
+              <span v-if="item.favorite === true" class="favoriteArea">
+                <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
+                  <span class="btn-box">
+                    <span class="btn1"></span>
+                  </span>
+              </span>
+              <span v-else-if="item.favorite === false" class="favoriteArea">
+                <!-- :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
+                <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
+                  <span class="btn-box">
+                    <span class="btn"></span>
+                  </span>
+              </span>
+              <p class="name">{{item.hotelChineseName}}</p>
+              <div class="ratings">
+                <div class="empty_star">★★★★★</div>
+                <div class="full_star" :style="`width:${item.avg_rating/2*20}%;`">★★★★★</div>
+              </div>
+              <p>正評：{{item.labels.positive}}</p>
+              <p>負評：{{item.labels.negative}}</p>
+            </div>
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </router-link>
+       
+
+        <!-- <template>
           <span>
             <vue-good-table
               ref="competitionTable"
@@ -24,7 +62,7 @@
                 <template v-if="props.column.field === 'favorite'">
                   <template>
                     <span v-if="props.row.favorite === true">
-                      <!--  :value="[props.row.companyID]" -->
+                       :value="[props.row.companyID]"
                       <input
                         type="checkbox"
                         class="checkbox"
@@ -37,7 +75,7 @@
                       </span>
                     </span>
                     <span v-else-if="props.row.favorite === false">
-                      <!--  :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
+                       :name="[props.row.companyID]" :value="[props.row.companyID]" 
                       <input
                         type="checkbox"
                         class="checkbox"
@@ -56,26 +94,32 @@
                   <span v-if="props.row.hotelName === companyName">
                     <router-link
                       :to="{
+                        name: 'commentList',
+                        params: { collections: props.row.hotelName },
+                      }"
+                      >{{props.row.hotelName}}</router-link
+                    >
+                  </span>
+                  <span v-else-if="props.row.hotelName !== companyName">
+                    <router-link
+                      :to="{
                         name: 'competitionCommentList',
                         params: { collections: props.row.hotelName },
                       }"
                       >{{props.row.hotelName}}</router-link
                     >
                   </span>
-                  <router-link
-                    :to="{
-                      name: 'competitionCommentList',
-                      params: { collections: props.row.hotelName },
-                    }"
-                    >{{props.row.hotelName}}</router-link
-                  >
+                  
                 </template>
               </template>
             </vue-good-table>
           </span>
-        </template>
+        </template> -->
+      <div class="clear"></div>
       </div>
+      <div class="clear"></div>
     </div>
+    <div class="clear"></div>
   </div>
 </template>
 
@@ -87,7 +131,7 @@ import dateTime from "../assets/js/dateTime";
 export default {
   name: "competition",
   components: {
-    "vue-good-table": require("vue-good-table").VueGoodTable,
+    // "vue-good-table": require("vue-good-table").VueGoodTable,
   },
   data() {
     return {
@@ -193,8 +237,14 @@ export default {
       .get("https://hotelapi.im.nuk.edu.tw/api/competition/" + self.companyName)
       .then((response) => {
         self.companyData = response.data.data;
-        // console.log()
-
+        self.companyData.forEach((item) => {
+          self.companyList.filter((child) => {
+            if(child.field === item.hotelName){
+              item.hotelChineseName = child.label
+            }
+          })
+        })
+        // console.log(self.companyData)
         // self.$refs["commentdataTable"].forEach((item) => {
         //   if(item.hotelName === self.companyName){
         //     $('')
@@ -207,32 +257,40 @@ export default {
         self.rating();
         self.favorite();
         self.favoriteList = self.account.favorite;
-        self.trrr();
+        // self.trrr();
+
+        // self.fieldFn();
       });
   },
   methods: {
-    fieldFn(rowObj){
-      let self = this
-      var x = ''
-      self.companyList.filter((item) => {
-        if(item.field === rowObj.hotelName){
-          x = item.label
-        }
-      })
-      return x
-      // return '<router-link :to="{name: ' + "'competitionCommentList'" + ', params: {collections:' + rowObj.hotelName + '}}">' + x + '</router-link>'
+ 
+    fn: function(value){
+      let self = this;
+      if(self.companyName === value){
+        return 'commentList'
+      }else{
+        return 'competitionCommentList'
+      }
     },
+    // fieldFn(){
+    //   let self = this
+    //   var x = ''
+    //   // self.companyList.filter((item) => {
+    //   //   if(item.field === rowObj.hotelName){
+    //   //     x = item.label
+    //   //   }
+    //   // })
+    //   // return x
+    //   // return '<router-link :to="{name: ' + "'competitionCommentList'" + ', params: {collections:' + rowObj.hotelName + '}}">' + x + '</router-link>'
+    // },
     rowStyleClassFn: function(row){
       let self = this;
-      // if(row.hotelName === self.companyName){
-      //   return $(row).addClass('selfCompany')
-      // }
       return row.hotelName === self.companyName ? 'selfCompany' : '';
     },
-    trrr: function(){
-      var q = document.getElementsByClassName('selfCompany');
-      q.item[0].style.backgroundColor = 'green'; 
-    },
+    // trrr: function(){
+    //   var q = document.getElementsByClassName('selfCompany');
+    //   q.item[0].style.backgroundColor = 'green'; 
+    // },
     favorite: function () {
       let self = this;
       self.companyData.forEach((item) => {
@@ -248,6 +306,13 @@ export default {
       self.companyData.sort(function (item) {
         return item.favorite ? -1 : 1;
       });
+      self.companyData.sort(function(x,y){
+        return x.hotelName === self.companyName ? -1 : y.hotelName === self.companyName ? 1:0
+      })
+
+      // var ele = document.getElementsByClassName('full_star')
+      // var widthX = 
+      // ele.css('width', )
     },
     favoriteFn: function ($event) {
       let self = this;
@@ -268,12 +333,20 @@ export default {
       self.companyData.sort(function (item) {
         return item.favorite ? -1 : 1;
       });
+      self.companyData.sort(function(x,y){
+        return x.hotelName === self.companyName ? -1 : y.hotelName === self.companyName ? 1:0
+      })
     },
     rating: function () {
       let self = this;
       self.companyData.sort(function (a, b) {
         return b.avg_rating - a.avg_rating;
       });
+      self.companyData.sort(function(x,y){
+        return x.hotelName === self.companyName ? -1 : y.hotelName === self.companyName ? 1:0
+      })
+      // var y = $('eachCompany').attr('data-status')
+      // console.log(y)
     },
     updateHistory: function(value){
       let self = this

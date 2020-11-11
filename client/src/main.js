@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import VueSimpleAlert from 'vue-simple-alert'
+import infiniteScroll from 'vue-infinite-scroll'
 // CSS
 import 'vue-good-table/dist/vue-good-table.css';
 import 'element-ui/lib/theme-chalk/index.css'
@@ -48,6 +49,7 @@ Vue.component(Checkbox.name, Checkbox)
 Vue.component(CheckboxGroup.name, CheckboxGroup)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(VueSimpleAlert);
+Vue.use(infiniteScroll);
 Vue.config.productionTip = false
 
 new Vue({

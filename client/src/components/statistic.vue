@@ -98,15 +98,7 @@
             <el-button @click="cancle">清除</el-button>
           </div>
         </div>
-        <div class="demo-wrapper">
-          <div class="demo-container">
-            <div>
-              <!-- <button id="parentIframe" v-on:click="createMap()">GDP</button> -->
-              <p class="allP">各國留言數量</p>
-            </div>
-            <div id="svgMapGPD"></div>
-          </div>
-        </div> 
+        
         <!-- <div id="world-map" style="width: 600px; height: 400px"></div> -->
         <div class="statisticTop">
           <!-- <div class="main flex-2">
@@ -178,17 +170,20 @@
         </div>
         <div class="statisticBottom">
           <div class="statisticWeb flex-1">
-            <div>
+            <div class="statisticWebChild">
               <p class="allP1">各平台留言數量比例</p>
-              <doughnut-chart class="travel" :chart-data="this.webCommentcollection" :options="options2" style="width: 70%; height: 50%; margin-left: 40px;"></doughnut-chart>
-            </div>
-          </div>
-          <div class="statisticWeb flex-1">
-            <div>
-              <p class="allP1">旅遊類型比例</p>
-              <doughnut-chart class="travel" :chart-data="this.tripTypecollection" :options="options2" style="width: 80%; height: 60%; margin-left: 40px;"></doughnut-chart>
+              <doughnut-chart class="travel" :chart-data="this.webCommentcollection" :options="options2" style="width: 50%; height: 50%; margin-left: 40px;"></doughnut-chart>
               <div class="clear"></div>
             </div>
+            <div class="clear"></div>
+          </div>
+          <div class="statisticWeb flex-1">
+            <div class="statisticWebChild">
+              <p class="allP1">旅遊類型比例</p>
+              <doughnut-chart class="travel" :chart-data="this.tripTypecollection" :options="options2" style="width: 50%; height: 50%; margin-left: 40px;"></doughnut-chart>
+              <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
           </div>
           <!-- <div class="statisticWeb flex-1">
             <div>
@@ -199,6 +194,17 @@
          
           <div class="clear"></div>
         </div>
+        <div class="demo-wrapper">
+          <p class="allP">各國留言數量</p>
+          <div class="demo-container">
+            <!-- <div> -->
+              <!-- <button id="parentIframe" v-on:click="createMap()">GDP</button> -->
+            <!-- </div> -->
+            <div id="svgMapGPD"></div>
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </div> 
         <div class="clear"></div>
       </div>
 </template>
@@ -1271,22 +1277,6 @@ export default {
           },
         ],
       };
-      this.countrycollection = {
-        // labels: self.labelX2,
-        datasets: [
-          {
-            backgroundColor: [
-              "#F75019",
-              "#178D8F",
-              "#3591B0",
-              "#872403",
-              "#AD3937",
-              "#F53431",
-            ],
-            // data: [20, 30, 20, 30, 50, 70]
-          },
-        ],
-      };
     },
     getWebsiteData(value, data) {
       let self = this;
@@ -1366,22 +1356,32 @@ export default {
 .daterangepicker.show-calendar .drp-buttons {
   display: none;
 } */
-.svgMap-map-wrapper {
-  background: white;
-}
+
+
 .demo-wrapper {
-  width: 400px;
-  height: 300px;
+  width: 97%;
+  /* width: 400px; */
+  height: 100%;
+  background: white;
+  padding: 0px;
+  /* padding-left: 2%; */
   /* padding: 2%; */
 }
+.demo-container{
+  width: 100%;
+  margin-right: 2%;
+  margin-left: 2%;
+  padding: 0px 0px 40px 0px;
+}
 #svgMapGPD {
-  width: 400px;
-  height: 300px;
+  width: 96%;
+  /* width: 400px; */
 }
 
 .svgMap-map-image {
-  width: 80%;
+  width: 100%;
   height: 100%;
 }
+
 </style>
 <style scoped src= '../assets/css/statistic.css'></style>

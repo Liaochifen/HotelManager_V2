@@ -30,7 +30,10 @@
           </template>
         </span>
         <span v-else-if="page === 1">
-          <p>666</p>
+          <p>帳號管理</p>
+        </span>
+        <span v-else-if="page === 2">
+          <p>後臺管理員部分</p>
         </span>
       </template>
     <div class="clear"></div>
