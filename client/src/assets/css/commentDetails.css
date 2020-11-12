@@ -318,3 +318,78 @@ label{
 .clear{
     clear: both;
 }
+.commentInfo_phone{
+    display: none;
+}
+
+@media (max-width: 425px) {
+    .dataArea{
+        margin: 0;
+        margin-bottom: 40px;
+        width: 100%;
+        display: flex;
+        flex-direction:column-reverse;
+    }
+   .dataBG{
+       width: 90%;
+       margin: 0;
+       margin:  10px auto;
+       box-sizing: border-box;
+       height: unset;
+   }
+   .CommentTtle{
+       margin: 0;
+       margin-bottom: 10px;
+   }
+   .MainComment{
+       padding: 0;
+       display: flex;
+       flex-wrap: wrap;
+   }
+   .MainComment span{
+       width: 25%;
+       margin: 0 0 5px 0;
+   }
+   .Maincontent{
+       height: unset;
+   }
+   .ReplyAddress{
+       display: flex;
+       flex-direction: column;
+       width: 90%;
+       margin: auto;
+   }
+   .commentInfo_phone{
+       display: inline;
+   }
+   .commentInfo{
+       text-align: center;
+       padding: 2%;
+       box-sizing: border-box;
+   }
+   .MultiFilterArea1{
+       display: none;
+       
+       flex-direction: column;
+       padding-bottom: 5%;
+   }
+   .MultiFilterArea1.active{
+       display: flex;
+   }
+   
+   .manageConditionDiv{
+        padding-top: 0;
+        /* border-bottom: 1px dashed lightgray; */
+   }
+   .manageConditionDiv, .manageReplyDiv, .manageTags, .replyArea{
+        padding: 2%;
+   }
+   .filterP1{
+       margin: 2%;
+   }
+}
+@media (max-width: 320px){
+    .MainComment span{
+       width: 50%;
+   }
+}
