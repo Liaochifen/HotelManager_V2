@@ -4,191 +4,85 @@
       <span class="selection_btn_phone">篩選</span>
       <div class="page">
         <span>評論列表</span>
-        <button @click="askForNotificationPermission">Notification</button>
+        <!-- <button @click="askForNotificationPermission">Notification</button> -->
       </div>
       <div class="selection_phone">
         <span class="select_btn1">篩選一</span>
         <span class="select_btn2">篩選二</span>
       </div>
-      <div class="editArea">
-        <!-- <span class="editSpan">編輯</span> -->
-        <button class="editButton" @click="editFun">
-          <img src="../assets/icon/edit.png" />
+      <div class="buttonFunArea">
+        <button class="editButton" @click="openFilter()">
+          <img src="../assets/icon/filter.png"/>
         </button>
-        <div class="edit">
-          <p>編輯評論狀態</p>
-          <el-select
-            placeholder="評論狀態設定"
-            class="editButton"
-            v-model="conditionModify"
-          >
-            <el-option
-              v-for="item in conditions"
-              :key="item.value"
-              :value="item.field"
-            ></el-option>
-          </el-select>
-          <p>編輯回覆狀態</p>
-          <el-select
-            placeholder="回覆狀態設定"
-            class="editButton"
-            v-model="replyModify"
-          >
-            <el-option
-              v-for="item in reply"
-              :key="item.value"
-              :value="item.field"
-            ></el-option>
-          </el-select>
-          <button @click="editUpdate" class="confirmButton">確認</button>
-          <button @click="editCancle" class="confirmButton">取消</button>
-          <div class="clear"></div>
-        </div>
+        <button class="editButton" @click="editFun()">
+          <img src="../assets/icon/edit.png"/>
+        </button>
+        <button @click="clearALL()" class="clearall">全部清除</button>
       </div>
-    </div>
-    <div class="filter">
-      <ul>
-        <li class="all">
-          <button @click="tagFilter('all')" :value="oneTag">
-            <div class="labelDiv">
-              <img src="https://fakeimg.pl/20x20/" alt="" />
-              <span>全部</span>
-            </div>
-          </button>
-        </li>
-        <li v-for="item in labelchoose" :key="item.field" :class="item.field">
-          <button @click="tagFilter(item.field)">
-            <div class="labelDiv">
-              <img src="https://fakeimg.pl/20x20/" alt="" />
-              <span>{{ item.label }}</span>
-            </div>
-          </button>
-        </li>
-        <li class="custom">
-          <button @click="tagCustom()">
-            <div class="labelDiv">
-              <img src="https://fakeimg.pl/20x20/" alt="" />
-              <span>自訂</span>
-            </div>
-          </button>
-        </li>
-      </ul>
-      <div class="clear"></div>
-      <div class="labelchooseArea">
-        <div class="labelchoose">
-          <input
-            type="checkbox"
-            name="label_all"
-            v-model="checkedtagsALL"
-            @change="checkedALLFilter(checkedtagsALL)"
-            id="checkALL"
-          />
-          <label for="checkALL">全選</label>
-          <div class="clear"></div>
-        </div>
-        <div class="labelchoose" v-for="item in labelchoose" :key="item.field">
-          <input
-            type="checkbox"
-            name="label_checked_col[]"
-            :id="[item.field]"
-            :value="item.field"
-            v-model="checkedtags"
-            @change="checkedALLFilter(checkedtags)"
-          />
-          <label :for="[item.field]">{{ item.label }}</label>
-          <div class="clear"></div>
-        </div>
-        <div class="clear"></div>
-      </div>
-      <div class="clear"></div>
-    </div>
-    <div class="dataArea">
-      <div class="MultiFilterArea">
-        <p class="filterP">篩選</p>
-        <el-button @click="clearALL()" class="clearall">全部清除</el-button>
-        <div slot="table-actions" class="slot_div">
-          <p class="filterTitle">標籤類型</p>
-          <template>
-            <el-checkbox
-              :indeterminate="TypesIndeterminate"
-              v-model="TypescheckAll"
-              @change="handleCheckAllChange(0)"
-              >全選</el-checkbox
+      <div class="edit">
+        <div>
+          <div class="slot_div">
+            <el-select
+              placeholder="評論狀態設定"
+              class="custom_el_select"
+              v-model="conditionModify"
             >
-            <el-checkbox-group
-              v-model="typeChoosen"
-              @change="handleCheckedChange(0)"
-            >
-              <el-checkbox
-                v-for="item in types"
-                :label="item.value"
-                :key="item.value"
-                :value="item.value"
-                >{{ item.field }}</el-checkbox
-              >
-            </el-checkbox-group>
-          </template>
-        </div>
-        <div slot="table-actions" class="slot_div">
-          <p class="filterTitle">評論處理狀態</p>
-          <template>
-            <el-checkbox
-              :indeterminate="ConditionIndeterminate"
-              v-model="ConditioncheckAll"
-              @change="handleCheckAllChange(1)"
-              >全選</el-checkbox
-            >
-            <el-checkbox-group
-              v-model="conditionChoosen"
-              @change="handleCheckedChange(1)"
-            >
-              <el-checkbox
+              <el-option
                 v-for="item in conditions"
-                :label="item.value"
-                :key="item.value"
-                :value="item.value"
-                >{{ item.field }}</el-checkbox
-              >
-            </el-checkbox-group>
+                :key="item.value + 'editComment'"
+                :value="item.field"
+              ></el-option>
+            </el-select>
+          </div>
+          <div class="slot_div">
+            <el-select
+              placeholder="回覆狀態設定"
+              class="custom_el_select"
+              v-model="replyModify"
+            >
+              <el-option
+                v-for="item in reply"
+                :key="item.value + 'editreply'"
+                :value="item.field"
+              ></el-option>
+            </el-select>
+          </div>
+          <!-- <button @click="editUpdate" class="confirmButton">確認</button> -->
+          <!-- <button @click="editCancle" class="confirmButton">取消</button> -->
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+    <div class="MultiFilterArea">
+        <div slot="table-actions" class="slot_div">
+          <template>
+            <el-select v-model="typeChoosen"  placeholder="選擇評論類型"  @change="handleCheckedChange(0)" class="custom_el_select">
+              <el-option value="全選">全選</el-option>
+              <el-option v-for="child in types"  :key="child.value"  :value="child.field"></el-option>
+            </el-select>
           </template>
+        </div>
+        <div slot="table-actions" class="slot_div">
+            <el-select v-model="conditionChoosen"  placeholder="選擇評論處理狀態" class="custom_el_select" @change="handleCheckedChange(1)">
+              <el-option value="全選">全選</el-option>
+              <el-option v-for="child in conditions"  :key="child.value"  :value="child.field" ></el-option>
+            </el-select>
+        </div>
+        <div slot="table-actions" class="slot_div">
+            <el-select v-model="replyChoosen"  placeholder="選擇評論回覆狀態"  @change="handleCheckedChange(2)" class="custom_el_select">
+              <el-option value="全選">全選</el-option>
+              <el-option v-for="child in reply"  :key="child.value"  :value="child.field"></el-option>
+            </el-select>
         </div>
         <div slot="table-actions" class="slot_div">
           <p class="filterTitle">評論分數</p>
-          <!-- range slider -->
           <div class="slidecontainer">
-            <input type="range" min="0" max="5" step="0.1" value="0" class="slider" id="myRange" @input="scoreHtml" @propertychange="scoreHtml" @change="scoreFilter(commentData)">
+            <input type="range" min="0" max="5" step="0.1" value="0" class="slider" id="myRange" @input="scoreHtml" @propertychange="scoreHtml" @change="AllfilterFunction()">
             <span id="value">0</span>
           </div>
-          <!-- <el-select v-model="conditionChoosen" class="formInputCss" placeholder="狀態" @change="ALLFilterFunction">
-              <el-option v-for="item in conditions" :key="item.value" :label="item.label" :value="item.field"></el-option>
-            </el-select> -->
         </div>
+        
         <div slot="table-actions" class="slot_div">
-          <p class="filterTitle">評論回覆狀態</p>
-          <template>
-            <el-checkbox
-              :indeterminate="ReplyIndeterminate"
-              v-model="ReplycheckAll"
-              @change="handleCheckAllChange(2)"
-              >全選</el-checkbox
-            >
-            <el-checkbox-group
-              v-model="replyChoosen"
-              @change="handleCheckedChange(2)"
-            >
-              <el-checkbox
-                v-for="item in reply"
-                :label="item.value"
-                :key="item.value"
-                :value="item.value"
-                class="elcheckbox"
-                >{{ item.field }}</el-checkbox
-              >
-            </el-checkbox-group>
-          </template>
-        </div>
-        <div slot="table-actions" class="slot_div">
-          <p class="filterTitle">評論時間</p>
           <div
             id="reportrange"
             style="
@@ -198,16 +92,69 @@
               border: 1px solid #dcdfe6;
             "
           >
-            <!-- <i class="fas fa-calendar"></i> -->
             <span @click="dateRange" class="timeSpan"
               >時間
-              <!-- <i class="el-select__caret el-input__icon el-icon-arrow-up"></i> -->
             </span>
           </div>
         </div>
+        <div class="clear"></div>
+    </div>
+    <div class="dataArea">
+        <div class="filter">
+          <p class="filterP">分類</p>
+          <ul>
+            <li class="all">
+              <button @click="tagFilter('all')" :value="oneTag">
+                <div class="labelDiv">
+                  <span>全部</span><span class="num" >(1000)</span>
+                </div>
+              </button>
+            </li>
+            <li v-for="item in labelchoose" :key="item.field" :class="item.field">
+              <button @click="tagFilter(item.field)">
+                <div class="labelDiv">
+                  <span>{{ item.label }}</span><span class="num">(1000)</span>
+                </div>
+              </button>
+            </li>
+            <li class="custom">
+              <button @click="tagCustom()">
+                <div class="labelDiv customTag">
+                  <span>自訂</span>
+                </div>
+              </button>
+            </li>
+          </ul>
+        <div class="clear"></div>
+        <div class="labelchooseArea">
+          <!-- <div class="labelchoose">
+            <input
+              type="checkbox"
+              name="label_all"
+              v-model="checkedtagsALL"
+              @change="checkedALLFilter(checkedtagsALL)"
+              id="checkALL"
+            />
+            <label for="checkALL">全選</label>
+            <div class="clear"></div>
+          </div> -->
+          <div class="labelchoose" v-for="item in labelchoose" :key="item.field + 'mulTag'">
+            <input
+              type="checkbox"
+              name="label_checked_col[]"
+              :id="[item.field]"
+              :value="item.field"
+              v-model="checkedtags"
+              @change="AllfilterFunction()"
+            />
+            <label :for="[item.field]" :key="item.field + 'ss'">{{ item.label }}</label>
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
       </div>
       <div class="dataRightArea">
-        <!-- v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit" -->
         <vue-good-table 
           :fixed-header="true"
           max-height="600px"
@@ -250,14 +197,6 @@
                 <el-button class="done" disabled="disabled">已完成</el-button>
               </span>
             </template>
-            <!-- <template v-else-if="props.column.label === '回覆'">
-                <span v-if="props.row.labels.reply === 1">
-                  <el-button class="replyButton" @click="replyUpdate(props.row._id)">是</el-button>
-                </span>                
-                <span v-else-if="props.row.labels.reply === 0">
-                  <el-button class="replyButton" @click="replyUpdate(props.row._id)">否</el-button>
-                </span>
-              </template> -->
             <template
               v-else-if="props.column.label === '評論'"
               v-bind:value="props.row._id"
@@ -267,9 +206,6 @@
                 >{{ props.row.title }}</router-link
               >
             </template>
-            <!-- <template v-else-if="props.column.field === 'website'"> -->
-            <!-- <a :href="props.row.resource[0].url" target="_blanket">{{props.row.resource}}</a> -->
-            <!-- </template> -->
           </template>
         </vue-good-table>
         <div class="clear"></div>
@@ -278,7 +214,6 @@
   </div>
 </template>
 <script>
-// import { filter } from 'vue/types/umd'
 import axios from "axios";
 import dateTime from "../assets/js/dateTime";
 import $ from "jquery";
@@ -299,29 +234,31 @@ export default {
       selectedArr: [],
       checkedtags: [],
       newComment: [],
-      // busy: false,
-      // itemPerLoad: 5,
       checkedtagsALL: false,
       oneTag: "",
       columns: [
         {
           label: "正/負評",
           field: this.fieldFn,
+          sortable: false
         },
         {
           label: "狀態",
           field: this.fieldFn2,
+          sortable: false
         },
         {
           label: "回覆",
           field: this.fieldFn1,
           tdClass: "display",
           thClass: "display",
+          sortable: false
         },
 
         {
           label: "評論",
           field: this.fieldFn3,
+          sortable: false
         },
         {
           label: "評分",
@@ -338,6 +275,7 @@ export default {
           field: "website",
           tdClass: "display",
           thClass: "display",
+          sortable: false
         },
       ],
       // limit: 10,
@@ -432,7 +370,7 @@ export default {
           field: "否",
         },
       ],
-      conditionChoosen: [],
+      conditionChoosen: "",
       conditionModify: "",
       conditionModifytoHistory: {
         employeeNumber: '',
@@ -443,12 +381,20 @@ export default {
         old: '',
         new: ''
       },
-      typeChoosen: [],
-      replyChoosen: [],
+      typeChoosen: "",
+      replyChoosen: "",
       replyModify: "",
       start: "",
       end: "",
       count: 0,
+      x: '',
+      y: '',
+      z: '',
+      filterObj: {
+        pos_neg: '',
+        condition: '',
+        reply: '',
+      }
     };
   },
   // 在一個條件後面會跟著一個問號 (?)
@@ -459,7 +405,7 @@ export default {
   mounted() {
     let self = this;
     var moment = require("moment");
-    var start = moment().subtract(6, "month");
+    var start = moment().subtract(24, "month");
     var end = moment();
     self.start = start;
     self.end = end;
@@ -470,7 +416,6 @@ export default {
       self.employeeNumber = loginData.id
     }
     axios
-    // , self.itemPerLoad
       .get("https://hotelapi.im.nuk.edu.tw/api/comment/" + self.companyName)
       .then((response) => {
         console.log('From web', response.data);
@@ -498,7 +443,9 @@ export default {
 
   },
   // 剩多重篩選&分數
-  computed: {
+  // computed: {
+
+  // },
     // ALLFilterFunction () {
     //   var self = this
     //   if (self.count === 0) {
@@ -535,39 +482,32 @@ export default {
     //     }
     //   }
     //   return self.commentData
-  },
+  // },
   // created(){
   //   this.loadMore()
   // },
   methods: {
-    
-    // selectionChanged(params){
-
-    // },
-    // loadMore: function(){
-    //   this.busy = true;
-    //   let self = this;
-    //   console.log('ww')
-    //   axios
-    //     .get("https://hotelapi.im.nuk.edu.tw/api/comment/" + self.companyName)
-    //     .then((response) => {
-    //       self.networkDataReceived = true;
-    //       // self.commentData = response.data;
-    //       // self.selectedArr = response.data;
-    //       const append = response.data.slice(this.selectedArr.length, this.selectedArr.length + this.limit);
-    //       this.commentData = this.selectedArr.concat(append);
-    //       console.log(this.commentData)
-    //       this.selectedArr = this.selectedArr.concat(append)
-    //       this.busy = false;
-    //       // console.log(self.itemPerLoad)
-
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    //     this.busy = false;
-
-    // },
+    AllfilterFunction: function(){
+      let self = this
+      var score = document.getElementById("myRange").value
+      let arr = []
+      if(self.oneTag !== '' && self.oneTag !== 'all'){
+        arr = self.oneTagData
+      }else if(self.checkedtags.length !== 0){
+        arr = self.checkedFun(self.selectedArr, self.checkedtags)
+      }else{
+        arr = self.selectedArr
+      }
+      if(self.x.length !== 0 || self.y.length !== 0 || self.z.length !==0){
+        arr = this.handleFilterData(arr, self.filterObj)
+      }
+      if(score !== '0'){
+        arr = this. scoreFilter(arr)
+      }
+      arr = this.timeFilter(arr, self.start, self.end)
+      self.commentData = arr
+      return self.commentData
+    },
     askForNotificationPermission() {
       let self = this;
       if ("Notification" in window && "serviceWorker" in navigator) {
@@ -663,11 +603,46 @@ export default {
           console.log(err);
         });
     },
-    clearALL() {
+    clearALL(){
       let self = this;
-      self.typeChoosen = [];
-      self.conditionChoosen = [];
-      self.replyChoosen = [];
+      self.typeChoosen = '';
+      self.conditionChoosen = '';
+      self.replyChoosen = '';
+      self.x = '';
+      self.y = '';
+      self.z = '';
+      self.oneTag = '';
+      self.oneTagData = '';
+      this.TypescheckAll = null;
+      this.ConditioncheckAll = null;
+      this.ReplycheckAll = null;
+      this.TypesIndeterminate = null;
+      this.ConditionIndeterminate = null;
+      this.ReplyIndeterminate = null;
+      this.ishandleFilterData = false;
+      this.isscoreFilterData = false;
+      document.getElementById("myRange").value = 0
+      document.getElementById('value').innerHTML = 0;
+      $(".all").removeClass("focus");
+      self.labelchoose.forEach((item) => {
+        $("." + item.field).removeClass("focus");
+      });
+      self.$refs["commentdataTable"].selectedRows.forEach((item) => {
+          item['vgtSelected'] = false
+      });
+      self.checkedtags = [];
+      self.commentData = self.selectedArr;
+      $("#reportrange span").html("時間");
+      return self.commentData;
+    },
+    clearALLInFilter() {
+      let self = this;
+      self.typeChoosen = '';
+      self.conditionChoosen = '';
+      self.replyChoosen = '';
+      self.x = '';
+      self.y = '';
+      self.z = '';
       this.TypescheckAll = null;
       this.ConditioncheckAll = null;
       this.ReplycheckAll = null;
@@ -682,89 +657,86 @@ export default {
       $("#reportrange span").html("時間");
       return self.commentData;
     },
-    handleCheckAllChange(val) {
-      let self = this;
-      if (val === 0) {
-        if (self.TypescheckAll) {
-          self.typeChoosen = Object.values(self.types).map(
-            (item) => item.value
-          );
-          this.TypesIndeterminate = false;
-        } else {
-          self.typeChoosen = [];
-          this.TypesIndeterminate = false;
+    openFilter(){
+      // let self = this;
+      event.stopPropagation();
+      $(".MultiFilterArea").toggle("normal");
+      $(document).click(function (event) {
+        var area = $(".MultiFilterArea"); // 設定目標區域
+        var area1 = $(".daterangepicker"); // 設定目標區域
+        if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
+          // $('#divTop').slideUp('slow');  //滑動消失
+          $(".MultiFilterArea").hide(500); // 淡出消失
         }
-      } else if (val === 1) {
-        if (self.ConditioncheckAll) {
-          self.conditionChoosen = Object.values(self.conditions).map(
-            (item) => item.value
-          );
-          this.ConditionIndeterminate = false;
-        } else {
-          self.conditionChoosen = [];
-          this.ConditionIndeterminate = false;
-        }
-      } else if (val === 2) {
-        if (self.ReplycheckAll) {
-          self.replyChoosen = Object.values(self.reply).map(
-            (item) => item.value
-          );
-          this.ReplyIndeterminate = false;
-        } else {
-          self.replyChoosen = [];
-          this.ReplyIndeterminate = false;
-        }
-      }
-      self.commentData = self.handleFilterData();
+      });
     },
     handleCheckedChange(value) {
       let self = this;
+      // var filterObj = {
+      //   pos_neg: '',
+      //   condition: '',
+      //   reply: '',
+      // };
       if (value === 0) {
-        let checkedCount = self.typeChoosen.length;
-        self.TypescheckAll = checkedCount === self.types.length;
-        self.TypesIndeterminate =
-          checkedCount > 0 && checkedCount < self.types.length;
+        self.x = self.typeChoosen;
+        if(self.x !== '全選'){
+          self.types.filter((item) => {
+            if(item.field === self.x){
+              self.x = [item.value]
+            }
+          })
+        }else{
+          self.x = ''
+        }
       } else if (value === 1) {
-        let checkedCount = self.conditionChoosen.length;
-        self.ConditioncheckAll = checkedCount === self.conditions.length;
-        self.ConditionIndeterminate =
-          checkedCount > 0 && checkedCount < self.conditions.length;
+        self.y = self.conditionChoosen;
+        if(self.y !== '全選'){
+          self.conditions.filter((item) => {
+            if(item.field === self.y){
+              self.y = [item.value]
+            }
+          })
+        }else{
+          self.y = ''
+        }
       } else if (value === 2) {
-        let checkedCount = self.replyChoosen.length;
-        self.ReplycheckAll = checkedCount === self.reply.length;
-        self.ReplyIndeterminate =
-          checkedCount > 0 && checkedCount < self.reply.length;
+        self.z = self.replyChoosen;
+        if(self.z !== '全選'){
+          self.reply.filter((item) => {
+            if(item.field === self.z){
+              self.z = [item.value]
+            }
+          })
+        }else{
+          self.z = ''
+        }
       }
-      self.commentData = self.handleFilterData();
-    },
-    handleFilterData() {
-      let self = this;
-      var arr = [];
-      var filterObj = {
-        pos_neg: self.typeChoosen,
-        condition: self.conditionChoosen,
-        reply: self.replyChoosen,
+      self.filterObj = {
+        pos_neg: self.x,
+        condition: self.y,
+        reply: self.z,
       };
-      if (self.oneTag.length !== 0 && self.oneTag !== 'all') {
-        arr = self.selectedArr.filter((item) => {
-          return item.labels[self.oneTag] === 1;
-        });
-        
-      } else {
-        arr = self.selectedArr;
-        // if(self.isscoreFilterData === true){
-        //   // console.log(arr)
-        //   arr = self.scoreFilter(arr)
-        // }
-      }
+      self.AllfilterFunction();
+    },
+    handleFilterData(arr, filterObj1) {
+      let self = this;
+      // var arr1 = [];
       self.ishandleFilterData = true
-      const filterKeys = Object.keys(filterObj);
+      // if (self.oneTag.length !== 0 && self.oneTag !== 'all') {
+      //   arr1 = self.selectedArr.filter((item) => {
+      //     return item.labels[self.oneTag] === 1;
+      //   });
+      // } else {
+      //   arr1 = self.selectedArr;
+      // }
+      const filterKeys = Object.keys(filterObj1);
       return arr.filter((item) => {
+        self.ishandleFilterData = false
         return filterKeys.every((key) => {
-          if (!filterObj[key].length) {
+          if (!filterObj1[key].length) {
             return true;
           }
-          return !!~filterObj[key].indexOf(item.labels[key]);
+          return !!~filterObj1[key].indexOf(item.labels[key]);
         });
       });
     },
@@ -805,13 +777,6 @@ export default {
     scoreFilter: function(arr){
       let self = this;
       var value = document.getElementById("myRange").value;
-      self.isscoreFilterData = true;
-      if(arr.length === 0 && (self.oneTag.length === 0 || self.oneTag === 'all') && self.ishandleFilterData === false){
-        arr = self.selectedArr
-      }else if(self.ishandleFilterData === true){
-        arr = self.handleFilterData()
-      }
-      // var arr = self.selectedArr
       arr = arr.filter((item) => {
         return item.rating <= value
       })
@@ -819,7 +784,7 @@ export default {
       return self.commentData;
     },
     timeFilter: function (arr, startData, endData) {
-      let self = this;
+      // let self = this;
       arr = arr.filter((item) => {
         return (
           Date.parse(Object.values(item.times)[1]) >=
@@ -827,50 +792,18 @@ export default {
           Date.parse(Object.values(item.times)[1]) <= Date.parse(endData._d)
         );
       });
-      self.commentData = arr;
-      return self.commentData;
-    },
-    checkedALLFilter: function (data) {
-      var self = this;
-      // 全選
-      if (self.checkedtagsALL === true && data === self.checkedtagsALL) {
-        $("input[name='label_checked_col[]']").prop("checked", true);
-        self.checkedtags = [];
-        self.labelchoose.forEach((item) => {
-          self.checkedtags.push(item.tag);
-        });
-        // 點其它時是全選
-      } else if (self.checkedtagsALL === true && data === self.checkedtags) {
-        self.checkedtagsALL = false;
-        $(event.target).prop("checked", false);
-        // 取消全選
-      } else if (self.checkedtagsALL !== true && data === self.checkedtagsALL) {
-        $("input[name='label_checked_col[]']").prop("checked", false);
-        self.checkedtags = [];
-        // 點其它時不是全選
-      } else if (self.checkedtagsALL !== true && data === self.checkedtags) {
-        $(event.target).prop("checked", false);
-      }
-      // 記得回來打開
-      // self.ALLFilterFunction()
+      return arr;
     },
     checkedFun: function (arr, chtags) {
       var arr1 = [];
       arr.forEach((item) => {
-        for (var i in item.tags) {
-          var count = 0;
-          for (var j in chtags) {
-            if (item.tags[i] === chtags[j]) {
-              arr1.push(item);
-              count++;
-              break;
+          for(var j in chtags){
+            if(item.labels[chtags[j]] === 1){
+              arr1.push(item)
+              break
             }
           }
-          if (count !== 0) {
-            break;
-          }
-        }
-      });
+      })      
       return arr1;
     },
     cb: function (start, end) {
@@ -880,7 +813,8 @@ export default {
       );
       self.start = start;
       self.end = end;
-      this.timeFilter(self.selectedArr, self.start, self.end);
+      self.AllfilterFunction()
+      // this.timeFilter(self.selectedArr, self.start, self.end);
     },
     dateRange: function () {
       var moment = require("moment");
@@ -898,6 +832,7 @@ export default {
             "Last Month": [moment().subtract(30, "days"), moment()],
             "Last Six Months": [moment().subtract(6, "month"), moment()],
           },
+          showCustomRangeLabel: false
         },
         self.cb
       );
@@ -942,7 +877,7 @@ export default {
     editFun: function () {
       // let self = this
       event.stopPropagation();
-      $(".edit").toggle("fast");
+      $(".edit").toggle("normal");
       $(document).click(function (event) {
         var area = $(".edit"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {
@@ -974,23 +909,6 @@ export default {
           self.updateHistory()
         });
       }
-      // if (self.replyModify.length !== 0) {
-      //   if (self.replyModify === "是") {
-      //     self.$refs["commentdataTable"].selectedRows.forEach((item) => {
-      //       item.labels.reply = 1;
-      //       self.newComment = item;
-      //       console.log(item.labels.reply);
-      //       self.updateComment(item._id);
-      //     });
-      //   } else {
-      //     self.$refs["commentdataTable"].selectedRows.forEach((item) => {
-      //       item.labels.reply = 0;
-      //       console.log(item.labels.reply);
-      //       self.newComment = item;
-      //       self.updateComment(item._id);
-      //     });
-      //   }
-      // }
     },
     updateComment: function (id) {
       let self = this;
@@ -1061,13 +979,13 @@ export default {
       self.clearALL();
       if (tag === "all") {
         self.checkedtags = [];
-        $("input[name='label_checked_col[]']").prop("checked", true);
-        $("input[name='label_all']").prop("checked", true);
+        // $("input[name='label_checked_col[]']").prop("checked", true);
         $(".all").addClass("focus");
         self.labelchoose.forEach((item) => {
           $("." + item.field).removeClass("focus");
         });
-        self.checkedtagsALL = false;
+        // self.checkedtagsALL = false;
+        $(".custom").removeClass("focus");
         self.commentData = self.selectedArr;
         return self.commentData;
       } else {
@@ -1079,15 +997,15 @@ export default {
             $("." + item.field).removeClass("focus");
           }
         });
+        $(".custom").removeClass("focus");
         arrq = self.selectedArr.filter((item) => {
           return item.labels[tag] === 1;
         });
         self.commentData = arrq;
-        // self.oneTagData = arrq
         self.checkedtags = [];
         $("input[name='label_checked_col[]']").prop("checked", false);
         $("input[name='label_all']").prop("checked", false);
-        self.checkedtagsALL = false;
+        // self.checkedtagsALL = false;
         return self.commentData;
       }
     },
@@ -1095,11 +1013,15 @@ export default {
       let self = this;
       self.oneTag = "";
       event.stopPropagation();
+      $(".all").removeClass("focus");
+      $(".custom").addClass("focus");
+      self.labelchoose.forEach((item) => {
+        $("." + item.field).removeClass("focus");
+      });
       $(".labelchoose").toggle("slow");
       $(document).click(function (event) {
         var area = $(".labelchooseArea"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {
-          // $('#divTop').slideUp('slow');  //滑動消失
           $(".labelchoose").hide(1000); // 淡出消失
         }
       });

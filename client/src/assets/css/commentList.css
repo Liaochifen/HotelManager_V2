@@ -3,7 +3,26 @@ label{
     padding-top: 5px;
 }
 
-.editArea{
+button:hover{
+    cursor: pointer;
+}
+.buttonFunArea{
+    width: 200px;
+    /* display: inline-block; */
+    /* padding-top: 20px; */
+    margin-left: 85%;
+    margin-bottom: 15px;
+}
+.custom_el_select{
+    width: 160px !important;
+    height: 30px !important;
+}
+
+/* 改不了 */
+.el-input__inner{
+    height: 30px !important;
+}
+/* .editArea{
     display: inline-block;
     position: relative;
     margin-left: 84%;
@@ -13,42 +32,65 @@ label{
     vertical-align: middle;
     border-radius: 2px;
     border: 0.5px solid rgb(187, 187, 187)
-    /* box-shadow: 0.3px 0.3px 1px 1px #5c5a6e8f; */
-}
+} */
 .editButton{
     all: unset;
-    /* background-color: #F4F5F8; */
-    /* box-shadow: 0.3px 0.3px 1px 1px #5c5a6e8f; */
+    background: white;
+    width: 20px;
+    height: 15px;
+    padding: 10px;
+    margin-right: 5px;
+    border-radius: 3px;
+    vertical-align: bottom;
+    border: 0.3px solid rgb(233, 233, 233);
 }
-.editButton .editSpan{
-    /* display: block; */
+.editButton img{
+    width: 100%;
+    margin: auto;
+    justify-content: center; 
+    /* text-align:  center; */
+}
+/* .editButton .editSpan{
     float: right;
     padding: 5px 5px 5px 3px;
-}
+} */
 .editArea:hover{
     cursor: pointer;
     background-color: rgba(149, 188, 255, 0.425);
 }
-.edit{
+/* .edit{
     display: none;
     position: absolute;
     width: 180px;
-    /* top: 10px; */
-    right: 0;
+    right: 20px;
     margin-top: 10px;
-    padding: 10%;
-    background-color: #F4F5F8;
-    border: 1px solid rgba(182, 182, 182, 0.76);
+    padding: 1%;
+    background-color: #ffffff;
+    border: 0.3px solid rgba(182, 182, 182, 0.76);
     border-radius: 3px;
     z-index: 1000;
-    /* margin-right: 5%; */
+} */
+.edit{
+    display: none;
+    /* width:94.5%; */
+    width: 30%;
+    float: right;
+    /* margin-left: 1.5%; */
+    margin-right: 2.5%;
+    margin-bottom: 10px;
+    /* padding: 1%; */
+    /* background: rgb(255, 255, 255); */
+    /* border: 0.3px solid rgb(233, 233, 233); */
 }
+/* 
 .edit p{
     margin-top: 10px;
     margin-left: 5px;
     font-size: 16px;
+} */
+.edit div{
+    display: inline-block;
 }
-
 .confirmButton{
     margin-left: 20px;
     margin-top: 15px;
@@ -58,48 +100,67 @@ label{
     border-radius: 3px;
     border: 1px solid rgb(201, 201, 201);
 }
-.MultiFilterArea{
+/* .MultiFilterArea{
     float: left;
     width: 10%;
-    /* margin-top: 15px; */
-    /* margin-top: 52px; */
     margin-right: 15px;
     height: 100vh;
     padding: 1%;
     background-color: #F4F5F8;
     border-radius: 3px;
     border: 1px solid rgb(226, 226, 226);
-    /* color: white; */
+} */
+.MultiFilterArea{
+    display: none;
+    width:65%;
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+    margin-bottom: 5px;
+    border-right: 0.3px solid #cccccc;
+    /* padding: 1%; */
+    /* background: rgb(255, 255, 255); */
+    /* border: 0.3px solid rgb(233, 233, 233); */
 }
+
 .clearall{
+    all: unset;
     display: inline-block;
-    margin-left: 24%;
+    margin-left: 2%;
     font-size: 12px;
-    /* background-color: #106697c5; */
-    /* color: white; */
-    padding: 5px;
+    padding: 10px 10px;
     border-radius: 3px;
-    box-shadow: 0.5px 0.5px 2px #adadad;
+    /* box-shadow: 0.5px 0.5px 2px #adadad; */
     font-family: "Segoe UI";
     letter-spacing: 1px;
+    border: 2px solid #000;
+    background-color: #ffffff;
+    color: black;
 }
+.clearall:hover{
+    background: rgb(255, 255, 255);
+    border: 2px solid rgb(201, 201, 201);
+    color: black;
+    /* -webkit-box-shadow: 0.5px 0.5px 0px #adadad; */
+    /* -moz-box-shadow: 0.5px 0.5px 0px #adadad;/ */
+    /* box-shadow: 1px 1px 0px #adadad; */
+    position:relative;
+    top: 0.5px;
+    left: 0.5px;
+}
+
 .el-checkbox{
     /* color: white; */
     margin-left: 15px;
 }
-.filterP{
-    font-weight: bold;
-    display: inline-block;
-    font-size: 16px;
-}
+
+
 .filterTitle{
-    margin: 25px 0px 10px 5px;
+    /* margin: 25px 0px 10px 5px; */
     font-size: 14px;
 }
 
 #reportrange{
     width: 100px;
-    /* height: 20px; */
     padding: 1%;
     border-radius: 4px;
     left: 190px;
@@ -111,8 +172,10 @@ label{
     /* line-height: 20px; */
     /* border: 1px solid #000; */
     /* vertical-align: middle; */
-    font-size: 12px;
-    color: #61656e;
+    font-size: 14px;
+    line-height: 20px;
+    vertical-align: middle;
+    color: #8b8b8b;
     font-family: Arial;
     letter-spacing: 1px;
     /* padding-top: 3px; */
@@ -124,10 +187,19 @@ label{
     /* margin-left: 1%; */
 }
 
-.filter{
+/* .filter{
     width: 100%;
     margin-left: 1.5%;
-    /* margin-bottom: 5px; */
+} */
+.filter{
+    float: left;
+    width: 10%;
+    margin-right: 15px;
+    height: 70vh;
+    padding: 1%;
+    background-color: #ffffff;
+    border-radius: 3px;
+    border: 0.3px solid rgb(226, 226, 226);
 }
 .filter button{
     all: unset;
@@ -142,8 +214,15 @@ label{
 .elcheckbox{
     width: 100%;
 }
+.filterP{
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 16px;
+}
 .labelDiv{
-    padding-top: 15px;
+    margin-left: 10px;
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 .labelDiv img{
@@ -152,7 +231,11 @@ label{
 }
 .labelDiv span{
     /* all: unset; */
-    font-size: 18px;
+    font-size: 16px;
+}
+.labelDiv .num{
+    font-size: 12px;
+    margin-left: 5px;
 }
 .filter li:hover{
     cursor: pointer;
@@ -168,7 +251,7 @@ label{
 .labelchoose{
     display: none;
     float: left;
-    margin: 30px 5px 20px 5px;
+    margin: 10px 5px;
 }
 
 .el-table{
@@ -178,6 +261,7 @@ label{
 
 .slot_div{
     float: left;
+    margin-right: 5px;
 }
 
 tr:hover td{
@@ -247,6 +331,7 @@ tr:hover td{
 }
 .vgt-global-search{
     padding: 10px;
+    background: white;
 }
 .vgt-input{
     width: 50%;
