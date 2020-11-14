@@ -7,43 +7,78 @@
     </div>
     <div class="dataArea1">
       <div class="phone">
-         <!-- <router-link
-                      :to="{
-                        name: 'competitionCommentList',
-                        params: { collections: props.row.hotelName },
-                      }"
-                      >{{props.row.hotelName}}</router-link
-                    > -->
-        <router-link v-for="item in companyData" :key="item.id" :to="{name: fn(item.hotelName), params: {collections: item.hotelName}}">
-          <div class="eachCompany" :data-status="item.hotelName">
-            <img src="https://fakeimg.pl/230x150/">
-            <div class="companyInfo">
-              <span v-if="item.favorite === true" class="favoriteArea">
-                <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
-                  <span class="btn-box">
-                    <span class="btn1"></span>
-                  </span>
-              </span>
-              <span v-else-if="item.favorite === false" class="favoriteArea">
-                <!-- :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
-                <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
-                  <span class="btn-box">
-                    <span class="btn"></span>
-                  </span>
-              </span>
-              <p class="name">{{item.hotelChineseName}}</p>
-              <div class="ratings">
-                <div class="empty_star">★★★★★</div>
-                <div class="full_star" :style="`width:${item.avg_rating/2*20}%;`">★★★★★</div>
-              </div>
-              <p>正評：{{item.labels.positive}}</p>
-              <p>負評：{{item.labels.negative}}</p>
-            </div>
-            <div class="clear"></div>
-          </div>
-          <div class="clear"></div>
-        </router-link>
-       
+          <template>
+            <span v-for="item in companyData" :key="item.id" >
+                <template v-if="item.hotelName === companyName">
+                    <div class="eachCompany myCompany">
+                      <div class="rank">{{item.rank}}</div>
+                      <router-link :to="{name: fn(item.hotelName), params: {collections: item.hotelName}}">
+                      <div class="details">
+                        <img src="https://fakeimg.pl/230x165/">
+                        <div class="companyInfo">
+                          <span v-if="item.favorite === true" class="favoriteArea">
+                            <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
+                              <span class="btn-box">
+                                <span class="btn1"></span>
+                              </span>
+                          </span>
+                          <span v-else-if="item.favorite === false" class="favoriteArea">
+                            <!-- :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
+                            <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
+                              <span class="btn-box">
+                                <span class="btn"></span>
+                              </span>
+                          </span>
+                          <p class="name">{{item.hotelChineseName}}</p>
+                          <div class="ratings">
+                            <div class="empty_star">★★★★★</div>
+                            <div class="full_star" :style="`width:${item.avg_rating/2*20}%;`">★★★★★</div>
+                          </div>
+                          <p>正評：{{item.labels.positive}}</p>
+                          <p>負評：{{item.labels.negative}}</p>
+                        </div>
+                        <div class="clear"></div>
+                      </div>
+                      </router-link>
+                      <div class="clear"></div>
+                    </div>
+                </template>
+                <template v-else-if="item.hotelName !== companyName">
+                    <div class="eachCompany">
+                      <div class="rank">{{item.rank}}</div>
+                      <router-link :to="{name: fn(item.hotelName), params: {collections: item.hotelName}}">
+                      <div class="details">
+                        <img src="https://fakeimg.pl/230x165/">
+                        <div class="companyInfo">
+                          <span v-if="item.favorite === true" class="favoriteArea">
+                            <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
+                              <span class="btn-box">
+                                <span class="btn1"></span>
+                              </span>
+                          </span>
+                          <span v-else-if="item.favorite === false" class="favoriteArea">
+                            <!-- :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
+                            <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
+                              <span class="btn-box">
+                                <span class="btn"></span>
+                              </span>
+                          </span>
+                          <p class="name">{{item.hotelChineseName}}</p>
+                          <div class="ratings">
+                            <div class="empty_star">★★★★★</div>
+                            <div class="full_star" :style="`width:${item.avg_rating/2*20}%;`">★★★★★</div>
+                          </div>
+                          <p>正評：{{item.labels.positive}}</p>
+                          <p>負評：{{item.labels.negative}}</p>
+                        </div>
+                        <div class="clear"></div>
+                      </div>
+                      </router-link>
+                    </div>
+                </template>
+            </span>    
+          </template>
+        </div>
 
         <!-- <template>
           <span>
@@ -115,8 +150,7 @@
             </vue-good-table>
           </span>
         </template> -->
-      <div class="clear"></div>
-      </div>
+
       <div class="clear"></div>
     </div>
     <div class="clear"></div>
@@ -342,11 +376,12 @@ export default {
       self.companyData.sort(function (a, b) {
         return b.avg_rating - a.avg_rating;
       });
+      self.companyData.forEach((item, index) => {
+        item['rank'] = index +1 
+      })
       self.companyData.sort(function(x,y){
         return x.hotelName === self.companyName ? -1 : y.hotelName === self.companyName ? 1:0
       })
-      // var y = $('eachCompany').attr('data-status')
-      // console.log(y)
     },
     updateHistory: function(value){
       let self = this

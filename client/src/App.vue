@@ -9,15 +9,17 @@
                 <div class="clear"></div>
             </div> -->
         <div class="menu" id="menu" >
-          <p>功能列</p>
+          <p class="system">Hotel</p>
+          <p class="system">System</p>
+          <p class="functionList">功能列</p>
           <ul>
             <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
             <li id="accountManage">
               <router-link :to="{ name: 'accountList' }"
-                ><img
-                  src="https://fakeimg.pl/15x15/"
+                ><img class="icons"
+                  src="./assets/icon/account.png"
                   alt=""
-                />帳號管理</router-link
+                /><span>帳號管理</span></router-link
               >
             </li>
             <!-- <img src="./assets/icon/comment.svg" class="icons" alt=""> -->
@@ -26,10 +28,10 @@
                 :to="{
                   name: 'competition',
                 }"
-                ><img
-                  src="https://fakeimg.pl/15x15/"
+                ><img class="icons"
+                  src="./assets/icon/comment.png"
                   alt=""
-                />評論管理</router-link
+                /><span>評論管理</span></router-link
               >
               <!-- <router-link
                 :to="{
@@ -47,10 +49,10 @@
                   name: 'statistic',
                   params: { collections: companyName },
                 }"
-                ><img
-                  src="https://fakeimg.pl/15x15/"
+                ><img class="icons"
+                  src="./assets/icon/statistics.png"
                   alt=""
-                />統計結果</router-link
+                /><span>統計結果</span></router-link
               >
             </li>
             <!-- <li>
@@ -69,10 +71,10 @@
             <li>
               <router-link
                 :to="{ name: 'history', params: { company: companyName } }"
-                ><img
-                  src="https://fakeimg.pl/15x15/"
+                ><img  class="icons"
+                  src="./assets/icon/history.png"
                   alt=""
-                />歷史紀錄</router-link
+                /><span>歷史紀錄</span></router-link
               >
             </li>
             <div class="clear"></div>
@@ -88,7 +90,7 @@
             <li>
               <router-link :to="{ name: 'accountList' }"
                 ><img
-                  src="https://fakeimg.pl/15x15/"
+                  src="./assets/icon/account.png"
                   alt=""
                 />帳號管理</router-link
               >
@@ -101,7 +103,7 @@
                   params: { collections: companyName },
                 }"
                 ><img
-                  src="https://fakeimg.pl/15x15/"
+                  src="./assets/icon/comment.png"
                   alt=""
                 />評論管理</router-link
               >
@@ -113,7 +115,7 @@
                   params: { collections: companyName },
                 }"
                 ><img
-                  src="https://fakeimg.pl/15x15/"
+                  src="./assets/icon/statistics.png"
                   alt=""
                 />統計結果</router-link
               >
@@ -135,7 +137,7 @@
               <router-link
                 :to="{ name: 'history', params: { company: companyName } }"
                 ><img
-                  src="https://fakeimg.pl/15x15/"
+                  src="./assets/icon/history.png"
                   alt=""
                 />歷史紀錄</router-link
               >
@@ -221,16 +223,16 @@
     <div class="footer">
       <ul class="phoneMenu">
         <li>
-          <a href="#"><img src="https://fakeimg.pl/27x27/" alt="" /></a>
+          <a href="#"><img class="icons" src="./assets/icon/account.png" alt="" /></a>
         </li>
         <li>
-          <a href="#"><img src="https://fakeimg.pl/27x27/" alt="" /></a>
+          <a href="#"><img class="icons" src="./assets/icon/statistics.png" alt="" /></a>
         </li>
         <li>
-          <a href="#"><img src="https://fakeimg.pl/27x27/" alt="" /></a>
+          <a href="#"><img class="icons" src="./assets/icon/history.png" alt="" /></a>
         </li>
         <li>
-          <a href="#"><img src="https://fakeimg.pl/27x27/" alt="" /></a>
+          <a href="#"><img class="icons" src="./assets/icon/account.png" alt="" /></a>
         </li>
       </ul>
       <div class="clear"></div>
@@ -535,32 +537,18 @@ a {
   position: fixed;
   top: 0;
   padding-right: 5px;
-  background-color: rgb(47, 58, 76);
-  /* offset-x | offset-y | blur-radius | spread-radius | color */
+  background-color: #fff;
   box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.2);
   color: white;
 }
 
-/* .company{
-    margin-top: 25px;
-    padding-top: 20px;
-    margin-left: 10px;
-    margin-right: 5px;
+.icons{
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
 }
-
-.companyImg{
-    float: left;
-    margin-bottom: 10px;
-}
-
-.title{
-    float: left;
-    margin-top: 15px;
-    font-size: 18px;
-} */
-
 .menu {
-  margin-top: 25px;
+  margin-top: 10px;
   margin-left: 15px;
   font-size: 16px;
   z-index: 100;
@@ -569,30 +557,34 @@ a {
 #menu{
   visibility: hidden;
 }
-/* #accountManage{
-  display: block;
+.system{
+  font-size: 14x;
+  color: #a89090;
+  text-align: center;
 }
-#statisticalResults{
-  display: block;
-} */
-.menu li {
-  margin: 20px 0px;
+.functionList{
+  font-size: 12x;
+  color: #a89090;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.menu li, li {
+  margin-bottom: 10px;
 }
 .menu li a {
-  font-size: 16px;
-  letter-spacing: 5px;
-  padding: 15px 20px;
-  color: white;
+  padding: 15px 15px;
   display: block;
 }
-.menu p {
-  font-size: 14x;
-  margin-left: 10px;
-  color: #a89090;
+.menu li a span{
+  color: black;
+  font-size: 16px;
+  line-height: 26px;
+  letter-spacing: 3px;
+  vertical-align: top;
 }
-.menu img {
-  margin-right: 5px;
-}
+
+
 .menu li:hover {
   cursor: pointer;
   background-color: rgb(182, 96, 96);
@@ -761,13 +753,19 @@ a {
   }
   .headerContent {
     display: inline;
-    background-color: rgb(47, 58, 76);
+    /* background-color: rgb(47, 58, 76); */
+    background-color: #fff;
     width: 100%;
     height: 0;
     padding: 0;
     position: relative;
     z-index: 1;
     /* display: none; */
+  }
+  .icons{
+    margin-top: 5px;
+    width: 22px;
+    height: 20px;
   }
   .content {
     width: 100%;
@@ -777,7 +775,8 @@ a {
   }
   .contentTop {
     position: fixed;
-    background-color: rgb(47, 58, 76);
+    /* background-color: rgb(47, 58, 76); */
+    background-color: #fff;
     height: 39px;
     margin: 0;
     padding: 0;
@@ -832,7 +831,8 @@ a {
   }
   .left_menu {
     display: block;
-    background-color: rgb(47, 58, 76);
+    /* background-color: rgb(47, 58, 76); */
+    background-color: #fff;
     color: white;
     height: 100%;
     width: 60vw;
@@ -883,12 +883,14 @@ a {
     position: fixed;
     bottom: 0;
     text-align: center;
-    background-color: rgb(47, 58, 76);
+    /* background-color: rgb(47, 58, 76); */
+    background-color: #fff;
+    border-top: 0.3px solid rgb(221, 221, 221);
   }
   .phoneMenu li {
     width: 25%;
     padding-top: 5px;
-    padding-bottom: 5px;
+    /* padding-bottom: 5px; */
     float: left;
     text-align: center;
   }

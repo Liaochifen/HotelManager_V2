@@ -72,18 +72,8 @@
             </template>
             <el-button @click="addTag">+</el-button>
             <div class="addTagsArea">
-              <el-select
-                v-model="TagsAdd"
-                placeholder="請選擇標籤"
-                @change="submitAdd"
-              >
-                <el-option
-                  v-for="item in label_no_tags"
-                  :key="item.field"
-                  :value="item.field"
-                  :placeholder="item.label"
-                  >{{ item.label }}</el-option
-                >
+              <el-select v-model="TagsAdd"  placeholder="請選擇標籤"  @change="submitAdd">
+                <el-option v-for="item in label_no_tags"  :key="item.field"  :value="item.field"  :placeholder="item.label"  >{{ item.label }}</el-option>
               </el-select>
             </div>
             <div class="clear"></div>
