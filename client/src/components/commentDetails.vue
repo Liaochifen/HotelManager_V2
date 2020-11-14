@@ -28,7 +28,7 @@
       </div>
 
       <div class="ReplyAddress">
-        <p class="commentInfo">評論資訊</p>
+        <p class="commentInfo">評論資訊<span class="commentInfo_phone" @click="commentInfo_phone"><img src="https://fakeimg.pl/20x20/" alt=""></span></p>
         <div class="MultiFilterArea1">
           <div class="manageConditionDiv">
             <p class="filterP1">評論狀態</p>
@@ -397,6 +397,9 @@ export default {
           $(".labelchoose2").hide(1000); // 淡出消失
         }
       });
+    },
+    commentInfo_phone: function (){
+      $('.MultiFilterArea1').slideToggle()
     },
   },
 };
