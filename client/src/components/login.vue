@@ -81,10 +81,11 @@ export default {
           this.passWord == this.accountInfo[i].password
         ) {
           this.logingAccount = this.accountInfo[i];
+          // this.updateAccount();
+          // this.loginRecord();
           //var userID = this.accountInfo[i]._id;
           var currentTime = new Date().getTime(); //取得從 1970-01-01 00:00:00 UTC 累計的毫秒數
-          this.logingAccount.lastLoginDate = dateTime.recordDate();
-          this.logingAccount.lastLoginTime = dateTime.recordTime();
+   
           localStorage.setItem(
             "token",
             JSON.stringify({
@@ -103,24 +104,7 @@ export default {
           document.getElementById("limitWord").innerHTML = this.logingAccount.employeeLimit; 
           document.getElementById("menu").style.visibility = "visible";
           document.getElementById("breadcrumb").style.visibility = "visible";
-          this.updateAccount();
-          this.loginRecord();
-
-          if (this.accountInfo[i].firstLogin) {
-            this.$router.push({ name: "changePassword" });
-            window.location.reload();
-            break;
-          } else {
-            // this.$router.push({
-            //   name: "commentList",
-            //   params: { collections: this.accountInfo[i].companyName },
-            // });
-            this.$router.push({
-              name: "competition"
-            });
-            window.location.reload();
-            break;
-          } //決定登入後要導到哪一頁
+          break;
         } else if (i == this.accountInfo.length - 1) {
           // alert('使用者帳號密碼錯誤!請重新登入')
           this.$fire({
@@ -131,8 +115,66 @@ export default {
           });
         }
       }
+ 
+        // if (this.logingAccount.firstLogin) {
+        //   this.$router.push({ name: "changePassword" });
+        //   window.location.reload();
+          
+        // } else {
+        //   // this.$router.push({
+        //   //   name: "commentList",
+        //   //   params: { collections: this.accountInfo[i].companyName },
+        //   // });
+          
+        //   this.$router.push({ name: "competition" });
+        //   window.location.reload();
+        // } //決定登入後要導到哪一頁
+
+        this.logingAccount.lastLoginDate = dateTime.recordDate();
+        this.logingAccount.lastLoginTime = dateTime.recordTime();
+        let updateUser = this.logingAccount;
+        let id = this.logingAccount._id;
+        axios
+        .put("https://hotelapi.im.nuk.edu.tw/api/account/" + id, updateUser)
+        .then((response) => {
+          console.log(response);
+          let record = "login";
+          let company = this.logingAccount.companyName;
+          this.login.employeeNumber = this.logingAccount.employeeNumber;
+          this.login.loginTime = dateTime.recordDate()+" "+ dateTime.recordTime();
+          console.log(this.login);
+          console.log(company);
+          axios
+            .put(
+              "https://hotelapi.im.nuk.edu.tw/api/history/" +
+                company +
+                "/" +
+                record,
+              this.login
+            )
+            .then((response2) => {
+              console.log(response2);
+              if (this.logingAccount.firstLogin) {
+              this.$router.push({ name: "changePassword" });
+              window.location.reload();
+              } else {
+                this.$router.push({ name: "competition" });
+                window.location.reload();
+              } //決定登入後要導到哪一頁
+              })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      
+    
     },
     updateAccount: function () {
+      this.logingAccount.lastLoginDate = dateTime.recordDate();
+      this.logingAccount.lastLoginTime = dateTime.recordTime();
       let updateUser = this.logingAccount;
       let id = this.logingAccount._id;
       axios
