@@ -92,6 +92,7 @@ export default {
               id: this.logingAccount._id,
               time: currentTime+1,
               companyName: this.logingAccount.companyName,
+              limit:this.logingAccount.employeeLimit,
             })
           );
           

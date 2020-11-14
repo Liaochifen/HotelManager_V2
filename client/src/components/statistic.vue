@@ -409,6 +409,10 @@ export default {
     };
   },
   mounted: function () {
+    var loginData = JSON.parse(localStorage.getItem("token"));
+    if(loginData.limit === "一般使用者"){
+      this.$router.push({ name: "competition" });
+    }
     let self = this;
     // var time = [];
     var arr = [];

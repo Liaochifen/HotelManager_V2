@@ -112,6 +112,7 @@ export default {
             id: this.userAccountDetail._id,
             time: currentTime+1,
             companyName: this.userAccountDetail.companyName,
+            limit:this.logingAccount.employeeLimit,
           })
         );
         this.updateAccount();

@@ -247,7 +247,9 @@ export default {
     let self = this;
     var loginData = JSON.parse(localStorage.getItem("token"));
     var userID = loginData.id;
-
+    if(loginData.limit != "後台管理者"){
+      this.$router.push({ name: "competition" });
+    }
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
       .then((response) => {
