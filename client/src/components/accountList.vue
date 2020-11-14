@@ -179,6 +179,7 @@ export default {
   data() {
     return {
       hotels: [],
+      allHtols:[],
       networkDataReceived: false,
       networkDataReceivedAll: false, 
       chooseDepartment: "請選擇",
@@ -266,12 +267,28 @@ export default {
       .then((response) => {
         console.log('From web', response.data);
         self.networkDataReceivedAll = true;
-        self.hotels = response.data;
+        self.allHtols = response.data;
+        var num;
+        for(num=0; num< this.allHtols.length;num++){
+          if(this.allHtols[num].companyName === this.logingAccount.companyName){
+            self.hotels.push(this.allHtols[num]);
+          } 
+        }
         self.accountList = self.hotels;
+
       })
       .catch((error) => {
         console.log(error);
       });
+    
+    // var num;
+    // for(num=0; num< this.allHtols.length;num++){
+    //   if(this.allHtols[num].companyName === this.logingAccount.companyName){
+    //     self.hotels.push(this.allHtols[num]);
+    //   }
+    //   self.accountList = self.hotels;
+    // }
+    
     if ("indexedDB" in window) {
       console.log("Reading indexedDB...");
       util.readAllData("account").then(function (data) {
@@ -367,7 +384,11 @@ export default {
     },
     createAccount: function () {
       let i;
+      // this.newAccount.companyName = 
       let newUser = this.newAccount;
+      console.log("new");
+      console.log(this.newAccount);
+      console.log(newUser);
       for (i = 0; i < this.hotels.length; i++) {
         // console.log("newAccount: "+this.newAccount.userName);
         // console.log("hotels: "+this.hotels[i].userName);
@@ -388,6 +409,7 @@ export default {
             .then(() => {
               // this.accountList.push(newUser);
               this.hotels.push(newUser);
+              console.log(newUser);
               // this.searchResults.push(newUser);
               this.$fire({
                 title: "Success !!",
@@ -409,6 +431,7 @@ export default {
                 )
                 .then((responseRecord) => {
                   console.log(responseRecord);
+                   this.close();
                 })
                 .catch((errorRecord) => {
                   console.log(errorRecord);
@@ -417,7 +440,7 @@ export default {
             .catch((error) => {
               console.log(error);
             });
-          this.close();
+          // this.close();
         }
       }
       // console.log(newUser);
@@ -454,15 +477,20 @@ export default {
       //return this.accountList;
     },
     close: function () {
+      console.log("close");
       document.getElementById("addNewUser").style.visibility = "hidden";
       document.getElementById("employeeNumber").removeAttribute("required");
       document.getElementById("email").removeAttribute("required");
       document.getElementById("password").removeAttribute("required");
       document.getElementById("userName").removeAttribute("required");
-      this.newAccount = {};
+      this.newAccount={};
+      this.newAccount.companyName = this.logingAccount.companyName;
       this.newAccount.department = "資訊部";
       this.newAccount.employeeLimit = "一般使用者";
       this.newAccount.lastLoginDate = "New User";
+      this.newAccount.lastLoginTime = "";
+      this.newAccount.firstLogin = true;
+
     },
     open: function () {
       document.getElementById("employeeNumber").required = true;
