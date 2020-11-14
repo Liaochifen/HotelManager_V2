@@ -2,6 +2,7 @@
   <div class="historyContent">
     <button @click="changePage(0)" class="pageButton0 pageButtonStart">評論動態</button>
     <button @click="changePage(1)" class="pageButton1">個人動態</button>
+    <button @click="changePage(2)" class="pageButton2" id="userInfoRecord">紀錄</button>
     <div class="clear"></div>
     <div class="historydataArea">
       <!-- 後臺管理員區塊 -->
@@ -34,6 +35,49 @@
         </span>
         <span v-else-if="page === 2">
           <p>後臺管理員部分</p>
+          <button  v-on:click="manager(0)">登入</button>
+          <button  v-on:click="manager(1)">登出</button>
+          <button  v-on:click="manager(2)">忘記密碼</button>
+          <button  v-on:click="manager(3)">修改帳號資料</button>
+          <button  v-on:click="manager(4)">新增刪除使用者</button>
+          <div  v-if="userInfoPage === 0">
+            <div v-for="(item, loginIndex) in loginNew" :key="loginIndex" class="commentArea">
+              <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+              <span class="commentHistoryContent">{{item.employeeNumber}} 登入</span>
+              <span class="commentTimeHistory">{{item.loginTime}}</span>
+            </div>
+          </div>
+          <div  v-else-if="userInfoPage === 1">
+            <div v-for="(item, logoutIndex) in logoutNew" :key="logoutIndex" class="commentArea">
+              <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+              <span class="commentHistoryContent">{{item.employeeNumber}} 登出</span>
+              <span class="commentTimeHistory">{{item.logoutTime}}</span>
+            </div>
+          </div>
+          <div  v-else-if="userInfoPage === 2">
+            <div v-for="(item, userIndex) in userNew" :key="userIndex" class="commentArea">
+              <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+              <span class="commentHistoryContent">{{item.employeeNumber}} 忘記密碼 驗證 
+                <span v-if="item.forgetPassword.verification === true">成功</span>
+                <span v-else>失敗</span>
+                 </span>
+              <span class="commentTimeHistory">{{item.forgetPassword.verificationTime}}</span>
+            </div>
+          </div>
+          <div  v-else-if="userInfoPage === 3">
+            <div v-for="(item, userDetailModifyIndex) in userDetailModifyNew" :key="userDetailModifyIndex" class="commentArea">
+              <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+              <span class="commentHistoryContent">{{item.modifyInfo}} {{item.modifyPerson}} 把 {{item.employeeNumber}} 由 {{item.old}} 改為 {{item.new}} </span>
+              <span class="commentTimeHistory">{{item.time}}</span>
+            </div>
+          </div>
+          <div  v-else-if="userInfoPage === 4">
+            <div v-for="(item, userListModifyIndex) in userListModifyNew" :key="userListModifyIndex" class="commentArea">
+              <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+              <span class="commentHistoryContent">{{item.modify}} 使用者 {{item.employeeNumber}} </span>
+              <span class="commentTimeHistory">{{item.time}}</span>
+            </div>
+          </div>
         </span>
       </template>
     <div class="clear"></div>
@@ -60,6 +104,12 @@ export default {
       },
       // page === 0 顯示評論動態，page === 1顯示個人動態
       page: 0,
+      loginNew:[],
+      logoutNew:[],
+      userNew:[],
+      userDetailModifyNew:[],
+      userListModifyNew:[],
+      userInfoPage:0,
     };
   },
   mounted() {
@@ -67,6 +117,17 @@ export default {
     // var value = 0;
     //  + value
     var logining = localStorage.getItem("token");
+    var userID = JSON.parse(logining).companyName.id;
+    axios
+      .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
+      .then((response) => {
+        if(response.limit === '後台管理員' ){
+          document.getElementById("userInfoRecord").style.visibility = "visible";
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     axios
       .get(
         "https://hotelapi.im.nuk.edu.tw/api/history/" +
@@ -75,6 +136,11 @@ export default {
       .then((response) => {
         var arr = ['old', 'new']
         self.historyData = response.data;
+        self.loginNew=self.historyData.login;
+        self.logoutNew=self.historyData.logout;
+        self.userNew=self.historyData.user;
+        self.userDetailModifyNew=self.historyData.userDetailModify;
+        self.userListModifyNew=self.historyData.UserListModify;
         console.log(self.historyData)
         self.commentFilter.push({
           condition: self.historyData.condition,
@@ -110,9 +176,17 @@ export default {
         $(".pageButton0").addClass("focus");
         $(".pageButton0").removeClass("pageButtonStart");
         $(".pageButton1").removeClass("focus");
-      }else{
+        $(".pageButton2").removeClass("focus");
+      }else if(value === 1){
         self.page = 1
         $(".pageButton1").addClass("focus");
+        $(".pageButton0").removeClass("pageButtonStart");
+        $(".pageButton0").removeClass("focus");
+        $(".pageButton2").removeClass("focus");
+      }else{
+        self.page = 2
+        $(".pageButton2").addClass("focus");
+        $(".pageButton1").removeClass("focus");
         $(".pageButton0").removeClass("pageButtonStart");
         $(".pageButton0").removeClass("focus");
       }
@@ -142,6 +216,10 @@ export default {
     //   Time = dateTime.recordTime();
     //   console.log(Time);
     // },
+
+    manager:function(page){
+      this.userInfoPage = page;
+    }
   },
 };
 </script>

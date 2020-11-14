@@ -5,7 +5,7 @@
     width: 93%;
 }
 
-.pageButton0, .pageButton1{
+.pageButton0, .pageButton1 ,.pageButton2{
     all: unset;
     margin-right: 20px;
     font-size: 16px;
@@ -14,12 +14,14 @@
     color: rgba(0, 81, 255, 0.712);
     border-bottom: 1px solid rgba(0, 81, 255, 0.712);
 }
-.pageButton0:hover, .pageButton1:hover{
+.pageButton0:hover, .pageButton1:hover,.pageButton2:hover{
     cursor: pointer;
     color: rgba(0, 81, 255, 0.712);
     border-bottom: 1px solid rgba(0, 81, 255, 0.712);
 }
-
+.userInfoRecord{
+    visibility: hidden;
+}
 .historydataArea{
     margin-top: 50px;
 }
