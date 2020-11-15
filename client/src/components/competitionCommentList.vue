@@ -4,8 +4,148 @@
       <div class="page">
         <span>評論列表</span>
       </div>
+      <div class="buttonFunArea">
+        <button class="editButton" @click="openFilter()">
+          <img src="../assets/icon/filter.png"/>
+        </button>
+        <button @click="clearALL()" class="clearall">全部清除</button>
+      </div>
     </div>
-    <div class="filter">
+        <div class="MultiFilterArea">
+        <div slot="table-actions" class="slot_div">
+          <template>
+            <el-select v-model="typeChoosen"  placeholder="選擇評論類型"  @change="handleCheckedChange()" class="custom_el_select">
+              <el-option value="全選">全選</el-option>
+              <el-option v-for="child in types"  :key="child.value"  :value="child.field"></el-option>
+            </el-select>
+          </template>
+        </div>
+        <!-- <div slot="table-actions" class="slot_div">
+            <el-select v-model="conditionChoosen"  placeholder="選擇評論處理狀態" class="custom_el_select" @change="handleCheckedChange(1)">
+              <el-option value="全選">全選</el-option>
+              <el-option v-for="child in conditions"  :key="child.value"  :value="child.field" ></el-option>
+            </el-select>
+        </div> -->
+        <!-- <div slot="table-actions" class="slot_div">
+            <el-select v-model="replyChoosen"  placeholder="選擇評論回覆狀態"  @change="handleCheckedChange(2)" class="custom_el_select">
+              <el-option value="全選">全選</el-option>
+              <el-option v-for="child in reply"  :key="child.value"  :value="child.field"></el-option>
+            </el-select>
+        </div> -->
+        <div slot="table-actions" class="slot_div">
+          <p class="filterTitle">評論分數</p>
+          <div class="slidecontainer">
+            <input type="range" min="0" max="5" step="0.1" value="0" class="slider" id="myRange" @input="scoreHtml" @propertychange="scoreHtml" @change="AllfilterFunction()">
+            <span id="value">0</span>
+          </div>
+        </div>
+        
+        <div slot="table-actions" class="slot_div">
+          <div
+            id="reportrange"
+            style="
+              background: #fff;
+              cursor: pointer;
+              padding: 5px 10px;
+              border: 1px solid #dcdfe6;
+            "
+          >
+            <span @click="dateRange" class="timeSpan"
+              >時間
+            </span>
+          </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="dataArea">
+      <div class="filter">
+        <p class="filterP">分類</p>
+        <ul>
+          <li class="all">
+            <button @click="tagFilter('all')" :value="oneTag">
+              <div class="labelDiv">
+                <span>全部</span><span class="num" >(1000)</span>
+              </div>
+            </button>
+          </li>
+          <li v-for="item in labelchoose" :key="item.field" :class="item.field">
+            <button @click="tagFilter(item.field)">
+              <div class="labelDiv">
+                <span>{{ item.label }}</span><span class="num">(1000)</span>
+              </div>
+            </button>
+          </li>
+          <li class="custom">
+            <button @click="tagCustom()">
+              <div class="labelDiv customTag">
+                <span>自訂</span>
+              </div>
+            </button>
+          </li>
+        </ul>
+        <div class="clear"></div>
+        <div class="labelchooseArea">
+          <div class="labelchoose" v-for="item in labelchoose" :key="item.field + 'mulTag'">
+            <input
+              type="checkbox"
+              name="label_checked_col[]"
+              :id="[item.field]"
+              :value="item.field"
+              v-model="checkedtags"
+              @change="AllfilterFunction()"
+            />
+            <label :for="[item.field]" :key="item.field + 'ss'">{{ item.label }}</label>
+            <div class="clear"></div>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="dataRightArea">
+          <!-- @on-selected-rows-change="selectionChanged" -->
+        <vue-good-table
+          max-height="600px"
+          :fixed-header="true"
+          ref="commentdataTable"
+          class="el-table"
+          styleClass="vgt-table striped"
+          :rows="competitionCommentList"
+          :columns="columns"
+          :search-options="{ enabled: true }"
+          :pagination-options="{
+            enabled: true,
+            mode: 'pages',
+            perPage: 10,
+            position: 'bottom',
+            dropdownAllowAll: false,
+            setCurrentPage: 1,
+            nextLabel: 'next',
+            prevLabel: 'prev',
+          }"
+        >
+          <template slot="table-row" slot-scope="props">
+            <template
+              v-if="props.column.label === '評論'"
+              v-bind:value="props.row._id"
+            >
+              <router-link
+                :to="{
+                  name: 'competitionCommentDetails',
+                  params: { collections: companyName, _id: props.row._id },
+                }"
+                >{{ props.row.title }}</router-link
+              >
+            </template>
+            <!-- <template v-else-if="props.column.field === 'resource'">
+                <a :href="props.row.resource[0].url" target="_blanket">{{props.row.resource[1].resourceName}}</a>
+              </template> -->
+          </template>
+        </vue-good-table>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <!-- <div class="filter">
       <ul>
         <li class="all">
           <button @click="tagFilter('all')">
@@ -60,90 +200,8 @@
         <div class="clear"></div>
       </div>
       <div class="clear"></div>
-    </div>
-    <div class="dataArea">
-      <div class="MultiFilterArea">
-        <p class="filterP">篩選</p>
-        <el-button @click="clearALL()" class="clearall">全部清除</el-button>
-        <div slot="table-actions" class="slot_div">
-          <p class="filterTitle">標籤類型</p>
-          <template>
-            <el-checkbox
-              :indeterminate="TypesIndeterminate"
-              v-model="TypescheckAll"
-              @change="handleCheckAllChange(0)"
-              >全選</el-checkbox
-            >
-            <el-checkbox-group
-              v-model="typeChoosen"
-              @change="handleCheckedChange(0)"
-            >
-              <el-checkbox
-                v-for="item in types"
-                :label="item.value"
-                :key="item.value"
-                :value="item.value"
-                >{{ item.field }}</el-checkbox
-              >
-            </el-checkbox-group>
-          </template>
-        </div>
-        <div slot="table-actions" class="slot_div">
-          <p class="filterTitle">評論分數</p>
-          <!-- <el-select v-model="conditionChoosen" class="formInputCss" placeholder="狀態" @change="ALLFilterFunction">
-              <el-option v-for="item in conditions" :key="item.value" :label="item.label" :value="item.field"></el-option>
-            </el-select> -->
-        </div>
-        <div slot="table-actions" class="slot_div">
-          <p class="filterTitle">評論時間</p>
-          <div
-            id="reportrange"
-            style="
-              background: #fff;
-              cursor: pointer;
-              padding: 5px 10px;
-              border: 1px solid #dcdfe6;
-            "
-          >
-            <!-- <i class="fas fa-calendar"></i> -->
-            <span @click="dateRange" class="timeSpan"
-              >時間
-              <!-- <i class="el-select__caret el-input__icon el-icon-arrow-up"></i> -->
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="dataRightArea">
-        <vue-good-table
-          ref="commentdataTable"
-          class="el-table"
-          styleClass="vgt-table striped"
-          :rows="competitionCommentList"
-          :columns="columns"
-          @on-selected-rows-change="selectionChanged"
-          :search-options="{ enabled: true }"
-        >
-          <template slot="table-row" slot-scope="props">
-            <template
-              v-if="props.column.label === '評論'"
-              v-bind:value="props.row._id"
-            >
-              <router-link
-                :to="{
-                  name: 'competitionCommentDetails',
-                  params: { collections: companyName, _id: props.row._id },
-                }"
-                >{{ props.row.title }}</router-link
-              >
-            </template>
-            <!-- <template v-else-if="props.column.field === 'resource'">
-                <a :href="props.row.resource[0].url" target="_blanket">{{props.row.resource[1].resourceName}}</a>
-              </template> -->
-          </template>
-        </vue-good-table>
-        <div class="clear"></div>
-      </div>
-    </div>
+    </div> -->
+
   </div>
 </template>
 
@@ -153,17 +211,18 @@ import $ from "jquery";
 
 export default {
   name: "competitionCommentList",
+  components: {
+    "vue-good-table": require("vue-good-table").VueGoodTable,
+  },
   data() {
     return {
       companyName: this.$route.params.collections,
       competitionCommentList: [],
       selectedArr: [],
-      // labelchoose: [],
       checkedtags: [],
       newComment: [],
       checkedtagsALL: false,
       oneTag: "",
-      // oneTagData: [],
       columns: [
         {
           label: "正/負評",
@@ -187,10 +246,6 @@ export default {
           field: "website",
         },
       ],
-      // currentPage: 1,
-      // pagesize: 10,
-      TypesIndeterminate: null,
-      TypescheckAll: false,
       titleField: "",
       labelchoose: [
         {
@@ -236,16 +291,20 @@ export default {
           field: "負評",
         },
       ],
-      typeChoosen: [],
+      typeChoosen: "",
       start: "",
       end: "",
       count: 0,
+      x: '',
+      filterObj: {
+        pos_neg: ''
+      }
     };
   },
   mounted() {
     let self = this;
     var moment = require("moment");
-    var start = moment().subtract(6, "month");
+    var start = moment().subtract(24, "month");
     var end = moment();
     // console.log(self.companyID)
     axios
@@ -273,69 +332,85 @@ export default {
     self.start = start;
     self.end = end;
   },
-  computed: {
-    // ALLFilterFunction () {
-    //   var self = this
-    //   if (self.count === 0) {
-    //     self.count++
-    //   } else {
-    //     let arr = []
-    //     arr = this.conditionFilter(self.selectedArr, self.conditionChoosen)
-    //     arr = this.timeFilter(arr, self.start, self.end)
-    //     if (self.checkedtagsALL === true || self.checkedtags.length !== 0) {
-    //       arr = self.checkedFun(arr, self.checkedtags)
-    //     }
-    //     self.competitionCommentList = arr
-    //   }
-    //   return self.competitionCommentList
-    // }
-  },
   methods: {
+        AllfilterFunction: function(){
+      let self = this
+      var score = document.getElementById("myRange").value
+      let arr = []
+      if(self.oneTag !== '' && self.oneTag !== 'all'){
+        arr = self.oneTagData
+      }else if(self.checkedtags.length !== 0){
+        arr = self.checkedFun(self.selectedArr, self.checkedtags)
+      }else{
+        arr = self.selectedArr
+      }
+      if(self.x.length !== 0){
+        arr = this.handleFilterData(arr, self.filterObj)
+      }
+      console.log(arr)
+      if(score !== '0'){
+        arr = this. scoreFilter(arr)
+      }
+      arr = this.timeFilter(arr, self.start, self.end)
+      self.competitionCommentList = arr
+      return self.competitionCommentList
+    },
     clearALL() {
       let self = this;
-      self.typeChoosen = [];
-      this.TypesIndeterminate = false;
+      self.typeChoosen = '';
+      self.x = '';
+      self.oneTag = '';
+      self.oneTagData = '';
+      document.getElementById("myRange").value = 0
+      document.getElementById('value').innerHTML = 0;
+      $(".all").removeClass("focus");
+      self.labelchoose.forEach((item) => {
+        $("." + item.field).removeClass("focus");
+      });
+      self.checkedtags = [];
       self.competitionCommentList = self.selectedArr;
       $("#reportrange span").html("時間");
       return self.competitionCommentList;
     },
-    handleCheckAllChange(val) {
-      let self = this;
-      if (val === 0) {
-        if (self.TypescheckAll) {
-          self.typeChoosen = Object.values(self.types).map(
-            (item) => item.value
-          );
-          this.TypesIndeterminate = false;
-        } else {
-          self.typeChoosen = [];
-          this.TypesIndeterminate = false;
+    openFilter(){
+      // let self = this;
+      event.stopPropagation();
+      $(".MultiFilterArea").slideToggle("normal");
+      $(document).click(function (event) {
+        var area = $(".MultiFilterArea"); // 設定目標區域
+        var area1 = $(".daterangepicker"); // 設定目標區域
+        if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
+          // $('#divTop').slideUp('slow');  //滑動消失
+          $(".MultiFilterArea").hide(500); // 淡出消失
         }
-      }
-      self.competitionCommentList = self.handleFilterData();
+      });
     },
-    handleCheckedChange(value) {
+    handleCheckedChange() {
       let self = this;
-      if (value === 0) {
-        let checkedCount = self.typeChoosen.length;
-        self.TypescheckAll = checkedCount === self.types.length;
-        self.TypesIndeterminate =
-          checkedCount > 0 && checkedCount < self.types.length;
+      self.x = self.typeChoosen;
+      if(self.x !== '全選'){
+        self.types.filter((item) => {
+          if(item.field === self.x){
+            self.x = [item.value]
+          }
+        })
+      }else{
+        self.x = ''
       }
-      self.competitionCommentList = self.handleFilterData();
-    },
-    handleFilterData() {
-      let self = this;
-      var filterObj = {
-        pos_neg: self.typeChoosen,
+      self.filterObj = {
+        pos_neg: self.x
       };
-      const filterKeys = Object.keys(filterObj);
-      return self.selectedArr.filter((item) => {
+      console.log(self.filterObj)
+      self.AllfilterFunction();
+    },
+    handleFilterData(arr, filterObj1) {
+      const filterKeys = Object.keys(filterObj1);
+      return arr.filter((item) => {
         return filterKeys.every((key) => {
-          if (!filterObj[key].length) {
+          if (!filterObj1[key].length) {
             return true;
           }
-          return !!~filterObj[key].indexOf(item.labels[key]);
+          return !!~filterObj1[key].indexOf(item.labels[key]);
         });
       });
     },
@@ -352,8 +427,33 @@ export default {
         rowObj.title = rowObj.text.substr(0, 10) + "...";
       }
     },
-    timeFilter: function (arr, startData, endData) {
+    scoreHtml: function(){
+      var output = document.getElementById("myRange").value;
+      document.getElementById('value').innerHTML = output;   
+    },
+    scoreFilter: function(arr){
       let self = this;
+      var value = document.getElementById("myRange").value;
+      arr = arr.filter((item) => {
+        return item.rating <= value
+      })
+      self.commentData = arr;
+      return self.commentData;
+    },
+    checkedFun: function (arr, chtags) {
+      var arr1 = [];
+      arr.forEach((item) => {
+          for(var j in chtags){
+            if(item.labels[chtags[j]] === 1){
+              arr1.push(item)
+              break
+            }
+          }
+      })      
+      return arr1;
+    },
+    timeFilter: function (arr, startData, endData) {
+      // let self = this;
       arr = arr.filter((item) => {
         return (
           Date.parse(Object.values(item.times)[1]) >=
@@ -361,50 +461,7 @@ export default {
           Date.parse(Object.values(item.times)[1]) <= Date.parse(endData._d)
         );
       });
-      self.competitionCommentList = arr;
-      return self.competitionCommentList;
-    },
-    checkedALLFilter: function (data) {
-      var self = this;
-      // 全選
-      if (self.checkedtagsALL === true && data === self.checkedtagsALL) {
-        $("input[name='label_checked_col[]']").prop("checked", true);
-        self.checkedtags = [];
-        self.labelchoose.forEach((item) => {
-          self.checkedtags.push(item.tag);
-        });
-        // 點其它時是全選
-      } else if (self.checkedtagsALL === true && data === self.checkedtags) {
-        self.checkedtagsALL = false;
-        $(event.target).prop("checked", false);
-        // 取消全選
-      } else if (self.checkedtagsALL !== true && data === self.checkedtagsALL) {
-        $("input[name='label_checked_col[]']").prop("checked", false);
-        self.checkedtags = [];
-        // 點其它時不是全選
-      } else if (self.checkedtagsALL !== true && data === self.checkedtags) {
-        $(event.target).prop("checked", false);
-      }
-      self.ALLFilterFunction();
-    },
-    checkedFun: function (arr, chtags) {
-      var arr1 = [];
-      arr.forEach((item) => {
-        for (var i in item.tags) {
-          var count = 0;
-          for (var j in chtags) {
-            if (item.tags[i] === chtags[j]) {
-              arr1.push(item);
-              count++;
-              break;
-            }
-          }
-          if (count !== 0) {
-            break;
-          }
-        }
-      });
-      return arr1;
+      return arr;
     },
     cb: function (start, end) {
       var self = this;
@@ -413,7 +470,7 @@ export default {
       );
       self.start = start;
       self.end = end;
-      this.timeFilter(self.selectedArr, self.start, self.end);
+      self.AllfilterFunction()
     },
     dateRange: function () {
       var moment = require("moment");
@@ -431,6 +488,7 @@ export default {
             "Last Month": [moment().subtract(30, "days"), moment()],
             "Last Six Months": [moment().subtract(6, "month"), moment()],
           },
+          showCustomRangeLabel: false
         },
         self.cb
       );
@@ -456,13 +514,11 @@ export default {
       self.oneTag = tag;
       if (tag === "all") {
         self.checkedtags = [];
-        $("input[name='label_checked_col[]']").prop("checked", true);
-        $("input[name='label_all']").prop("checked", true);
         $(".all").addClass("focus");
-        self.checkedtagsALL = false;
         self.labelchoose.forEach((item) => {
           $("." + item.field).removeClass("focus");
         });
+        $(".custom").removeClass("focus");
         self.competitionCommentList = self.selectedArr;
         return self.competitionCommentList;
       } else {
@@ -474,11 +530,11 @@ export default {
             $("." + item.field).removeClass("focus");
           }
         });
+        $(".custom").removeClass("focus");
         arrq = self.selectedArr.filter((item) => {
           return item.labels[tag] === 1;
         });
         self.competitionCommentList = arrq;
-        // self.oneTagData = arrq
         self.checkedtags = [];
         $("input[name='label_checked_col[]']").prop("checked", false);
         $("input[name='label_all']").prop("checked", false);
@@ -490,11 +546,15 @@ export default {
       let self = this;
       self.oneTag = "";
       event.stopPropagation();
-      $(".labelchoose").toggle("slow");
+      $(".all").removeClass("focus");
+      $(".custom").addClass("focus");
+      self.labelchoose.forEach((item) => {
+        $("." + item.field).removeClass("focus");
+      });
+      $(".labelchoose").slideToggle("slow");
       $(document).click(function (event) {
         var area = $(".labelchooseArea"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {
-          // $('#divTop').slideUp('slow');  //滑動消失
           $(".labelchoose").hide(1000); // 淡出消失
         }
       });

@@ -362,6 +362,7 @@ export default {
     addDepartment(){
       let self = this;
       var result = new Set();
+      self.departments = []
       self.hotels.forEach((item) => {
         result.has(item.department) ? '' : self.departments.push({field: item.department, value: item._id}) && result.add(item.department)
       })
@@ -456,6 +457,7 @@ export default {
     },
     createAccount: function () {
       let i;
+      let self = this
       // this.newAccount.companyName = 
       let newUser = this.newAccount;
       console.log("new");
