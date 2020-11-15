@@ -75,38 +75,68 @@
           </button>
         </div>
       </div>
-
+      <div class="buttonFunArea">
+        <div class="buttonArea">
+          <button class="editButton" @click="openFilter()">
+          <img src="../assets/icon/filter.png"/>
+          <span>篩選</span>
+          </button>
+          <button class="editButton" v-on:click="open()">
+            <img src="../assets/icon/add.png"/>
+            <span>新增使用者</span>
+          </button>
+          <button class="editButton " id="delete" v-on:click="deleteAccount()">
+            <img src="../assets/icon/delete.png"/>
+            <span>刪除使用者</span>
+          </button>
+          <button class="editButton clearALL" @click="clearALL()" >
+            <img src="../assets/icon/clear.png"/>
+            <span>全部清除</span>
+          </button>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+      </div>
       <!-- 手機版的選單 -->
-
+<!-- <el-select
+              placeholder="評論狀態設定"
+              class="custom_el_select"
+              v-model="conditionModify"
+            >
+              <el-option
+                v-for="item in conditions"
+                :key="item.value + 'editComment'"
+                :value="item.field"
+              ></el-option>
+            </el-select> -->
       <div slot="table-actions" class="account_select_phone">
         <div class="right_select">
-          <div class="dep">所屬單位</div>
-          <div class="limit">員工權限</div>
+          <!-- <div class="dep">所屬單位</div>
+          <div class="limit">員工權限</div> -->
           <div>
-            <select
+            <el-select
               v-model="chooseDepartment"
               class="selectBox"
-              v-on:click="selection()"
+              @change="selection()"
+              placeholder="請選擇部門"
             >
-              <option chooseDepartment>請選擇</option>
-              <option>資訊部</option>
-              <option>行銷部</option>
-            </select>
+              <el-option v-for="item in departments" :key="item.value" :value="item.field"></el-option>
+            </el-select>
           </div>
           <div>
-            <select
+            <el-select
               v-model="chooseLimit"
               class="selectBox"
-              v-on:click="selection()"
+              @change="selection()"
+              placeholder="請選擇權限"
             >
-              <option chooseLimit>請選擇</option>
-              <option>後台管理者</option>
-              <option>主管使用者</option>
-              <option>一般使用者</option>
-            </select>
+              <el-option value='後台管理者'>後台管理者</el-option>
+              <el-option value='主管使用者'>主管使用者</el-option>
+              <el-option value='一般使用者'>一般使用者</el-option>
+            </el-select>
           </div>
         </div>
-        <div class="left_btn">
+        <!-- <div class="left_btn">
           <div>
             <button class="functionButton" v-on:click="open()">新增</button>
           </div>
@@ -115,11 +145,12 @@
               刪除
             </button>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- 手機版的選單 -->
 
+      
       <vue-good-table
         class="el-table"
         styleClass="vgt-table striped"
@@ -132,7 +163,7 @@
         :select-options="{ enabled: true }"
         @on-cell-click="linkAccountDetial"
       >
-        <div slot="table-actions" class="account_select">
+        <!-- <div slot="table-actions" class="account_select">
           <span>所屬單位</span>
           <select
             v-model="chooseDepartment"
@@ -154,11 +185,12 @@
             <option>主管使用者</option>
             <option>一般使用者</option>
           </select>
+          
           <button class="functionButton" v-on:click="deleteAccount()">
             刪除
           </button>
           <button class="functionButton" v-on:click="open()">新增</button>
-        </div>
+        </div> -->
       </vue-good-table>
       <div class="clear"></div>
     </div>
@@ -170,6 +202,8 @@
 import axios from "axios";
 import dateTime from "../assets/js/dateTime";
 import util from "../assets/js/utility";
+import $ from "jquery";
+// import { filter } from 'vue/types/umd';
 
 export default {
   name: "accountList",
@@ -182,9 +216,10 @@ export default {
       allHtols:[],
       networkDataReceived: false,
       networkDataReceivedAll: false, 
-      chooseDepartment: "請選擇",
-      chooseLimit: "請選擇",
+      chooseDepartment: "",
+      chooseLimit: "",
       checkedAccount: [],
+      departments: [],
       // checkedAccount:勾選的，accountList:最後要顯示的
       accountList: [],
       newAccount: {
@@ -246,41 +281,47 @@ export default {
   },
   mounted() {
     let self = this;
+    let promises = [];
     var loginData = JSON.parse(localStorage.getItem("token"));
     var userID = loginData.id;
+    self.departments = [];
     if(loginData.limit != "後台管理者"){
       this.$router.push({ name: "competition" });
     }
-    axios
-      .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
-      .then((response) => {
-        this.logingAccount = response.data;
-        this.newAccount.companyName = this.logingAccount.companyName;
-        this.company = this.logingAccount.companyName;
+    promises.push(
+      axios
+        .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
+        .then((response) => {
+          this.logingAccount = response.data;
+          this.newAccount.companyName = this.logingAccount.companyName;
+          this.company = this.logingAccount.companyName;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
+    Promise.all(promises).then(() => {
+      axios
+        .get("https://hotelapi.im.nuk.edu.tw/api/account")
+        .then((response) => {
+          console.log('From web', response.data);
+          self.networkDataReceivedAll = true;
+          self.allHtols = response.data;
+          console.log(self.allHtols)
+          var num;
+          for(num=0; num< this.allHtols.length;num++){
+            if(this.allHtols[num].companyName === this.logingAccount.companyName){
+              self.hotels.push(this.allHtols[num]);
+            } 
+          }
+          self.addDepartment()
+          self.accountList = self.hotels;
       })
       .catch((error) => {
         console.log(error);
       });
+    })
 
-    axios
-      .get("https://hotelapi.im.nuk.edu.tw/api/account")
-      .then((response) => {
-        console.log('From web', response.data);
-        self.networkDataReceivedAll = true;
-        self.allHtols = response.data;
-        var num;
-        for(num=0; num< this.allHtols.length;num++){
-          if(this.allHtols[num].companyName === this.logingAccount.companyName){
-            self.hotels.push(this.allHtols[num]);
-          } 
-        }
-        self.accountList = self.hotels;
-
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    
     // var num;
     // for(num=0; num< this.allHtols.length;num++){
     //   if(this.allHtols[num].companyName === this.logingAccount.companyName){
@@ -312,17 +353,48 @@ export default {
     } 
   },
   methods: {
+    clearALL(){
+      let self = this;
+      self.chooseDepartment = '';
+      self.chooseLimit = ''
+      self.accountList = self.hotels
+    },
+    addDepartment(){
+      let self = this;
+      var result = new Set();
+      self.hotels.forEach((item) => {
+        result.has(item.department) ? '' : self.departments.push({field: item.department, value: item._id}) && result.add(item.department)
+      })
+    },
     selectionChanged(params) {
       let k;
       let self = this;
       this.checkedAccount = [];
       this.deleteEmployee = [];
       this.rowSelection = params.selectedRows;
+      if(this.rowSelection.length !== 0){
+        $('#delete').show()
+      }else{
+        $('#delete').hide()
+      }
       for (k = 0; k < self.rowSelection.length; k++) {
         this.checkedAccount.push(this.rowSelection[k]._id);
         this.deleteEmployee.push(this.rowSelection[k].employeeNumber);
         // console.log(this.checkedAccount._id);
       }
+    },
+    openFilter(){
+      let self = this;
+      self.close()
+      event.stopPropagation();
+      $(".account_select_phone").slideToggle("normal");
+      $(document).click(function (event) {
+        var area = $(".account_select_phone"); // 設定目標區域
+        if (!area.is(event.target) && area.has(event.target).length === 0) {
+          // $('#divTop').slideUp('slow');  //滑動消失
+          $(".account_select_phone").hide(500); // 淡出消失
+        }
+      });
     },
     linkAccountDetial(params) {
       let nowAccount = params.row;
@@ -409,6 +481,7 @@ export default {
             .then(() => {
               // this.accountList.push(newUser);
               this.hotels.push(newUser);
+              self.addDepartment()
               console.log(newUser);
               // this.searchResults.push(newUser);
               this.$fire({
@@ -446,39 +519,69 @@ export default {
       // console.log(newUser);
     },
     selection: function () {
-      let j;
-      //console.log("begineselection:"+this.accountList)
-      this.accountList = [];
-      for (j = 0; j < this.hotels.length; j++) {
-        if (
-          this.hotels[j].department == this.chooseDepartment &&
-          this.hotels[j].employeeLimit == this.chooseLimit
-        ) {
-          this.accountList.push(this.hotels[j]);
-        } else if (
-          this.hotels[j].department == this.chooseDepartment &&
-          this.chooseLimit == "請選擇"
-        ) {
-          this.accountList.push(this.hotels[j]);
-        } else if (
-          this.chooseDepartment == "請選擇" &&
-          this.hotels[j].employeeLimit == this.chooseLimit
-        ) {
-          this.accountList.push(this.hotels[j]);
-        } else if (
-          this.chooseDepartment == "請選擇" &&
-          this.chooseLimit == "請選擇"
-        ) {
-          this.accountList.push(this.hotels[j]);
+      let self = this
+      var arr = [];
+      if(self.chooseDepartment.length !== 0){
+        self.hotels.forEach((item) => {
+          if(item.department === self.chooseDepartment){
+            arr.push(item)
+          }
+        })
+        if(self.chooseLimit.length !== 0){
+          arr = arr.filter((item) => {
+            return item.employeeLimit === self.chooseLimit
+          })
         }
-        //console.log("inFor:accountList:"+this.accountList)
+      }else{
+        self.hotels.forEach((item) => {
+          if(item.employeeLimit === self.chooseLimit){
+            arr.push(item)
+          }
+        })
+        if(self.chooseDepartment.length !== 0){
+          arr = arr.filter((item) => {
+            return item.department === self.chooseDepartment
+          })
+        }
       }
-      //console.log("accountList:"+this.accountList)
-      //return this.accountList;
+      self.accountList = arr
+      return self.accountList
+      // console.log(arr)
+      // return self.hotels.filter((item) => {
+      //   return filterKeys.every((key) => {
+      //     if (!filterObj[key].length) {
+      //       return true;
+      //     }
+      //     return !!~filterObj[key].indexOf(item.labels[key]);
+      //   });
+      // });
+      // for (j = 0; j < this.hotels.length; j++) {
+      //   if (
+      //     this.hotels[j].department == this.chooseDepartment &&
+      //     this.hotels[j].employeeLimit == this.chooseLimit
+      //   ) {
+      //     this.accountList.push(this.hotels[j]);
+      //   } else if (
+      //     this.hotels[j].department == this.chooseDepartment &&
+      //     this.chooseLimit == "請選擇"
+      //   ) {
+      //     this.accountList.push(this.hotels[j]);
+      //   } else if (
+      //     this.chooseDepartment == "請選擇" &&
+      //     this.hotels[j].employeeLimit == this.chooseLimit
+      //   ) {
+      //     this.accountList.push(this.hotels[j]);
+      //   } else if (
+      //     this.chooseDepartment == "請選擇" &&
+      //     this.chooseLimit == "請選擇"
+      //   ) {
+      //     this.accountList.push(this.hotels[j]);
+      //   }
+      // }
     },
     close: function () {
       console.log("close");
-      document.getElementById("addNewUser").style.visibility = "hidden";
+      document.getElementById("addNewUser").style.display = "none";
       document.getElementById("employeeNumber").removeAttribute("required");
       document.getElementById("email").removeAttribute("required");
       document.getElementById("password").removeAttribute("required");
@@ -490,14 +593,24 @@ export default {
       this.newAccount.lastLoginDate = "New User";
       this.newAccount.lastLoginTime = "";
       this.newAccount.firstLogin = true;
-
     },
     open: function () {
       document.getElementById("employeeNumber").required = true;
       document.getElementById("email").required = true;
       document.getElementById("password").required = true;
       document.getElementById("userName").required = true;
-      document.getElementById("addNewUser").style.visibility = "visible";
+      event.stopPropagation();
+      $("#addNewUser").slideToggle("normal");
+      $(".account_select_phone").hide(500); // 淡出消失
+
+      $(document).click(function (event) {
+        var area = $("#addNewUser"); // 設定目標區域
+        if (!area.is(event.target) && area.has(event.target).length === 0) {
+          // $('#divTop').slideUp('slow');  //滑動消失
+          $("#addNewUser").hide(500); // 淡出消失
+        }
+      });
+      // document.getElementById("addNewUser").style.visibility = "visible";
     },
     deletedRecord: function () {
       console.log("deleteRecord");

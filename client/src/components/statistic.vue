@@ -172,7 +172,7 @@
           <div class="statisticWeb flex-1">
             <div class="statisticWebChild">
               <p class="allP1">各平台留言數量比例</p>
-              <doughnut-chart class="travel" :chart-data="this.webCommentcollection" :options="options2" style="width: 50%; height: 50%; margin-left: 40px;"></doughnut-chart>
+              <doughnut-chart class="travel" :chart-data="this.webCommentcollection" :options="options2" style="width: 50%; height: 50%; margin: auto;"></doughnut-chart>
               <div class="clear"></div>
             </div>
             <div class="clear"></div>
@@ -180,7 +180,7 @@
           <div class="statisticWeb flex-1">
             <div class="statisticWebChild">
               <p class="allP1">旅遊類型比例</p>
-              <doughnut-chart class="travel" :chart-data="this.tripTypecollection" :options="options2" style="width: 50%; height: 50%; margin-left: 40px;"></doughnut-chart>
+              <doughnut-chart class="travel" :chart-data="this.tripTypecollection" :options="options2" style="width: 50%; height: 50%; margin: auto;"></doughnut-chart>
               <div class="clear"></div>
             </div>
             <div class="clear"></div>
@@ -727,7 +727,7 @@ export default {
     momentChange(value) {
       var newValue = value + 1;
       if (newValue < 10) {
-        return "0" + newValue;
+        return parseInt("0" + newValue);
       } else {
         return newValue;
       }
@@ -909,10 +909,13 @@ export default {
         var x = self.months.filter((item) => {
           return item.field === self.chosenmonthData;
         });
+        console.log(x)
         self.statisticAllData
           .filter((item) => {
+            console.log(self.momentChange(moment(item.time)._d.getMonth()))
+            console.log(item)
             if (
-              self.momentChange(moment(item.time)._d.getMonth()) === x[0].month
+              self.momentChange(moment(item.time)._d.getMonth()) === parseInt(x[0].month)
             ) {
               self.RankFilterData.push(item);
               return item;
@@ -921,6 +924,7 @@ export default {
           .forEach((child) => {
             self.RangeLabelData.push(child.time);
           });
+          console.log(self.RankFilterData)
       } else {
         self.statisticAllData
           .filter((item) => {
@@ -1174,10 +1178,7 @@ export default {
       var data1 = [];
       if (value === 1 || value === 2) {
         arr = self.RankFilterData;
-        // console.log('//')
-        console.log(self.RankFilterData);
       } else {
-        // console.log('?/')
         arr = self.statisticAllData.filter((item) => {
           return (
             Date.parse(item.time) >= Date.parse(self.start._d) &&
@@ -1185,6 +1186,7 @@ export default {
           );
         });
       }
+      console.log(arr)
       arr.filter((item) => {
         item.data.filter((child) => {
           if (child.hotelName === self.companyName) {
@@ -1287,8 +1289,6 @@ export default {
       console.log(value);
       if (value === 2) {
         data = self.getSelfCompany(data);
-        console.log(data);
-
         data = data.websites_count.map((element) => {
           return element.number;
         });
@@ -1298,7 +1298,6 @@ export default {
         return element.number;
       });
       return data;
-      // console.log(data)
     },
     getTripTypesData(value, data) {
       let self = this;

@@ -660,7 +660,7 @@ export default {
     openFilter(){
       // let self = this;
       event.stopPropagation();
-      $(".MultiFilterArea").toggle("normal");
+      $(".MultiFilterArea").slideToggle("normal");
       $(document).click(function (event) {
         var area = $(".MultiFilterArea"); // 設定目標區域
         var area1 = $(".daterangepicker"); // 設定目標區域
@@ -877,7 +877,7 @@ export default {
     editFun: function () {
       // let self = this
       event.stopPropagation();
-      $(".edit").toggle("normal");
+      $(".edit").slideToggle("normal");
       $(document).click(function (event) {
         var area = $(".edit"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {
@@ -1018,7 +1018,7 @@ export default {
       self.labelchoose.forEach((item) => {
         $("." + item.field).removeClass("focus");
       });
-      $(".labelchoose").toggle("slow");
+      $(".labelchoose").slideToggle("slow");
       $(document).click(function (event) {
         var area = $(".labelchooseArea"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {

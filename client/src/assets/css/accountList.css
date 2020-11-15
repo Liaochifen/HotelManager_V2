@@ -1,3 +1,7 @@
+
+button:hover{
+  cursor: pointer;
+}
 /* function */
 .function{
   margin-right: 10%;
@@ -5,7 +9,7 @@
   font-size: 16px;
   line-height: 21px;
 }
-.selectBox{  
+/* .selectBox{  
   margin-right: 50px;
   margin-left: 5px;
   margin-top: 5px;
@@ -14,6 +18,15 @@
   border-radius: 3px;
   border-color: #707070;
   font-family: "微軟正黑體";
+} */
+.selectBox{
+  width: 160px !important;
+  height: 30px !important;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+#delete{
+  display: none;
 }
 .inputBox{
   float: right;
@@ -25,7 +38,7 @@
   font-family: "微軟正黑體";
   margin-left: 70px;
 }
-.functionButton{
+/* .functionButton{
   float: right;
   width: 55px;
   height: 22px;
@@ -40,7 +53,83 @@
   margin-top: 5px;
   font-family: "微軟正黑體";
   box-shadow: 0px 3px 6px #00000029;
+} */
+.buttonFunArea{
+  width: 100%;
+  /* margin-left: 66%; */
+  margin-bottom: 10px;
 }
+.buttonArea{
+  float: right;
+}
+.editButton{
+  all: unset;
+  position: relative;
+  right: 0px;
+  background: white;
+  /* width: 100px; */
+  height: 20px;
+  padding: 10px 5px;
+  margin-right: 10px;
+  border-radius: 3px;
+  vertical-align: bottom;
+  border: 0.5px solid rgb(233, 233, 233);
+  -webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
+}
+.editButton img{
+  height: 24px;
+  object-fit: contain;
+  margin: auto;
+  justify-content: center; 
+  margin-left: 5px;
+}
+.editButton span{
+  margin-left: 10px;
+  margin-right: 10px;
+  line-height: 24px;
+  vertical-align: top;
+  text-align: center;
+}
+.editButton:hover{
+  background-color: rgba(181, 240, 191, 0.747);
+  position:relative;
+  bottom: 2px;
+}
+.editButton:active{
+  -webkit-box-shadow: 2px 2px 0px #adadad;
+  -moz-box-shadow: 2px 2px 0px #adadad;
+  box-shadow: 1px 1px 0px #adadad;
+  position:relative;
+  top:1px;
+  left:1px;
+}
+.clearALL img{
+  width: 28px;
+  height: 24px;
+}
+/* .clearall{
+  all: unset;
+  display: inline-block;
+  height: 20px;
+  font-size: 12px;
+  padding: 10px 10px;
+  border-radius: 3px;
+  font-family: "Segoe UI";
+  letter-spacing: 1px;
+  border: 0.5px solid rgb(233, 233, 233);
+  background-color: #ffffff;
+  color: black;  
+  -webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	transition: all 0.5s;
+}
+.clearall:hover{
+  background-color: rgba(181, 240, 191, 0.747);
+  position:relative;
+  bottom: 2px;
+} */
 .accountList  td{
   padding: 0px 5px;
   border-top:#656565 solid 1.5px ;
@@ -76,8 +165,8 @@
   /* z-index: 1; */
 }
 #addNewUser{
-  /* display: none; */
-  visibility:hidden;
+  display: none;
+  /* visibility:hidden; */
   z-index:1;
 }
 .addAccount{
@@ -122,6 +211,14 @@
 }
 .account_select_phone{
   display: none;
+  width: 30%;
+  float: left;
+  margin-right: 2.5%;
+  margin-bottom: 10px;
+}
+.account_select_phone div{
+  display: inline-block;
+
 }
 @media (max-width: 768px) {
   .insideContent{

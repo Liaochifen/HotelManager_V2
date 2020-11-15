@@ -508,6 +508,7 @@ table {
 a {
   text-decoration: none;
 }
+
 .icons {
   width: 20px;
   height: 20px;
