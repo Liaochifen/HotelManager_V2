@@ -8,8 +8,6 @@ button:hover{
 }
 .buttonFunArea{
     width: 200px;
-    /* display: inline-block; */
-    /* padding-top: 20px; */
     margin-left: 85%;
     margin-bottom: 15px;
 }
@@ -48,16 +46,15 @@ button:hover{
     width: 100%;
     margin: auto;
     justify-content: center; 
-    /* text-align:  center; */
 }
 /* .editButton .editSpan{
     float: right;
     padding: 5px 5px 5px 3px;
 } */
-.editArea:hover{
+/* .editArea:hover{
     cursor: pointer;
     background-color: rgba(149, 188, 255, 0.425);
-}
+} */
 /* .edit{
     display: none;
     position: absolute;
@@ -88,9 +85,9 @@ button:hover{
     margin-left: 5px;
     font-size: 16px;
 } */
-.edit div{
+/* .edit div{
     display: inline-block;
-}
+} */
 .confirmButton{
     margin-left: 20px;
     margin-top: 15px;
@@ -132,7 +129,7 @@ button:hover{
     /* box-shadow: 0.5px 0.5px 2px #adadad; */
     font-family: "Segoe UI";
     letter-spacing: 1px;
-    border: 2px solid #000;
+  border: 2px solid rgb(122, 122, 122);
     background-color: #ffffff;
     color: black;
 }

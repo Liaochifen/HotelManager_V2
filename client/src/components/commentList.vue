@@ -128,17 +128,6 @@
           </ul>
         <div class="clear"></div>
         <div class="labelchooseArea">
-          <!-- <div class="labelchoose">
-            <input
-              type="checkbox"
-              name="label_all"
-              v-model="checkedtagsALL"
-              @change="checkedALLFilter(checkedtagsALL)"
-              id="checkALL"
-            />
-            <label for="checkALL">全選</label>
-            <div class="clear"></div>
-          </div> -->
           <div class="labelchoose" v-for="item in labelchoose" :key="item.field + 'mulTag'">
             <input
               type="checkbox"
@@ -284,24 +273,24 @@ export default {
       // currentPage: 1,
       // pagesize: 10,
       // filter area
-      ishandleFilterData: false,
-      isscoreFilterData: false,
-      TypescheckAll: false,
-      ConditioncheckAll: false,
-      ReplycheckAll: false,
+      // ishandleFilterData: false,
+      // isscoreFilterData: false,
+      // TypescheckAll: false,
+      // ConditioncheckAll: false,
+      // ReplycheckAll: false,
       // 選取數量為不確定:true
-      TypesIndeterminate: null,
-      ConditionIndeterminate: null,
-      ReplyIndeterminate: null,
+      // TypesIndeterminate: null,
+      // ConditionIndeterminate: null,
+      // ReplyIndeterminate: null,
       titleField: "",
-      resourceName: [
-        "Trip",
-        "Hotels",
-        "Agoda",
-        "Booking",
-        "TripAdvisor",
-        "Expedia",
-      ],
+      // resourceName: [
+      //   "Trip",
+      //   "Hotels",
+      //   "Agoda",
+      //   "Booking",
+      //   "TripAdvisor",
+      //   "Expedia",
+      // ],
       labelchoose: [
         {
           label: "餐飲",
@@ -614,14 +603,14 @@ export default {
       self.z = '';
       self.oneTag = '';
       self.oneTagData = '';
-      this.TypescheckAll = null;
-      this.ConditioncheckAll = null;
-      this.ReplycheckAll = null;
-      this.TypesIndeterminate = null;
-      this.ConditionIndeterminate = null;
-      this.ReplyIndeterminate = null;
-      this.ishandleFilterData = false;
-      this.isscoreFilterData = false;
+      // this.TypescheckAll = null;
+      // this.ConditioncheckAll = null;
+      // this.ReplycheckAll = null;
+      // this.TypesIndeterminate = null;
+      // this.ConditionIndeterminate = null;
+      // this.ReplyIndeterminate = null;
+      // this.ishandleFilterData = false;
+      // this.isscoreFilterData = false;
       document.getElementById("myRange").value = 0
       document.getElementById('value').innerHTML = 0;
       $(".all").removeClass("focus");
@@ -661,7 +650,7 @@ export default {
     openFilter(){
       // let self = this;
       event.stopPropagation();
-      $(".MultiFilterArea").toggle("normal");
+      $(".MultiFilterArea").slideToggle("normal");
       $(document).click(function (event) {
         var area = $(".MultiFilterArea"); // 設定目標區域
         var area1 = $(".daterangepicker"); // 設定目標區域
@@ -673,11 +662,6 @@ export default {
     },
     handleCheckedChange(value) {
       let self = this;
-      // var filterObj = {
-      //   pos_neg: '',
-      //   condition: '',
-      //   reply: '',
-      // };
       if (value === 0) {
         self.x = self.typeChoosen;
         if(self.x !== '全選'){
@@ -720,9 +704,9 @@ export default {
       self.AllfilterFunction();
     },
     handleFilterData(arr, filterObj1) {
-      let self = this;
+      // let self = this;
       // var arr1 = [];
-      self.ishandleFilterData = true
+      // self.ishandleFilterData = true
       // if (self.oneTag.length !== 0 && self.oneTag !== 'all') {
       //   arr1 = self.selectedArr.filter((item) => {
       //     return item.labels[self.oneTag] === 1;
@@ -732,7 +716,7 @@ export default {
       // }
       const filterKeys = Object.keys(filterObj1);
       return arr.filter((item) => {
-        self.ishandleFilterData = false
+        // self.ishandleFilterData = false
         return filterKeys.every((key) => {
           if (!filterObj1[key].length) {
             return true;
@@ -878,7 +862,7 @@ export default {
     editFun: function () {
       // let self = this
       event.stopPropagation();
-      $(".edit").toggle("normal");
+      $(".edit").slideToggle("normal");
       $(document).click(function (event) {
         var area = $(".edit"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {
@@ -1019,7 +1003,7 @@ export default {
       self.labelchoose.forEach((item) => {
         $("." + item.field).removeClass("focus");
       });
-      $(".labelchoose").toggle("slow");
+      $(".labelchoose").slideToggle("slow");
       $(document).click(function (event) {
         var area = $(".labelchooseArea"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {

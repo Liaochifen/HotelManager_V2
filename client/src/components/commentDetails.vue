@@ -250,7 +250,6 @@ export default {
           self.tagsModifytoHistory.new = item.label
         }
       })
-      console.log(TagsDel)
       self.commentData.labels[TagsDel] = 0;
       self.newComment = self.commentData;
       // self.updataComment()
