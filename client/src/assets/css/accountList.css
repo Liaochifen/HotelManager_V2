@@ -377,7 +377,30 @@ button:hover{
   .add_btn{
     text-align: center;
   }
-
+  #add_user{
+    all:unset;
+    background: white;
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    border: 1px solid rgb(233, 233, 233);
+    bottom: 60px;
+    right: 20px;
+    z-index: 1;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 1px 2px 6px rgb(199, 195, 195);
+  }
+  
+  #add_user img{
+    margin: 0;
+  }
+  #add_user span{
+    display: none;
+  }
 }
 @media (max-width: 600px) {
   .input{
@@ -400,17 +423,6 @@ button:hover{
   .display{
     display: none;
   }
-  #add_user{
-    position: fixed;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    text-align: center;
-    border: 1px dashed rgb(199, 195, 195);
-    bottom: 60px;
-    right: 20px;
-    z-index: 1;
-    outline: none;
-  }
+  
   
 }

@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="contentCenter">
-      <span class="selection_btn_phone" @click="filter_phone">篩選</span>
+      <!-- <span class="selection_btn_phone" @click="filter_phone">篩選</span>
       <div class="selection_phone">
         <span class="select_btn1" @click="filter_phone">篩選一</span>
         <span class="select_btn2" @click="filter_phone">篩選二</span>
-      </div>
+      </div> -->
       <div class="page">
         <span>評論列表</span>
         <!-- <button @click="askForNotificationPermission">Notification</button> -->

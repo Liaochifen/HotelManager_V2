@@ -1,9 +1,19 @@
 <template>
   <div class="historyContent">
-    <button @click="changePage(0)" class="pageButton0 pageButtonStart">評論動態</button>
-    <button @click="changePage(1)" class="pageButton1">個人動態</button>
-    <button @click="changePage(2)" class="pageButton2" id="userInfoRecord">紀錄</button>
+    <div class="contentCenter">
+      <div class="page">
+        <span>歷史紀錄</span>
+      </div>
+    </div>
+    <button @click="changePage(0)" class="pageButton0 pageButtonStart phone_none">評論動態</button>
+    <button @click="changePage(1)" class="pageButton1 phone_none">個人動態</button>
+    <button @click="changePage(2)" class="pageButton2 phone_none" id="userInfoRecord">紀錄</button>
     <div class="clear"></div>
+    <div class="history_list_phone">
+      <button @click="changePage(0)" class="pageButton0 pageButtonStart">評論動態</button>
+      <button @click="changePage(1)" class="pageButton1">個人動態</button>
+      <button @click="changePage(2)" class="pageButton2" id="userInfoRecord">帳號紀錄</button>
+    </div>
     <div class="historydataArea">
       <!-- 後臺管理員區塊 -->
       <!-- <template v-if="===123>"> -->

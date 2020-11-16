@@ -1,5 +1,10 @@
 <template lang="html">
       <div class="statistic_content">
+        <div class="contentCenter">
+          <div class="page">
+            <span>統計結果</span>
+          </div>
+        </div>
         <div class="RealTime">
           <p>即時</p>
           <ul>

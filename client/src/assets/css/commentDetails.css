@@ -318,14 +318,12 @@ label{
 .clear{
     clear: both;
 }
-.commentInfo_phone{
-    display: none;
-}
 
-@media (max-width: 425px) {
-    /* .page{
-        margin: 0 auto;
-    } */
+
+@media (max-width: 768px) {
+    .page{
+        margin-left: -54px;
+    }
     .dataArea{
         top: 39px;
         margin: 20px 0 40px 0;
@@ -371,14 +369,11 @@ label{
        box-sizing: border-box;
    }
    .MultiFilterArea1{
-       display: none;
-       
+       display: flex;
        flex-direction: column;
        padding-bottom: 5%;
    }
-   .MultiFilterArea1.active{
-       display: flex;
-   }
+   
    
    .manageConditionDiv{
         padding-top: 0;
@@ -390,6 +385,8 @@ label{
    .filterP1{
        margin: 2%;
    }
+
+   /* 競爭對手的評論詳細內容 */
 }
 @media (max-width: 320px){
     .MainComment span{

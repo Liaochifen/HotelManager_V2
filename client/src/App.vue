@@ -218,19 +218,52 @@
       <router-view></router-view>
     </div>
     <div class="clear"></div>
+
     <div class="footer">
       <ul class="phoneMenu">
-        <li>
-          <a href="#"><img class="icons" src="./assets/icon/account.png" alt="" /></a>
+        <li> 
+          <router-link
+            :to="{
+              name: 'competition',
+            }"
+            ><img class="icons"
+              src="./assets/icon/comment.png"
+              alt=""
+            /></router-link
+          >
+        </li>
+        <li id="statisticalResults">
+          <router-link
+            :to="{
+              name: 'statistic',
+              params: { collections: companyName },
+            }"
+            ><img class="icons"
+              src="./assets/icon/statistics.png"
+              alt=""
+            /></router-link
+          >
+        </li>
+        
+        <li id="accountManage">
+              <router-link :to="{ name: 'accountList' }"
+                ><img class="icons"
+                  src="./assets/icon/account.png"
+                  alt=""
+                /></router-link
+              >
         </li>
         <li>
-          <a href="#"><img class="icons" src="./assets/icon/statistics.png" alt="" /></a>
+          <router-link
+            :to="{ name: 'history', params: { company: companyName } }"
+            ><img  class="icons"
+              src="./assets/icon/history.png"
+              alt=""
+            /></router-link
+          >
         </li>
         <li>
-          <a href="#"><img class="icons" src="./assets/icon/history.png" alt="" /></a>
-        </li>
-        <li>
-          <a href="#"><img class="icons" src="./assets/icon/account.png" alt="" /></a>
+          <a href="#" v-on:click="link('accountDetial')"><img class="icons" src="./assets/icon/account.png" alt="" /></a>
         </li>
       </ul>
       <div class="clear"></div>
@@ -744,10 +777,11 @@ a {
     margin: 0;
     position: fixed;
     z-index: 1;
-    top: 11px;
+    top: 12px;
+    /* text-align: center; */
     left: 50%;
-    margin-left: -54px;
-    color: white;
+    /* margin-left: -25px; */
+    /* color: white; */
   }
   .header {
     height: 0;
@@ -884,19 +918,19 @@ a {
   }
   .phoneMenu {
     width: 100%;
-    display: block;
+    /* display: block; */
     position: fixed;
     bottom: 0;
-    text-align: center;
+    /* text-align: center; */
     /* background-color: rgb(47, 58, 76); */
     background-color: #fff;
     border-top: 0.3px solid rgb(221, 221, 221);
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
   }
   .phoneMenu li {
-    width: 20%;
-    padding-top: 5px;
-    /* padding-bottom: 5px; */
-    float: left;
+    margin: 5px 0;
     text-align: center;
   }
   .phoneMenu button{
