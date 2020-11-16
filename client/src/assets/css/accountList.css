@@ -183,8 +183,8 @@ button:hover{
   border: 1px solid rgb(197, 197, 197);
   box-shadow: 1px 2px 2px #adadad;
   border-radius: 5px;
-  margin-left: 150px;
-  margin-top: 50px;
+  margin-left: 125px;
+  margin-top: 25px;
   background-color: #ffffff;
   position: absolute;
   z-index: 1000;

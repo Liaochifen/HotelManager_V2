@@ -306,7 +306,6 @@ export default {
     var moment = require("moment");
     var start = moment().subtract(24, "month");
     var end = moment();
-    // console.log(self.companyID)
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/comment/" + self.companyName)
       .then((response) => {

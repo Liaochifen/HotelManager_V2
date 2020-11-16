@@ -12,19 +12,19 @@
                 <template v-if="item.hotelName === companyName">
                     <div class="eachCompany myCompany">
                       <div class="rank">{{item.rank}}</div>
-                      <span v-if="item.favorite === true" class="favoriteArea">
+                      <!-- <span v-if="item.favorite === true" class="favoriteArea">
                         <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
                           <span class="btn-box">
                             <span class="btn1"></span>
                           </span>
                         </span>
                         <span v-else-if="item.favorite === false" class="favoriteArea">
-                            <!-- :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
+                            :name="[props.row.companyID]" :value="[props.row.companyID]" 
                           <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
                           <span class="btn-box">
                             <span class="btn"></span>
                           </span>
-                      </span>
+                      </span> -->
                       <router-link :to="{name: fn(item.hotelName), params: {collections: item.hotelName}}">
                       <div class="details">
                         <img src="https://fakeimg.pl/230x165/">

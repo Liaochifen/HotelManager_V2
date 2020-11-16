@@ -7,34 +7,113 @@
     <div class="historydataArea">
       <template>
         <span v-if="page === 0">
-          <template>
-            <div>
+          <button @click="publicManage(0)">評論狀態動態</button>
+          <button @click="publicManage(1)">評論標籤動態</button>
+          <button @click="publicManage(2)">評論回覆動態</button>
+          <!-- <template> -->
+            <!-- <div> -->
               <!-- .condition -->
-              <div v-for="(item, index) in commentFilter[0].condition" :key="index+'con'" class="commentArea">
-                <!-- 放大頭照 -->
-                <!-- <p>{{item.employeeNumber}}</p> -->
-                <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
-                <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
-                <!-- 手機板變成在評論底下，縮小 -->
-                <span class="commentTimeHistory">{{item.time}}</span>
+              <div v-if="publicPage === 0">
+                <span v-if="commentFilter.length === 0">
+                  <p>無任何記錄</p>
+                </span>
+                <span v-else-if="commentFilter.length !== 0">
+                  <div v-for="(item, index) in commentFilter" :key="index+'con'" class="commentArea">
+                  <!-- 放大頭照 -->
+                  <!-- <p>{{item.employeeNumber}}</p> -->
+                    <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                    <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
+                    <!-- 手機板變成在評論底下，縮小 -->
+                    <span class="commentTimeHistory">{{item.time}}</span>
+                  </div>
+                </span>
               </div>
-              <div v-for="(item, index1) in commentFilter[0].tags" :key="index1+'tag'" class="commentArea">
-                <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
-                <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
-                <span class="commentTimeHistory">{{item.time}}</span>
+              <div v-else-if="publicPage === 1"> 
+                <span v-if="tagsFilter.length === 0">
+                  <p>無任何記錄</p>
+                </span>
+                <span v-else-if="tagsFilter.length !== 0">
+                  <div v-for="(item, index1) in tagsFilter" :key="index1+'tag'" class="commentArea">
+                    <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                    <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
+                    <span class="commentTimeHistory">{{item.time}}</span>
+                  </div>
+                </span>
               </div>
-            </div>
-          </template>
+              <div v-else-if="publicPage === 2"> 
+                <span v-if="replyFIlter.length === 0">
+                  <p>無任何記錄</p>
+                </span>
+                <span v-else-if="replyFIlter.length !== 0">
+                  <div v-for="(item, index1) in replyFIlter" :key="index1+'tag'" class="commentArea">
+                    <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                    <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>的回覆狀態從"{{item.old}}"{{item.modify}}成"{{item.new}}"</span>
+                    <span class="commentTimeHistory">{{item.time}}</span>
+                  </div>
+                </span>
+              </div>
+            <!-- </div> -->
+          <!-- </template> -->
         </span>
         <span v-else-if="page === 1">
           <p>個人動態</p>
-          <!-- <template>
-            <div v-for="(item,index) in personFilter" :key="index+'person'">
-              <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
-              <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
-
-            </div>
-          </template> -->
+          <button @click="personalManage(0)">評論狀態動態</button>
+          <button @click="personalManage(1)">評論標籤動態</button>
+          <button @click="personalManage(2)">我的最愛動態</button>
+          <div v-if="personalPage === 0">
+            <span v-if="personalCommentFilter.length === 0">
+              <p>無任何記錄</p>
+            </span>
+            <span v-else-if="personalCommentFilter.length !== 0">
+              <div v-for="(item, index) in personalCommentFilter" :key="index+'conPer'" class="commentArea">
+                <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
+                <span class="commentTimeHistory">{{item.time}}</span>
+              </div>
+            </span>
+          </div>
+          <div v-else-if="personalPage === 1">
+            <span v-if="personalTagFilter.length === 0">
+              <p>無任何記錄</p>
+            </span>
+            <span v-else-if="personalTagFilter.length !== 0">
+              <div v-for="(item, index) in personalTagFilter" :key="index+'tagPer'" class="commentArea">
+                <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                    <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
+                <span class="commentTimeHistory">{{item.time}}</span>
+              </div>
+            </span>
+          </div>
+          <div v-else-if="personalPage === 2">
+            <span v-if="personalFavFilter.length === 0">
+              <p>無任何記錄</p>
+            </span>
+            <span v-else-if="personalFavFilter.length !== 0">
+              <div v-for="(item, index) in personalFavFilter" :key="index+'favPer'" class="commentArea">
+                <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                <span v-if="item.modify === '移除'">
+                  <span class="commentHistoryContent">將<router-link :to="{ name: 'competitionCommentList', params: { collections: item.company }}">{{item.hotelChineseName}}</router-link>從我的最愛中{{item.modify}}</span>
+                  <span class="commentTimeHistory">{{item.time}}</span>
+                </span>
+                <span v-else-if="item.modify === '加入'">
+                  <span class="commentHistoryContent">將<router-link :to="{ name: 'competitionCommentList', params: { collections: item.company }}">{{item.hotelChineseName}}</router-link>{{item.modify}}我的最愛</span>
+                  <span class="commentTimeHistory">{{item.time}}</span>
+                </span>
+              </div>
+            </span>
+          </div>
+          <div v-else-if="personalPage === 3">
+            <span v-if="personalFavFilter.length === 0">
+              <p>無任何記錄</p>
+            </span>
+            <span v-else-if="replyFIlter.length !== 0">
+              <div v-for="(item, index1) in replyFIlter" :key="index1+'tag'" class="commentArea">
+                <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>的回覆狀態從"{{item.old}}"{{item.modify}}成"{{item.new}}"</span>
+                <span class="commentTimeHistory">{{item.time}}</span>
+              </div>
+            </span>
+          </div>
         </span>
         <span v-else-if="page === 2">
           <p>後臺管理員部分</p>
@@ -81,6 +160,48 @@
               <span class="commentTimeHistory">{{item.time}}</span>
             </div>
           </div>
+          <div v-else-if="userInfoPage === 5">
+            <span v-if="personalCommentFilter.length === 0">
+              <p>無任何記錄</p>
+            </span>
+            <span v-else-if="personalCommentFilter.length !== 0">
+              <div v-for="(item, index) in personalCommentFilter" :key="index+'conPer'" class="commentArea">
+                <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
+                <span class="commentTimeHistory">{{item.time}}</span>
+              </div>
+            </span>
+          </div>
+          <div v-else-if="userInfoPage === 6">
+            <span v-if="personalTagFilter.length === 0">
+              <p>無任何記錄</p>
+            </span>
+            <span v-else-if="personalTagFilter.length !== 0">
+              <div v-for="(item, index) in personalTagFilter" :key="index+'tagPer'" class="commentArea">
+                <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                    <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
+                <span class="commentTimeHistory">{{item.time}}</span>
+              </div>
+            </span>
+          </div>
+          <div v-else-if="userInfoPage === 7">
+            <span v-if="personalFavFilter.length === 0">
+              <p>無任何記錄</p>
+            </span>
+            <span v-else-if="personalFavFilter.length !== 0">
+              <div v-for="(item, index) in personalFavFilter" :key="index+'favPer'" class="commentArea">
+                <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                <span v-if="item.modify === '移除'">
+                  <span class="commentHistoryContent">將{{item.company}}從我的最愛中{{item.modify}}</span>
+                  <span class="commentTimeHistory">{{item.time}}</span>
+                </span>
+                <span v-else-if="item.modify === '加入'">
+                  <span class="commentHistoryContent">將{{item.company}}{{item.modify}}我的最愛</span>
+                  <span class="commentTimeHistory">{{item.time}}</span>
+                </span>
+              </div>
+            </span>
+          </div>
         </span>
       </template>
     <div class="clear"></div>
@@ -100,12 +221,13 @@ export default {
       employeeNumber: '',
       historyData: [],
       commentFilter: [],
-      personFilter: [],
-      // logout: {
-      //   employeeNumber: "info01",
-      //   logoutTime: "2020/10/11",
-      // },
-      // page === 0 顯示評論動態，page === 1顯示個人動態
+      tagsFilter: [],
+      favoriteFilter: [],
+      replyFIlter: [],
+      personalFavFilter: [],
+      personalCommentFilter: [],
+      personalReplyFilter: [],
+      personalTagFilter: [],
       page: 0,
       loginNew:[],
       logoutNew:[],
@@ -113,6 +235,50 @@ export default {
       userDetailModifyNew:[],
       userListModifyNew:[],
       userInfoPage:0,
+      personalPage: 0,
+      publicPage: 0,
+      companyList: [
+        {
+          field: "GrandHotelTaipei",
+          label: "台北圓山大飯店"
+        },
+        {
+          field: "GrandHyattTaipei",
+          label: "台北君悅酒店"
+        },
+        {
+          field: "RegentTaipei",
+          label: "台北晶華酒店"
+        },
+        {
+          field: "W_Taipei",
+          label: "台北W飯店"
+        },
+        {
+          field: "RoyalNikkoTaipei",
+          label: "台北老爺大酒店"
+        },
+        {
+          field: "PalaisDeChineHotel",
+          label: "君品酒店"
+        },
+        {
+          field: "EasternPlazaHotelTaipei",
+          label: "香格里拉台北遠東國際大飯店"
+        },
+        {
+          field: "SheratonGrandTaipei",
+          label: "台北喜來登大飯店"
+        },
+        {
+          field: "OkuraPrestigeTaipei",
+          label: "大倉久和大飯店"
+        },
+        {
+          field: "GaiaHotelTaipei",
+          label: "大地酒店"
+        }
+      ],
     };
   },
   mounted() {
@@ -146,26 +312,35 @@ export default {
         self.userNew=self.historyData.user;
         self.userDetailModifyNew=self.historyData.userDetailModify;
         self.userListModifyNew=self.historyData.UserListModify;
-        self.commentFilter.push({
-          condition: self.historyData.condition,
-          tags: self.historyData.tags
-        })
-        self.commentFilter[0].condition.filter((item) => {
+        self.commentFilter = self.historyData.condition;
+        self.tagsFilter = self.historyData.tags;
+        self.favoriteFilter = self.historyData.favorite
+        self.replyFIlter = self.historyData.reply
+        // self.commentFilter.push({
+        //   condition: self.historyData.condition,
+        //   tags: self.historyData.tags
+        // })
+        self.commentFilter.filter((item) => {
           if(item.employeeNumber === self.employeeNumber){
-            self.personFilter.push(item)
+            self.personalCommentFilter.push(item)
           }
         })
-        self.commentFilter[0].tags.filter((item) => {
+        self.tagsFilter.filter((item) => {
           if(item.employeeNumber === self.employeeNumber){
-            self.personFilter.push(item)
+            self.personalTagFilter.push(item)
           }
         })
-        self.historyData.favorite.filter((item) => {
+        self.favoriteFilter.filter((item) => {
           if(item.employeeNumber === self.employeeNumber){
-            self.personFilter.push(item)
+            self.personalFavFilter.push(item)
           }
         })
-        self.commentFilter[0].condition.forEach((item) => {
+        self.replyFIlter.filter((item) => {
+          if(item.employeeNumber === self.employeeNumber){
+            self.personalReplyFilter.push(item)
+          }
+        })
+        self.commentFilter.forEach((item) => {
           arr.filter((child) => {
             if(item[child] === 0){
               item[child] = '未處理'
@@ -175,6 +350,13 @@ export default {
             }
             if(item[child] === 2){
               item[child] = '已完成'
+            }
+          })
+        })
+        self.favoriteFilter.forEach((item) => {
+          self.companyList.filter((child) => {
+            if(child.field === item.company){
+              item['hotelChineseName'] = child.label
             }
           })
         })
@@ -235,6 +417,12 @@ export default {
 
     manager:function(page){
       this.userInfoPage = page;
+    },
+    personalManage: function(page){
+      this.personalPage = page;
+    },
+    publicManage: function(page){
+      this.publicPage = page;
     }
   },
 };

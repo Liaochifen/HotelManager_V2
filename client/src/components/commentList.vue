@@ -3,11 +3,11 @@
 
   <div>
     <div class="contentCenter" id="maindiv">
-      <span class="selection_btn_phone" @click="filter_phone">篩選</span>
+      <!-- <span class="selection_btn_phone" @click="filter_phone">篩選</span>
       <div class="selection_phone">
         <span class="select_btn1" @click="filter_phone">篩選一</span>
         <span class="select_btn2" @click="filter_phone">篩選二</span>
-      </div>
+      </div> -->
       <div class="page">
         <span>評論列表</span>
         <!-- <button @click="askForNotificationPermission">Notification</button> -->
@@ -51,7 +51,7 @@
             </el-select>
           </div>
           <div class="add_btn">
-            <button class="functionButton deleteBTN" id="tableActionsBtn" @click="editUpdate()">確認</button>
+            <button class="functionButton deleteBTN" id="tableActionsBtn" @click="editUpdate(conditionModify, replyModify)">確認</button>
             <button class="functionButton deleteBTN" id="tableActionsBtn" @click="editCCancle()">取消</button>
           <div class="clear"></div>
         </div>
@@ -435,6 +435,15 @@ export default {
         old: '',
         new: ''
       },
+      replyModifytoHistory: {
+        employeeNumber: '',
+        commentID: '',
+        title: '',
+        modify: '',
+        time: '',
+        old: '',
+        new: ''
+      },
       typeChoosen: "",
       replyChoosen: "",
       replyModify: "",
@@ -701,6 +710,8 @@ export default {
       self.checkedtags = [];
       self.commentData = self.selectedArr;
       $("#reportrange span").html("時間");
+      self.conditionModify = '';
+      self.replyModify = '';
       return self.commentData;
     },
     clearALLInFilter() {
@@ -979,16 +990,16 @@ export default {
         }
       });
     },
-    editUpdate: function () {
+    editUpdate: function (value, value1) {
       let self = this;
-      if (self.conditionModify === "未處理") {
-        self.conditionModify = 0;
-      } else if (self.conditionModify === "處理中") {
-        self.conditionModify = 1;
+      var x = ''
+      if (value === "未處理") {
+        x = 0;
+      } else if (value === "處理中") {
+        x = 1;
       } else {
-        self.conditionModify = 2;
+        x = 2;
       }
-      var x = self.conditionModify
       self.conditionModifytoHistory.new = x
       if (x.length !== 0) {
         self.$refs["commentdataTable"].selectedRows.forEach((item) => {
@@ -1001,9 +1012,26 @@ export default {
             item.labels.condition = x;
             self.newComment = item;
             self.updateComment(item._id);
-            self.updateHistory()
+            self.updateHistory(0)
           }
         });
+      }
+      self.replyModifytoHistory.new = value1
+      if (value1.length !== 0) {
+        self.$refs["commentdataTable"].selectedRows.forEach((item) => {
+            self.replyModifytoHistory.old = item.labels.reply
+            self.replyModifytoHistory.commentID = item._id
+            self.replyModifytoHistory.title = item.text.substr(0, 10) + "..."
+            item.labels.reply = value1;
+            self.newComment = item;
+            self.updateComment(item._id);
+            self.updateHistory(1)
+        });
+        if(self.replyModifytoHistory.old === 0){
+          self.replyModifytoHistory.old = '否'
+        }else{
+          self.replyModifytoHistory.old = '是'
+        }
       }
     },
     updateComment: function (id) {
@@ -1044,17 +1072,30 @@ export default {
 
       self.editCancle();
     },
-    updateHistory: function(){
+    updateHistory: function(value){
       let self = this
-      let record = 'condition'
       self.conditionModifytoHistory.time = dateTime.recordDate() + " " + dateTime.recordTime();
       self.conditionModifytoHistory.employeeNumber = self.employeeNumber
       self.conditionModifytoHistory.modify = '修改'
-      axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" + self.companyName + '/' + record, self.conditionModifytoHistory).then((response) => {
-        console.log(response)
-      }).catch((error) => {
-        console.log(error)
-      })
+      self.replyModifytoHistory.time = dateTime.recordDate() + " " + dateTime.recordTime();
+      self.replyModifytoHistory.employeeNumber = self.employeeNumber
+      self.replyModifytoHistory.modify = '修改'
+      if(value === 0){
+        let record = 'condition'
+        axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" + self.companyName + '/' + record, self.conditionModifytoHistory).then((response) => {
+          console.log(response)
+        }).catch((error) => {
+          console.log(error)
+        })
+      }else if(value === 1){
+        let record = 'reply'
+        axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" + self.companyName + '/' + record, self.replyModifytoHistory).then((response) => {
+          console.log(response)
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+      
     },
     editCancle: function () {
       let self = this;

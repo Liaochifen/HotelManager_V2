@@ -40,8 +40,7 @@
           </div>
           <div class="input">
             <select v-model="newAccount.department" class="addSelect">
-              <option>資訊部</option>
-              <option>行銷部</option>
+              <option v-for="item in departments" :key="item.value" :value="item.field">{{item.field}}</option>
             </select>
             <span>所屬單位&nbsp;: &nbsp;</span>
             <div class="clear"></div>
@@ -377,6 +376,27 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+      if ("indexedDB" in window) {
+        console.log("Reading indexedDB...");
+        util.readAllData("account").then(function (data) {
+          if (!self.networkDataReceivedAll) {
+            console.log("From cache", data);
+            self.hotels = data;
+            self.accountList = self.hotels;
+          }
+          if (!self.networkDataReceived) {
+            for (let i = 0; i < self.hotels.length; i++) {
+              if (data[i]._id === userID) {
+                console.log("From web", data[i]);
+                self.logingAccount = data[i];
+                self.newAccount.companyName = self.logingAccount.companyName;
+                self.company = self.logingAccount.companyName;
+                break;
+              }
+            }
+          }
+        });
+      }
     })
 
     // var num;
@@ -386,28 +406,7 @@ export default {
     //   }
     //   self.accountList = self.hotels;
     // }
-    
-    if ("indexedDB" in window) {
-      console.log("Reading indexedDB...");
-      util.readAllData("account").then(function (data) {
-        if (!self.networkDataReceivedAll) {
-          console.log("From cache", data);
-          self.hotels = data;
-          self.accountList = self.hotels;
-        }
-        if (!self.networkDataReceived) {
-          for (let i = 0; i < self.hotels.length; i++) {
-            if (data[i]._id === userID) {
-              console.log("From web", data[i]);
-              self.logingAccount = data[i];
-              self.newAccount.companyName = self.logingAccount.companyName;
-              self.company = self.logingAccount.companyName;
-              break;
-            }
-          }
-        }
-      });
-    }
+
     var _this = this
     window.onresize = function () {
       _this.window_width = document.documentElement.clientWidth 
