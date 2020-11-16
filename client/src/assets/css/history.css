@@ -54,3 +54,41 @@
 .clear{
     clear:both;
 }
+.history_list_phone{
+    display: none;
+}
+.contentCenter{
+    display: none;
+}
+@media (max-width: 768px) {
+    .contentCenter{
+        display: block;
+    }  
+    .page{
+        margin-left: -36px;
+    } 
+    .historyContent{
+        margin: 0;
+        width: 100%;
+        margin-top: 76px;
+    }
+    .phone_none{
+        display: none;
+    }
+    .history_list_phone{
+        width: 100%;
+        position: fixed;
+        top: 39px;
+        display: flex;
+        justify-content: space-around;
+    }
+    .history_list_phone button{
+        background: white;
+        display: block;
+        /* width: 34%; */
+        margin: 0;
+        text-align: center;
+        padding: 10px 0;
+        flex: 1;
+    }
+}

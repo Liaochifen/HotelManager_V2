@@ -187,19 +187,48 @@ button{
         margin: 0 5%;
         width: 90%;
     }
-    .dataArea{
+    .dataArea1{
         width: 100%;
-        margin: 0;
-        margin-bottom: 50px;
+        margin: 60px 0 40px 0;
+        text-align: center;
+        /* margin-bottom: 50px; */
     }
     .contentCenter{
         width: 100%;
         margin-top: 30px;
     }
-    /* .page{
-        font-size: 25px;
-        font-weight: bold;
-        margin-top: 30px;  
-        margin-right: 20%;
-    } */
+    .page{
+        margin-left: -54px;
+    }
+    .eachCompany{
+        width: 90%;
+        height: unset;
+        padding: 0;
+        padding-bottom: 20px;
+    }
+    .eachCompany:hover{
+        /* all:unset; */
+        cursor: pointer;
+        position: relative;
+        top:0;
+        left:0;
+        background-color: #f7f7f7;
+    }
+    .details{
+        display: flex;
+    }
+    .details .companyInfo{
+        width: 75%;
+    }
+    .details img{
+        margin: 0;
+    }
+    .checkbox{
+        /* position: relative; */
+    }
+}
+@media (max-width: 425px) {
+    .name{
+        font-size: 18px;
+    }
 }

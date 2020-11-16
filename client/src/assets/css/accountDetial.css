@@ -112,6 +112,9 @@
 	margin-right: 95px;
 } */
 @media (max-width: 768px) {
+  .page{
+    margin-left: -54px;
+  }
   .contentCenter{
     /* background: blue; */
     width: 100%;

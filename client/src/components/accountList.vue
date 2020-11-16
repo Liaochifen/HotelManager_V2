@@ -84,7 +84,7 @@
           <img src="../assets/icon/filter.png"/>
           <span>篩選</span>
           </button>
-          <button class="editButton" v-on:click="open()">
+          <button class="editButton" v-on:click="open()" id="add_user">
             <img src="../assets/icon/add.png"/>
             <span>新增使用者</span>
           </button>

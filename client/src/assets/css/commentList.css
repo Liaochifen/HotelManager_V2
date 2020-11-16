@@ -371,12 +371,15 @@ tr:hover td{
     display: none;
 }
 @media (max-width: 768px) {
+    .page{
+        margin-left: -36px;
+    }
     .vgt-fixed-header{
         z-index: 0;
     }
     .contentCenter{
         width: 100%;
-        margin-top: 30px;
+        margin-top: 0px;
         /* z-index: 5; */
     }
     /* .page{
