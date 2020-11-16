@@ -259,10 +259,10 @@ button:hover{
 @media (max-width: 768px) {
   .insideContent{
     width: 100%;
-    margin-bottom: 50px;
+    margin: 50px 0;
   }
   .display_ipad{
-        display: none;
+    display: none;
   }
   .vueGoodTable{
     width: 90%;
@@ -280,10 +280,7 @@ button:hover{
     margin-top: 30px;
   }
   .page{
-    font-size: 25px;
-    font-weight: bold;
-    margin-top: 30px;  
-    margin-right: 20%;
+    margin-left: -36px;
   }
   .account_select{
     display: none;
@@ -341,52 +338,115 @@ button:hover{
     width: 90%;
     float: unset;
   }
+
   /* 新增帳號 */
   .addUser{
-    margin:3%;
-    /* z-index: 1; */
-    width: 84%;
+    margin-left: -2%;
+    top: 15%;
+    width: 94%;
     position: fixed;
     height: auto;
-    background-color:#ffffffe8;
+    background: #FFF;
+    /* padding: 30px 30px 20px 30px; */
+    box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;
+    -webkit-box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;
+    font: 12px Arial, Helvetica, sans-serif;
+    color: #666;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+  }
+  .addUser form{
+    /* background: #000; */
+    border-top: 1px dashed rgb(231, 231, 231);
+    box-sizing: border-box;
+    padding: 10px 0;
   }
   .addAccount{
-    margin-bottom: 20px;
+    margin: 10px 20px;
+    font-size: 20px;
+  }
+  .closeAdd{
+    margin: 10px 20px;
+    padding: 0;
   }
   .input{
-    margin: 0px 10% ;
+    margin: 0 30% 0 0 ;
     float: none;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    /* justify-content: flex-end; */
   }
   .input input{
-    margin: 5px 0;
-    width: 150px;
-    /* float: none; */
+    margin: 10px 0;
+    width: 200px;
+    /* margin-left: 5px; */
+    border: 1px solid #e5e5e5;
+	  background: #fbfbfb;
   }
   .input span{
     float: none;
+    text-align: right;
+    margin-right: 5px;
+    line-height: 40px;
+    width: 45%;
   }
   .inputBox{
     float: none;
+    
   }
   .addSelect{
-    /* float: none; */
-    margin: 5px 0;
-    width: 158px;
+    border: 1px solid #e5e5e5;
+	  background: #fbfbfb;
+    margin: 10px 0;
+    width: 208px;
   }
   #tableActionsBtn{
-    margin: 0;
+    width: 70px;
+    margin: 10px 40%;
     float: none;
+    
+  }
+  #cancel{
+    display: none;
   }
   .add_btn{
-    width: 50%;
-    /* background: #000; */
-    float: left;
     text-align: center;
-    margin: 10px 0 20px;
+  }
+
+}
+@media (max-width: 600px) {
+  .input{
+    margin: 0 20% 0 0 ;
+  }
+  .input span{
+    width: 20%;
   }
 }
 @media (max-width: 425px) {
-    .display{
-        display: none;
-    }
+  .input input{
+    width: 160px;
+  }
+  .addSelect{
+    width: 168px;
+  }
+  .input span{
+    width: auto;
+  }
+  .display{
+    display: none;
+  }
+  #add_user{
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    border: 1px dashed rgb(199, 195, 195);
+    bottom: 60px;
+    right: 20px;
+    z-index: 1;
+    outline: none;
+  }
+  
 }

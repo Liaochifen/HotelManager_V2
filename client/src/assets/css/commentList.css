@@ -371,16 +371,20 @@ tr:hover td{
     display: none;
 }
 @media (max-width: 768px) {
+    .vgt-fixed-header{
+        z-index: 0;
+    }
     .contentCenter{
         width: 100%;
         margin-top: 30px;
+        /* z-index: 5; */
     }
-    .page{
+    /* .page{
         font-size: 25px;
         font-weight: bold;
         margin-top: 30px;  
         margin-right: 20%;
-    }
+    } */
     .editArea{
         display: none;
         background: #000;
@@ -394,12 +398,17 @@ tr:hover td{
         z-index: 2;
         color: white;
     }
+    .selection_btn_phone:hover{
+        cursor: pointer;
+    }
     .selection_phone {
         color: white;
         height: 100%;
         width: 100%;
         z-index: 2;
         position: fixed;
+        top: 39px;
+        background: rgb(218, 226, 236);
     }
     .selection_phone span{
         background-color: rgba(47, 58, 76);
@@ -407,12 +416,10 @@ tr:hover td{
         font-size: 20px;
         width: 50%;
         float: left;
-        padding: 10px 0;
+        padding: 8px 0;
         text-align: center;
+        /* height: 20px; */
     }
-    /* .select_btn1.active,.select_btn2.active{
-        background: rgb(182, 96, 96);
-    } */
     .selection_phone.active {
         background-color: rgba(47, 58, 76, 1);
         display: block;
@@ -423,6 +430,10 @@ tr:hover td{
         display: none;
         background-color: rgb(218, 226, 236);
         margin: 0;
+        /* height: 100%; */
+        position:fixed;
+        z-index: 2;
+        top: 75px;
     }
     .filter li{
         width: 25%;
@@ -442,9 +453,6 @@ tr:hover td{
     }
     .filter.active{
         display: block;
-        position: fixed;
-        /* top: 20%; */
-        z-index: 3;
     }
     .dataArea{
         width: 100%;
@@ -456,9 +464,10 @@ tr:hover td{
         border: none;
         border-radius: unset;
         width: 100%;
-        height: unset;
-        /* bottom: 50px; */
-        /* top: 50%; */
+        /* height: 100%; */
+        position:fixed;
+        z-index: 2;
+        top: 75px;
         display: none;
         margin: 0;
         padding: 10px 0;
@@ -480,8 +489,6 @@ tr:hover td{
     }
     .MultiFilterArea.active{
         display: block;
-        position: fixed;
-        z-index: 3;
     }
     .dataRightArea{
         width: 90%;

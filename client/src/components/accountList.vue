@@ -68,7 +68,7 @@
             <div class="clear"></div>
           </div>
         </form>
-        <div class="add_btn">
+        <div class="add_btn" id="cancel">
           <button
             class="functionButton deleteBTN"
             id="tableActionsBtn"
@@ -144,19 +144,16 @@
         </div>
         <!-- <div class="left_btn">
           <div>
-            <button class="functionButton" v-on:click="open()">新增</button>
+            <button id="add_user" class="functionButton" v-on:click="open()">十</button>
           </div>
           <div>
-            <button class="functionButton" v-on:click="deleteAccount()">
+            <button  class="functionButton" v-on:click="deleteAccount()">
               刪除
             </button>
           </div>
         </div> -->
       </div>
 
-      <!-- 手機版的選單 -->
-
-      
       <vue-good-table
         class="el-table"
         styleClass="vgt-table striped"
