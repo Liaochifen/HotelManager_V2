@@ -5,16 +5,12 @@
     <button @click="changePage(2)" class="pageButton2" id="userInfoRecord">紀錄</button>
     <div class="clear"></div>
     <div class="historydataArea">
-      <!-- 後臺管理員區塊 -->
-      <!-- <template v-if="===123>"> -->
-
-      <!-- </template> -->
       <template>
         <span v-if="page === 0">
           <template>
             <div>
               <!-- .condition -->
-              <div v-for="(item, index) in commentFilter[0].condition" :key="index" class="commentArea">
+              <div v-for="(item, index) in commentFilter[0].condition" :key="index+'con'" class="commentArea">
                 <!-- 放大頭照 -->
                 <!-- <p>{{item.employeeNumber}}</p> -->
                 <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
@@ -22,7 +18,7 @@
                 <!-- 手機板變成在評論底下，縮小 -->
                 <span class="commentTimeHistory">{{item.time}}</span>
               </div>
-              <div v-for="(item, index1) in commentFilter[0].tags" :key="index1" class="commentArea">
+              <div v-for="(item, index1) in commentFilter[0].tags" :key="index1+'tag'" class="commentArea">
                 <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
                 <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
@@ -31,7 +27,14 @@
           </template>
         </span>
         <span v-else-if="page === 1">
-          <p>帳號管理</p>
+          <p>個人動態</p>
+          <!-- <template>
+            <div v-for="(item,index) in personFilter" :key="index+'person'">
+              <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+              <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
+
+            </div>
+          </template> -->
         </span>
         <span v-else-if="page === 2">
           <p>後臺管理員部分</p>
@@ -41,21 +44,21 @@
           <button  v-on:click="manager(3)">修改帳號資料</button>
           <button  v-on:click="manager(4)">新增刪除使用者</button>
           <div  v-if="userInfoPage === 0">
-            <div v-for="(item, loginIndex) in loginNew" :key="loginIndex" class="commentArea">
+            <div v-for="(item, loginIndex) in loginNew" :key="loginIndex+'login'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 登入</span>
               <span class="commentTimeHistory">{{item.loginTime}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 1">
-            <div v-for="(item, logoutIndex) in logoutNew" :key="logoutIndex" class="commentArea">
+            <div v-for="(item, logoutIndex) in logoutNew" :key="logoutIndex+'logout'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 登出</span>
               <span class="commentTimeHistory">{{item.logoutTime}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 2">
-            <div v-for="(item, userIndex) in userNew" :key="userIndex" class="commentArea">
+            <div v-for="(item, userIndex) in userNew" :key="userIndex+'pw'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 忘記密碼 驗證 
                 <span v-if="item.forgetPassword.verification === true">成功</span>
@@ -65,14 +68,14 @@
             </div>
           </div>
           <div  v-else-if="userInfoPage === 3">
-            <div v-for="(item, userDetailModifyIndex) in userDetailModifyNew" :key="userDetailModifyIndex" class="commentArea">
+            <div v-for="(item, userDetailModifyIndex) in userDetailModifyNew" :key="userDetailModifyIndex+'acds'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.modifyInfo}} {{item.modifyPerson}} 把 {{item.employeeNumber}} 由 {{item.old}} 改為 {{item.new}} </span>
               <span class="commentTimeHistory">{{item.time}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 4">
-            <div v-for="(item, userListModifyIndex) in userListModifyNew" :key="userListModifyIndex" class="commentArea">
+            <div v-for="(item, userListModifyIndex) in userListModifyNew" :key="userListModifyIndex+'mod'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.modify}} 使用者 {{item.employeeNumber}} </span>
               <span class="commentTimeHistory">{{item.time}}</span>
@@ -94,14 +97,14 @@ export default {
   name: "history",
   data() {
     return {
-      // msg: 'hello',
+      employeeNumber: '',
       historyData: [],
       commentFilter: [],
       personFilter: [],
-      logout: {
-        employeeNumber: "info01",
-        logoutTime: "2020/10/11",
-      },
+      // logout: {
+      //   employeeNumber: "info01",
+      //   logoutTime: "2020/10/11",
+      // },
       // page === 0 顯示評論動態，page === 1顯示個人動態
       page: 0,
       loginNew:[],
@@ -117,7 +120,9 @@ export default {
     // var value = 0;
     //  + value
     var logining = localStorage.getItem("token");
-    var userID = JSON.parse(logining).companyName.id;
+    var userID = JSON.parse(logining).companyName;
+    self.employeeNumber = JSON.parse(logining).id
+
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
       .then((response) => {
@@ -141,10 +146,24 @@ export default {
         self.userNew=self.historyData.user;
         self.userDetailModifyNew=self.historyData.userDetailModify;
         self.userListModifyNew=self.historyData.UserListModify;
-        console.log(self.historyData)
         self.commentFilter.push({
           condition: self.historyData.condition,
           tags: self.historyData.tags
+        })
+        self.commentFilter[0].condition.filter((item) => {
+          if(item.employeeNumber === self.employeeNumber){
+            self.personFilter.push(item)
+          }
+        })
+        self.commentFilter[0].tags.filter((item) => {
+          if(item.employeeNumber === self.employeeNumber){
+            self.personFilter.push(item)
+          }
+        })
+        self.historyData.favorite.filter((item) => {
+          if(item.employeeNumber === self.employeeNumber){
+            self.personFilter.push(item)
+          }
         })
         self.commentFilter[0].condition.forEach((item) => {
           arr.filter((child) => {
@@ -160,9 +179,6 @@ export default {
           })
         })
         self.changePage(0)
-        // self.personFilter.push({
-
-        // })
       })
       .catch((error) => {
         console.log(error);

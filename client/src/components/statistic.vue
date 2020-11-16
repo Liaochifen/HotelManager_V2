@@ -6,7 +6,7 @@
               <li class="flex-1">
                 <div>
                   <span class="subti">總評論則數</span>
-                  <p>{{todayData[0].data.reviews_num}}
+                  <p>{{todayData.length && todayData[0].data.reviews_num}}
                     <span v-if="rise[0].value === 0">
                       <img src="../assets/icon/rise.png">
                     </span>
@@ -22,7 +22,7 @@
               <li class="flex-1">
                 <div>
                   <span class="subti">正評則數</span>
-                  <p>{{todayData[0].data.labels.positive}}
+                  <p>{{todayData.length && todayData[0].data.labels.positive}}
                     <span v-if="rise[1].value === 0">
                       <img src="../assets/icon/rise.png">
                     </span>
@@ -38,7 +38,7 @@
               <li class="flex-1">
                 <div>
                   <span class="subti">負評則數</span>
-                  <p>{{todayData[0].data.labels.negative}}
+                  <p>{{todayData.length && todayData[0].data.labels.negative}}
                     <span v-if="rise[2].value === 0">
                       <img src="../assets/icon/rise.png">
                     </span>
@@ -54,7 +54,7 @@
               <li class="flex-1">
                 <div>
                   <span class="subti">評分</span>
-                  <p>{{todayData[0].data.avg_rating}}
+                  <p>{{todayData.length && todayData[0].data.avg_rating}}
                     <span v-if="rise[3].value === 0">
                       <img src="../assets/icon/rise.png">
                     </span>
@@ -98,32 +98,7 @@
             <el-button @click="cancle">清除</el-button>
           </div>
         </div>
-        
-        <!-- <div id="world-map" style="width: 600px; height: 400px"></div> -->
         <div class="statisticTop">
-          <!-- <div class="main flex-2">
-            <ul>
-              <li>
-                <div>
-                  <span>總評論則數</span>
-                  <p>{{todayData[0].data.labels.positive + todayData[0].data.labels.negative}}</p>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <span>評分</span>
-                  <p>{{todayData[0].data.avg_rating}}</p>
-                </div>
-              </li>
-              <li>
-                <div>
-                  <span>總排名</span>
-                  <p>{{avg_rank}}</p>
-                  <p>{{todayData[0].data.labels.positive + todayData[0].data.labels.negative}}</p>
-                </div>
-              </li>
-            </ul>
-          </div> -->
           <div class="Rank flex-1">
             <div class="statisticRank">
               <p class="allP">總排名趨勢</p>
@@ -141,13 +116,6 @@
           <div class="clear"></div>
         </div>
         <div class="statisticCenter">
-          <!-- <div class="statisticComment flex-2">
-            <div>
-              <p class="allP1">正負評比例</p>
-              <doughnut-chart :chart-data="Commentcollection" :options="options2" style="width: 90%; height: 90%; margin-left: 30px;"></doughnut-chart>
-              <div class="clear"></div>
-            </div>
-          </div> -->
           <div class="statistic flex-1">
             <div>
               <p class="allP">正評趨勢</p>
@@ -185,21 +153,11 @@
             </div>
             <div class="clear"></div>
           </div>
-          <!-- <div class="statisticWeb flex-1">
-            <div>
-              <p class="allP1">各國留言數量比</p>
-              <doughnut-chart :chart-data="countrycollection" :options="options2" style="width: 80%; height: 80%; margin-left: 30px;"></doughnut-chart>
-            </div>
-          </div> -->
-         
           <div class="clear"></div>
         </div>
         <div class="demo-wrapper">
           <p class="allP">各國留言數量</p>
           <div class="demo-container">
-            <!-- <div> -->
-              <!-- <button id="parentIframe" v-on:click="createMap()">GDP</button> -->
-            <!-- </div> -->
             <div id="svgMapGPD"></div>
             <div class="clear"></div>
           </div>
@@ -276,14 +234,14 @@ export default {
       ],
 
       // statisticRank: [],
-      Rankcollection: null,
-      Commentcollection: null,
-      positiveDatacollection: null,
-      negativeDatacollection: null,
-      Servicecollection: null,
-      webCommentcollection: null,
-      tripTypecollection: null,
-      countrycollection: null,
+      Rankcollection: {},
+      Commentcollection: {},
+      positiveDatacollection: {},
+      negativeDatacollection: {},
+      Servicecollection: {},
+      webCommentcollection: {},
+      tripTypecollection: {},
+      countrycollection: {},
       // option再想一下
       options: null,
       options1: {
@@ -350,6 +308,7 @@ export default {
           // 可以加onclick
         },
       },
+      options4:{},
       // labelX: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       labelX: [
         {
@@ -416,7 +375,7 @@ export default {
     let self = this;
     // var time = [];
     var arr = [];
-    // var arr1 = [];
+    let promises = [];
     var moment = require("moment");
     var today = moment().subtract(1, "days");
     var start = moment().subtract(7, "days");
@@ -430,10 +389,12 @@ export default {
       self.loginData = JSON.parse(logining);
       self.companyName = self.loginData.companyName;
     }
-    axios
-      .get("https://hotelapi.im.nuk.edu.tw/api/statistic")
-      .then((response) => {
-        self.statisticAllData = response.data;
+    promises.push(
+      axios.get("https://hotelapi.im.nuk.edu.tw/api/statistic").then((response) => {
+        self.statisticAllData = response.data
+      })
+    );
+    Promise.all(promises).then(() => {
         self.statisticAllData.filter((item) => {
           item.data.filter((child) => {
             if (child.hotelName === self.companyName) {
@@ -465,7 +426,6 @@ export default {
             Date.parse(item.time) <= Date.parse(end._d)
           ) {
             self.arr1.push(item.data.countries_count);
-            console.log(self.arr1);
           }
         });
         // Assign the country data to the WebsiteData variable
@@ -473,10 +433,7 @@ export default {
           data: {
             websiteNum: {
               name: "Number per day",
-              // format: '{0} USD',
               thousandSeparator: ",",
-              // thresholdMax: 50000,
-              // thresholdMin: 1000
             },
           },
           applyData: "websiteNum",
@@ -679,6 +636,7 @@ export default {
         self.labelX3 = self.todayData[0].data.travel_types.map((ele) => {
           return ele.type;
         });
+
         self.rate();
         self.RankData(3);
         self.commentData(3);
@@ -686,7 +644,12 @@ export default {
         self.negativeData(3);
         self.ServiceData();
         self.webCommentData(3, self.statisticData);
-      })
+    })
+    // axios
+    //   .get("https://hotelapi.im.nuk.edu.tw/api/statistic")
+    //   .then((response) => {
+    //     self.statisticAllData = response.data;
+        
       .catch((error) => {
         console.log(error);
       });

@@ -12,11 +12,11 @@
           <span class="subtitle">評分</span
           ><span class="spaceRight">{{ commentData.rating }}</span>
           <span class="subtitle">評論日期</span
-          ><span class="spaceRight">{{ commentData.times.comment }}</span>
+          ><span class="spaceRight">{{ commentData.length && commentData.times.comment}}</span>
           <span class="subtitle">住客國家</span
           ><span class="spaceRight">{{ commentData.locale }}</span>
           <span class="subtitle">入住時間</span
-          ><span class="spaceRight">{{ commentData.times.checkin }}</span>
+          ><span class="spaceRight">{{ commentData.length && commentData.times.checkin }}</span>
           <span class="subtitle">房型</span
           ><span class="spaceRight">{{ commentData.room_type }}</span>
           <span class="subtitle">來源網站</span
@@ -30,7 +30,7 @@
       <div class="ReplyAddress">
         <p class="commentInfo">評論資訊<span class="commentInfo_phone" @click="commentInfo_phone"><img src="https://fakeimg.pl/20x20/" alt=""></span></p>
         <div class="MultiFilterArea1">
-          <div class="manageConditionDiv">
+          <div class="manageConditionDiv" v-if="commentData.labels">
             <p class="filterP1">評論狀態</p>
             <template>
               <span v-if="commentData.labels.condition === 0">
@@ -55,7 +55,13 @@
           </div>
 
           <div class="manageTags">
-            <p class="filterP1">標籤</p>
+            <div>
+               <p class="filterP1">標籤</p>
+              <div class="addTagsBTN">
+                <!-- <button @click="addTag">+</button> -->
+                <input type="button" value="+" @click="addTag" style="font-size: 18px;">
+              </div>
+            </div>
             <!-- <div class="labelchoose1" v-for="item in commentData.tags" :key="item._id"> -->
             <!-- <input type="text" name="label_tags" disabled="true" :value="item" class="tagInput"> -->
             <!--  @click="deleteTags(item)" -->
@@ -63,22 +69,20 @@
             <!-- </div> -->
             <template>
               <div class="tags" v-for="item in label_tags" :key="item.field">
-                
                 <el-button
                   ><button class="deleBtn" @click="deleTag(item.field)">x</button>
                   {{ item.label }}</el-button
                 >
               </div>
             </template>
-            <el-button @click="addTag">+</el-button>
-            <div class="addTagsArea">
-              <el-select v-model="TagsAdd"  placeholder="請選擇標籤"  @change="submitAdd">
-                <el-option v-for="item in label_no_tags"  :key="item.field"  :value="item.field"  :placeholder="item.label"  >{{ item.label }}</el-option>
-              </el-select>
-            </div>
             <div class="clear"></div>
           </div>
-          <div class="manageReplyDiv">
+          <div class="addTagsArea">
+            <el-select v-model="TagsAdd"  placeholder="請選擇標籤"  @change="submitAdd">
+              <el-option v-for="item in label_no_tags"  :key="item.field"  :value="item.field"  :placeholder="item.label"  >{{ item.label }}</el-option>
+            </el-select>
+          </div>
+          <div class="manageReplyDiv" v-if="commentData.labels">
             <p class="filterP1">回覆狀態</p>
             <template>
               <span v-if="commentData.labels.reply === 1">
@@ -241,7 +245,17 @@ export default {
     // },
     addTag: function () {
       // let self = this;
-      $(".addTagsArea").css("display", "inline-block");
+      event.stopPropagation();
+      // $(".addTagsArea").css("display", "inline-block");
+      $(".addTagsArea").slideToggle("normal");
+      $(document).click(function (event) {
+        var area = $(".addTagsArea"); // 設定目標區域
+        var area1 = $(".addTagsBTN"); // 設定目標區域
+        if ((!area.is(event.target) && area.has(event.target).length === 0) && (!area1.is(event.target) && area1.has(event.target).length === 0)) {
+          // $('#divTop').slideUp('slow');  //滑動消失
+          $(".addTagsArea").hide(500); // 淡出消失
+        }
+      });
     },
     deleTag: function(TagsDel) {
       let self = this;
@@ -252,7 +266,7 @@ export default {
       })
       self.commentData.labels[TagsDel] = 0;
       self.newComment = self.commentData;
-      // self.updataComment()
+      self.updateComment()
       self.label_no_tags = [];
       self.label_tags = self.labelchoose.filter((item) => {
         if(self.commentData.labels[item.field] === 1){
@@ -261,10 +275,7 @@ export default {
           self.label_no_tags.push(item)
         }
       })
-      console.log(self.commentData)
-      console.log(self.label_tags)
-      console.log(self.label_no_tags)
-      // self.updateHistory(1,1)
+      self.updateHistory(1,2)
     },
     submitAdd: function () {
       let self = this;
@@ -285,6 +296,7 @@ export default {
           self.label_no_tags.push(item);
         }
       });
+      $(".addTagsArea").css("display", "none");
       self.updateHistory(1, 1)
     },
     conditionUpdate: function (data) {

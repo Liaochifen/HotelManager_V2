@@ -12,30 +12,33 @@
                 <template v-if="item.hotelName === companyName">
                     <div class="eachCompany myCompany">
                       <div class="rank">{{item.rank}}</div>
+                      <span v-if="item.favorite === true" class="favoriteArea">
+                        <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
+                          <span class="btn-box">
+                            <span class="btn1"></span>
+                          </span>
+                        </span>
+                        <span v-else-if="item.favorite === false" class="favoriteArea">
+                            <!-- :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
+                          <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
+                          <span class="btn-box">
+                            <span class="btn"></span>
+                          </span>
+                      </span>
                       <router-link :to="{name: fn(item.hotelName), params: {collections: item.hotelName}}">
                       <div class="details">
                         <img src="https://fakeimg.pl/230x165/">
                         <div class="companyInfo">
-                          <span v-if="item.favorite === true" class="favoriteArea">
-                            <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
-                              <span class="btn-box">
-                                <span class="btn1"></span>
-                              </span>
-                          </span>
-                          <span v-else-if="item.favorite === false" class="favoriteArea">
-                            <!-- :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
-                            <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
-                              <span class="btn-box">
-                                <span class="btn"></span>
-                              </span>
-                          </span>
+                          
                           <p class="name">{{item.hotelChineseName}}</p>
                           <div class="ratings">
                             <div class="empty_star">★★★★★</div>
                             <div class="full_star" :style="`width:${item.avg_rating/2*20}%;`">★★★★★</div>
                           </div>
-                          <p>正評：{{item.labels.positive}}</p>
-                          <p>負評：{{item.labels.negative}}</p>
+                          <div class="mouth_info">
+                            <p class="pos">正評：{{item.labels.positive}}</p>
+                            <p class="neg">負評：{{item.labels.negative}}</p>
+                          </div>
                         </div>
                         <div class="clear"></div>
                       </div>
@@ -46,30 +49,33 @@
                 <template v-else-if="item.hotelName !== companyName">
                     <div class="eachCompany">
                       <div class="rank">{{item.rank}}</div>
+                      <span v-if="item.favorite === true" class="favoriteArea">
+                      <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
+                        <span class="btn-box">
+                          <span class="btn1"></span>
+                        </span>
+                      </span>
+                      <span v-else-if="item.favorite === false" class="favoriteArea">
+                      <!-- :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
+                      <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
+                        <span class="btn-box">
+                          <span class="btn"></span>
+                        </span>
+                      </span>
                       <router-link :to="{name: fn(item.hotelName), params: {collections: item.hotelName}}">
                       <div class="details">
                         <img src="https://fakeimg.pl/230x165/">
                         <div class="companyInfo">
-                          <span v-if="item.favorite === true" class="favoriteArea">
-                            <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
-                              <span class="btn-box">
-                                <span class="btn1"></span>
-                              </span>
-                          </span>
-                          <span v-else-if="item.favorite === false" class="favoriteArea">
-                            <!-- :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
-                            <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
-                              <span class="btn-box">
-                                <span class="btn"></span>
-                              </span>
-                          </span>
+
                           <p class="name">{{item.hotelChineseName}}</p>
                           <div class="ratings">
                             <div class="empty_star">★★★★★</div>
                             <div class="full_star" :style="`width:${item.avg_rating/2*20}%;`">★★★★★</div>
                           </div>
-                          <p>正評：{{item.labels.positive}}</p>
-                          <p>負評：{{item.labels.negative}}</p>
+                          <div class="mouth_info">
+                            <p class="pos">正評：{{item.labels.positive}}</p>
+                            <p class="neg">負評：{{item.labels.negative}}</p>
+                          </div>
                         </div>
                         <div class="clear"></div>
                       </div>
@@ -353,6 +359,12 @@ export default {
       self.companyData.forEach((item) => {
         if (item.hotelName === $event.target.value) {
           item["favorite"] = $event.target.checked;
+          if($event.target.checked === true){
+            self.favoriteModifytoHistory.modify = '加入'
+          }else{
+            self.favoriteModifytoHistory.modify = '取消'
+          }
+          self.favoriteModifytoHistory.company = item.hotelName
           self.account.favorite = self.favoriteList;
           axios
             .put(
@@ -362,6 +374,7 @@ export default {
             .catch((err) => {
               console.log(err);
             });
+          self.updateHistory()
         }
       });
       self.companyData.sort(function (item) {
@@ -370,6 +383,7 @@ export default {
       self.companyData.sort(function(x,y){
         return x.hotelName === self.companyName ? -1 : y.hotelName === self.companyName ? 1:0
       })
+      // self.updateHistory()
     },
     rating: function () {
       let self = this;
@@ -383,16 +397,11 @@ export default {
         return x.hotelName === self.companyName ? -1 : y.hotelName === self.companyName ? 1:0
       })
     },
-    updateHistory: function(value){
+    updateHistory: function(){
       let self = this
       let record = 'favorite'
       self.favoriteModifytoHistory.employeeNumber = self.employeeNumber
-      self.conditionModifytoHistory.time = dateTime.recordDate() + " " + dateTime.recordTime();
-      if(value === 0){
-        self.favoriteModifytoHistory.modify = '刪除'
-      }else{
-        self.favoriteModifytoHistory.modify = '加入'
-      }
+      self.favoriteModifytoHistory.time = dateTime.recordDate() + " " + dateTime.recordTime();
       axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" + self.companyName + '/' + record, self.favoriteModifytoHistory).then((response) => {
         console.log(response)
       }).catch((error) => {

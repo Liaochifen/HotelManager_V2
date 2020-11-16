@@ -1,6 +1,8 @@
+
 <template>
+
   <div>
-    <div class="contentCenter">
+    <div class="contentCenter" id="maindiv">
       <span class="selection_btn_phone">篩選</span>
       <div class="page">
         <span>評論列表</span>
@@ -47,6 +49,11 @@
               ></el-option>
             </el-select>
           </div>
+          <div class="add_btn">
+            <button class="functionButton deleteBTN" id="tableActionsBtn" @click="editUpdate()">確認</button>
+            <button class="functionButton deleteBTN" id="tableActionsBtn" @click="editCCancle()">取消</button>
+          <div class="clear"></div>
+        </div>
           <!-- <button @click="editUpdate" class="confirmButton">確認</button> -->
           <!-- <button @click="editCancle" class="confirmButton">取消</button> -->
           <div class="clear"></div>
@@ -62,6 +69,7 @@
             </el-select>
           </template>
         </div>
+        
         <div slot="table-actions" class="slot_div">
             <el-select v-model="conditionChoosen"  placeholder="選擇評論處理狀態" class="custom_el_select" @change="handleCheckedChange(1)">
               <el-option value="全選">全選</el-option>
@@ -144,7 +152,7 @@
         <div class="clear"></div>
       </div>
       <div class="dataRightArea">
-        <vue-good-table 
+          <vue-good-table 
           :fixed-header="true"
           max-height="600px"
           ref="commentdataTable"
@@ -162,41 +170,43 @@
           :pagination-options="{
             enabled: true,
             mode: 'pages',
-            perPage: 10,
+            perPage: '',
+            rowsPerPageLabel: '',
             position: 'bottom',
             dropdownAllowAll: false,
             setCurrentPage: 1,
             nextLabel: 'next',
             prevLabel: 'prev',
           }"
-        >
-          <template slot="table-row" slot-scope="props">
-            <template v-if="props.column.label === '狀態'">
-              <span v-if="props.row.labels.condition === 0">
-                <el-button class="none" @click="conditionUpdate(props.row._id)"
-                  >未處理</el-button
-                >
-              </span>
-              <span v-else-if="props.row.labels.condition === 1">
-                <el-button class="ing" @click="conditionUpdate(props.row._id)"
-                  >處理中</el-button
-                >
-              </span>
-              <span v-else-if="props.row.labels.condition === 2">
-                <el-button class="done" disabled="disabled">已完成</el-button>
-              </span>
-            </template>
-            <template
-              v-else-if="props.column.label === '評論'"
-              v-bind:value="props.row._id"
-            >
-              <router-link
-                :to="{ name: 'commentDetails', params: { _id: props.row._id } }"
-                >{{ props.row.title }}</router-link
+          >
+            <template slot="table-row" slot-scope="props">
+              <template v-if="props.column.label === '狀態'">
+                <span v-if="props.row.labels.condition === 0">
+                  <el-button class="none" @click="conditionUpdate(props.row._id)"
+                    >未處理</el-button
+                  >
+                </span>
+                <span v-else-if="props.row.labels.condition === 1">
+                  <el-button class="ing" @click="conditionUpdate(props.row._id)"
+                    >處理中</el-button
+                  >
+                </span>
+                <span v-else-if="props.row.labels.condition === 2">
+                  <el-button class="done" disabled="disabled">已完成</el-button>
+                </span>
+              </template>
+              <template
+                v-else-if="props.column.label === '評論'"
+                v-bind:value="props.row._id"
               >
+                <router-link
+                  :to="{ name: 'commentDetails', params: { _id: props.row._id } }"
+                  >{{ props.row.title }}</router-link
+                >
+              </template>
             </template>
-          </template>
-        </vue-good-table>
+          </vue-good-table>
+
         <div class="clear"></div>
       </div>
     </div>
@@ -225,7 +235,48 @@ export default {
       newComment: [],
       checkedtagsALL: false,
       oneTag: "",
-      columns: [
+      columns: [{
+          label: "正/負評",
+          field: this.fieldFn,
+          sortable: false
+        },
+        {
+          label: "狀態",
+          field: this.fieldFn2,
+          sortable: false
+        },
+        {
+          label: "回覆",
+          field: this.fieldFn1,
+          tdClass: "display",
+          thClass: "display",
+          sortable: false
+        },
+
+        {
+          label: "評論",
+          field: this.fieldFn3,
+          sortable: false
+        },
+        {
+          label: "評分",
+          field: "rating",
+          type: "number",
+        },
+        // ?
+        {
+          label: "時間",
+          field: "times.comment",
+        },
+        {
+          label: "網站來源",
+          field: "website",
+          tdClass: "display",
+          thClass: "display",
+          sortable: false
+        }
+      ],
+      columns_computer: [
         {
           label: "正/負評",
           field: this.fieldFn,
@@ -267,6 +318,27 @@ export default {
           sortable: false
         },
       ],
+      columns_phone: [
+        {
+          label: "正/負評",
+          field: this.fieldFn,
+          sortable: false
+        },
+        {
+          label: "狀態",
+          field: this.fieldFn2,
+          sortable: false
+        },
+        {
+          label: "評論",
+          field: this.fieldFn3,
+          sortable: false
+        },
+        {
+          label: "時間",
+          field: "times.comment",
+        }
+      ],
       // limit: 10,
       // busy: false,
       // currentPage: 1,
@@ -282,14 +354,6 @@ export default {
       // ConditionIndeterminate: null,
       // ReplyIndeterminate: null,
       titleField: "",
-      // resourceName: [
-      //   "Trip",
-      //   "Hotels",
-      //   "Agoda",
-      //   "Booking",
-      //   "TripAdvisor",
-      //   "Expedia",
-      // ],
       labelchoose: [
         {
           label: "餐飲",
@@ -383,7 +447,9 @@ export default {
         pos_neg: '',
         condition: '',
         reply: '',
-      }
+      },
+      window_width: document.documentElement.clientWidth,
+      
     };
   },
   // 在一個條件後面會跟著一個問號 (?)
@@ -429,7 +495,19 @@ export default {
     if ('Notification' in window && 'serviceWorker' in navigator) {
       self.askForNotificationPermission();
     }
-
+    var _this = this
+    window.onresize = function () {
+      _this.window_width = document.documentElement.clientWidth 
+    }
+  },
+  watch: {
+    'window_width': function (val) { 
+      if(val > 768){
+        this.columns = this.columns_computer
+      }else{
+        this.columns = this.columns_phone
+      }
+    }
   },
   // 剩多重篩選&分數
   // computed: {
@@ -839,21 +917,51 @@ export default {
     conditionUpdate: function (id) {
       let self = this;
       // foreach改成filter
+      console.log(id)
       self.commentData.filter((item) => {
         if (item._id === id) {
           self.conditionModifytoHistory.commentID = id
           self.conditionModifytoHistory.title = item.text.substr(0, 10) + "...";
           self.conditionModifytoHistory.old = item.labels.condition
           if (item.labels.condition === 0) {
-            item.labels.condition = 1;
+            this.$fire({
+              title: "是否將此評論狀態修改為'處理中'?",
+              // text: "刪除後將不可復原",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "是",
+              cancelButtonText: "否",
+            }).then((result) => {
+              if(result.value){
+                item.labels.condition = 1;
+                self.conditionModifytoHistory.new = item.labels.condition
+                self.newComment = item;
+                self.updateComment(id);
+                self.updateHistory()
+              }
+            })
           } else {
-            self.conditionModifytoHistory.old = item.labels.condition
-            item.labels.condition = 2
+            this.$fire({
+              title: "是否將此評論狀態修改為'已完成'?",
+              text: "修改後不可復原",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "是",
+              cancelButtonText: "否",
+            }).then((result) => {
+              if(result.value){
+                item.labels.condition = 2
+                self.conditionModifytoHistory.new = item.labels.condition
+                self.newComment = item;
+                self.updateComment(id);
+                self.updateHistory()
+              }
+            })
           }
-          self.conditionModifytoHistory.new = item.labels.condition
-          self.newComment = item;
-          self.updateComment(id);
-          self.updateHistory()
         }
       });
       return self.commentData;
@@ -883,14 +991,17 @@ export default {
       self.conditionModifytoHistory.new = x
       if (x.length !== 0) {
         self.$refs["commentdataTable"].selectedRows.forEach((item) => {
-          self.conditionModifytoHistory.old = item.labels.condition
-          self.conditionModifytoHistory.commentID = item._id
-          self.conditionModifytoHistory.title = item.text.substr(0, 10) + "..."
-          item.labels.condition = x;
-          console.log(item.labels.condition)
-          self.newComment = item;
-          self.updateComment(item._id);
-          self.updateHistory()
+          if(item.labels.condition === 2){
+            console.log(item.labels.condition)
+          }else{
+            self.conditionModifytoHistory.old = item.labels.condition
+            self.conditionModifytoHistory.commentID = item._id
+            self.conditionModifytoHistory.title = item.text.substr(0, 10) + "..."
+            item.labels.condition = x;
+            self.newComment = item;
+            self.updateComment(item._id);
+            self.updateHistory()
+          }
         });
       }
     },
@@ -946,8 +1057,8 @@ export default {
     },
     editCancle: function () {
       let self = this;
-      self.conditionModify = [];
-      self.replyModify = [];
+      self.conditionModify = '';
+      self.replyModify = '';
       $(".edit").hide(100); // 淡出消失
     },
     // handleSizeChange: function (size) {

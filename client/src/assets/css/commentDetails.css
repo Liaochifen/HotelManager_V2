@@ -106,7 +106,10 @@ label{
 .filterP1{
     margin-bottom: 5%;
 }
-
+.manageTags .filterP1{
+    display: inline-block;
+    font-size: 16px;
+}
 
 .none{
     width: 100px;
@@ -175,13 +178,25 @@ label{
 .tags:hover + .deleteButton{
     display: block;
 } */
+.addTagsBTN{
+    display: inline-block;
+    width: 70px;
+    margin-left: 61%;
+}
+.addTagsBTN input{
+    all: unset;
+}
+.addTagsBTN input:hover{
+    cursor: pointer;
+}
 .addTagsArea{
     display: none;
+    width: 250px;
+    margin-left: 5%;
 }
 .deleBtn{
     all: unset;
     display: none;
-
 }
 .tags:hover .el-button{
     width: 60px;
@@ -367,6 +382,9 @@ label{
        padding: 2%;
        box-sizing: border-box;
    }
+   .deleBtn{
+       display: inline-block;
+   }
    .MultiFilterArea1{
        display: none;
        
@@ -392,4 +410,7 @@ label{
     .MainComment span{
        width: 50%;
    }
+   .deleBtn{
+    display: inline-block;
+    }
 }

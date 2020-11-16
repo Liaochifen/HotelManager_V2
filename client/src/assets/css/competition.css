@@ -71,6 +71,33 @@ button{
     width: 65%;
     padding: 1.5%;
 }
+.mouth_info p{
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.pos{
+    width: 100px;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    padding: 0.5%;
+    margin-right: 30px;
+    color: rgb(233, 37, 37);
+    border: 0.3px solid rgb(185, 185, 185);
+    box-shadow: 0.5px 0.5px 2px #adadad;
+}
+.neg{
+    width: 100px;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    padding: 0.5%;
+    color: rgb(48, 161, 108);
+    border: 0.3px solid rgb(185, 185, 185);
+    box-shadow: 0.5px 0.5px 2px #adadad;
+}
+
 .name{
     font-size: 20px;
     font-weight: bold;
@@ -130,7 +157,9 @@ button{
     opacity:0;
 }
 .favoriteArea{
-    float: right;
+    /* float: right; */
+    position:absolute;
+    right: 25px;
 }
 .btn-box, .btn-box .btn, .checkbox:hover{
     cursor: pointer;

@@ -234,6 +234,29 @@ button:hover{
     font-size: 12px;
     margin-left: 5px;
 }
+
+.functionButton{
+    all: unset;
+    background: white;
+    height: 20px;
+    background-color: rgba(72, 133, 82, 0.877);
+    border: 0.5px solid rgb(196, 196, 196);
+    border-radius: 5px;
+    padding: 1% 2.5%;
+    color: white;
+    letter-spacing: 3px;
+    float: left;
+}
+/* .addBTN{
+    position: absolute;
+    left: 35%;
+    bottom: 10%;
+}
+.deleteBTN{
+    position: absolute;
+    right: 35%;
+    bottom: 10%;
+} */
 .filter li:hover{
     cursor: pointer;
     /* background: #F1F3F6; */

@@ -1,11 +1,13 @@
 <template>
   <div class="insideContent">
+    <div class="mask"></div>
     <div class="contentCenter">
       <div class="page">
         <span>帳號列表</span>
       </div>
     </div>
     <div class="vueGoodTable">
+      <div class="mask"></div>
       <div class="addUser" id="addNewUser">
         <span class="addAccount">新增帳號</span>
         <button class="closeAdd" v-on:click="close()">X</button>
@@ -60,19 +62,21 @@
           </div>
           <div class="clear"></div>
           <div class="add_btn">
-            <button class="functionButton" id="tableActionsBtn" type="submit">
+            <button class="functionButton addBTN" id="tableActionsBtn" type="submit">
               確認
             </button>
+            <div class="clear"></div>
           </div>
         </form>
         <div class="add_btn">
           <button
-            class="functionButton"
+            class="functionButton deleteBTN"
             id="tableActionsBtn"
             v-on:click="close()"
           >
             取消
           </button>
+          <div class="clear"></div>
         </div>
       </div>
       <div class="buttonFunArea">
@@ -120,6 +124,7 @@
               @change="selection()"
               placeholder="請選擇部門"
             >
+              <el-option value="全選">全選</el-option>
               <el-option v-for="item in departments" :key="item.value" :value="item.field"></el-option>
             </el-select>
           </div>
@@ -130,6 +135,7 @@
               @change="selection()"
               placeholder="請選擇權限"
             >
+              <el-option value="全選">全選</el-option>
               <el-option value='後台管理者'>後台管理者</el-option>
               <el-option value='主管使用者'>主管使用者</el-option>
               <el-option value='一般使用者'>一般使用者</el-option>
@@ -244,16 +250,19 @@ export default {
         {
           label: "員工編號",
           field: "employeeNumber",
+          sortable: false
         },
         {
           label: "姓名",
           field: "userName",
+          sortable: false
         },
         {
           label: "信箱",
           field: "email",
           tdClass: "display_ipad",
           thClass: "display_ipad",
+          sortable: false
         },
         {
           label: "權限等級",
@@ -266,7 +275,57 @@ export default {
           thClass: "display",
         },
       ],
-
+      columns_computer: [
+        {
+          label: "所屬單位",
+          field: "department",
+          tdClass: "display",
+          thClass: "display",
+        },
+        {
+          label: "員工編號",
+          field: "employeeNumber",
+          sortable: false
+        },
+        {
+          label: "姓名",
+          field: "userName",
+          sortable: false
+        },
+        {
+          label: "信箱",
+          field: "email",
+          tdClass: "display_ipad",
+          thClass: "display_ipad",
+          sortable: false
+        },
+        {
+          label: "權限等級",
+          field: "employeeLimit",
+        },
+        {
+          label: "上次登入時間",
+          field: "lastLoginDate",
+          tdClass: "display",
+          thClass: "display",
+        },
+      ],
+      columns_phone: [
+        {
+          label: "員工編號",
+          field: "employeeNumber",
+          sortable: false
+        },
+        {
+          label: "姓名",
+          field: "userName",
+          sortable: false
+        },
+        {
+          label: "權限等級",
+          field: "employeeLimit",
+        }
+      ],
       rowSelection: [],
       UserListModify: {
         modify: "",
@@ -277,6 +336,7 @@ export default {
       company: "",
       record: "UserListModify",
       deleteEmployee: [],
+      window_width: document.documentElement.clientWidth
     };
   },
   mounted() {
@@ -350,7 +410,20 @@ export default {
           }
         }
       });
-    } 
+    }
+    var _this = this
+    window.onresize = function () {
+      _this.window_width = document.documentElement.clientWidth 
+    }
+  },
+  watch: {
+    'window_width': function (val) { 
+      if(val > 768){
+        this.columns = this.columns_computer
+      }else{
+        this.columns = this.columns_phone
+      }
+    }
   },
   methods: {
     clearALL(){
@@ -523,31 +596,38 @@ export default {
     selection: function () {
       let self = this
       var arr = [];
-      if(self.chooseDepartment.length !== 0){
+      if((self.chooseDepartment === '全選' || self.chooseDepartment === '')&& (self.chooseLimit === '全選' || self.chooseLimit === '')){
+        self.accountList = self.hotels  
+        return self.accountList
+      }else if(self.chooseDepartment.length !== 0 && self.chooseDepartment !== '全選'){
         self.hotels.forEach((item) => {
           if(item.department === self.chooseDepartment){
             arr.push(item)
           }
         })
-        if(self.chooseLimit.length !== 0){
+        if(self.chooseLimit.length !== 0 && self.chooseLimit !== '全選'){
           arr = arr.filter((item) => {
             return item.employeeLimit === self.chooseLimit
           })
         }
-      }else{
+        self.accountList = arr
+        return self.accountList
+      }else if(self.chooseDepartment.length !== 0 && self.chooseLimit !== '全選'){
         self.hotels.forEach((item) => {
           if(item.employeeLimit === self.chooseLimit){
             arr.push(item)
           }
         })
-        if(self.chooseDepartment.length !== 0){
+        if(self.chooseDepartment.length !== 0 && self.chooseDepartment !== '全選'){
           arr = arr.filter((item) => {
             return item.department === self.chooseDepartment
           })
         }
+        self.accountList = arr
+        return self.accountList
       }
-      self.accountList = arr
-      return self.accountList
+
+     
       // console.log(arr)
       // return self.hotels.filter((item) => {
       //   return filterKeys.every((key) => {
@@ -582,8 +662,8 @@ export default {
       // }
     },
     close: function () {
-      console.log("close");
       document.getElementById("addNewUser").style.display = "none";
+      $(".mask").hide(); 
       document.getElementById("employeeNumber").removeAttribute("required");
       document.getElementById("email").removeAttribute("required");
       document.getElementById("password").removeAttribute("required");
@@ -602,6 +682,7 @@ export default {
       document.getElementById("password").required = true;
       document.getElementById("userName").required = true;
       event.stopPropagation();
+      $('.mask').show();
       $("#addNewUser").slideToggle("normal");
       $(".account_select_phone").hide(500); // 淡出消失
 
@@ -609,7 +690,8 @@ export default {
         var area = $("#addNewUser"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {
           // $('#divTop').slideUp('slow');  //滑動消失
-          $("#addNewUser").hide(500); // 淡出消失
+          $("#addNewUser").hide(); // 淡出消失
+          $(".mask").hide(); // 淡出消失
         }
       });
       // document.getElementById("addNewUser").style.visibility = "visible";
