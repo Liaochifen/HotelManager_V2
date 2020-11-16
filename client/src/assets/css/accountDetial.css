@@ -17,12 +17,12 @@
     content: "\00a0 >\00a0 ";
     color: black;
 }
-.page{
+/* .page{
     font-size: 25px;
     font-weight: bold;
     margin-top: 30px;  
     margin-right: 20%;
-}
+} */
 .detail{
   width: 73%;
   margin-left: 8%;

@@ -86,7 +86,6 @@
           <!-- <p>功能列</p> -->
           <div class="close_btn"><a href="">X</a></div>
           <ul class="leftul" id="menuUl">
-            <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
             <li>
               <router-link :to="{ name: 'accountList' }"
                 ><img
@@ -95,7 +94,6 @@
                 />帳號管理</router-link
               >
             </li>
-            <!-- <img src="./assets/icon/comment.svg" class="icons" alt=""> -->
             <li>
               <router-link
                 :to="{
@@ -742,9 +740,13 @@ a {
 @media (max-width: 768px) {
   .page {
     font-size: 18px;
-    margin-top: 50px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 0;
+    position: fixed;
+    z-index: 1;
+    top: 11px;
+    left: 50%;
+    margin-left: -54px;
+    color: white;
   }
   .header {
     height: 0;
@@ -809,7 +811,8 @@ a {
     display: none;
   }
   .showMenu {
-    display: block;
+    /* display: block; */
+    display: none;
     width: 20%;
     line-height: 39px;
     text-align: center;
@@ -876,6 +879,7 @@ a {
   .footer{
     position: relative;
     z-index: 1;
+    
   }
   .phoneMenu {
     width: 100%;
@@ -888,11 +892,17 @@ a {
     border-top: 0.3px solid rgb(221, 221, 221);
   }
   .phoneMenu li {
-    width: 25%;
+    width: 20%;
     padding-top: 5px;
     /* padding-bottom: 5px; */
     float: left;
     text-align: center;
+  }
+  .phoneMenu button{
+    border:0;
+    background-color:none;
+    background:none;
+    padding: 0;
   }
 }
 @media (max-width: 425px) {

@@ -56,13 +56,17 @@
     outline:none;
 }
 @media (max-width: 768px) {
-    .page input{
+    #login_page{
+        position: static;
+        color: #000;
+    }
+    #login_page input{
         margin-top: 10px;
     }
-    .page button{
-        margin-top: 10px;
+    #login_page button{
+        margin-top: 20px;
     }
-    .page{
+    #login_page{
         /* background: #000; */
         width: 100%;
         margin: 0;
@@ -79,7 +83,16 @@
         width: 100%;
     }
     .btn button{
-        margin: 10px 0;
+        margin: 15px 0;
         float: none;
+        background: #c4c0c0;
+        border: none;
+        padding: 10px 25px 10px 25px;
+        color: #FFF;
+        box-shadow: 1px 1px 5px #B6B6B6;
+        border-radius: 3px;
+        /* text-shadow: 1px 1px 1px #6b6868; */
+        cursor: pointer;
+        width: 90px;
     }
 }

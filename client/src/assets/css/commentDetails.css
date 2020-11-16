@@ -323,12 +323,15 @@ label{
 }
 
 @media (max-width: 425px) {
+    /* .page{
+        margin: 0 auto;
+    } */
     .dataArea{
-        margin: 0;
-        margin-bottom: 40px;
+        top: 39px;
+        margin: 20px 0 40px 0;
         width: 100%;
         display: flex;
-        flex-direction:column-reverse;
+        flex-direction:column;
     }
    .dataBG{
        width: 90%;
@@ -364,7 +367,7 @@ label{
    }
    .commentInfo{
        text-align: center;
-       padding: 2%;
+       padding: 1%;
        box-sizing: border-box;
    }
    .MultiFilterArea1{

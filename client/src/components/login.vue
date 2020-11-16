@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="page">
+    <div class="page" id="login_page">
       <img class="photo" src="https://fakeimg.pl/100x100/" alt="" />
       <div class="clear"></div>
       <h1>登入</h1>
