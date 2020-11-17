@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.924bbb05345c1d91d09b37c0bbf8adb0.js"
+  "/precache-manifest.787e3e785f533d9b6c942a28c4465f20.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -59,7 +59,8 @@ self.addEventListener('activate', function (event) {
     caches.keys()
       .then(function (keyList) {
         return Promise.all(keyList.map(function (key) {
-          if (key !== CACHE_STATIC_NAME && key !== CACHE_DYNAMIC_NAME && key !== CACHE_ORIGIN) {
+          if (key !== CACHE_STATIC_NAME && key !== CACHE_DYNAMIC_NAME) {
+          // if (key !== CACHE_STATIC_NAME && key !== CACHE_DYNAMIC_NAME && key !== CACHE_ORIGIN) {
             console.log('[Service Worker] Removing old cache.', key);
             return caches.delete(key);
           }
@@ -81,42 +82,52 @@ function isInArray(string, array) {
 }
 
 self.addEventListener('fetch', function (event) {
-  var re = new RegExp('https://hotelapi.im.nuk.edu.tw/api/');
-  var targetApi = event.request.url.match(new RegExp('\/api\/[a-zA-z]*'));
-  if (event.request.url.match(re)) {
-    var idbName = targetApi[0].substring(5);
+    var re = new RegExp('https://hotelapi.im.nuk.edu.tw/api/');
+    var re_stat = new RegExp('https://hotelapi.im.nuk.edu.tw/stat?');
+    var targetApi = event.request.url.match(new RegExp('\/api\/[a-zA-z]*'));
+  if (event.request.url.match(re) || event.request.url.match(re_stat)) {
+    var idbName = "";
+    if (event.request.url.match(re)) {
+      idbName = targetApi[0].substring(5);
+      if (idbName === "commentDetails") {
+          idbName = "comment"
+      }
+    } else if (event.request.url.match(re_stat)) {
+      idbName = "stat";
+    }
+    console.log(event.request.url);
+    console.log(targetApi[0]);
     console.log('[Service Worker] Match ' + event.request.url);
-//  if (event.request.url.indexOf(url) > -1) {
     event.respondWith(fetch(event.request)
       .then(function (res) {
-        var clonedRes = res.clone();
-        clearAllData(idbName)
-          .then(function () {
-            console.log('[Service Worker] Clear', idbName);
-            return clonedRes.json();
-          })
-          .then(function (data) {
-            if (data.length === undefined) {
-              writeData(idbName, data)
-            }
-            else {
-                for (var key in data) {
-//                  console.log(key, data[key]);
-                  writeData(idbName, data[key])
-                }
-            }
-          })
-          .catch(function(err) {
-            console.log('[Service Worker] Clear', idbName);
-            console.log(err);
-          });
-//          });
-        return res;
+       var clonedRes = res.clone();
+       if (idbName !== 'comment' && idbName !== 'account') {
+           clearAllData(idbName)
+               .catch(function (err) {
+                   console.log(err);
+               });
+       }
+       clonedRes.json()
+           .then(function (data) {
+               if (data.length === undefined) {
+                   writeData(idbName, data)
+               }
+               else {
+                   for (var key in data) {
+                       writeData(idbName, data[key])
+                   }
+               }
+           })
+           .catch(function (err) {
+               console.log(err);
+           });
+       //          });
+       return res;
       })
     );
   } else if (isInArray(event.request.url, STATIC_FILES)) {
     event.respondWith(
-      caches.match(event.request)
+        caches.match(event.request)
     );
   } else {
     event.respondWith(
@@ -130,7 +141,9 @@ self.addEventListener('fetch', function (event) {
                 return caches.open(CACHE_DYNAMIC_NAME)
                   .then(function (cache) {
                     // trimCache(CACHE_DYNAMIC_NAME, 3);
-                    cache.put(event.request.url, res.clone());
+                    if (event.request.url.indexOf('https://cdn.jsdelivr.net/') !== 0) {
+                      cache.put(event.request.url, res.clone());
+                    }
                     return res;
                   })
               })
