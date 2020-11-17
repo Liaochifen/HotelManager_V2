@@ -540,10 +540,6 @@ a {
   text-decoration: none;
 }
 
-.icons {
-  width: 20px;
-  height: 20px;
-}
 .warp {
   width: 100%;
   margin: auto;

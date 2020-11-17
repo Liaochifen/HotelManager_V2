@@ -145,7 +145,7 @@
           <div class="statisticWeb flex-1">
             <div class="statisticWebChild">
               <p class="allP1">各平台留言數量比例</p>
-              <doughnut-chart class="travel" :chart-data="this.webCommentcollection" :options="options2" style="width: 50%; height: 50%; margin: auto;"></doughnut-chart>
+              <doughnut-chart class="travel" :chart-data="this.webCommentcollection" :options="options2" style="width: 40%; height: 50%; margin: auto;"></doughnut-chart>
               <div class="clear"></div>
             </div>
             <div class="clear"></div>
@@ -175,7 +175,6 @@
 <script>
 import axios from "axios";
 import $ from "jquery";
-// import svgMap from "svgmap";
 import lineChart from "../assets/js/lineChart";
 import barChart from "../assets/js/barChart";
 import doughnutChart from "../assets/js/doughnutChart";
@@ -188,7 +187,6 @@ export default {
     lineChart,
     barChart,
     doughnutChart,
-    // ChartDataLabels
   },
   data() {
     return {
@@ -702,11 +700,19 @@ export default {
     },
     callSingleDate() {
       let self = this;
+      $("#reportrange span").html(
+        '時間'
+      );
+      $('.ranges').find('li').each(function(){
+        if($(this).hasClass('active')){
+          $(this).removeClass('active')
+        }
+      })
       self.RankData(2);
       self.commentData(2);
       self.positiveData(2);
       self.negativeData(2);
-      // self.fillData(2)
+      $("#showmonthMenu").css("display", "none");
     },
     date() {
       let self = this;
@@ -877,11 +883,8 @@ export default {
         var x = self.months.filter((item) => {
           return item.field === self.chosenmonthData;
         });
-        console.log(x)
         self.statisticAllData
           .filter((item) => {
-            console.log(self.momentChange(moment(item.time)._d.getMonth()))
-            console.log(item)
             if (
               self.momentChange(moment(item.time)._d.getMonth()) === parseInt(x[0].month)
             ) {
@@ -1154,7 +1157,6 @@ export default {
           );
         });
       }
-      console.log(arr)
       arr.filter((item) => {
         item.data.filter((child) => {
           if (child.hotelName === self.companyName) {

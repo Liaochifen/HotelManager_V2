@@ -115,14 +115,16 @@
             <li class="all">
               <button @click="tagFilter('all')" :value="oneTag">
                 <div class="labelDiv">
-                  <span>全部</span><span class="num" >(1000)</span>
+                  <!-- <span class="num">(1000)</span> -->
+                  <span>全部</span>
                 </div>
               </button>
             </li>
             <li v-for="item in labelchoose" :key="item.field" :class="item.field">
               <button @click="tagFilter(item.field)">
                 <div class="labelDiv">
-                  <span>{{ item.label }}</span><span class="num">(1000)</span>
+                  <!-- <span class="num">(1000)</span> -->
+                  <span>{{ item.label }}</span>
                 </div>
               </button>
             </li>
