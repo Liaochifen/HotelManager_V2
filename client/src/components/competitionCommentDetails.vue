@@ -8,14 +8,6 @@
     <div class="dataArea">
       <div class="dataBG">
         <p class="CommentTtle">{{ commentData.title }}</p>
-        <span class="subtitle">評分</span
-        ><span class="spaceRight">{{ commentData.rating }}</span>
-        <span class="subtitle">評論日期</span
-        ><span>{{commentData.length && commentData.times.comment }}</span>
-        <div class="Maincontent">
-          <span class="commentContent">{{ commentData.text }}</span>
-        </div>
-        <!-- <p class="space"> -->
         <div class="MainComment">
           <span class="subtitle">評分</span
           ><span class="spaceRight">{{ commentData.rating }}</span>
@@ -26,7 +18,7 @@
           <span class="subtitle">入住時間</span
           ><span>{{commentData.length &&  commentData.times.checkin }}</span>
         <!-- </p> -->
-        <p class="space">
+        <!-- <p class="space"> -->
           ><span class="spaceRight">{{ commentData.times.checkin }}</span>
           <span class="subtitle">房型</span
           ><span class="spaceRight">{{ commentData.room_type }}</span>
@@ -40,8 +32,8 @@
 
       <div class="ReplyAddress">
         <div class="MultiFilterArea1">
-          <div class="manageTags">
-            <p class="filterP1">標籤</p>
+          <div class="manageTags compet">
+            <p class="filterP1 compet_filterP1">標籤</p>
             <!-- <div class="labelchoose1" v-for="item in commentData.tags" :key="item._id"> -->
             <!-- <input type="text" name="label_tags" disabled="true" :value="item" class="tagInput"> -->
             <!--  @click="deleteTags(item)" -->

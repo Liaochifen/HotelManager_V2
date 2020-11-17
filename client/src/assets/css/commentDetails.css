@@ -333,7 +333,10 @@ label{
 .clear{
     clear: both;
 }
-
+.compet{
+    display: flex;
+    flex-direction: column;
+}
 
 @media (max-width: 768px) {
     .page{
@@ -405,6 +408,7 @@ label{
    }
 
    /* 競爭對手的評論詳細內容 */
+   
 }
 @media (max-width: 320px){
     .MainComment span{
