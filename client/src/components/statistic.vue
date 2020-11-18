@@ -153,7 +153,7 @@
           <div class="statisticWeb flex-1">
             <div class="statisticWebChild">
               <p class="allP1">旅遊類型比例</p>
-              <doughnut-chart class="travel" :chart-data="this.tripTypecollection" :options="options2" style="width: 50%; height: 50%; margin: auto;"></doughnut-chart>
+              <doughnut-chart class="travel" :chart-data="this.tripTypecollection" :options="options2" style="width: 50%; height: 40%; margin: auto; margin-top: -20px;"></doughnut-chart>
               <div class="clear"></div>
             </div>
             <div class="clear"></div>
@@ -1235,6 +1235,22 @@ export default {
             data: self.getWebsiteData(value, data),
           },
         ],
+        // plugins: [{
+        //   beforeInit: function(chart, options){
+        //             console.log(chart)
+        //             var data = chart.data.datasets[0].data;
+      //       var isAllZero = data.reduce((a, b) => a + b) > 0 ? false : true;
+      //       console.log(isAllZero)
+
+      //       if (!isAllZero) return;
+      //       // when all data values are zero...
+      //       // chart.data.datasets[0].data = data.map((e, i) => i > 0 ? 0 : 1); //add one segment
+      //       // chart.data.datasets[0].backgroundColor = '#d2dee2'; //change bg color
+      //       // chart.data.datasets[0].borderWidth = 0; //no border
+      //       // chart.options.tooltips = false; //disable tooltips
+      //       // chart.options.legend.onClick = null; //disable legend click
+          // }
+        // }]
       };
       this.tripTypecollection = {
         labels: self.labelX3,
@@ -1256,7 +1272,6 @@ export default {
     },
     getWebsiteData(value, data) {
       let self = this;
-      console.log(value);
       if (value === 2) {
         data = self.getSelfCompany(data);
         data = data.websites_count.map((element) => {

@@ -17,7 +17,7 @@
             <li id="accountManage">
               <router-link :to="{ name: 'accountList' }"
                 ><img class="icons"
-                  src="./assets/icon/account.png"
+                  src="./assets/icon/accountlist.png"
                   alt=""
                 /><span>帳號管理</span></router-link
               >
@@ -89,7 +89,7 @@
             <li>
               <router-link :to="{ name: 'accountList' }"
                 ><img
-                  src="./assets/icon/account.png"
+                  src="./assets/icon/accountlist.png"
                   alt=""
                 />帳號管理</router-link
               >
@@ -157,7 +157,7 @@
     </div>
     <div class="content">
       <div class="contentTop">
-        <a id="menubtn" class="showMenu" href="#"
+        <!-- <a id="menubtn" class="showMenu" href="#"
           ><img src="https://fakeimg.pl/15x15/" alt=""
         /></a>
         <div class="breadcrumb" id="breadcrumb">
@@ -165,8 +165,8 @@
           <a class="breadcrumb-item" href="/commentlist">評論管理</a>
           <a href="#">評論列表</a>
           <div class="clear"></div>
-        </div>
-        <div class="personalInfo">
+        </div> -->
+        <div class="personalInfo" id="personalInfo">
           <img
             class="photo"
             src="https://fakeimg.pl/20x20/"
@@ -187,24 +187,21 @@
           </div>
           <div class="personalMenu">
             <ul>
-              <li>
-                <button v-on:click="link('accountDetial')">
-                  <img src="https://fakeimg.pl/20x20/" alt="" />個人資料
+              <li v-on:click="link('accountDetial')">
+                <button >
+                  <img class="editButton" src="./assets/icon/account.png" alt="" />
+                  <span>個人資料</span>
                 </button>
               </li>
-              <li>
-                <button v-on:click="link('')">
-                  <img src="https://fakeimg.pl/20x20/" alt="" />歷史紀錄
-                </button>
-              </li>
-              <li>
-                <img src="https://fakeimg.pl/20x20/" alt="" /><button
-                  v-on:click="logouted()"
-                >
-                  登出
+              <li  v-on:click="link('history')">
+                <button >
+                  <img  class="editButton"  src="./assets/icon/history.png" alt="" />
+                  <span>歷史記錄</span>
                 </button>
               </li>
             </ul>
+                <!-- <img src="https://fakeimg.pl/20x20/" alt="" /> -->
+                <button v-on:click="logouted()" class="bigheadLogout">登出</button>
           </div>
           <div class="clear"></div>
         </div>
@@ -310,7 +307,8 @@ export default {
           }
           document.getElementById("limitWord").innerHTML = self.userAccountDetail.employeeLimit;
           document.getElementById("menu").style.visibility = "visible";
-          document.getElementById("breadcrumb").style.visibility = "visible";
+          document.getElementById("personalInfo").style.visibility = "visible";
+          // document.getElementById("breadcrumb").style.visibility = "visible";
         })
         .catch((error) => {
           console.log(error);
@@ -320,7 +318,8 @@ export default {
       $("#statisticalResults").show();
       document.getElementById("limitWord").innerHTML = " ";
       document.getElementById("menu").style.visibility = "hidden";
-      document.getElementById("breadcrumb").style.visibility = "hidden";
+      document.getElementById("personalInfo").style.visibility = "hidden";
+      // document.getElementById("breadcrumb").style.visibility = "hidden";
     }
   },
   methods: {
@@ -346,7 +345,8 @@ export default {
       $("#statisticalResults").show();
       document.getElementById("limitWord").innerHTML = " ";
       document.getElementById("menu").style.visibility = "hidden";
-      document.getElementById("breadcrumb").style.visibility = "hidden";
+      // document.getElementById("breadcrumb").style.visibility = "hidden";
+      document.getElementById("personalInfo").style.visibility = "hidden";
       this.$router.push("/login");
     },
     logoutRecord: function () {
@@ -654,18 +654,9 @@ a {
   content: "\00a0 >\00a0 ";
   color: black;
 }
-.personalInfo {
-  float: right;
-  padding-right: 30px;
-  /* margin-right: 5%; */
-}
-.personalInfo p {
-  float: right;
-  margin-right: 10px;
-}
+
 .photo {
   float: right;
-  /* margin-top: 10px; */
 }
 
 .el-table th,
@@ -696,8 +687,104 @@ a {
 .phoneMenu {
   display: none;
 }
+#personalInfo{
+  visibility: hidden;
+}
+.personalInfo{
+  float: right;
+  padding-right: 30px;
+}
+.personalInfo p{
+  float: right;
+  margin-right: 10px;
+}
+#logining{
+  display:none;
+}
+.loginingInfo{
+  width: 250px;
+  height: 270px;
+  position: absolute;
+  z-index: 100000;
+  top: 7%;
+  right: 2%;
+  padding: 2%;
+  background: white;
+  border-radius: 3px;
+  border: 0.5px solid rgb(211, 211, 211);
+  box-shadow: 0.5px 0.5px 2px #adadad;
+}
+.nameEmail{
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 0.3px solid rgb(204, 204, 204);
+}
+.nameEmail img{
+  float: left;
+  margin-left: 10px;
+  margin-right: 20px;
+}
+.nameEmail ul li{
+  padding-top: 5px;
+}
+.personalMenu{
+  margin-top: 20px;
+}
+.personalMenu ul li{
+  padding: 20px;
+  border-bottom: 0.3px solid rgb(204,204,204);
+  margin-bottom: 0px;
+}
+.personalMenu ul li button{
+  all:unset;
+}
+.personalMenu ul li span{
+  margin-left: 20px;
+  font-size: 16px;
+  line-height: 18px;
+  vertical-align: top;
+  letter-spacing: 3px;
+}
+.personalMenu ul li:hover{
+  cursor: pointer;
+  background: rgb(206, 206, 206);
+}
+.bigheadLogout{
+  all: unset;
+  width: 40px;
+  margin: 15% 32%;
+  font-size: 16px;
+  height: 30px;
+  background-color: rgba(72, 133, 82, 0.877);
+  border: 0.5px solid rgb(196, 196, 196);
+  border-radius: 5px;
+  padding: 2px 25px;
+  color: white;
+  letter-spacing: 3px;
+  text-align: center;
+}
+.bigheadLogout:hover{
+  cursor: pointer;
+}
 
-/* 個人資料 */
+.editButton{
+    all: unset;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    vertical-align: bottom;
+    margin: auto;
+    justify-content: center; 
+}
+
+/* .personalInfo {
+  float: right;
+  padding-right: 30px;
+}
+.personalInfo p {
+  float: right;
+  margin-right: 10px;
+}
 .loginingInfo {
   background-color: #fff;
   padding-top: 20px;
@@ -714,7 +801,6 @@ a {
   z-index: 100;
 }
 #logining {
-  /* visibility: hidden; */
   display: none;
 }
 .loginingInfo .nameEmail {
@@ -743,7 +829,7 @@ a {
 }
 .personalMenu img {
   margin-right: 15px;
-}
+} */
 .logoutInfo {
   background-color: #fff;
   padding-top: 20px;

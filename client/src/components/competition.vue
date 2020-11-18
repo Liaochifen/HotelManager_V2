@@ -1,36 +1,23 @@
 <template>
   <div class="wholeArea">
     <div class="contentCenter">
-      <div class="page">
+      <!-- <div class="page">
         <span>競爭對手列表</span>
-      </div>
+      </div> -->
     </div>
     <div class="dataArea1">
       <div class="phone">
           <template>
             <span v-for="item in companyData" :key="item.id" >
                 <template v-if="item.hotelName === companyName">
-                    <div class="eachCompany myCompany">
-                      <div class="rank">{{item.rank}}</div>
-                      <!-- <span v-if="item.favorite === true" class="favoriteArea">
-                        <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
-                          <span class="btn-box">
-                            <span class="btn1"></span>
-                          </span>
-                        </span>
-                        <span v-else-if="item.favorite === false" class="favoriteArea">
-                            :name="[props.row.companyID]" :value="[props.row.companyID]" 
-                          <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
-                          <span class="btn-box">
-                            <span class="btn"></span>
-                          </span>
-                      </span> -->
+                    <p class="myHotel">我的飯店</p>
+                    <div class="myCompany">
                       <router-link :to="{name: fn(item.hotelName), params: {collections: item.hotelName}}">
                       <div class="details">
-                        <img src="https://fakeimg.pl/230x165/">
+                        <img :src="require(`../assets/icon/${item.hotelName}.jpg`)" style="width: 180px; height: 160px; object-fit: cover;"/>
+                        <!-- <img src="`../assets/icon/${item.hotelName}.jpg`"/> -->
                         <div class="companyInfo">
-                          
-                          <p class="name">{{item.hotelChineseName}}</p>
+                          <p class="name">{{item.hotelChineseName}}<span class='rank'>({{item.rank}})</span></p>
                           <div class="ratings">
                             <div class="empty_star">★★★★★</div>
                             <div class="full_star" :style="`width:${item.avg_rating/2*20}%;`">★★★★★</div>
@@ -45,10 +32,11 @@
                       </router-link>
                       <div class="clear"></div>
                     </div>
+                      <div class="clear"></div>
                 </template>
                 <template v-else-if="item.hotelName !== companyName">
                     <div class="eachCompany">
-                      <div class="rank">{{item.rank}}</div>
+                      <!-- <div class="rank">{{item.rank}}</div> -->
                       <span v-if="item.favorite === true" class="favoriteArea">
                       <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
                         <span class="btn-box">
@@ -64,10 +52,10 @@
                       </span>
                       <router-link :to="{name: fn(item.hotelName), params: {collections: item.hotelName}}">
                       <div class="details">
-                        <img src="https://fakeimg.pl/230x165/">
+                        <img :src="require(`../assets/icon/${item.hotelName}.jpg`)" style="width: 200px; height: 160px;  object-fit: cover;"/>
                         <div class="companyInfo">
 
-                          <p class="name">{{item.hotelChineseName}}</p>
+                          <p class="name">{{item.hotelChineseName}}<span class='rank'>({{item.rank}})</span></p>
                           <div class="ratings">
                             <div class="empty_star">★★★★★</div>
                             <div class="full_star" :style="`width:${item.avg_rating/2*20}%;`">★★★★★</div>
@@ -391,7 +379,15 @@ export default {
         return b.avg_rating - a.avg_rating;
       });
       self.companyData.forEach((item, index) => {
-        item['rank'] = index +1 
+        if(index+1 >3){
+          item['rank'] = index +1 +'th'
+        }else if(index+1 === 1){
+          item['rank'] = index +1 +'st'
+        }else if(index+1 === 2){
+          item['rank'] = index +1 +'nd'
+        }else if(index+1 === 3){
+          item['rank'] = index +1 +'rd'
+        }
       })
       self.companyData.sort(function(x,y){
         return x.hotelName === self.companyName ? -1 : y.hotelName === self.companyName ? 1:0
@@ -417,4 +413,5 @@ export default {
   .selfCompany{
     background-color:green;
   }
+
 </style>

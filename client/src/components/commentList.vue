@@ -14,9 +14,9 @@
       </div>
       
       <div class="buttonFunArea">
-        <button class="editButton" @click="openFilter()">
+        <!-- <button class="editButton" @click="openFilter()">
           <img src="../assets/icon/filter.png"/>
-        </button>
+        </button> -->
         <button class="editButton" @click="editFun()">
           <img src="../assets/icon/edit.png"/>
         </button>
@@ -36,8 +36,9 @@
                 :value="item.field"
               ></el-option>
             </el-select>
+            <div class="clear"></div>
           </div>
-          <div class="slot_div">
+          <!-- <div class="slot_div">
             <el-select
               placeholder="回覆狀態設定"
               class="custom_el_select"
@@ -49,9 +50,9 @@
                 :value="item.field"
               ></el-option>
             </el-select>
-          </div>
+          </div> -->
           <div class="add_btn">
-            <button class="functionButton deleteBTN" id="tableActionsBtn" @click="editUpdate(conditionModify, replyModify)">確認</button>
+            <button class="functionButton addBTN" id="tableActionsBtn" @click="editUpdate(conditionModify, replyModify)">確認</button>
             <button class="functionButton deleteBTN" id="tableActionsBtn" @click="editCCancle()">取消</button>
           <div class="clear"></div>
         </div>
@@ -84,14 +85,6 @@
             </el-select>
         </div>
         <div slot="table-actions" class="slot_div">
-          <p class="filterTitle">評論分數</p>
-          <div class="slidecontainer">
-            <input type="range" min="0" max="5" step="0.1" value="0" class="slider" id="myRange" @input="scoreHtml" @propertychange="scoreHtml" @change="AllfilterFunction()">
-            <span id="value">0</span>
-          </div>
-        </div>
-        
-        <div slot="table-actions" class="slot_div">
           <div
             id="reportrange"
             style="
@@ -106,6 +99,15 @@
             </span>
           </div>
         </div>
+        <div slot="table-actions" class="slot_div score_div">
+          <p class="filterTitle">評論分數</p>
+          <div class="slidecontainer">
+            <input type="range" min="0" max="5" step="0.1" value="0" class="slider" id="myRange" @input="scoreHtml" @propertychange="scoreHtml" @change="AllfilterFunction()">
+            <span id="value">0</span>
+          </div>
+        </div>
+        
+        
         <div class="clear"></div>
     </div>
     <div class="dataArea">
@@ -738,19 +740,19 @@ export default {
       $("#reportrange span").html("時間");
       return self.commentData;
     },
-    openFilter(){
-      // let self = this;
-      event.stopPropagation();
-      $(".MultiFilterArea").slideToggle("normal");
-      $(document).click(function (event) {
-        var area = $(".MultiFilterArea"); // 設定目標區域
-        var area1 = $(".daterangepicker"); // 設定目標區域
-        if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
-          // $('#divTop').slideUp('slow');  //滑動消失
-          $(".MultiFilterArea").hide(500); // 淡出消失
-        }
-      });
-    },
+    // openFilter(){
+    //   // let self = this;
+    //   event.stopPropagation();
+    //   $(".MultiFilterArea").slideToggle("normal");
+    //   $(document).click(function (event) {
+    //     var area = $(".MultiFilterArea"); // 設定目標區域
+    //     var area1 = $(".daterangepicker"); // 設定目標區域
+    //     if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
+    //       // $('#divTop').slideUp('slow');  //滑動消失
+    //       $(".MultiFilterArea").hide(500); // 淡出消失
+    //     }
+    //   });
+    // },
     handleCheckedChange(value) {
       let self = this;
       if (value === 0) {
@@ -931,7 +933,6 @@ export default {
     conditionUpdate: function (id) {
       let self = this;
       // foreach改成filter
-      console.log(id)
       self.commentData.filter((item) => {
         if (item._id === id) {
           self.conditionModifytoHistory.commentID = id
@@ -1167,7 +1168,7 @@ export default {
     },
     selectionChanged() {},
     
-  },
+  }
 };
 </script>
 <style scoped src= '../assets/css/commentList.css'></style>

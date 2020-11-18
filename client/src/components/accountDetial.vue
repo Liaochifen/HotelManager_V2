@@ -34,6 +34,10 @@
       <button id="saveInfo" v-on:click="confirm()">儲存</button>
       <button id="cancleInfo" v-on:click="cancleEditMode()">取消</button>   
     </div>
+    <!-- <div class="pre_next">
+      <button id="" v-on:click="findOther(0)">上一則</button>
+      <button id="" v-on:click="findOther(1)">下一則</button>   
+    </div> -->
   </div>
 </template>
   <!-- <div> -->
@@ -138,7 +142,8 @@ export default {
       checkPassword:"",
       company:"",
       record:"userDetailModify",
-      blockarea: 0
+      blockarea: 0,
+      next: 0
     };
   },
   mounted() {
@@ -322,8 +327,28 @@ export default {
     },
     accountPage: function(value){
       this.blockarea = value
-    } 
-  },
+    },
+    // findOther: function(value){
+    //   let self = this
+    //   if(value === 1){
+    //     axios
+    //       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID + '/' + value)
+    //       .then((response) => {
+    //         console.log(response.data)
+    //         self.userAccountDetail = response.data;
+    //         self.oldPassword = self.userAccountDetail.password;
+    //         self.oldEmail = self.userAccountDetail.email;
+    //         self.oldUserName = self.userAccountDetail.userName;
+    //         self.oldEmployeeLimit = self.userAccountDetail.employeeLimit;
+    //         self.oldDepartment = self.userAccountDetail.department;
+    //         self.company = self.userAccountDetail.companyName;
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    //     }
+    // },
+  }
 };
 </script>
 

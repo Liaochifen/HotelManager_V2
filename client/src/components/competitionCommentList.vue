@@ -33,14 +33,6 @@
             </el-select>
         </div> -->
         <div slot="table-actions" class="slot_div">
-          <p class="filterTitle">評論分數</p>
-          <div class="slidecontainer">
-            <input type="range" min="0" max="5" step="0.1" value="0" class="slider" id="myRange" @input="scoreHtml" @propertychange="scoreHtml" @change="AllfilterFunction()">
-            <span id="value">0</span>
-          </div>
-        </div>
-        
-        <div slot="table-actions" class="slot_div">
           <div
             id="reportrange"
             style="
@@ -55,6 +47,15 @@
             </span>
           </div>
         </div>
+        <div slot="table-actions" class="slot_div score_div">
+          <p class="filterTitle">評論分數</p>
+          <div class="slidecontainer">
+            <input type="range" min="0" max="5" step="0.1" value="0" class="slider" id="myRange" @input="scoreHtml" @propertychange="scoreHtml" @change="AllfilterFunction()">
+            <span id="value">0</span>
+          </div>
+        </div>
+        
+        
         <div class="clear"></div>
     </div>
     <div class="dataArea">

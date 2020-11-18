@@ -17,13 +17,18 @@
     <div class="historydataArea">
       <template>
         <span v-if="page === 0">
-          <button @click="publicManage(0)">評論狀態動態</button>
-          <button @click="publicManage(1)">評論標籤動態</button>
-          <button @click="publicManage(2)">評論回覆動態</button>
+          <ul>
+            <li class="his_comment"><button @click="publicManage(0)" >評論狀態動態</button></li>
+            <li class="his_tags"><button @click="publicManage(1)" >評論標籤動態</button></li>
+            <li class="his_reply"><button @click="publicManage(2)" >評論回覆動態</button></li>
+            <div class="clear"></div>
+          </ul>
+          <div class="clear"></div>
           <!-- <template> -->
             <!-- <div> -->
               <!-- .condition -->
-              <div v-if="publicPage === 0">
+              <div v-if="publicPage === 0" class="public_record">
+                <div class="clear"></div>
                 <span v-if="commentFilter.length === 0">
                   <p>無任何記錄</p>
                 </span>
@@ -38,7 +43,7 @@
                   </div>
                 </span>
               </div>
-              <div v-else-if="publicPage === 1"> 
+              <div v-else-if="publicPage === 1" class="public_record"> 
                 <span v-if="tagsFilter.length === 0">
                   <p>無任何記錄</p>
                 </span>
@@ -50,7 +55,7 @@
                   </div>
                 </span>
               </div>
-              <div v-else-if="publicPage === 2"> 
+              <div v-else-if="publicPage === 2" class="public_record"> 
                 <span v-if="replyFIlter.length === 0">
                   <p>無任何記錄</p>
                 </span>
@@ -66,11 +71,12 @@
           <!-- </template> -->
         </span>
         <span v-else-if="page === 1">
-          <p>個人動態</p>
-          <button @click="personalManage(0)">評論狀態動態</button>
-          <button @click="personalManage(1)">評論標籤動態</button>
-          <button @click="personalManage(2)">我的最愛動態</button>
-          <div v-if="personalPage === 0">
+          <ul>
+            <li><button @click="personalManage(0)">評論狀態動態</button></li>
+            <li><button @click="personalManage(1)">評論標籤動態</button></li>
+            <li><button @click="personalManage(2)">我的最愛動態</button></li>
+          </ul>
+          <div v-if="personalPage === 0"  class="personal_record">
             <span v-if="personalCommentFilter.length === 0">
               <p>無任何記錄</p>
             </span>
@@ -82,7 +88,7 @@
               </div>
             </span>
           </div>
-          <div v-else-if="personalPage === 1">
+          <div v-else-if="personalPage === 1" class="personal_record">
             <span v-if="personalTagFilter.length === 0">
               <p>無任何記錄</p>
             </span>
@@ -94,7 +100,7 @@
               </div>
             </span>
           </div>
-          <div v-else-if="personalPage === 2">
+          <div v-else-if="personalPage === 2" class="personal_record">
             <span v-if="personalFavFilter.length === 0">
               <p>無任何記錄</p>
             </span>
@@ -112,7 +118,7 @@
               </div>
             </span>
           </div>
-          <div v-else-if="personalPage === 3">
+          <div v-else-if="personalPage === 3" class="personal_record">
             <span v-if="personalFavFilter.length === 0">
               <p>無任何記錄</p>
             </span>
@@ -125,28 +131,29 @@
             </span>
           </div>
         </span>
-        <span v-else-if="page === 2">
-          <p>後臺管理員部分</p>
-          <button  v-on:click="manager(0)">登入</button>
-          <button  v-on:click="manager(1)">登出</button>
-          <button  v-on:click="manager(2)">忘記密碼</button>
-          <button  v-on:click="manager(3)">修改帳號資料</button>
-          <button  v-on:click="manager(4)">新增刪除使用者</button>
-          <div  v-if="userInfoPage === 0">
+        <span v-else-if="page === 2" >
+          <ul>
+            <li><button  v-on:click="manager(0)">登入</button></li>
+            <li><button  v-on:click="manager(1)">登出</button></li>
+            <li><button  v-on:click="manager(2)">忘記密碼</button></li>
+            <li><button  v-on:click="manager(3)">修改帳號資料</button></li>
+            <li><button  v-on:click="manager(4)">新增刪除使用者</button></li>
+          </ul>
+          <div  v-if="userInfoPage === 0" class="backend_record">
             <div v-for="(item, loginIndex) in loginNew" :key="loginIndex+'login'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 登入</span>
               <span class="commentTimeHistory">{{item.loginTime}}</span>
             </div>
           </div>
-          <div  v-else-if="userInfoPage === 1">
+          <div  v-else-if="userInfoPage === 1" class="backend_record">
             <div v-for="(item, logoutIndex) in logoutNew" :key="logoutIndex+'logout'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 登出</span>
               <span class="commentTimeHistory">{{item.logoutTime}}</span>
             </div>
           </div>
-          <div  v-else-if="userInfoPage === 2">
+          <div  v-else-if="userInfoPage === 2" class="backend_record">
             <div v-for="(item, userIndex) in userNew" :key="userIndex+'pw'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 忘記密碼 驗證 
@@ -156,21 +163,21 @@
               <span class="commentTimeHistory">{{item.forgetPassword.verificationTime}}</span>
             </div>
           </div>
-          <div  v-else-if="userInfoPage === 3">
+          <div  v-else-if="userInfoPage === 3" class="backend_record">
             <div v-for="(item, userDetailModifyIndex) in userDetailModifyNew" :key="userDetailModifyIndex+'acds'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.modifyInfo}} {{item.modifyPerson}} 把 {{item.employeeNumber}} 由 {{item.old}} 改為 {{item.new}} </span>
               <span class="commentTimeHistory">{{item.time}}</span>
             </div>
           </div>
-          <div  v-else-if="userInfoPage === 4">
+          <div  v-else-if="userInfoPage === 4" class="backend_record">
             <div v-for="(item, userListModifyIndex) in userListModifyNew" :key="userListModifyIndex+'mod'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.modify}} 使用者 {{item.employeeNumber}} </span>
               <span class="commentTimeHistory">{{item.time}}</span>
             </div>
           </div>
-          <div v-else-if="userInfoPage === 5">
+          <div v-else-if="userInfoPage === 5" class="backend_record">
             <span v-if="personalCommentFilter.length === 0">
               <p>無任何記錄</p>
             </span>
@@ -182,7 +189,7 @@
               </div>
             </span>
           </div>
-          <div v-else-if="userInfoPage === 6">
+          <div v-else-if="userInfoPage === 6" class="backend_record">
             <span v-if="personalTagFilter.length === 0">
               <p>無任何記錄</p>
             </span>
@@ -194,7 +201,7 @@
               </div>
             </span>
           </div>
-          <div v-else-if="userInfoPage === 7">
+          <div v-else-if="userInfoPage === 7" class="backend_record">
             <span v-if="personalFavFilter.length === 0">
               <p>無任何記錄</p>
             </span>
@@ -371,6 +378,7 @@ export default {
           })
         })
         self.changePage(0)
+        self.publicManage(0)
       })
       .catch((error) => {
         console.log(error);
@@ -433,6 +441,20 @@ export default {
     },
     publicManage: function(page){
       this.publicPage = page;
+      console.log('ee')
+      if(page === 0){
+        $('.his_comment').addClass('bg')
+        $('.his_tags').removeClass('bg')
+        $('.his_reply').removeClass('bg')
+      }else if(page === 1){
+        $('.his_comment').removeClass('bg')
+        $('.his_tags').addClass('bg')
+        $('.his_reply').removeClass('bg')
+      }else{
+        $('.his_comment').removeClass('bg')
+        $('.his_tags').removeClass('bg')
+        $('.his_reply').addClass('bg')
+      }
     }
   },
 };

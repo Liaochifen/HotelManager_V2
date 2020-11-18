@@ -30,9 +30,7 @@
   .accountPersonalMenu ul li{
     display: inline-block;
     margin: 10px 20px 10px 30px;
-    /* line-height: 28px; */
     padding: 0.5%;
-    /* vertical-align: middle; */
     letter-spacing: 2px;
     border-right: 0.3px solid rgb(202, 202, 202);
     padding-right: 50px;

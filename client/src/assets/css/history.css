@@ -23,13 +23,59 @@
     visibility: hidden;
 }
 .historydataArea{
-    margin-top: 50px;
+    box-shadow: 0.5px 0.5px 1px #adadad;
+    
+    /* box-shadow: 0.5px 0.5px 1px #adadad; */
+}
+.historydataArea ul{
+    width: 100%;
+    margin-top: 30px;
+    /* margin-bottom: 30px; */
+    background-color: #fff;
+    height: 50px;
+    /* border: 0.3px solid rgb(219, 219, 219); */
+    /* border-bottom: none; */
+    border-radius: 3px;
+}
+
+.historydataArea ul li{
+    display: inline-block;
+    width: 10%;
+    letter-spacing: 2px;
+    border-right: 0.3px solid rgb(238, 238, 238);
+    padding-top: 3px;
+    margin-bottom: 0px;
+    line-height: 45px;
+}
+.historydataArea ul li, .historydataArea ul li{
+    padding-left: 25px;
+}
+.historydataArea button{
+    all: unset;
+}
+.historydataArea ul li:hover{
+    cursor: pointer;
+    background: rgb(248, 248, 248);
+    color: rgb(10, 145, 10);
+}
+.historydataArea ul li button:active{
+    all: unset;
+}
+.bg{
+    color: rgb(10, 145, 10);
+}
+.public_record, .personal_record, .backend_record{
+    margin-top: 5px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.842);
+    box-shadow: 0.5px 0.5px 2px #adadad;
+    padding: 1%;
 }
 .commentArea{
     /* margin-top: 20px; */
     padding-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid gray;
+    border-bottom: 0.3px solid rgb(201, 201, 201);
     position: relative;
 }
 .commentArea:hover{
@@ -38,9 +84,7 @@
 .commentHistoryContent{
     margin-left: 10px;
     letter-spacing: 3px;
-    
     font-size: 16px;
-
 }
 .commentTimeHistory{
     color: gray;

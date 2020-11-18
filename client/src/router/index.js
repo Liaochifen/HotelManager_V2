@@ -15,8 +15,9 @@ import accountDetial from '@/components/accountDetial'
 import forgetPassword from '@/components/forgetPassword'
 import competitionCommentList from '@/components/competitionCommentList'
 import competitionCommentDetails from '@/components/competitionCommentDetails'
+import personalPage from '@/components/personalPage'
 // For test only
-import HelloWorld from '@/components/HelloWorld'
+// import HelloWorld from '@/components/HelloWorld'
 
 
 Vue.use(Router)
@@ -114,9 +115,14 @@ export default new Router({
             component: history
         },
         {
-            path: '/HelloWorld',
-            name: 'HelloWorld',
-            component: HelloWorld
+            path: '/personalPage',
+            name: 'personalPage',
+            component: personalPage
         }
+        // {
+        //     path: '/HelloWorld',
+        //     name: 'HelloWorld',
+        //     component: HelloWorld
+        // }
     ]
 });

@@ -8,14 +8,16 @@ button:hover{
 }
 .buttonFunArea{
     width: 200px;
-    margin-left: 85%;
+    margin-left: 88%;
     margin-bottom: 15px;
 }
 .custom_el_select{
     width: 160px !important;
     height: 30px !important;
 }
-
+.score_div{
+    margin-left: 20px;
+}
 /* 改不了 */
 .el-input__inner{
     height: 30px !important;
@@ -47,6 +49,7 @@ button:hover{
     margin: auto;
     justify-content: center; 
 }
+
 /* .editButton .editSpan{
     float: right;
     padding: 5px 5px 5px 3px;
@@ -70,7 +73,7 @@ button:hover{
 .edit{
     display: none;
     /* width:94.5%; */
-    width: 30%;
+    width: 23.5%;
     float: right;
     /* margin-left: 1.5%; */
     margin-right: 2.5%;
@@ -108,12 +111,12 @@ button:hover{
     border: 1px solid rgb(226, 226, 226);
 } */
 .MultiFilterArea{
-    display: none;
+    /* display: none; */
     width:65%;
     margin-left: 1.5%;
     margin-right: 1.5%;
     margin-bottom: 5px;
-    border-right: 0.3px solid #cccccc;
+    /* border-right: 0.3px solid #cccccc; */
     /* padding: 1%; */
     /* background: rgb(255, 255, 255); */
     /* border: 0.3px solid rgb(233, 233, 233); */
@@ -129,7 +132,7 @@ button:hover{
     /* box-shadow: 0.5px 0.5px 2px #adadad; */
     font-family: "Segoe UI";
     letter-spacing: 1px;
-  border: 2px solid rgb(122, 122, 122);
+    border: 2px solid rgb(122, 122, 122);
     background-color: #ffffff;
     color: black;
 }
@@ -157,7 +160,7 @@ button:hover{
 }
 
 #reportrange{
-    width: 100px;
+    width: 120px;
     padding: 1%;
     border-radius: 4px;
     left: 190px;
@@ -169,12 +172,13 @@ button:hover{
     /* line-height: 20px; */
     /* border: 1px solid #000; */
     /* vertical-align: middle; */
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 16px;
+    line-height: 26px;
     vertical-align: middle;
-    color: #8b8b8b;
+    color: #C0C4CC;
     font-family: Arial;
     letter-spacing: 1px;
+    padding-top: 2px;
     /* padding-top: 3px; */
 }
 
@@ -238,15 +242,19 @@ button:hover{
 .functionButton{
     all: unset;
     background: white;
-    height: 20px;
+    height: 30px;
     background-color: rgba(72, 133, 82, 0.877);
     border: 0.5px solid rgb(196, 196, 196);
     border-radius: 5px;
-    padding: 1% 2.5%;
+    padding: 3px 15px;
     color: white;
     letter-spacing: 3px;
     float: left;
 }
+.addBTN{
+    margin-right: 10px;
+}
+
 /* .addBTN{
     position: absolute;
     left: 35%;

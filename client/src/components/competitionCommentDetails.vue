@@ -12,14 +12,14 @@
           <span class="subtitle">評分</span
           ><span class="spaceRight">{{ commentData.rating }}</span>
           <span class="subtitle">評論日期</span
-          ><span class="spaceRight">{{ commentData.times.comment }}</span>
+          ><span class="spaceRight">{{commentData.length && commentData.times.comment }}</span>
           <span class="subtitle">住客國家</span
           ><span class="spaceRight">{{ commentData.locale }}</span>
           <span class="subtitle">入住時間</span
           ><span>{{commentData.length &&  commentData.times.checkin }}</span>
         <!-- </p> -->
         <!-- <p class="space"> -->
-          ><span class="spaceRight">{{ commentData.times.checkin }}</span>
+          <span class="spaceRight">{{ commentData.length && commentData.times.checkin }}</span>
           <span class="subtitle">房型</span
           ><span class="spaceRight">{{ commentData.room_type }}</span>
           <span class="subtitle">來源網站</span
