@@ -272,10 +272,13 @@
 import axios from "axios";
 import $ from "../node_modules/jquery";
 import dateTime from "../src/assets/js/dateTime";
+import util from "./assets/js/utility";
+
 export default {
   name: "App",
   data() {
     return {
+      networkDataReceived: false,
       userID: "",
       companyName: "",
       userAccountDetail: {},
@@ -292,11 +295,11 @@ export default {
       self.companyName = loginData.companyName;
       self.userID = loginData.id;
       
-
       axios
         .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
         .then((response) => {
           console.log(response.data);
+          self.networkDataReceived = true;
           self.userAccountDetail = response.data;
           if(self.userAccountDetail.employeeLimit === "一般使用者"){
             document.getElementById("accountManage").style.display = "none"; 
@@ -313,6 +316,32 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+
+      if ("indexedDB" in window) {
+        console.log("Reading indexedDB...");
+        util.readAllData("account").then(function (data) {
+          if (!self.networkDataReceived) {
+            console.log("From cache", data);
+            for (var i in data) {
+              if (data[i]._id === self.userID) {
+                console.log('Match', data[i]);
+                self.userAccountDetail = data[i];
+                if(self.userAccountDetail.employeeLimit === "一般使用者"){
+                  document.getElementById("accountManage").style.display = "none";
+                  document.getElementById("statisticalResults").style.display = "none";
+                } else if (self.userAccountDetail.employeeLimit === "主管使用者") {
+                  console.log(self.userAccountDetail.employeeLimit);
+                  document.getElementById("accountManage").style.display = "none";
+                }
+                document.getElementById("limitWord").innerHTML = self.userAccountDetail.employeeLimit;
+                document.getElementById("menu").style.visibility = "visible";
+                document.getElementById("breadcrumb").style.visibility = "visible";
+                break;
+              }
+            }
+          }
+        });
+      }
     } else {
       $("#accountManage").show();
       $("#statisticalResults").show();

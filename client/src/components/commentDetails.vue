@@ -130,11 +130,13 @@
 import axios from "axios";
 import $ from "jquery";
 import dateTime from "../assets/js/dateTime";
+import util from "../assets/js/utility";
 
 export default {
   name: "commentDetails",
   data() {
     return {
+      networkDataReceived: false,
       companyName: "",
       employeeNumber: '',
       commentDetailsID: this.$route.params._id,
@@ -226,18 +228,49 @@ export default {
           if (self.commentData.labels[item.field] === 1) {
             return item;
           } else {
-            self.label_no_tags.push(item);
+            var inLabelTage = false;
+            for (var i in self.label_no_tags) {
+              if (self.label_no_tags[i].field === item.field) {
+                inLabelTage = true;
+                break;
+              }
+            }
+            if (!inLabelTage) {
+              self.label_no_tags.push(item);
+            } 
           }
         });
-        // self.label_no_tags = self.labelchoose.filter((item) => {
-        //   if(self.commentData.labels[item.field] === 0){
-        //     return item
-        //   }
-        // })
       })
       .catch((error) => {
         console.log(error);
       });
+
+    if ("indexedDB" in window) {
+      console.log("Reading indexedDB...");
+      util.readAllData("comment").then(function (data) {
+        if (!self.networkDataReceived) {
+          console.log("From cache", data);
+          for (var i in data) {
+            if (data[i]._id === self.commentDetailsID) {
+              self.commentData = data[i];
+              self.newComment = data[i];
+              break;
+            }
+          }
+          if (self.commentData.title === "") {
+            self.commentData.title =
+              self.commentData.text.substr(0, 10) + "...";
+          }
+          self.label_tags = self.labelchoose.filter((item) => {
+            if (self.commentData.labels[item.field] === 1) {
+              return item;
+            } else {
+              self.label_no_tags.push(item);
+            }
+          });
+        }
+      });
+    }
   },
   methods: {
     // getTags: function () {

@@ -155,6 +155,7 @@
 import axios from "axios";
 import dateTime from "../assets/js/dateTime";
 // import $ from "jquery";
+import util from "../assets/js/utility";
 
 export default {
   name: "competition",
@@ -163,6 +164,8 @@ export default {
   },
   data() {
     return {
+      networkDataReceivedAccount: false,
+      networkDataReceivedCompany: false,
       columns: [
         {
           label: "收藏",
@@ -256,14 +259,34 @@ export default {
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.loginData.id)
       .then((response) => {
+        console.log('From web', response.data);
+        self.networkDataReceivedAccount = true;
         self.account = response.data;
       })
       .catch((error) => {
         console.log(error);
       });
+
+    if ("indexedDB" in window) {
+      console.log("Reading indexedDB...");
+      util.readAllData("account").then(function (data) {
+        if (!self.networkDataReceivedAccount) {
+          console.log("From cache", data);
+          for (var i in data) {
+            if (data[i]._id === self.loginData.id) {
+              self.account = data[i];
+              break;
+            }
+          }
+        }
+      });
+    }
+
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/competition/" + self.companyName)
       .then((response) => {
+        console.log('From web', response.data.data);
+        self.networkDataReceivedCompany = true;
         self.companyData = response.data.data;
         self.companyData.forEach((item) => {
           self.companyList.filter((child) => {
@@ -289,6 +312,28 @@ export default {
 
         // self.fieldFn();
       });
+
+    if ("indexedDB" in window) {
+      console.log("Reading indexedDB...");
+      util.readAllData("competition").then(function (data) {
+        if (!self.networkDataReceivedCompany) {
+          console.log("From cache", data);
+          self.companyData = data;
+          if (self.companyData !== undefined) {
+            self.companyData.forEach((item) => {
+              self.companyList.filter((child) => {
+                if(child.field === item.hotelName){
+                  item.hotelChineseName = child.label
+                }
+              })
+            })
+            self.rating();
+            self.favorite();
+            self.favoriteList = self.account.favorite;
+          }
+        }
+      });
+    }
   },
   methods: {
  
