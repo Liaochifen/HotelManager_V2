@@ -11,6 +11,9 @@ var dbPromise = idb.open('account', 1, function (db) {
     if (!db.objectStoreNames.contains('sync-comment-update')) {
         db.createObjectStore('sync-comment-update', { keyPath: 'id' });
     }
+    if (!db.objectStoreNames.contains('competition')) {
+        db.createObjectStore('competition', { keyPath: 'hotelName' });
+    }
 });
 
 
