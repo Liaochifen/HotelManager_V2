@@ -145,12 +145,14 @@
 import axios from "axios";
 import $ from "jquery";
 import dateTime from "../assets/js/dateTime";
+import util from "../assets/js/utility";
 
 export default {
   name: "accountDetial",
   data() {
     return {
       userAccountDetail: {},
+      networkDataReceived: false,
       userID: this.$route.params.userID,
       pass_type: "password",
       oldPassword:"",
@@ -169,7 +171,8 @@ export default {
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
       .then((response) => {
-        console.log(response.data);
+        console.log('From web', response.data);
+        self.networkDataReceived = true;
         self.userAccountDetail = response.data;
         console.log(self.userAccountDetail);
         self.oldPassword = self.userAccountDetail.password;
@@ -182,6 +185,29 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+
+      if ("indexedDB" in window) {
+        console.log("Reading indexedDB...");
+        util.readAllData("account").then(function (data) {
+          if (!self.networkDataReceived) {
+            console.log("From cache", data);
+            for (var i in data) {
+              if (data[i]._id === self.userID) {
+                console.log('Match', data[i]);
+                self.userAccountDetail = data[i];
+                self.oldPassword = self.userAccountDetail.password;
+                self.oldEmail = self.userAccountDetail.email;
+                self.oldUserName = self.userAccountDetail.userName;
+                self.oldEmployeeLimit = self.userAccountDetail.employeeLimit;
+                self.oldDepartment = self.userAccountDetail.department;
+                self.company = self.userAccountDetail.companyName;
+
+                break;
+              }
+            }
+          }
+        });
+      }
   },
   methods: {
     updateAccount: function () {
