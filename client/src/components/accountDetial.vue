@@ -1,3 +1,41 @@
+<template>
+  <div>
+    <div class="contentCenter">
+      <div class="page">
+        <span>帳號詳細內容</span>
+      </div>
+    </div>
+    <span class="personalInfoLastLogin">上次登入時間：{{userAccountDetail.lastLoginDate}}</span>
+    <div class="accountDetails">
+      <div class="accountDetailsBG">
+        <ul>
+          <li><span class="span_info">使用者編號</span><input type="text" readonly v-model="userAccountDetail.employeeNumber"></li>
+          <li><span class="span_info">所屬部門</span><input type="text" readonly v-model="userAccountDetail.department" id="department"/><button class="edit_btn" @click="edit(0)"><img src="../assets/icon/edit.png"></button></li>
+          <li><span class="span_info">使用者權限</span>
+            <select v-model="userAccountDetail.employeeLimit" disabled  id="limit">
+              <option>一般使用者</option>
+              <option>主管使用者</option>
+              <option>後台管理者</option>
+            </select>
+            <button class="edit_btn" @click="edit(4)"><img src="../assets/icon/edit.png"></button>
+          </li>
+          <li><span class="span_info">姓名</span><input type="text" readonly v-model="userAccountDetail.userName" id="userName"/><button class="edit_btn" @click="edit(1)"><img src="../assets/icon/edit.png"></button></li>
+          <li><span class="span_info">信箱</span><input type="text" readonly v-model="userAccountDetail.email" id="email"/><button class="edit_btn" @click="edit(2)"><img src="../assets/icon/edit.png"></button></li>
+          <li><span class="span_info">密碼</span>
+            <input class="form-control"  type="password"  readonly="readonly"  v-model="userAccountDetail.password"  id="password"/>
+            <span id="passwordIcon" v-on:click="changePassword" v-if="pass_type === 'password'"><font-awesome-icon icon="eye"/></span>
+            <span id="passwordIcon" v-on:click="changePassword" v-else><font-awesome-icon icon="eye-slash"/></span>
+            <button class="edit_btn" @click="edit(3)"><img src="../assets/icon/edit.png"></button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="btnBlock">
+      <button id="saveInfo" v-on:click="confirm()">儲存</button>
+      <button id="cancleInfo" v-on:click="cancleEditMode()">取消</button>   
+    </div>
+  </div>
+</template>
   <!-- <div> -->
     <!-- <div class="contentCenter">
       <div class="page">
@@ -79,67 +117,6 @@
       <div class="clear"></div>
     </div> -->
   <!-- </div> -->
-<template>
-  <div>
-    <div class="contentCenter">
-      <div class="page">
-        <span>帳號詳細內容</span>
-      </div>
-    </div>
-    <!-- <span class="personalInfoLastLogin">上次登入時間：{{userAccountDetail.lastLoginDate}}</span> -->
-    <div class="wrap">
-      <div class="accountPersonalMenu">
-        <ul>
-          <li><button @click="accountPage(0)">個人資料</button></li>
-          <li><button @click="accountPage(1)">修改密碼</button></li>
-          <li><button @click="accountPage(2)">歷史記錄</button></li>
-        </ul>
-      </div>
-      <div class="accountPersonalInfo">
-        <div class="accountPersonalBG" v-if="blockarea === 0">
-          <div class="accountInfoDetails">
-            <p>員工編號</p>
-            <input type="text" readonly v-model="userAccountDetail.employeeNumber" id="employeeNumber"/>
-          </div>
-          <div class="accountInfoDetails">
-            <p>所屬單位</p>
-            <input type="text" readonly v-model="userAccountDetail.department" id="department"/>
-          </div>
-          <div class="accountInfoDetails">
-            <p>姓名</p>
-            <input type="text" readonly v-model="userAccountDetail.userName" id="userName"/>
-          </div>
-          <div class="accountInfoDetails">
-            <p>使用者權限</p>
-            <!-- disabled -->
-            <select v-model="userAccountDetail.employeeLimit"  id="limit">
-              <option>一般使用者</option>
-              <option>主管使用者</option>
-              <option>後台管理者</option>
-            </select>
-          </div>
-          <div class="clear"></div>
-          <div class="accountInfoDetails">
-            <p>信箱</p>
-            <input type="text" readonly v-model="userAccountDetail.email" id="email"/>
-          </div>
-          <div class="accountInfoDetails pw">
-            <p>密碼</p>
-            <input class="form-control"  type="password"  readonly="readonly"  v-model="userAccountDetail.password"  id="password"/>
-              <span id="passwordIcon" v-on:click="changePassword" v-if="pass_type === 'password'"><font-awesome-icon icon="eye"/></span>
-              <span id="passwordIcon" v-on:click="changePassword" v-else><font-awesome-icon icon="eye-slash"/></span>
-          </div>
-          <!-- <button id="saveInfo" v-on:click="confirm()">儲存</button> -->
-          <div class="clear"></div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="changePassword">
-    </div> -->
-    <!-- <div class="history">
-    </div> -->
-  </div>
-</template>
   
 <script>
 import axios from "axios";
@@ -174,7 +151,6 @@ export default {
         console.log('From web', response.data);
         self.networkDataReceived = true;
         self.userAccountDetail = response.data;
-        console.log(self.userAccountDetail);
         self.oldPassword = self.userAccountDetail.password;
         self.oldEmail = self.userAccountDetail.email;
         self.oldUserName = self.userAccountDetail.userName;
@@ -233,21 +209,27 @@ export default {
         this.pass_type = "password";
       }
     },
-    edit:function(){
-      document.getElementById("department").removeAttribute("readOnly");
-      document.getElementById("department").style.cssText ="border:#707070 solid 1px; background-color:#D3D0D0; border-radius: 8px;";
-      document.getElementById("userName").removeAttribute("readOnly");
-      document.getElementById("userName").style.cssText = "border:#707070 solid 1px;background-color:#D3D0D0;border-radius: 8px;";
-      document.getElementById("email").removeAttribute("readOnly");
-      document.getElementById("email").style.cssText = "border:#707070 solid 1px;background-color:#D3D0D0;border-radius: 8px;";
-      document.getElementById("limit").removeAttribute("disabled", false);
-      document.getElementById("limit").style.cssText = "border:#707070 solid 1px;background-color:#D3D0D0;border-radius: 8px;";
-      document.getElementById("password").removeAttribute("readOnly");
-      document.getElementById("password").style.cssText = "border:#707070 solid 1px;background-color:#D3D0D0;border-radius: 8px;";
+    edit:function(value){
+      if(value === 0){
+        document.getElementById("department").removeAttribute("readOnly");
+        document.getElementById("department").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+      }else if(value === 1){
+        document.getElementById("userName").removeAttribute("readOnly");
+        document.getElementById("userName").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+      }else if(value === 2){
+        document.getElementById("email").removeAttribute("readOnly");
+        document.getElementById("email").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+      }else if(value === 3){
+        document.getElementById("password").removeAttribute("readOnly");
+        document.getElementById("password").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+      }else if(value === 4){
+        document.getElementById("limit").removeAttribute("disabled", false);
+        document.getElementById("limit").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 35px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+      }
       document.getElementById("saveInfo").style.visibility = "visible";
+      document.getElementById("cancleInfo").style.visibility = "visible";
     },
     confirm:function(){
-      
       if(this.oldUserName != this.userAccountDetail.userName){
           var userName = this.oldUserName;
           this.recordUserDetailModify('修改姓名',userName,this.userAccountDetail.userName);
@@ -312,16 +294,31 @@ export default {
         });
         }
       document.getElementById("department").setAttribute("readOnly", true);
-      document.getElementById("department").style.cssText = "border-bottom: #9A9A9A solid 1px;";
+      document.getElementById("department").style.cssText = "all: unset; width: 170px; position: relative; z-index: 100;";
       document.getElementById("userName").setAttribute("readOnly", true);
-      document.getElementById("userName").style.cssText = "border-bottom: #9A9A9A solid 1px;";
+      document.getElementById("userName").style.cssText = "all: unset; width: 170px; position: relative; z-index: 100;";
       document.getElementById("email").setAttribute("readOnly", true);
-      document.getElementById("email").style.cssText = "border-bottom: #9A9A9A solid 1px;";
+      document.getElementById("email").style.cssText = "all: unset; width: 170px; position: relative; z-index: 100;";
       document.getElementById("limit").setAttribute("disabled", true);
-      document.getElementById("limit").style.cssText = "border-bottom: #9A9A9A solid 1px;";
+      document.getElementById("limit").style.cssText = "  width: 170px; height: 35px;";
       document.getElementById("password").setAttribute("readOnly", true);
-      document.getElementById("password").style.cssText = "border-bottom: #9A9A9A solid 1px; ";
+      document.getElementById("password").style.cssText = "all: unset; width: 170px; position: relative; z-index: 100;";
       document.getElementById("saveInfo").style.visibility = "hidden";
+      document.getElementById("cancleInfo").style.visibility = "hidden";
+    },
+    cancleEditMode(){
+      document.getElementById("department").setAttribute("readOnly", true);
+      document.getElementById("department").style.cssText = "all: unset; width: 170px; position: relative; z-index: 100;";
+      document.getElementById("userName").setAttribute("readOnly", true);
+      document.getElementById("userName").style.cssText = "all: unset; width: 170px; position: relative; z-index: 100;";
+      document.getElementById("email").setAttribute("readOnly", true);
+      document.getElementById("email").style.cssText = "all: unset; width: 170px; position: relative; z-index: 100;";
+      document.getElementById("limit").setAttribute("disabled", true);
+      document.getElementById("limit").style.cssText = "  width: 170px; height: 35px;";
+      document.getElementById("password").setAttribute("readOnly", true);
+      document.getElementById("password").style.cssText = "all: unset; width: 170px; position: relative; z-index: 100;";
+      document.getElementById("saveInfo").style.visibility = "hidden";
+      document.getElementById("cancleInfo").style.visibility = "hidden";
     },
     recordUserDetailModify:function(change,oldInfo,newInfo){
       var userDetailModify = new Object();

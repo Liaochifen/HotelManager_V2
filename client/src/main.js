@@ -5,7 +5,7 @@ import router from './router';
 import VueGoodTablePlugin from 'vue-good-table';
 import ElementUI from 'element-ui'
 import dateTime from '../src/assets/js/dateTime'
-// import '../node_modules/daterangepicker/daterangepicker'
+import '../node_modules/daterangepicker/daterangepicker'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
