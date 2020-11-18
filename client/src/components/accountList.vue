@@ -341,6 +341,7 @@ export default {
     var loginData = JSON.parse(localStorage.getItem("token"));
     var userID = loginData.id;
     self.departments = [];
+    self.hotels = [];
     if(loginData.limit != "後台管理者"){
       this.$router.push({ name: "competition" });
     }
@@ -363,7 +364,6 @@ export default {
           console.log('From web', response.data);
           self.networkDataReceivedAll = true;
           self.allHtols = response.data;
-          console.log(self.allHtols)
           var num;
           for(num=0; num< this.allHtols.length;num++){
             if(this.allHtols[num].companyName === this.logingAccount.companyName){
@@ -380,7 +380,6 @@ export default {
         console.log("Reading indexedDB...");
         util.readAllData("account").then(function (data) {
           if (!self.networkDataReceivedAll) {
-            console.log("From cache", data);
             self.hotels = data;
             self.accountList = self.hotels;
           }
@@ -468,7 +467,6 @@ export default {
     },
     linkAccountDetial(params) {
       let nowAccount = params.row;
-      console.log(nowAccount._id);
       this.$router.push({ path: `/accountDetial/${nowAccount._id}` });
     },
     deleteAccount: function () {
@@ -529,9 +527,6 @@ export default {
       let self = this
       // this.newAccount.companyName = 
       let newUser = this.newAccount;
-      console.log("new");
-      console.log(this.newAccount);
-      console.log(newUser);
       for (i = 0; i < this.hotels.length; i++) {
         // console.log("newAccount: "+this.newAccount.userName);
         // console.log("hotels: "+this.hotels[i].userName);
@@ -553,7 +548,6 @@ export default {
               // this.accountList.push(newUser);
               this.hotels.push(newUser);
               self.addDepartment()
-              console.log(newUser);
               // this.searchResults.push(newUser);
               this.$fire({
                 title: "Success !!",
@@ -563,8 +557,7 @@ export default {
               this.UserListModify.modify = "新增";
               this.UserListModify.employeeNumber = newUser.employeeNumber;
               this.UserListModify.time =
-                dateTime.recordDate() + " " + dateTime.recordTime();
-              console.log(this.UserListModify);
+              dateTime.recordDate() + " " + dateTime.recordTime();
               axios
                 .put(
                   "https://hotelapi.im.nuk.edu.tw/api/history/" +

@@ -203,12 +203,15 @@
   border-radius: 3px;
 }
 .accountDetails ul{
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
   /* margin-top: 20px; */
 }
 .accountDetails li{
   padding: 20px 0px;
   margin-bottom: 0px;
-  border-bottom: 0.5px solid rgb(206, 206, 206);
+  border-bottom: 0.3px solid rgb(236, 236, 236);
 }
 .accountDetails li:hover{
   cursor: pointer;
@@ -217,11 +220,11 @@
 .span_info{
   display: inline-block;
   width: 100px;
-  margin-left: 5%;
+  /* margin-left: 5%; */
   margin-right: 10%;
   line-height: 35px;
   vertical-align: middle;
-
+  color: gray;
 }
 .accountDetails ul li input{
   all: unset;

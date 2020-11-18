@@ -20,7 +20,7 @@
           <ul>
             <li class="his_comment"><button @click="publicManage(0)" >評論狀態動態</button></li>
             <li class="his_tags"><button @click="publicManage(1)" >評論標籤動態</button></li>
-            <li class="his_reply"><button @click="publicManage(2)" >評論回覆動態</button></li>
+            <!-- <li class="his_reply"><button @click="publicManage(2)" >評論回覆動態</button></li> -->
             <div class="clear"></div>
           </ul>
           <div class="clear"></div>
@@ -55,7 +55,7 @@
                   </div>
                 </span>
               </div>
-              <div v-else-if="publicPage === 2" class="public_record"> 
+              <!-- <div v-else-if="publicPage === 2" class="public_record"> 
                 <span v-if="replyFIlter.length === 0">
                   <p>無任何記錄</p>
                 </span>
@@ -66,7 +66,7 @@
                     <span class="commentTimeHistory">{{item.time}}</span>
                   </div>
                 </span>
-              </div>
+              </div> -->
             <!-- </div> -->
           <!-- </template> -->
         </span>
@@ -303,19 +303,22 @@ export default {
     // var value = 0;
     //  + value
     var logining = localStorage.getItem("token");
-    var userID = JSON.parse(logining).companyName;
+    // var userID = JSON.parse(logining).companyName;
     self.employeeNumber = JSON.parse(logining).id
 
-    axios
-      .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
-      .then((response) => {
-        if(response.limit === '後台管理員' ){
-          document.getElementById("userInfoRecord").style.visibility = "visible";
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if(JSON.parse(logining).limit === '後台管理者'){
+      document.getElementById('userInfoRecord').style.visibility = 'visible';
+    }
+    // axios
+    //   .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
+    //   .then((response) => {
+    //     if(response.limit === '後台管理員' ){
+    //       document.getElementById("userInfoRecord").style.visibility = "visible";
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
     axios
       .get(
         "https://hotelapi.im.nuk.edu.tw/api/history/" +
@@ -441,7 +444,6 @@ export default {
     },
     publicManage: function(page){
       this.publicPage = page;
-      console.log('ee')
       if(page === 0){
         $('.his_comment').addClass('bg')
         $('.his_tags').removeClass('bg')
@@ -450,11 +452,12 @@ export default {
         $('.his_comment').removeClass('bg')
         $('.his_tags').addClass('bg')
         $('.his_reply').removeClass('bg')
-      }else{
-        $('.his_comment').removeClass('bg')
-        $('.his_tags').removeClass('bg')
-        $('.his_reply').addClass('bg')
       }
+      // }else{
+      //   $('.his_comment').removeClass('bg')
+      //   $('.his_tags').removeClass('bg')
+      //   $('.his_reply').addClass('bg')
+      // }
     }
   },
 };

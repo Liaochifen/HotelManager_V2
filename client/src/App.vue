@@ -335,7 +335,7 @@ export default {
                 }
                 document.getElementById("limitWord").innerHTML = self.userAccountDetail.employeeLimit;
                 document.getElementById("menu").style.visibility = "visible";
-                document.getElementById("breadcrumb").style.visibility = "visible";
+                // document.getElementById("breadcrumb").style.visibility = "visible";
                 break;
               }
             }
@@ -406,9 +406,6 @@ export default {
     },
     personalState: function () {
       if (localStorage.getItem("token")) {
-        // var loging = JSON.parse(localStorage.getItem('token'));
-        // this.userID = loging.id;
-        //console.log(this.userID);
         event.stopPropagation();
         $("#logining").toggle("fast");
         $(document).click(function (event) {

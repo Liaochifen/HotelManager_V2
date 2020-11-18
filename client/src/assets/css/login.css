@@ -36,6 +36,7 @@
     outline:none;
 }
 .link{
+  font-size: 16px;
     text-decoration:underline;
     margin-left: 33%;
     float: left;
@@ -43,17 +44,20 @@
     color: #707070;
 }
 .page button{
-    background-color: #49BE8B;
-    border: 0.5px solid #707070;
-    border-radius: 3px;
-    width: 70px;
-    color:#FFFFFF;
-    font-size: 14px;
-    padding: 5px;
+    all: unset;
+    width: 50px;
     float: left;
-    margin-left: 70px;
-    font-family: 微軟正黑體;
-    outline:none;
+    /* margin: 15% 32%; */
+    margin-left: 30px;
+    font-size: 16px;
+    height: 30px;
+    background-color: rgba(72, 133, 82, 0.877);
+    border: 0.5px solid rgb(196, 196, 196);
+    border-radius: 5px;
+    padding: 2px 25px;
+    color: white;
+    letter-spacing: 3px;
+    text-align: center;
 }
 @media (max-width: 768px) {
     #login_page{
