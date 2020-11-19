@@ -104,7 +104,7 @@ export default {
           } 
           document.getElementById("limitWord").innerHTML = this.logingAccount.employeeLimit; 
           document.getElementById("menu").style.visibility = "visible";
-          document.getElementById("breadcrumb").style.visibility = "visible";
+          // document.getElementById("breadcrumb").style.visibility = "visible";
           break;
         } else if (i == this.accountInfo.length - 1) {
           // alert('使用者帳號密碼錯誤!請重新登入')
