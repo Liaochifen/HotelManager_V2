@@ -506,9 +506,9 @@ export default {
         }
       });
     }
-    if ('Notification' in window && 'serviceWorker' in navigator) {
-      self.askForNotificationPermission();
-    }
+//    if ('Notification' in window && 'serviceWorker' in navigator) {
+//      self.askForNotificationPermission();
+//    }
     var _this = this
     window.onresize = function () {
       _this.window_width = document.documentElement.clientWidth 
@@ -589,101 +589,101 @@ export default {
       self.commentData = arr
       return self.commentData
     },
-    askForNotificationPermission() {
-      let self = this;
-      if ("Notification" in window && "serviceWorker" in navigator) {
-        Notification.requestPermission(function (result) {
-          console.log('User choice', result);
-          if (result !== 'granted') {
-            console.log('No notification permission granted!');
-          } else {
-            // self.displayConfirmNotification();
-            self.configurePushSub();
-          }
-        });
-      }
-    },
-    displayConfirmNotification: function () {
-      console.log("displayConfirmNotification");
-      if ("serviceWorker" in navigator) {
-        var options = {
-          body: "You successfully subscribed to our Notification service!",
-          icon: "img/icons/apple-touch-icon-76x76.png",
-          image: "img/icons/apple-touch-icon-76x76.png",
-          dir: "ltr",
-          lang: "zh-TW",
-          vibrate: [100, 50, 200],
-          badge: "img/icons/apple-touch-icon-76x76.png",
-          tag: "confirm-notification",
-          renotify: true,
-          actions: [
-            {
-              action: "confirm",
-              title: "Okay",
-              icon: "img/icons/apple-touch-icon-76x76.png",
-            },
-            {
-              action: "cancel",
-              title: "Cancel",
-              icon: "img/icons/apple-touch-icon-76x76.png",
-            },
-          ],
-        };
-        navigator.serviceWorker.ready.then(function (swreg) {
-          swreg.showNotification("Successfully subscribed", options);
-        });
-      }
-    },
-	configurePushSub() {
-      let self = this;
-      if (!("serviceWorker" in navigator)) {
-        return;
-      }
-
-      var reg;
-      navigator.serviceWorker.ready
-        .then(function (swreg) {
-          reg = swreg;
-          return swreg.pushManager.getSubscription();
-        })
-        .then(function (sub) {
-          if (sub === null) {
-            // Create a new subscription
-            var vapidPublicKey =
-              "BDsoBTxagj-zJcEl50RUzykFqBd9SCnp_cup1UHnrsrWzKg4FBoiYzBrm8NGLq2Ca3U4EsjZ0nP-JwD8f9S4u9w";
-            var convertedVapidPublicKey = util.urlBase64ToUint8Array(
-              vapidPublicKey
-            );
-            return reg.pushManager.subscribe({
-              userVisibleOnly: true,
-              applicationServerKey: convertedVapidPublicKey,
-            });
-          } else {
-            // We have a subscription
-          }
-        })
-        .then(function (newSub) {
-          return fetch(
-            "https://hotelmanager-848af.firebaseio.com/subscriptions.json",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              body: JSON.stringify(newSub),
-            }
-          );
-        })
-        .then(function (res) {
-          if (res.ok) {
-            self.displayConfirmNotification();
-          }
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    },
+//    askForNotificationPermission() {
+//      let self = this;
+//      if ("Notification" in window && "serviceWorker" in navigator) {
+//        Notification.requestPermission(function (result) {
+//          console.log('User choice', result);
+//          if (result !== 'granted') {
+//            console.log('No notification permission granted!');
+//          } else {
+//            // self.displayConfirmNotification();
+//            self.configurePushSub();
+//          }
+//        });
+//      }
+//    },
+//    displayConfirmNotification: function () {
+//      console.log("displayConfirmNotification");
+//      if ("serviceWorker" in navigator) {
+//        var options = {
+//          body: "You successfully subscribed to our Notification service!",
+//          icon: "img/icons/apple-touch-icon-76x76.png",
+//          image: "img/icons/apple-touch-icon-76x76.png",
+//          dir: "ltr",
+//          lang: "zh-TW",
+//          vibrate: [100, 50, 200],
+//          badge: "img/icons/apple-touch-icon-76x76.png",
+//          tag: "confirm-notification",
+//          renotify: true,
+//          actions: [
+//            {
+//              action: "confirm",
+//              title: "Okay",
+//              icon: "img/icons/apple-touch-icon-76x76.png",
+//            },
+//            {
+//              action: "cancel",
+//              title: "Cancel",
+//              icon: "img/icons/apple-touch-icon-76x76.png",
+//            },
+//          ],
+//        };
+//        navigator.serviceWorker.ready.then(function (swreg) {
+//          swreg.showNotification("Successfully subscribed", options);
+//        });
+//      }
+//    },
+//	configurePushSub() {
+//      let self = this;
+//      if (!("serviceWorker" in navigator)) {
+//        return;
+//      }
+//
+//      var reg;
+//      navigator.serviceWorker.ready
+//        .then(function (swreg) {
+//          reg = swreg;
+//          return swreg.pushManager.getSubscription();
+//        })
+//        .then(function (sub) {
+//          if (sub === null) {
+//            // Create a new subscription
+//            var vapidPublicKey =
+//              "BDsoBTxagj-zJcEl50RUzykFqBd9SCnp_cup1UHnrsrWzKg4FBoiYzBrm8NGLq2Ca3U4EsjZ0nP-JwD8f9S4u9w";
+//            var convertedVapidPublicKey = util.urlBase64ToUint8Array(
+//              vapidPublicKey
+//            );
+//            return reg.pushManager.subscribe({
+//              userVisibleOnly: true,
+//              applicationServerKey: convertedVapidPublicKey,
+//            });
+//          } else {
+//            // We have a subscription
+//          }
+//        })
+//        .then(function (newSub) {
+//          return fetch(
+//            "https://hotelmanager-848af.firebaseio.com/subscriptions.json",
+//            {
+//              method: "POST",
+//              headers: {
+//                "Content-Type": "application/json",
+//                Accept: "application/json",
+//              },
+//              body: JSON.stringify(newSub),
+//            }
+//          );
+//        })
+//        .then(function (res) {
+//          if (res.ok) {
+//            self.displayConfirmNotification();
+//          }
+//        })
+//        .catch(function (err) {
+//          console.log(err);
+//        });
+//    },
     clearALL(){
       let self = this;
       self.typeChoosen = '';
