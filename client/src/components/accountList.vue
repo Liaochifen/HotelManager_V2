@@ -348,14 +348,34 @@ export default {
       axios
         .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
         .then((response) => {
-          this.logingAccount = response.data;
-          this.newAccount.companyName = this.logingAccount.companyName;
-          this.company = this.logingAccount.companyName;
+          self.networkDataReceived = true;
+          self.logingAccount = response.data;
+          self.newAccount.companyName = this.logingAccount.companyName;
+          self.company = this.logingAccount.companyName;
         })
         .catch((error) => {
           console.log(error);
         })
     );
+
+//    if ("indexedDB" in window) {
+//      console.log("Reading indexedDB...");
+//      util.readAllData("account").then(function (data) {
+//        if (!self.networkDataReceived) {
+//          console.log("From cache", data);
+//          for (var i in data) {
+//            if (data[i]._id === userID) {
+//              promises.push(data[i]);
+//              self.logingAccount = data[i];
+//              self.newAccount.companyName = self.logingAccount.companyName;
+//              self.company = self.logingAccount.companyName;
+//              break;
+//            }
+//          }
+//        }
+//      });
+//    }
+      
     Promise.all(promises).then(() => {
       axios
         .get("https://hotelapi.im.nuk.edu.tw/api/account")
@@ -363,14 +383,21 @@ export default {
           console.log('From web', response.data);
           self.networkDataReceivedAll = true;
           self.allHtols = response.data;
-          console.log(self.allHtols)
-          var num;
-          for(num=0; num< this.allHtols.length;num++){
-            if(this.allHtols[num].companyName === this.logingAccount.companyName){
-              self.hotels.push(this.allHtols[num]);
+          for(var num=0; num< this.allHtols.length;num++){
+            if(self.allHtols[num].companyName === self.logingAccount.companyName){
+              var inHotels = false;
+              for (var i in self.hotels) {
+                if (self.hotels[i]._id === self.allHtols[num]._id){
+                  inHotels = true;
+                  break;
+                }
+              }
+              if (!inHotels) {
+                self.hotels.push(self.allHtols[num]);
+              }
             } 
           }
-          self.addDepartment()
+          self.addDepartment();
           self.accountList = self.hotels;
       })
       .catch((error) => {
@@ -381,19 +408,16 @@ export default {
         util.readAllData("account").then(function (data) {
           if (!self.networkDataReceivedAll) {
             console.log("From cache", data);
-            self.hotels = data;
-            self.accountList = self.hotels;
-          }
-          if (!self.networkDataReceived) {
-            for (let i = 0; i < self.hotels.length; i++) {
-              if (data[i]._id === userID) {
-                console.log("From web", data[i]);
-                self.logingAccount = data[i];
-                self.newAccount.companyName = self.logingAccount.companyName;
-                self.company = self.logingAccount.companyName;
-                break;
+            self.allHtols = data;
+            for (var i in self.allHtols) {
+              console.log(self.allHtols[i].companyName);
+              console.log(self.logingAccount.companyName);
+              if(self.allHtols[i].companyName === self.logingAccount.companyName){
+                self.hotels.push(self.allHtols[i]);
               }
             }
+            self.addDepartment();
+            self.accountList = self.hotels;
           }
         });
       }
