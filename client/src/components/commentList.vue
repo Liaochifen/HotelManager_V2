@@ -14,16 +14,16 @@
       </div>
       
       <div class="buttonFunArea">
-        <!-- <button class="editButton" @click="openFilter()">
+        <button class="editButton" @click="openFilter()" id="comment_filter_phone">
           <img src="../assets/icon/filter.png"/>
-        </button> -->
-        <button class="editButton" @click="editFun()">
+        </button>
+        <button class="editButton" @click="editFun()" id="editButton_phone">
           <img src="../assets/icon/edit.png"/>
         </button>
         <button @click="clearALL()" class="clearall">全部清除</button>
       </div>
       <div class="edit">
-        <div>
+        <div class="edit_flex">
           <div class="slot_div">
             <el-select
               placeholder="評論狀態設定"
@@ -84,7 +84,7 @@
               <el-option v-for="child in reply"  :key="child.value"  :value="child.field"></el-option>
             </el-select>
         </div>
-        <div slot="table-actions" class="slot_div">
+        <div slot="table-actions" class="slot_div time_filter_phone">
           <div
             id="reportrange"
             style="
@@ -740,19 +740,19 @@ export default {
       $("#reportrange span").html("時間");
       return self.commentData;
     },
-    // openFilter(){
-    //   // let self = this;
-    //   event.stopPropagation();
-    //   $(".MultiFilterArea").slideToggle("normal");
-    //   $(document).click(function (event) {
-    //     var area = $(".MultiFilterArea"); // 設定目標區域
-    //     var area1 = $(".daterangepicker"); // 設定目標區域
-    //     if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
-    //       // $('#divTop').slideUp('slow');  //滑動消失
-    //       $(".MultiFilterArea").hide(500); // 淡出消失
-    //     }
-    //   });
-    // },
+    openFilter(){
+      // let self = this;
+      event.stopPropagation();
+      $(".MultiFilterArea").slideToggle("normal");
+      $(document).click(function (event) {
+        var area = $(".MultiFilterArea"); // 設定目標區域
+        var area1 = $(".daterangepicker"); // 設定目標區域
+        if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
+          // $('#divTop').slideUp('slow');  //滑動消失
+          $(".MultiFilterArea").hide(); // 淡出消失
+        }
+      });
+    },
     handleCheckedChange(value) {
       let self = this;
       if (value === 0) {
@@ -989,7 +989,7 @@ export default {
         var area = $(".edit"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {
           // $('#divTop').slideUp('slow');  //滑動消失
-          $(".edit").hide(100); // 淡出消失
+          $(".edit").hide(); // 淡出消失
         }
       });
     },
@@ -1166,7 +1166,17 @@ export default {
         }
       });
     },
-    selectionChanged() {},
+    selectionChanged(params) {
+      this.rowSelection = params.selectedRows;
+      if(this.rowSelection.length !== 0){
+        $('#editButton_phone').show()
+        $('#comment_filter_phone').hide()
+      }else{
+        $('#editButton_phone').hide()
+        $('#comment_filter_phone').show()
+      }
+      
+    },
     
   }
 };

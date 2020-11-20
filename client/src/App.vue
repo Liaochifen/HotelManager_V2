@@ -217,7 +217,7 @@
     <div class="clear"></div>
 
     <div class="footer">
-      <ul class="phoneMenu">
+      <ul class="phoneMenu" >
         <li> 
           <router-link
             :to="{
@@ -880,21 +880,31 @@ a {
   display: none;
 }
 @media (max-width: 768px) {
+  .contentCenter{
+    background: white;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    height: 39px;
+    line-height: 39px;
+    box-shadow: 1px 0.5px 2px 0.5px rgba(0, 0, 0, 0.096);
+    z-index: 1;
+    top: 0;
+    left: 0;
+  }
   .page {
     font-size: 18px;
     margin: 0;
-    position: fixed;
-    z-index: 1;
-    top: 12px;
-    /* text-align: center; */
-    left: 50%;
-    /* margin-left: -25px; */
-    /* color: white; */
+    
+    /* z-index: 1; */
+    /* top: 12px; */
+    /* left: 50%; */
   }
   .header {
-    height: 0;
-    position: relative;
-    z-index: 2;
+    /* height: 0; */
+    /* position: relative; */
+    /* z-index: 2; */
+    display: none;
   }
   .headerContent {
     display: inline;
@@ -915,17 +925,21 @@ a {
   .content {
     width: 100%;
     padding: 0;
-    position: relative;
+    /* position: absolute; */
+    /* top: 39px; */
+    /* bottom: 40px; */
     z-index: 1;
   }
   .contentTop {
     position: fixed;
+    top: 0;
     /* background-color: rgb(47, 58, 76); */
     background-color: #fff;
     height: 39px;
     margin: 0;
     padding: 0;
     z-index: 1;
+    display: none;
   }
   .companyImg {
     display: none;
@@ -1020,15 +1034,18 @@ a {
   }
   /* 底部選單 */
   .footer{
-    position: relative;
+    position: fixed;
+    width: 100%;
+    /* position: relative; */
     z-index: 1;
-    
+    bottom: 0;
+    height: 39px;
   }
   .phoneMenu {
     width: 100%;
     /* display: block; */
-    position: fixed;
-    bottom: 0;
+    
+    /* bottom: 0; */
     /* text-align: center; */
     /* background-color: rgb(47, 58, 76); */
     background-color: #fff;

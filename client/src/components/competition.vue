@@ -1,9 +1,9 @@
 <template>
   <div class="wholeArea">
     <div class="contentCenter">
-      <!-- <div class="page">
-        <span>競爭對手列表</span>
-      </div> -->
+      <div class="page hotel_name">
+        <span>Hotel System</span>
+      </div>
     </div>
     <div class="dataArea1">
       <div class="phone">
@@ -22,7 +22,7 @@
                             <div class="empty_star">★★★★★</div>
                             <div class="full_star" :style="`width:${item.avg_rating/2*20}%;`">★★★★★</div>
                           </div>
-                          <div class="mouth_info">
+                          <div class="mouth_info my_mouth_info">
                             <p class="pos">正評：{{item.labels.positive}}</p>
                             <p class="neg">負評：{{item.labels.negative}}</p>
                           </div>

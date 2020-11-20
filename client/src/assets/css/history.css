@@ -109,12 +109,12 @@
         display: block;
     }  
     .page{
-        margin-left: -36px;
+        /* margin-left: -36px; */
     } 
     .historyContent{
         margin: 0;
         width: 100%;
-        margin-top: 76px;
+        /* margin-top: 76px; */
     }
     .phone_none{
         display: none;
@@ -134,5 +134,8 @@
         text-align: center;
         padding: 10px 0;
         flex: 1;
+    }
+    .public_record{
+        margin: 0;
     }
 }

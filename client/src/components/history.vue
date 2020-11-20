@@ -14,6 +14,7 @@
       <button @click="changePage(1)" class="pageButton1">個人動態</button>
       <button @click="changePage(2)" class="pageButton2" id="userInfoRecord">帳號紀錄</button>
     </div>
+    <div class="clear"></div>
     <div class="historydataArea">
       <template>
         <span v-if="page === 0">
