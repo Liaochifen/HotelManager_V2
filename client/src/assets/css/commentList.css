@@ -584,7 +584,7 @@ tr:hover td{
         justify-content: space-around;
         align-items: center;
         height: 200px;
-        padding: 10px 25px 15px;
+        padding: 10px 3% 15px;
         box-sizing: border-box;
     }
     .MultiFilterArea .slot_div{

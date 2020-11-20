@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="page">
+    <div class="page forgetPW_phone">
       <img class="photo" src="https://fakeimg.pl/100x100/" alt="" />
       <div class="clear"></div>
       <h1>忘記密碼</h1>
