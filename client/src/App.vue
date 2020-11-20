@@ -217,7 +217,7 @@
     <div class="clear"></div>
 
     <div class="footer">
-      <ul class="phoneMenu" >
+        <ul class="phoneMenu" id="phoneMenu" >
         <li> 
           <router-link
             :to="{
@@ -229,7 +229,7 @@
             /></router-link
           >
         </li>
-        <li id="statisticalResults">
+        <li id="statisticalResultsPhone">
           <router-link
             :to="{
               name: 'statistic',
@@ -242,7 +242,7 @@
           >
         </li>
         
-        <li id="accountManage">
+        <li id="accountManagePhone">
               <router-link :to="{ name: 'accountList' }"
                 ><img class="icons"
                   src="./assets/icon/account.png"
@@ -263,6 +263,7 @@
           <a href="#" v-on:click="link('accountDetial')"><img class="icons" src="./assets/icon/account.png" alt="" /></a>
         </li>
       </ul>
+      
       <div class="clear"></div>
     </div>
   </div>
@@ -303,14 +304,18 @@ export default {
           self.userAccountDetail = response.data;
           if(self.userAccountDetail.employeeLimit === "一般使用者"){
             document.getElementById("accountManage").style.display = "none"; 
-            document.getElementById("statisticalResults").style.display = "none"; 
+            document.getElementById("statisticalResults").style.display = "none";
+            document.getElementById("statisticalResultsPhone").style.display = "none";
+            document.getElementById("accountManagePhone").style.display = "none";
           }else if(self.userAccountDetail.employeeLimit === "主管使用者"){
             console.log(self.userAccountDetail.employeeLimit);
             document.getElementById("accountManage").style.display = "none"; 
+            document.getElementById("accountManagePhone").style.display = "none"; 
           }
           document.getElementById("limitWord").innerHTML = self.userAccountDetail.employeeLimit;
           document.getElementById("menu").style.visibility = "visible";
           document.getElementById("personalInfo").style.visibility = "visible";
+          document.getElementById("phoneMenu").style.visibility = "visible";
           // document.getElementById("breadcrumb").style.visibility = "visible";
         })
         .catch((error) => {
@@ -329,12 +334,16 @@ export default {
                 if(self.userAccountDetail.employeeLimit === "一般使用者"){
                   document.getElementById("accountManage").style.display = "none";
                   document.getElementById("statisticalResults").style.display = "none";
+                  document.getElementById("statisticalResultsPhone").style.display = "none";
+                  document.getElementById("accountManagePhone").style.display = "none";
                 } else if (self.userAccountDetail.employeeLimit === "主管使用者") {
                   console.log(self.userAccountDetail.employeeLimit);
                   document.getElementById("accountManage").style.display = "none";
+                  document.getElementById("accountManagePhone").style.display = "none";
                 }
                 document.getElementById("limitWord").innerHTML = self.userAccountDetail.employeeLimit;
                 document.getElementById("menu").style.visibility = "visible";
+                document.getElementById("phoneMenu").style.visibility = "visible";
                 // document.getElementById("breadcrumb").style.visibility = "visible";
                 break;
               }
@@ -345,9 +354,12 @@ export default {
     } else {
       $("#accountManage").show();
       $("#statisticalResults").show();
+      $("#statisticalResultsPhone").show();
+      $("#accountManagePhone").show();
       document.getElementById("limitWord").innerHTML = " ";
       document.getElementById("menu").style.visibility = "hidden";
       document.getElementById("personalInfo").style.visibility = "hidden";
+      document.getElementById("phoneMenu").style.visibility = "hidden";
       // document.getElementById("breadcrumb").style.visibility = "hidden";
     }
   },
@@ -372,10 +384,13 @@ export default {
       this.userAccountDetail = {};
       $("#accountManage").show();
       $("#statisticalResults").show();
+      $("#statisticalResultsPhone").show();
+      $("#accountManagePhone").show();
       document.getElementById("limitWord").innerHTML = " ";
       document.getElementById("menu").style.visibility = "hidden";
       // document.getElementById("breadcrumb").style.visibility = "hidden";
       document.getElementById("personalInfo").style.visibility = "hidden";
+      document.getElementById("phoneMenu").style.visibility = "hidden";
       this.$router.push("/login");
     },
     logoutRecord: function () {
@@ -692,6 +707,9 @@ a {
 
 .phoneMenu {
   display: none;
+}
+#phoneMenu{
+  visibility: hidden;
 }
 .page {
   font-size: 24px;
