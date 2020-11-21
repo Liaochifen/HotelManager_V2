@@ -170,6 +170,17 @@
         @on-selected-rows-change="selectionChanged"
         :select-options="{ enabled: true }"
         @on-cell-click="linkAccountDetial"
+        :pagination-options="{
+            enabled: true,
+            mode: 'pages',
+            perPage: '',
+            rowsPerPageLabel: '',
+            position: 'bottom',
+            dropdownAllowAll: false,
+            setCurrentPage: 1,
+            nextLabel: 'next',
+            prevLabel: 'prev',
+          }"
       >
         <!-- <div slot="table-actions" class="account_select">
           <span>所屬單位</span>
@@ -252,19 +263,16 @@ export default {
         {
           label: "員工編號",
           field: "employeeNumber",
-          sortable: false
         },
         {
           label: "姓名",
           field: "userName",
-          sortable: false
         },
         {
           label: "信箱",
           field: "email",
           tdClass: "display_ipad",
           thClass: "display_ipad",
-          sortable: false
         },
         {
           label: "權限等級",

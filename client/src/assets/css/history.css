@@ -66,7 +66,9 @@
 }
 .public_record, .personal_record, .backend_record{
     margin-top: 5px;
-    height: 100vh;
+    height:500px;
+    max-height:500px;
+    overflow-y: auto;
     background: rgba(255, 255, 255, 0.842);
     box-shadow: 0.5px 0.5px 2px #adadad;
     padding: 1%;
