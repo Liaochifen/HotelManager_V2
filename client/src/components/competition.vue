@@ -334,6 +334,7 @@ export default {
         }
       });
     }
+
     if ('Notification' in window && 'serviceWorker' in navigator) {
       self.askForNotificationPermission();
     }
@@ -387,7 +388,7 @@ export default {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Accept: "application/json",
+                "Accept": "application/json",
               },
               body: JSON.stringify(newSub),
             }
@@ -402,7 +403,7 @@ export default {
           console.log(err);
         });
     },
-    displayConfirmNotification: function () {
+    displayConfirmNotification() {
       console.log("displayConfirmNotification");
       if ("serviceWorker" in navigator) {
         var options = {

@@ -344,37 +344,51 @@ export default {
     if(loginData.limit != "後台管理者"){
       this.$router.push({ name: "competition" });
     }
-    promises.push(
-      axios
-        .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
-        .then((response) => {
-          self.networkDataReceived = true;
-          self.logingAccount = response.data;
-          self.newAccount.companyName = this.logingAccount.companyName;
-          self.company = this.logingAccount.companyName;
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    );
 
-//    if ("indexedDB" in window) {
-//      console.log("Reading indexedDB...");
-//      util.readAllData("account").then(function (data) {
-//        if (!self.networkDataReceived) {
-//          console.log("From cache", data);
-//          for (var i in data) {
-//            if (data[i]._id === userID) {
-//              promises.push(data[i]);
-//              self.logingAccount = data[i];
-//              self.newAccount.companyName = self.logingAccount.companyName;
-//              self.company = self.logingAccount.companyName;
-//              break;
-//            }
-//          }
-//        }
-//      });
-//    }
+    var inPromises = false;
+    for (var i in promises) {
+      console.log(promises);
+      if (promises[i]._id === self.userID) {
+        inPromises = true;
+        break;
+      }
+    }
+    if (!inPromises) {
+      promises.push(
+        axios
+          .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
+          .then((response) => {
+            console.log(response);
+            console.log(promises);
+            console.log('From web', response.data);
+            self.networkDataReceived = true;
+            self.logingAccount = response.data;
+            self.newAccount.companyName = this.logingAccount.companyName;
+            self.company = this.logingAccount.companyName;
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      );
+    }
+
+    if ("indexedDB" in window) {
+      console.log("Reading indexedDB...");
+      util.readAllData("account").then(function (data) {
+        if (!self.networkDataReceived) {
+          console.log("From cache", data);
+          for (var i in data) {
+            if (data[i]._id === userID) {
+              promises.push(data[i]);
+              self.logingAccount = data[i];
+              self.newAccount.companyName = self.logingAccount.companyName;
+              self.company = self.logingAccount.companyName;
+              break;
+            }
+          }
+        }
+      });
+    }
       
     Promise.all(promises).then(() => {
       axios
