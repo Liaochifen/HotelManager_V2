@@ -95,12 +95,16 @@ export default {
             if(this.logingAccount.employeeLimit === "一般使用者"){
               document.getElementById("accountManage").style.display = "none"; 
               document.getElementById("statisticalResults").style.display = "none"; 
+              document.getElementById("statisticalResultsPhone").style.display = "none";
+              document.getElementById("accountManagePhone").style.display = "none";
             }else if(this.logingAccount.employeeLimit === "主管使用者"){
-              document.getElementById("accountManage").style.display = "none"; 
+              document.getElementById("accountManage").style.display = "none";
+              document.getElementById("accountManagePhone").style.display = "none"; 
             }
             document.getElementById("limitWord").innerHTML = this.logingAccount.employeeLimit;
             document.getElementById("menu").style.visibility = "visible";
-            document.getElementById("breadcrumb").style.visibility = "visible";
+            // document.getElementById("breadcrumb").style.visibility = "visible";
+            document.getElementById("phoneMenu").style.visibility = "visible";
             this.$router.push({
               name: "competition",
               params: { collections: this.logingAccount.companyName },

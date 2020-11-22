@@ -198,7 +198,7 @@
         display: block;
     }
     .page{
-        margin-left: -36px;
+        /* margin-left: -36px; */
     }
     .statistic_content{
         /* margin: 50px 0; */
@@ -302,6 +302,12 @@
         width: 90%;
         margin: 0 5% 5%;
     }
+    .travel{
+        width: 90% !important;
+    }
+    /* .chartjs-render-monitor{
+        width: 80% !important;
+    } */
 }
 @media (max-width: 425px) {
     .flex-1{

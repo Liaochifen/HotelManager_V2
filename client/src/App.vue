@@ -217,7 +217,7 @@
     <div class="clear"></div>
 
     <div class="footer">
-      <ul class="phoneMenu">
+        <ul class="phoneMenu" id="phoneMenu" >
         <li> 
           <router-link
             :to="{
@@ -229,7 +229,7 @@
             /></router-link
           >
         </li>
-        <li id="statisticalResults">
+        <li id="statisticalResultsPhone">
           <router-link
             :to="{
               name: 'statistic',
@@ -242,7 +242,7 @@
           >
         </li>
         
-        <li id="accountManage">
+        <li id="accountManagePhone">
               <router-link :to="{ name: 'accountList' }"
                 ><img class="icons"
                   src="./assets/icon/account.png"
@@ -263,6 +263,7 @@
           <a href="#" v-on:click="link('accountDetial')"><img class="icons" src="./assets/icon/account.png" alt="" /></a>
         </li>
       </ul>
+      
       <div class="clear"></div>
     </div>
   </div>
@@ -303,14 +304,18 @@ export default {
           self.userAccountDetail = response.data;
           if(self.userAccountDetail.employeeLimit === "一般使用者"){
             document.getElementById("accountManage").style.display = "none"; 
-            document.getElementById("statisticalResults").style.display = "none"; 
+            document.getElementById("statisticalResults").style.display = "none";
+            document.getElementById("statisticalResultsPhone").style.display = "none";
+            document.getElementById("accountManagePhone").style.display = "none";
           }else if(self.userAccountDetail.employeeLimit === "主管使用者"){
             console.log(self.userAccountDetail.employeeLimit);
             document.getElementById("accountManage").style.display = "none"; 
+            document.getElementById("accountManagePhone").style.display = "none"; 
           }
           document.getElementById("limitWord").innerHTML = self.userAccountDetail.employeeLimit;
           document.getElementById("menu").style.visibility = "visible";
           document.getElementById("personalInfo").style.visibility = "visible";
+          document.getElementById("phoneMenu").style.visibility = "visible";
           // document.getElementById("breadcrumb").style.visibility = "visible";
         })
         .catch((error) => {
@@ -329,13 +334,17 @@ export default {
                 if(self.userAccountDetail.employeeLimit === "一般使用者"){
                   document.getElementById("accountManage").style.display = "none";
                   document.getElementById("statisticalResults").style.display = "none";
+                  document.getElementById("statisticalResultsPhone").style.display = "none";
+                  document.getElementById("accountManagePhone").style.display = "none";
                 } else if (self.userAccountDetail.employeeLimit === "主管使用者") {
                   console.log(self.userAccountDetail.employeeLimit);
                   document.getElementById("accountManage").style.display = "none";
+                  document.getElementById("accountManagePhone").style.display = "none";
                 }
                 document.getElementById("limitWord").innerHTML = self.userAccountDetail.employeeLimit;
                 document.getElementById("menu").style.visibility = "visible";
-                document.getElementById("breadcrumb").style.visibility = "visible";
+                document.getElementById("phoneMenu").style.visibility = "visible";
+                // document.getElementById("breadcrumb").style.visibility = "visible";
                 break;
               }
             }
@@ -345,9 +354,12 @@ export default {
     } else {
       $("#accountManage").show();
       $("#statisticalResults").show();
+      $("#statisticalResultsPhone").show();
+      $("#accountManagePhone").show();
       document.getElementById("limitWord").innerHTML = " ";
       document.getElementById("menu").style.visibility = "hidden";
       document.getElementById("personalInfo").style.visibility = "hidden";
+      document.getElementById("phoneMenu").style.visibility = "hidden";
       // document.getElementById("breadcrumb").style.visibility = "hidden";
     }
   },
@@ -372,10 +384,13 @@ export default {
       this.userAccountDetail = {};
       $("#accountManage").show();
       $("#statisticalResults").show();
+      $("#statisticalResultsPhone").show();
+      $("#accountManagePhone").show();
       document.getElementById("limitWord").innerHTML = " ";
       document.getElementById("menu").style.visibility = "hidden";
       // document.getElementById("breadcrumb").style.visibility = "hidden";
       document.getElementById("personalInfo").style.visibility = "hidden";
+      document.getElementById("phoneMenu").style.visibility = "hidden";
       this.$router.push("/login");
     },
     logoutRecord: function () {
@@ -406,9 +421,6 @@ export default {
     },
     personalState: function () {
       if (localStorage.getItem("token")) {
-        // var loging = JSON.parse(localStorage.getItem('token'));
-        // this.userID = loging.id;
-        //console.log(this.userID);
         event.stopPropagation();
         $("#logining").toggle("fast");
         $(document).click(function (event) {
@@ -696,6 +708,9 @@ a {
 .phoneMenu {
   display: none;
 }
+#phoneMenu{
+  visibility: hidden;
+}
 .page {
   font-size: 24px;
   font-weight: bold;
@@ -883,21 +898,31 @@ a {
   display: none;
 }
 @media (max-width: 768px) {
+  .contentCenter{
+    background: white;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    height: 39px;
+    line-height: 39px;
+    box-shadow: 1px 0.5px 2px 0.5px rgba(0, 0, 0, 0.096);
+    z-index: 1;
+    top: 0;
+    left: 0;
+  }
   .page {
     font-size: 18px;
     margin: 0;
-    position: fixed;
-    z-index: 1;
-    top: 12px;
-    /* text-align: center; */
-    left: 50%;
-    /* margin-left: -25px; */
-    /* color: white; */
+    
+    /* z-index: 1; */
+    /* top: 12px; */
+    /* left: 50%; */
   }
   .header {
-    height: 0;
-    position: relative;
-    z-index: 2;
+    /* height: 0; */
+    /* position: relative; */
+    /* z-index: 2; */
+    display: none;
   }
   .headerContent {
     display: inline;
@@ -918,17 +943,21 @@ a {
   .content {
     width: 100%;
     padding: 0;
-    position: relative;
+    /* position: absolute; */
+    /* top: 39px; */
+    /* bottom: 40px; */
     z-index: 1;
   }
   .contentTop {
     position: fixed;
+    top: 0;
     /* background-color: rgb(47, 58, 76); */
     background-color: #fff;
     height: 39px;
     margin: 0;
     padding: 0;
     z-index: 1;
+    display: none;
   }
   .companyImg {
     display: none;
@@ -1023,15 +1052,18 @@ a {
   }
   /* 底部選單 */
   .footer{
-    position: relative;
+    position: fixed;
+    width: 100%;
+    /* position: relative; */
     z-index: 1;
-    
+    bottom: 0;
+    height: 39px;
   }
   .phoneMenu {
     width: 100%;
     /* display: block; */
-    position: fixed;
-    bottom: 0;
+    
+    /* bottom: 0; */
     /* text-align: center; */
     /* background-color: rgb(47, 58, 76); */
     background-color: #fff;

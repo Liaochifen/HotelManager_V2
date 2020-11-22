@@ -5,6 +5,7 @@
         <span>帳號詳細內容</span>
       </div>
     </div>
+    <div class="accountDetails_outsidediv">
     <span class="personalInfoLastLogin">上次登入時間：{{userAccountDetail.lastLoginDate}}</span>
     <div class="accountDetails">
       <div class="accountDetailsBG">
@@ -38,6 +39,7 @@
       <button id="" v-on:click="findOther(0)">上一則</button>
       <button id="" v-on:click="findOther(1)">下一則</button>   
     </div> -->
+    </div>
   </div>
 </template>
   <!-- <div> -->

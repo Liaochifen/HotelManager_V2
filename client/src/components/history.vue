@@ -14,13 +14,14 @@
       <button @click="changePage(1)" class="pageButton1">個人動態</button>
       <button @click="changePage(2)" class="pageButton2" id="userInfoRecord">帳號紀錄</button>
     </div>
+    <div class="clear"></div>
     <div class="historydataArea">
       <template>
         <span v-if="page === 0">
           <ul>
             <li class="his_comment"><button @click="publicManage(0)" >評論狀態動態</button></li>
             <li class="his_tags"><button @click="publicManage(1)" >評論標籤動態</button></li>
-            <li class="his_reply"><button @click="publicManage(2)" >評論回覆動態</button></li>
+            <!-- <li class="his_reply"><button @click="publicManage(2)" >評論回覆動態</button></li> -->
             <div class="clear"></div>
           </ul>
           <div class="clear"></div>
@@ -55,7 +56,7 @@
                   </div>
                 </span>
               </div>
-              <div v-else-if="publicPage === 2" class="public_record"> 
+              <!-- <div v-else-if="publicPage === 2" class="public_record"> 
                 <span v-if="replyFIlter.length === 0">
                   <p>無任何記錄</p>
                 </span>
@@ -66,7 +67,7 @@
                     <span class="commentTimeHistory">{{item.time}}</span>
                   </div>
                 </span>
-              </div>
+              </div> -->
             <!-- </div> -->
           <!-- </template> -->
         </span>
@@ -140,21 +141,21 @@
             <li><button  v-on:click="manager(4)">新增刪除使用者</button></li>
           </ul>
           <div  v-if="userInfoPage === 0" class="backend_record">
-            <div v-for="(item, loginIndex) in loginNew" :key="loginIndex+'login'" class="commentArea">
+            <div v-for="(item, loginIndex) in loginNew.slice().reverse()" :key="loginIndex+'login'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 登入</span>
               <span class="commentTimeHistory">{{item.loginTime}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 1" class="backend_record">
-            <div v-for="(item, logoutIndex) in logoutNew" :key="logoutIndex+'logout'" class="commentArea">
+            <div v-for="(item, logoutIndex) in logoutNew.slice().reverse()" :key="logoutIndex+'logout'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 登出</span>
               <span class="commentTimeHistory">{{item.logoutTime}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 2" class="backend_record">
-            <div v-for="(item, userIndex) in userNew" :key="userIndex+'pw'" class="commentArea">
+            <div v-for="(item, userIndex) in userNew.slice().reverse()" :key="userIndex+'pw'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 忘記密碼 驗證 
                 <span v-if="item.forgetPassword.verification === true">成功</span>
@@ -164,14 +165,14 @@
             </div>
           </div>
           <div  v-else-if="userInfoPage === 3" class="backend_record">
-            <div v-for="(item, userDetailModifyIndex) in userDetailModifyNew" :key="userDetailModifyIndex+'acds'" class="commentArea">
+            <div v-for="(item, userDetailModifyIndex) in userDetailModifyNew.slice().reverse()" :key="userDetailModifyIndex+'acds'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.modifyInfo}} {{item.modifyPerson}} 把 {{item.employeeNumber}} 由 {{item.old}} 改為 {{item.new}} </span>
               <span class="commentTimeHistory">{{item.time}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 4" class="backend_record">
-            <div v-for="(item, userListModifyIndex) in userListModifyNew" :key="userListModifyIndex+'mod'" class="commentArea">
+            <div v-for="(item, userListModifyIndex) in userListModifyNew.slice().reverse()" :key="userListModifyIndex+'mod'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.modify}} 使用者 {{item.employeeNumber}} </span>
               <span class="commentTimeHistory">{{item.time}}</span>
@@ -303,19 +304,22 @@ export default {
     // var value = 0;
     //  + value
     var logining = localStorage.getItem("token");
-    var userID = JSON.parse(logining).companyName;
+    // var userID = JSON.parse(logining).companyName;
     self.employeeNumber = JSON.parse(logining).id
 
-    axios
-      .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
-      .then((response) => {
-        if(response.limit === '後台管理員' ){
-          document.getElementById("userInfoRecord").style.visibility = "visible";
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if(JSON.parse(logining).limit === '後台管理者'){
+      document.getElementById('userInfoRecord').style.visibility = 'visible';
+    }
+    // axios
+    //   .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
+    //   .then((response) => {
+    //     if(response.limit === '後台管理員' ){
+    //       document.getElementById("userInfoRecord").style.visibility = "visible";
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
     axios
       .get(
         "https://hotelapi.im.nuk.edu.tw/api/history/" +
@@ -441,7 +445,6 @@ export default {
     },
     publicManage: function(page){
       this.publicPage = page;
-      console.log('ee')
       if(page === 0){
         $('.his_comment').addClass('bg')
         $('.his_tags').removeClass('bg')
@@ -450,11 +453,12 @@ export default {
         $('.his_comment').removeClass('bg')
         $('.his_tags').addClass('bg')
         $('.his_reply').removeClass('bg')
-      }else{
-        $('.his_comment').removeClass('bg')
-        $('.his_tags').removeClass('bg')
-        $('.his_reply').addClass('bg')
       }
+      // }else{
+      //   $('.his_comment').removeClass('bg')
+      //   $('.his_tags').removeClass('bg')
+      //   $('.his_reply').addClass('bg')
+      // }
     }
   },
 };

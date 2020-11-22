@@ -1,13 +1,19 @@
 <template>
   <div class="insideContent">
     <div class="mask"></div>
-    <div class="contentCenter">
+    <div class="contentCenter account_contentCenter">
       <div class="page">
         <span>帳號列表</span>
       </div>
     </div>
     <div class="vueGoodTable">
+      <div class="contentCenter" id="contentCenter_phone">
+        <div class="page">
+          <span>帳號列表</span>
+        </div>
+      </div>
       <div class="mask"></div>
+      <div class="phone_mask"></div>
       <div class="addUser" id="addNewUser">
         <span class="addAccount">新增帳號</span>
         <button class="closeAdd" v-on:click="close()">X</button>
@@ -80,7 +86,7 @@
       </div>
       <div class="buttonFunArea">
         <div class="buttonArea">
-          <button class="editButton" @click="openFilter()">
+          <button class="editButton" @click="openFilter()" id="filter_phone">
           <img src="../assets/icon/filter.png"/>
           <span>篩選</span>
           </button>
@@ -113,7 +119,7 @@
               ></el-option>
             </el-select> -->
       <div slot="table-actions" class="account_select_phone">
-        <div class="right_select">
+        <!-- <div class="right_select"> -->
           <!-- <div class="dep">所屬單位</div>
           <div class="limit">員工權限</div> -->
           <div>
@@ -140,7 +146,7 @@
               <el-option value='一般使用者'>一般使用者</el-option>
             </el-select>
           </div>
-        </div>
+        <!-- </div> -->
         <!-- <div class="left_btn">
           <div>
             <button id="add_user" class="functionButton" v-on:click="open()">十</button>
@@ -164,6 +170,17 @@
         @on-selected-rows-change="selectionChanged"
         :select-options="{ enabled: true }"
         @on-cell-click="linkAccountDetial"
+        :pagination-options="{
+            enabled: true,
+            mode: 'pages',
+            perPage: '',
+            rowsPerPageLabel: '',
+            position: 'bottom',
+            dropdownAllowAll: false,
+            setCurrentPage: 1,
+            nextLabel: 'next',
+            prevLabel: 'prev',
+          }"
       >
         <!-- <div slot="table-actions" class="account_select">
           <span>所屬單位</span>
@@ -246,19 +263,16 @@ export default {
         {
           label: "員工編號",
           field: "employeeNumber",
-          sortable: false
         },
         {
           label: "姓名",
           field: "userName",
-          sortable: false
         },
         {
           label: "信箱",
           field: "email",
           tdClass: "display_ipad",
           thClass: "display_ipad",
-          sortable: false
         },
         {
           label: "權限等級",
@@ -341,6 +355,7 @@ export default {
     var loginData = JSON.parse(localStorage.getItem("token"));
     var userID = loginData.id;
     self.departments = [];
+    self.hotels = [];
     if(loginData.limit != "後台管理者"){
       this.$router.push({ name: "competition" });
     }
@@ -397,7 +412,7 @@ export default {
           console.log('From web', response.data);
           self.networkDataReceivedAll = true;
           self.allHtols = response.data;
-          for(var num=0; num< this.allHtols.length;num++){
+          for(var num=0; num< self.allHtols.length;num++){
             if(self.allHtols[num].companyName === self.logingAccount.companyName){
               var inHotels = false;
               for (var i in self.hotels) {
@@ -417,6 +432,7 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+      
       if ("indexedDB" in window) {
         console.log("Reading indexedDB...");
         util.readAllData("account").then(function (data) {
@@ -482,8 +498,10 @@ export default {
       this.rowSelection = params.selectedRows;
       if(this.rowSelection.length !== 0){
         $('#delete').show()
+        $('#filter_phone').hide()
       }else{
         $('#delete').hide()
+        $('#filter_phone').show()
       }
       for (k = 0; k < self.rowSelection.length; k++) {
         this.checkedAccount.push(this.rowSelection[k]._id);
@@ -500,13 +518,12 @@ export default {
         var area = $(".account_select_phone"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {
           // $('#divTop').slideUp('slow');  //滑動消失
-          $(".account_select_phone").hide(500); // 淡出消失
+          $(".account_select_phone").hide(); // 淡出消失
         }
       });
     },
     linkAccountDetial(params) {
       let nowAccount = params.row;
-      console.log(nowAccount._id);
       this.$router.push({ path: `/accountDetial/${nowAccount._id}` });
     },
     deleteAccount: function () {
@@ -567,9 +584,6 @@ export default {
       let self = this
       // this.newAccount.companyName = 
       let newUser = this.newAccount;
-      console.log("new");
-      console.log(this.newAccount);
-      console.log(newUser);
       for (i = 0; i < this.hotels.length; i++) {
         // console.log("newAccount: "+this.newAccount.userName);
         // console.log("hotels: "+this.hotels[i].userName);
@@ -591,7 +605,6 @@ export default {
               // this.accountList.push(newUser);
               this.hotels.push(newUser);
               self.addDepartment()
-              console.log(newUser);
               // this.searchResults.push(newUser);
               this.$fire({
                 title: "Success !!",
@@ -601,8 +614,7 @@ export default {
               this.UserListModify.modify = "新增";
               this.UserListModify.employeeNumber = newUser.employeeNumber;
               this.UserListModify.time =
-                dateTime.recordDate() + " " + dateTime.recordTime();
-              console.log(this.UserListModify);
+              dateTime.recordDate() + " " + dateTime.recordTime();
               axios
                 .put(
                   "https://hotelapi.im.nuk.edu.tw/api/history/" +
@@ -698,6 +710,7 @@ export default {
     close: function () {
       document.getElementById("addNewUser").style.display = "none";
       $(".mask").hide(); 
+      $(".phone_mask").hide(); 
       document.getElementById("employeeNumber").removeAttribute("required");
       document.getElementById("email").removeAttribute("required");
       document.getElementById("password").removeAttribute("required");
@@ -717,6 +730,7 @@ export default {
       document.getElementById("userName").required = true;
       event.stopPropagation();
       $('.mask').show();
+      $('.phone_mask').show();
       $("#addNewUser").slideToggle("normal");
       $(".account_select_phone").hide(500); // 淡出消失
 
@@ -726,6 +740,7 @@ export default {
           // $('#divTop').slideUp('slow');  //滑動消失
           $("#addNewUser").hide(); // 淡出消失
           $(".mask").hide(); // 淡出消失
+          $(".phone_mask").hide(); // 淡出消失
         }
       });
       // document.getElementById("addNewUser").style.visibility = "visible";

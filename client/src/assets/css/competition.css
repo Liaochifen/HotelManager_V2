@@ -210,53 +210,167 @@ button{
 /* .selfCompany element.style{
     background-color:green;
 } */
+.contentCenter{
+    display: none;
+}
 @media (max-width: 768px) {
+    .contentCenter{
+        display: block;
+    }
+    .hotel_name{
+        color: #a89090;
+        font-family: cursive;
+        font-weight: 900;
+    }
     .phone {
-        margin: 0 5%;
-        width: 90%;
+        /* margin: 0 5%; */
+        width: 100%;
     }
     .dataArea1{
+        position: relative;
+        top: 39px;
         width: 100%;
-        margin: 60px 0 40px 0;
+        margin: 0;
         text-align: center;
-        /* margin-bottom: 50px; */
-    }
-    .contentCenter{
-        width: 100%;
-        margin-top: 30px;
-    }
-    .page{
-        margin-left: -54px;
+        padding-bottom: 50px;
     }
     .eachCompany{
         width: 90%;
         height: unset;
         padding: 0;
-        padding-bottom: 20px;
     }
     .eachCompany:hover{
-        /* all:unset; */
         cursor: pointer;
         position: relative;
         top:0;
         left:0;
         background-color: #f7f7f7;
     }
+    .myHotel{
+        background:rgb(231, 229, 229);
+        border-bottom: 2px dashed white;
+        padding: 10px;
+    }
+    .myCompany{
+        padding: 10px 5% 0;
+        background:rgb(231, 229, 229);
+        border-radius: unset;
+        box-shadow:2px 2px 4px rgb(148, 146, 146);
+        height: unset;
+    }
+    .myCompany:hover{
+        height: unset;
+        cursor: pointer;
+        position: relative;
+        top:0px;
+        left:0px;
+        background:rgb(231, 229, 229);
+    }
     .details{
         display: flex;
+        /* flex-direction: column; */
     }
-    .details .companyInfo{
-        width: 75%;
+    .myCompany .details .companyInfo,.eachCompany .details .companyInfo{
+        width: 100%;
+        height: unset;
+        padding: 0;
+        margin: 15px 0;
+        /* text-align: left; */
     }
     .details img{
         margin: 0;
     }
     .checkbox{
-        /* position: relative; */
+        /* top: 40px; */
+        /* right: 5%; */
+    }
+    .btn-box{
+        /* position: absolute; */
+        /* top: 40px; */
+        /* right: 5%; */
+    }
+    .mouth_info{
+        /* position: absolute; */
+        /* right: 2%; */
+        /* top: 30%; */
+        display: flex;
+        /* flex-direction: column; */
+        padding-top: 30px;
+        align-items: center;
+        justify-content: center;
+        box-sizing:border-box;
+    }
+    .my_mouth_info{
+        right: 7%;
+        top: 20%;
+    }
+    .mouth_info p{
+        margin: 0 0 10px;
+        /* width: 50%; */
+        /* border: 1px solid rgb(221, 215, 215); */
+        /* border-radius: 15px; */
+        /* background: white; */
+        /* box-shadow:.5px .5px 2px rgb(184, 180, 180); */
+    }
+    .pos,.neg{
+        margin: 0;
+        padding: 0;
     }
 }
 @media (max-width: 425px) {
-    .name{
-        font-size: 18px;
+    .details{
+        flex-direction: column;
+    }
+    .details img{
+        /* height: unset !important; */
+        width: 50% !important;
+    }
+    .companyInfo .name{
+        font-size: 17px;
+    }
+    .empty_star,.full_star{
+        font-size: 20px;
+    }
+    .checkbox{
+        /* top: 0px; */
+        /* right: 30px; */
+    }
+    .btn-box{
+        /* position: absolute; */
+        /* top: 0px; */
+        /* right: 60px; */
+    }
+    .mouth_info{
+        position: absolute;
+        right: 8%;
+        top: 20%;
+        display: flex;
+        flex-direction: column;
+        /* padding-top: 20px; */
+        box-sizing:border-box;
+    }
+    
+    .mouth_info p{
+        /* margin: 0 0 10px; */
+        /* width: 50%; */
+        border: 1px solid rgb(221, 215, 215);
+        border-radius: 15px;
+        background: white;
+        /* box-shadow:.5px .5px 2px rgb(184, 180, 180); */
+    }
+    .my_mouth_info{
+        right: 13%;
+        top: 10%;
+    }
+    .my_mouth_info p{
+        background: rgb(245, 245, 245);
+    }
+    .pos,.neg{
+        margin: 0;
+        padding: 0;
+    }
+    .myCompany .details .companyInfo,.eachCompany .details .companyInfo{
+        margin: 5px 0 15px;
     }
 }
+
