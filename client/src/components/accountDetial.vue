@@ -40,6 +40,21 @@
       <button id="" v-on:click="findOther(1)">下一則</button>   
     </div> -->
     </div>
+
+
+    <div class="upload">
+      <input type="file" @click="previewImage" accept="image/*">
+    </div>
+    <div class="schedule" >
+      <p>progress  {{uploadValue.toFixed()+"%"}}
+      <progress :value="uploadValue" max="100" ></progress>
+      </p>
+    </div>
+    <div>
+      <img :src="picture" alt="" class="preview">
+
+      <button @click="onUpload">Upload</button>
+    </div>
   </div>
 </template>
   <!-- <div> -->
@@ -129,6 +144,7 @@ import axios from "axios";
 import $ from "jquery";
 import dateTime from "../assets/js/dateTime";
 import util from "../assets/js/utility";
+import firebase from 'firebase';
 
 export default {
   name: "accountDetial",
@@ -147,7 +163,10 @@ export default {
       company:"",
       record:"userDetailModify",
       blockarea: 0,
-      next: 0
+      next: 0,
+      imageData:null,
+      picture:null,
+      uploadValue:0
     };
   },
   mounted() {
@@ -356,6 +375,31 @@ export default {
     accountPage: function(value){
       this.blockarea = value
     },
+    previewImage(event){
+      this.uploadValue = 0;
+      this.picture = null;
+      this.imageData = event.target.files[0];
+      console.log("priview");
+      console.log(event.target.files[0]);
+      console.log(this.imageData);
+    },
+    onUpload(){
+      this.picture = null;
+      console.log("uploading");
+      console.log(this.imageData);
+      firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
+      const storageRef = firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
+      storageRef.on(`state_changed`,snapshot=>{
+        this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+      },error=>{console.log(error.message)},
+      ()=>{this.uploadValue = 100;
+        storageRef.snapshot.ref.getDownloadURL().then((url)=> {
+          console.log("url:"+url);
+          this.picture = url ; 
+        })
+      }
+      )
+    }
     // findOther: function(value){
     //   let self = this
     //   if(value === 1){
@@ -382,3 +426,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped src= '../assets/css/accountDetial.css'></style>
+<style scoped>
+img.preview{
+  width: 200px;
+}
+</style>
