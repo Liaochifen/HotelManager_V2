@@ -5,7 +5,7 @@
         <span>評論列表</span>
       </div>
       <div class="buttonFunArea">
-        <button class="editButton" @click="openFilter()">
+        <button class="editButton" @click="openFilter()" id="comment_filter_phone">
           <img src="../assets/icon/filter.png"/>
         </button>
         <button @click="clearALL()" class="clearall">全部清除</button>

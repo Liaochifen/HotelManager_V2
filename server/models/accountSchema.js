@@ -12,7 +12,8 @@ const accountSchema = mongoose.Schema({
     lastLoginDate: String,
     lastLoginTime: String,
     firstLogin: Boolean,
-    favorite: []
+    favorite: [],
+    picture:String
 }, { collection: 'accountData' })
 
 // const AccountData = module.exports = mongoose.model('accountData', accountSchema);

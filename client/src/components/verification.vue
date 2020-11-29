@@ -74,7 +74,7 @@ export default {
       console.log("sendEmail");
       var emailData = {
         user_name: this.userAccountDetail.userName,
-        user_email: "jingjing10301030@gmail.com", //this.userAccountDetail.email
+        user_email: this.userAccountDetail.email, //this.userAccountDetail.email
         message: this.certification,
       };
       // emailjs.sendForm('gmail', 'template_ih27sAiz', emailData, 'user_claUepgayYZIqK8g01tnK')
@@ -101,7 +101,9 @@ export default {
     },
     confirm() {
       if (this.check == this.certification) {
-        this.forgetPasswordRecord(true);
+        
+        // this.updateAccount();
+        // this.loginRecord();
         var currentTime = new Date().getTime(); //取得從 1970-01-01 00:00:00 UTC 累計的毫秒數
         this.recordLogingTime();
         console.log("currentTime"+currentTime)
@@ -112,13 +114,12 @@ export default {
             id: this.userAccountDetail._id,
             time: currentTime+1,
             companyName: this.userAccountDetail.companyName,
-            limit:this.logingAccount.employeeLimit,
+            limit:this.userAccountDetail.employeeLimit,
           })
         );
-        this.updateAccount();
-        this.loginRecord();
-        this.$router.push({ name: "changePassword" });
-        window.location.reload();
+        this.forgetPasswordRecord(true);
+        // this.$router.push({ name: "changePassword" });
+        // window.location.reload();
       } else {
         //alert('驗證碼錯誤!!請重新輸入或點選『重新寄送』按鈕');
         this.forgetPasswordRecord(false);
@@ -140,6 +141,7 @@ export default {
           //this.userAccountDetail=updateUser;
           //寫在mounted的如果數據改會自動更著改且不會重新整理
           console.log(response);
+          this.loginRecord();
         })
         .catch((error) => {
           console.log(error);
@@ -163,6 +165,8 @@ export default {
         )
         .then((response) => {
           console.log(response);
+          this.$router.push({ name: "changePassword" });
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error);
@@ -181,6 +185,9 @@ export default {
       console.log(this.user);
        axios.put("https://hotelapi.im.nuk.edu.tw/api/history/" +company +"/" +record,this.user)
         .then((responseRecord) => {
+          if(verificate){
+            this.updateAccount();
+          }
           console.log(responseRecord);
         })
         .catch((errorRecord) => {

@@ -111,85 +111,11 @@
 	margin-top: 26.5px;
 	margin-right: 95px;
 } */
-@media (max-width: 768px) {
-  .page{
-    margin-left: -54px;
-  }
-  .contentCenter{
-    /* background: blue; */
-    width: 100%;
-    margin-top: 30px;
-  }
-  .detail{
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #F7F7F7;
-    margin-bottom: 50px;
-  }
-  .leftContent{
-    width: 100%;
-    margin: 25px auto;
-    text-align:center;
-  }
-  .rightContent{
-    background-color: #F7F7F7;
-    width: 90%;
-    margin:auto;
-    float: none;
-  }
-  .rightContent h2{
-    /* background: red; */
-    margin: 10px 0;
-  
-  }
-  .rightContent li{
-    width: 80%;
-    margin: 0 10%;
-    padding: 5px 0;
-    /* background: #000; */
-  }
-  .personalDetail{
-    background: #FFFFFF;
-    margin: 0;
-    padding: 5px 0;
-  }
-  .contactInfo{
-    background: #FFFFFF;
-    margin: 0;
-    padding: 5px 0;
-  }
-  .private{
-    background: #FFFFFF;
-    margin: 0;
-    padding: 5px 0;
-  }
-  .rightContent input{
-    margin: 3px 0;
-    padding: 3px 5px;
-    font-weight:normal;
-    width: 150px;
-  }
-  .contactInfo input{
-    width: 205px;
-  }
-}
-@media (max-width: 375px) {
-  .rightContent li{
-    width: 86%;
-    margin: 0 7%;
-    padding: 5px 0;
-  }
-}
-@media (max-width: 320px) {
-  .rightContent li{
-    width: 90%;
-    margin: 0 5%;
-    padding: 5px 0;
-  }
-}
+
 
 .personalInfoLastLogin{
+  top: -20px;
+  position: relative;
   float: right;
   margin-right: 6.5%;
   margin-bottom: 10px;
@@ -203,15 +129,30 @@
   border-radius: 3px;
 }
 .accountDetails ul{
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  float: left;
   /* margin-top: 20px; */
 }
-.accountDetails li{
+.pictureList li{
+  padding: 20px 0px;
+  margin-bottom: 7px;
+}
+.DetailList li{
   padding: 20px 0px;
   margin-bottom: 0px;
   border-bottom: 0.3px solid rgb(236, 236, 236);
+}
+.pictureList{
+  margin-top: 15px;
+  width: 25%;
+  margin-left: 35px;
+}
+.pictureList .edit_btn{
+  margin-right: 40%;
+} 
+.DetailList {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .accountDetails li:hover{
   cursor: pointer;
@@ -295,4 +236,76 @@
   margin-right: 20px;
   font-size: 16px;
   visibility: hidden;
+}
+ul li .image-upload>input {
+  display: none;
+}
+ul li .image-upload>img{
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .edit_btn img{
+    display: block;
+  }
+  .accountDetails_outsidediv{
+    position: relative;
+    top: 39px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    z-index: 0;
+  }
+  .accountDetails{
+    padding: 10px 0 20px;
+    margin: 0 5%;
+    width: 90%;
+  }
+  .personalInfoLastLogin{
+    position: static;
+    text-align: right;
+  }
+  .accountDetails ul li{
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
+  .accountDetails ul li input{
+    width: 50%;
+    
+  }
+  .edit_btn{
+    position: absolute;
+    right: 10%;
+    margin: 0 ;
+    padding: 0;
+  }
+  #limit{
+    width: 50%;
+  }
+  .btnBlock{
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0; 
+    width: 100%;
+  }
+  #saveInfo,#cancleInfo{
+    margin: 0;
+  }
+}
+@media (max-width: 450px) {
+  .accountDetails li{
+    padding: 10px 0;
+  }
+  .span_info{
+    margin-right: 5%;
+  }
+  .edit_btn{
+    /* margin-left: 10px;
+    margin-right: 0; */
+  }
+  .accountDetails ul li input,#limit{
+    margin-left: 5%;
+    width: 70%;
+  }
 }

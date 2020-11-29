@@ -70,7 +70,8 @@ router.put("/account/:id", (req, res) => {
                 lastLoginDate: req.body.lastLoginDate,
                 lastLoginTime: req.body.lastLoginTime,
                 firstLogin: req.body.firstLogin,
-                favorite: req.body.favorite
+                favorite: req.body.favorite,
+                picture:req.body.picture
             }
         },
         {

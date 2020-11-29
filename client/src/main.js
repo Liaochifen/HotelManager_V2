@@ -11,6 +11,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import VueSimpleAlert from 'vue-simple-alert'
 import infiniteScroll from 'vue-infinite-scroll'
+import firebase from 'firebase';
 // CSS
 import 'vue-good-table/dist/vue-good-table.css';
 import 'element-ui/lib/theme-chalk/index.css'
@@ -64,7 +65,18 @@ Vue.use(VueGoodTablePlugin);
 Vue.use(ElementUI);
 library.add(faEye, faEyeSlash);
 
-
+var firebaseConfig = {
+  apiKey: "AIzaSyC0K00_BSYk1JPqoooTxf2v0VsnoOUWF_A",
+  authDomain: "hotel-system-image.firebaseapp.com",
+  databaseURL: "https://hotel-system-image.firebaseio.com",
+  projectId: "hotel-system-image",
+  storageBucket: "hotel-system-image.appspot.com",
+  messagingSenderId: "393061520511",
+  appId: "1:393061520511:web:7efaaa3644f0a779ca9b4a",
+  measurementId: "G-M3TTT5VVYX"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 
 // var loginData = JSON.parse(localStorage.getItem('token'))

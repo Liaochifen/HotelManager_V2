@@ -5,10 +5,23 @@
         <span>帳號詳細內容</span>
       </div>
     </div>
+    <div class="accountDetails_outsidediv">
     <span class="personalInfoLastLogin">上次登入時間：{{userAccountDetail.lastLoginDate}}</span>
     <div class="accountDetails">
-      <div class="accountDetailsBG">
-        <ul>
+      <div class="accountDetailsBG">     
+        <ul class="pictureList">
+          <li>
+            <div class="image-upload">
+            <label for="file-input" class="edit_btn">
+              <img src="../assets/icon/edit.png">
+            </label>
+            <input type="file" id="file-input" @change="previewImage" accept="image/png, image/jpeg" >
+          </div>
+          </li>
+          <!-- <li><button class="edit_btn" ><img src="../assets/icon/edit.png"><input type="file"  accept="image/*" ></button></li> -->
+          <li><img :src="picture" width="180px" alt=""></li>
+        </ul>
+        <ul class="DetailList">
           <li><span class="span_info">使用者編號</span><input type="text" readonly v-model="userAccountDetail.employeeNumber"></li>
           <li><span class="span_info">所屬部門</span><input type="text" readonly v-model="userAccountDetail.department" id="department"/><button class="edit_btn" @click="edit(0)"><img src="../assets/icon/edit.png"></button></li>
           <li><span class="span_info">使用者權限</span>
@@ -38,6 +51,22 @@
       <button id="" v-on:click="findOther(0)">上一則</button>
       <button id="" v-on:click="findOther(1)">下一則</button>   
     </div> -->
+    </div>
+
+
+    <div class="upload">
+      <input type="file"  accept="image/*" @change="previewImage">
+    </div>
+    <div class="schedule" >
+      <p>progress  {{uploadValue.toFixed()+"%"}}
+      <progress :value="uploadValue" max="100" ></progress>
+      </p>
+    </div>
+    <div>
+      <img :src="picture" alt="" class="preview">
+
+      <button @click="onUpload">Upload</button>
+    </div>
   </div>
 </template>
   <!-- <div> -->
@@ -127,6 +156,7 @@ import axios from "axios";
 import $ from "jquery";
 import dateTime from "../assets/js/dateTime";
 import util from "../assets/js/utility";
+import firebase from 'firebase';
 
 export default {
   name: "accountDetial",
@@ -145,7 +175,10 @@ export default {
       company:"",
       record:"userDetailModify",
       blockarea: 0,
-      next: 0
+      next: 0,
+      imageData:null,
+      picture:null,
+      uploadValue:0
     };
   },
   mounted() {
@@ -166,6 +199,13 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+      // const storageRef = firebase.storage().ref('cat1.png');
+      // storageRef.getDownloadURL().then(function(url) {
+      //   console.log("url:"+url);
+      //   self.picture = url;
+      // }).catch(function(error) {
+      //   console.log(error);
+      // });
 
       if ("indexedDB" in window) {
         console.log("Reading indexedDB...");
@@ -354,6 +394,60 @@ export default {
     accountPage: function(value){
       this.blockarea = value
     },
+    previewImage(event){
+      var self = this;
+      self.uploadValue = 0;
+      self.picture = null;
+      console.log(event.target.files[0]);
+      // event.target.files[0].name = this.userAccountDetail.employeeNumber;
+      self.imageData = event.target.files[0];
+      console.log("priview");
+      console.log(event.target.files[0]);
+      console.log(this.imageData);
+
+      // console.log(firebase.storage().ref('images/cat1.png'))
+      
+      // // var starsRef = storageRef.child('/cat1.png');
+      //抓圖片
+      // const storageRef = firebase.storage().ref('cat1.png');
+      // storageRef.getDownloadURL().then(function(url) {
+      //   console.log("url:"+url);
+      //   self.picture = url;
+      // }).catch(function(error) {
+      //   console.log(error);
+      // });
+      //刪除
+      // firebase.storage().ref('cat2.png').delete().then(function() {
+      //   // File deleted successfully
+      //   console.log("sucessful");
+      // }).catch(function(error) {
+      //   console.log(error);
+      //   // Uh-oh, an error occurred!
+      // });
+    },
+    onUpload(){
+      var oldPicture = this.userAccountDetail.picture;
+      this.picture = null;
+      console.log("uploading");
+      console.log(this.imageData);
+      const storageRef = firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
+      storageRef.on(`state_changed`,snapshot=>{
+        this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
+      },error=>{console.log(error.message)},
+      ()=>{this.uploadValue = 100;
+        storageRef.snapshot.ref.getDownloadURL().then((url)=> {
+          console.log("url:"+url);
+          this.picture = url ; 
+          this.userAccountDetail.picture = this.imageData.name;
+        })
+      });
+      //刪除舊照片
+      firebase.storage().ref(oldPicture).delete().then(function() {
+        console.log("sucessful");
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
     // findOther: function(value){
     //   let self = this
     //   if(value === 1){
@@ -380,3 +474,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped src= '../assets/css/accountDetial.css'></style>
+<style scoped>
+img.preview{
+  width: 200px;
+}
+</style>

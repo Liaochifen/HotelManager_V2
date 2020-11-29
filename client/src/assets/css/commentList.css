@@ -375,33 +375,25 @@ tr:hover td{
 .el-table a{
     color: rgb(39, 30, 165);
 }
-.selection_phone,.select_btn,.selection_btn_phone{
+/* .selection_phone,.select_btn,.selection_btn_phone{
+    display: none;
+} */
+#comment_filter_phone{
     display: none;
 }
 @media (max-width: 768px) {
     .page{
-        margin-left: -36px;
+        /* margin-left: -36px; */
     }
     .vgt-fixed-header{
         z-index: 0;
     }
-    .contentCenter{
-        width: 100%;
-        margin-top: 0px;
-        /* z-index: 5; */
-    }
-    /* .page{
-        font-size: 25px;
-        font-weight: bold;
-        margin-top: 30px;  
-        margin-right: 20%;
-    } */
     .editArea{
         display: none;
         background: #000;
     }
     /* 篩選器 */
-    .selection_btn_phone{
+    /* .selection_btn_phone{
         display: block;
         position: fixed;
         right: 20px;
@@ -429,13 +421,122 @@ tr:hover td{
         float: left;
         padding: 8px 0;
         text-align: center;
-        /* height: 20px; */
     }
     .selection_phone.active {
         background-color: rgba(47, 58, 76, 1);
         display: block;
         position: fixed;
         top: 38px;
+    } */
+    .buttonFunArea{
+        margin: 0;
+    }
+    #editButton_phone{
+        display: none;
+        position: fixed;
+        top: 5px;
+        right: 5%;
+        padding: 0;
+        margin: 0;
+        border: none;
+    }
+    #editButton_phone:active{
+        all: unset;
+        position: fixed;
+        top: 5px;
+        right: 5%;
+        padding: 0;
+        margin: 0;
+        border: none;
+        width: 20px;
+        height: 15px;
+        /* background: #000; */
+    }
+    .edit{
+        background: white;
+        width: 100%;
+        margin: 0;
+        padding: 15px 0 15px 30px;
+        box-sizing: border-box;
+        position: fixed;
+        bottom: 39px;
+        right: 0;
+        /* box-shadow: 0px -5px 5px black; */
+        box-shadow: 0 -2px 4px rgb(148, 146, 146);
+    }
+    .edit_flex{
+        display: flex;
+        justify-content: space-around;
+    }
+    .add_btn button{
+        height: 35px;
+        padding: 0 15px;
+        line-height: 35px;
+    }
+    .clearall{
+        position: fixed;
+        top: 6px;
+        left: 5%;
+        margin: 0;
+        padding: 0 13px;
+        height: 25px;
+        line-height: 25px;
+        border: 1px solid rgb(182, 180, 180);
+    }
+    .clearall:hover{
+        position: fixed;
+        top: 6px;
+        left: 5%;
+        margin: 0;
+        padding: 0 13px;
+        height: 25px;
+        line-height: 25px;
+        border: 1px solid rgb(122, 122, 122);
+    }
+    .clearall:active{
+        background: rgb(122,122,122);
+        color: white;
+    }
+    .dataArea{
+        width: 100%;
+        /* margin: 20px 0 0 ; */
+        margin: 0;
+        padding-bottom: 39px;
+        z-index: 0;
+        position: relative;
+        top: 39px;
+    }
+    .dataRightArea{
+        width: 100%;
+    }
+    #comment_filter_phone{
+        display: block;
+        position: fixed;
+        top: 8px;
+        right: 5%;
+        z-index: 1;
+        padding: 0;
+        margin: 0;
+        border: none;
+        width: 25px;
+    }
+    #comment_filter_phone:hover{
+        /* all: unset; */
+        background-color: white;
+        position:fixed;
+        top: 8px;
+        right: 5%;
+        /* left: unset; */
+        width: 25px;
+    }
+    #comment_filter_phone:active{
+        all: unset;
+        position:fixed;
+        top: 8px;
+        right: 5%;
+        /* left: 0; */
+        z-index: 1;
+        width: 25px;
     }
     .filter{
         display: none;
@@ -465,49 +566,48 @@ tr:hover td{
     .filter.active{
         display: block;
     }
-    .dataArea{
-        width: 100%;
-        margin: 0;
-        margin-bottom: 50px;
-    }
+    
     .MultiFilterArea{
-        background-color: rgb(218, 226, 236);
-        border: none;
-        border-radius: unset;
+        background: white;
+        position: fixed;
+        bottom: 39px;
+        left: 0;
         width: 100%;
-        /* height: 100%; */
-        position:fixed;
-        z-index: 2;
-        top: 75px;
-        display: none;
+        z-index: 1;
         margin: 0;
-        padding: 10px 0;
+        padding: 0;
+        border-radius: unset;
+        box-shadow: 0 -2px 4px rgb(148, 146, 146);
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        height: 200px;
+        padding: 10px 3% 15px;
+        box-sizing: border-box;
     }
     .MultiFilterArea .slot_div{
-        width: 100%;
+        width: 45%;
+        margin: 10px 0;
+        /* order: 1; */
+    }
+    #reportrange{
+        width: unset;
+    }
+    .slidecontainer{
+        text-align: center;
+    }
+    .filterTitle{
+        text-align: center;
     }
     .filterP{
         margin-left: 10px;
     }
-    .clearall{
-        margin: 0 10px;
-        float: right;
-    }
-    .MultiFilterArea .slot_div p{
-        background: rgb(196, 205, 226);
-        margin: 10px 0;
-        padding: 5px 10px;
-    }
     .MultiFilterArea.active{
         display: block;
     }
-    .dataRightArea{
-        width: 90%;
-        margin: 0 5%;
-    }
-    #reportrange{
-        margin-left: 15px;
-    }
+   
     .el-table{
         margin: 0;
     }

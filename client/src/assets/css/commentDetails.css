@@ -340,7 +340,7 @@ label{
 
 @media (max-width: 768px) {
     .page{
-        margin-left: -54px;
+        /* margin-left: -54px; */
     }
     .dataArea{
         top: 39px;

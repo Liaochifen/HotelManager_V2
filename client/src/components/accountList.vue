@@ -1,13 +1,19 @@
 <template>
   <div class="insideContent">
     <div class="mask"></div>
-    <div class="contentCenter">
+    <div class="contentCenter account_contentCenter">
       <div class="page">
         <span>帳號列表</span>
       </div>
     </div>
     <div class="vueGoodTable">
+      <div class="contentCenter" id="contentCenter_phone">
+        <div class="page">
+          <span>帳號列表</span>
+        </div>
+      </div>
       <div class="mask"></div>
+      <div class="phone_mask"></div>
       <div class="addUser" id="addNewUser">
         <span class="addAccount">新增帳號</span>
         <button class="closeAdd" v-on:click="close()">X</button>
@@ -80,7 +86,7 @@
       </div>
       <div class="buttonFunArea">
         <div class="buttonArea">
-          <button class="editButton" @click="openFilter()">
+          <button class="editButton" @click="openFilter()" id="filter_phone">
           <img src="../assets/icon/filter.png"/>
           <span>篩選</span>
           </button>
@@ -113,7 +119,7 @@
               ></el-option>
             </el-select> -->
       <div slot="table-actions" class="account_select_phone">
-        <div class="right_select">
+        <!-- <div class="right_select"> -->
           <!-- <div class="dep">所屬單位</div>
           <div class="limit">員工權限</div> -->
           <div>
@@ -140,7 +146,7 @@
               <el-option value='一般使用者'>一般使用者</el-option>
             </el-select>
           </div>
-        </div>
+        <!-- </div> -->
         <!-- <div class="left_btn">
           <div>
             <button id="add_user" class="functionButton" v-on:click="open()">十</button>
@@ -164,6 +170,17 @@
         @on-selected-rows-change="selectionChanged"
         :select-options="{ enabled: true }"
         @on-cell-click="linkAccountDetial"
+        :pagination-options="{
+            enabled: true,
+            mode: 'pages',
+            perPage: '',
+            rowsPerPageLabel: '',
+            position: 'bottom',
+            dropdownAllowAll: false,
+            setCurrentPage: 1,
+            nextLabel: 'next',
+            prevLabel: 'prev',
+          }"
       >
         <!-- <div slot="table-actions" class="account_select">
           <span>所屬單位</span>
@@ -235,6 +252,7 @@ export default {
         lastLoginDate: "New User",
         lastLoginTime: "",
         firstLogin: true,
+        picture:"cat1.png",
       },
       columns: [
         {
@@ -246,19 +264,16 @@ export default {
         {
           label: "員工編號",
           field: "employeeNumber",
-          sortable: false
         },
         {
           label: "姓名",
           field: "userName",
-          sortable: false
         },
         {
           label: "信箱",
           field: "email",
           tdClass: "display_ipad",
           thClass: "display_ipad",
-          sortable: false
         },
         {
           label: "權限等級",
@@ -345,18 +360,52 @@ export default {
     if(loginData.limit != "後台管理者"){
       this.$router.push({ name: "competition" });
     }
-    promises.push(
-      axios
-        .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
-        .then((response) => {
-          this.logingAccount = response.data;
-          this.newAccount.companyName = this.logingAccount.companyName;
-          this.company = this.logingAccount.companyName;
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-    );
+
+    var inPromises = false;
+    for (var i in promises) {
+      console.log(promises);
+      if (promises[i]._id === self.userID) {
+        inPromises = true;
+        break;
+      }
+    }
+    if (!inPromises) {
+      promises.push(
+        axios
+          .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
+          .then((response) => {
+            console.log(response);
+            console.log(promises);
+            console.log('From web', response.data);
+            self.networkDataReceived = true;
+            self.logingAccount = response.data;
+            self.newAccount.companyName = this.logingAccount.companyName;
+            self.company = this.logingAccount.companyName;
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      );
+    }
+
+    if ("indexedDB" in window) {
+      console.log("Reading indexedDB...");
+      util.readAllData("account").then(function (data) {
+        if (!self.networkDataReceived) {
+          console.log("From cache", data);
+          for (var i in data) {
+            if (data[i]._id === userID) {
+              promises.push(data[i]);
+              self.logingAccount = data[i];
+              self.newAccount.companyName = self.logingAccount.companyName;
+              self.company = self.logingAccount.companyName;
+              break;
+            }
+          }
+        }
+      });
+    }
+      
     Promise.all(promises).then(() => {
       axios
         .get("https://hotelapi.im.nuk.edu.tw/api/account")
@@ -364,35 +413,42 @@ export default {
           console.log('From web', response.data);
           self.networkDataReceivedAll = true;
           self.allHtols = response.data;
-          var num;
-          for(num=0; num< this.allHtols.length;num++){
-            if(this.allHtols[num].companyName === this.logingAccount.companyName){
-              self.hotels.push(this.allHtols[num]);
+          for(var num=0; num< self.allHtols.length;num++){
+            if(self.allHtols[num].companyName === self.logingAccount.companyName){
+              var inHotels = false;
+              for (var i in self.hotels) {
+                if (self.hotels[i]._id === self.allHtols[num]._id){
+                  inHotels = true;
+                  break;
+                }
+              }
+              if (!inHotels) {
+                self.hotels.push(self.allHtols[num]);
+              }
             } 
           }
-          self.addDepartment()
+          self.addDepartment();
           self.accountList = self.hotels;
       })
       .catch((error) => {
         console.log(error);
       });
+      
       if ("indexedDB" in window) {
         console.log("Reading indexedDB...");
         util.readAllData("account").then(function (data) {
           if (!self.networkDataReceivedAll) {
-            self.hotels = data;
-            self.accountList = self.hotels;
-          }
-          if (!self.networkDataReceived) {
-            for (let i = 0; i < self.hotels.length; i++) {
-              if (data[i]._id === userID) {
-                console.log("From web", data[i]);
-                self.logingAccount = data[i];
-                self.newAccount.companyName = self.logingAccount.companyName;
-                self.company = self.logingAccount.companyName;
-                break;
+            console.log("From cache", data);
+            self.allHtols = data;
+            for (var i in self.allHtols) {
+              console.log(self.allHtols[i].companyName);
+              console.log(self.logingAccount.companyName);
+              if(self.allHtols[i].companyName === self.logingAccount.companyName){
+                self.hotels.push(self.allHtols[i]);
               }
             }
+            self.addDepartment();
+            self.accountList = self.hotels;
           }
         });
       }
@@ -443,8 +499,10 @@ export default {
       this.rowSelection = params.selectedRows;
       if(this.rowSelection.length !== 0){
         $('#delete').show()
+        $('#filter_phone').hide()
       }else{
         $('#delete').hide()
+        $('#filter_phone').show()
       }
       for (k = 0; k < self.rowSelection.length; k++) {
         this.checkedAccount.push(this.rowSelection[k]._id);
@@ -461,7 +519,7 @@ export default {
         var area = $(".account_select_phone"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {
           // $('#divTop').slideUp('slow');  //滑動消失
-          $(".account_select_phone").hide(500); // 淡出消失
+          $(".account_select_phone").hide(); // 淡出消失
         }
       });
     },
@@ -653,6 +711,7 @@ export default {
     close: function () {
       document.getElementById("addNewUser").style.display = "none";
       $(".mask").hide(); 
+      $(".phone_mask").hide(); 
       document.getElementById("employeeNumber").removeAttribute("required");
       document.getElementById("email").removeAttribute("required");
       document.getElementById("password").removeAttribute("required");
@@ -664,6 +723,7 @@ export default {
       this.newAccount.lastLoginDate = "New User";
       this.newAccount.lastLoginTime = "";
       this.newAccount.firstLogin = true;
+      this.newAccount.picture = "cat1.png";
     },
     open: function () {
       document.getElementById("employeeNumber").required = true;
@@ -672,6 +732,7 @@ export default {
       document.getElementById("userName").required = true;
       event.stopPropagation();
       $('.mask').show();
+      $('.phone_mask').show();
       $("#addNewUser").slideToggle("normal");
       $(".account_select_phone").hide(500); // 淡出消失
 
@@ -681,6 +742,7 @@ export default {
           // $('#divTop').slideUp('slow');  //滑動消失
           $("#addNewUser").hide(); // 淡出消失
           $(".mask").hide(); // 淡出消失
+          $(".phone_mask").hide(); // 淡出消失
         }
       });
       // document.getElementById("addNewUser").style.visibility = "visible";

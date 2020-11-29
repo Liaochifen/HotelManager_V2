@@ -14,6 +14,7 @@
       <button @click="changePage(1)" class="pageButton1">個人動態</button>
       <button @click="changePage(2)" class="pageButton2" id="userInfoRecord">帳號紀錄</button>
     </div>
+    <div class="clear"></div>
     <div class="historydataArea">
       <template>
         <span v-if="page === 0">
@@ -140,21 +141,21 @@
             <li><button  v-on:click="manager(4)">新增刪除使用者</button></li>
           </ul>
           <div  v-if="userInfoPage === 0" class="backend_record">
-            <div v-for="(item, loginIndex) in loginNew" :key="loginIndex+'login'" class="commentArea">
+            <div v-for="(item, loginIndex) in loginNew.slice().reverse()" :key="loginIndex+'login'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 登入</span>
               <span class="commentTimeHistory">{{item.loginTime}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 1" class="backend_record">
-            <div v-for="(item, logoutIndex) in logoutNew" :key="logoutIndex+'logout'" class="commentArea">
+            <div v-for="(item, logoutIndex) in logoutNew.slice().reverse()" :key="logoutIndex+'logout'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 登出</span>
               <span class="commentTimeHistory">{{item.logoutTime}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 2" class="backend_record">
-            <div v-for="(item, userIndex) in userNew" :key="userIndex+'pw'" class="commentArea">
+            <div v-for="(item, userIndex) in userNew.slice().reverse()" :key="userIndex+'pw'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.employeeNumber}} 忘記密碼 驗證 
                 <span v-if="item.forgetPassword.verification === true">成功</span>
@@ -164,14 +165,14 @@
             </div>
           </div>
           <div  v-else-if="userInfoPage === 3" class="backend_record">
-            <div v-for="(item, userDetailModifyIndex) in userDetailModifyNew" :key="userDetailModifyIndex+'acds'" class="commentArea">
+            <div v-for="(item, userDetailModifyIndex) in userDetailModifyNew.slice().reverse()" :key="userDetailModifyIndex+'acds'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.modifyInfo}} {{item.modifyPerson}} 把 {{item.employeeNumber}} 由 {{item.old}} 改為 {{item.new}} </span>
               <span class="commentTimeHistory">{{item.time}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 4" class="backend_record">
-            <div v-for="(item, userListModifyIndex) in userListModifyNew" :key="userListModifyIndex+'mod'" class="commentArea">
+            <div v-for="(item, userListModifyIndex) in userListModifyNew.slice().reverse()" :key="userListModifyIndex+'mod'" class="commentArea">
               <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
               <span class="commentHistoryContent">{{item.modify}} 使用者 {{item.employeeNumber}} </span>
               <span class="commentTimeHistory">{{item.time}}</span>

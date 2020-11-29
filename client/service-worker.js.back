@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.787e3e785f533d9b6c942a28c4465f20.js"
+  "/precache-manifest.1c0bcb4f7ae29ecf9b3f4fe06a7dc09f.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -95,8 +95,8 @@ self.addEventListener('fetch', function (event) {
     } else if (event.request.url.match(re_stat)) {
       idbName = "stat";
     }
-    console.log(event.request.url);
-    console.log(targetApi[0]);
+    // console.log(event.request.url);
+    // console.log(targetApi[0]);
     console.log('[Service Worker] Match ' + event.request.url);
     event.respondWith(fetch(event.request)
       .then(function (res) {
@@ -110,8 +110,16 @@ self.addEventListener('fetch', function (event) {
        clonedRes.json()
            .then(function (data) {
                if (data.length === undefined) {
-                   writeData(idbName, data)
+                   if(idbName === 'competition') {
+                       for (var key in data.data) {
+                           writeData(idbName, data.data[key])
+                       }
+                   }
+                   else {
+                       writeData(idbName, data)
+                   }
                }
+               
                else {
                    for (var key in data) {
                        writeData(idbName, data[key])
