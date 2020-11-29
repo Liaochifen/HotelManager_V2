@@ -410,14 +410,14 @@ export default {
       // console.log(firebase.storage().ref('images/cat1.png'))
       
       // // var starsRef = storageRef.child('/cat1.png');
-      //抓圖片
-      // const storageRef = firebase.storage().ref('cat1.png');
-      // storageRef.getDownloadURL().then(function(url) {
-      //   console.log("url:"+url);
-      //   self.picture = url;
-      // }).catch(function(error) {
-      //   console.log(error);
-      // });
+      // 抓圖片
+      const storageRef = firebase.storage().ref('小新.jpg');
+      storageRef.getDownloadURL().then(function(url) {
+        console.log("url:"+url);
+        self.picture = url;
+      }).catch(function(error) {
+        console.log(error);
+      });
       //刪除
       // firebase.storage().ref('cat2.png').delete().then(function() {
       //   // File deleted successfully
