@@ -30,7 +30,8 @@
 import axios from "axios";
 import emailjs from "emailjs-com";
 import dateTime from "../assets/js/dateTime";
-
+import firebase from 'firebase/app';
+import 'firebase/storage';
 export default {
   name: "verification",
   data() {
@@ -49,7 +50,8 @@ export default {
           verification: true,
           verificationTime: ""
         }
-      }
+      },
+      picture:null
     };
   },
   mounted() {
@@ -101,23 +103,60 @@ export default {
     },
     confirm() {
       if (this.check == this.certification) {
-        
+        var self = this;
         // this.updateAccount();
         // this.loginRecord();
         var currentTime = new Date().getTime(); //取得從 1970-01-01 00:00:00 UTC 累計的毫秒數
         this.recordLogingTime();
         console.log("currentTime"+currentTime)
         // localStorage.setItem('token', JSON.stringify({id:this.userID,time:currentTime}));
-        localStorage.setItem(
-          "token",
-          JSON.stringify({
-            id: this.userAccountDetail._id,
-            employeeNumber:this.logingAccount.employeeNumber,
-            time: currentTime+1,
-            companyName: this.userAccountDetail.companyName,
-            limit:this.userAccountDetail.employeeLimit,
-          })
-        );
+        // localStorage.setItem(
+        //   "token",
+        //   JSON.stringify({
+        //     id: this.userAccountDetail._id,
+        //     employeeNumber:this.logingAccount.employeeNumber,
+        //     time: currentTime+1,
+        //     companyName: this.userAccountDetail.companyName,
+        //     limit:this.userAccountDetail.employeeLimit,
+        //   })
+        // );
+        // 抓圖片
+          const storageRef = firebase.storage().ref(this.userAccountDetail.picture);
+          storageRef.getDownloadURL().then(function(url) {
+            console.log("url:"+url);
+            self.picture = url;
+            localStorage.setItem(
+            "token",
+            JSON.stringify({
+              id: self.userAccountDetail._id,
+              employeeNumber:self.userAccountDetail.employeeNumber,
+              time: currentTime+1,
+              companyName: self.userAccountDetail.companyName,
+              limit:self.userAccountDetail.employeeLimit,
+              pictureUrl:self.picture,
+            })
+            );
+          }).catch(function(error) {
+            console.log(error);
+              const storageRef2 = firebase.storage().ref('004.png');
+              storageRef2.getDownloadURL().then(function(url) {
+                console.log("url:"+url);
+                self.picture = url;
+                 localStorage.setItem(
+                  "token",
+                  JSON.stringify({
+                    id: self.userAccountDetail._id,
+                    employeeNumber:self.userAccountDetail.employeeNumber,
+                    time: currentTime+1,
+                    companyName: self.userAccountDetail.companyName,
+                    limit:self.userAccountDetail.employeeLimit,
+                    pictureUrl:self.picture,
+                  })
+                  );
+              }).catch(function(error2) {
+                console.log(error2);
+              });
+          });
         this.forgetPasswordRecord(true);
         // this.$router.push({ name: "changePassword" });
         // window.location.reload();

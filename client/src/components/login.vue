@@ -34,6 +34,8 @@
 <script>
 import axios from "axios";
 import dateTime from "../assets/js/dateTime";
+import firebase from 'firebase/app';
+import 'firebase/storage';
 
 export default {
   name: "login",
@@ -47,6 +49,7 @@ export default {
         employeeNumber: "",
         loginTime: "",
       },
+      picture:null
     };
   },
   mounted() {
@@ -75,6 +78,7 @@ export default {
     logging: function () {
       console.log("login");
       let i;
+      var self = this;
       for (i = 0; i < this.accountInfo.length; i++) {
         if (
           this.userName == this.accountInfo[i].employeeNumber &&
@@ -85,17 +89,46 @@ export default {
           // this.loginRecord();
           //var userID = this.accountInfo[i]._id;
           var currentTime = new Date().getTime(); //取得從 1970-01-01 00:00:00 UTC 累計的毫秒數
-   
-          localStorage.setItem(
+
+          // 抓圖片
+          const storageRef = firebase.storage().ref(this.logingAccount.picture);
+          storageRef.getDownloadURL().then(function(url) {
+            console.log("url:"+url);
+            self.picture = url;
+            localStorage.setItem(
             "token",
             JSON.stringify({
-              id: this.logingAccount._id,
-              employeeNumber:this.logingAccount.employeeNumber,
+              id: self.logingAccount._id,
+              employeeNumber:self.logingAccount.employeeNumber,
               time: currentTime+1,
-              companyName: this.logingAccount.companyName,
-              limit:this.logingAccount.employeeLimit,
+              companyName: self.logingAccount.companyName,
+              limit:self.logingAccount.employeeLimit,
+              pictureUrl:self.picture,
             })
-          );
+            );
+            self.updateAccount();
+          }).catch(function(error) {
+            console.log(error);
+              const storageRef2 = firebase.storage().ref('004.png');
+              storageRef2.getDownloadURL().then(function(url) {
+                console.log("url:"+url);
+                self.picture = url;
+                 localStorage.setItem(
+                  "token",
+                  JSON.stringify({
+                    id: self.logingAccount._id,
+                    employeeNumber:self.logingAccount.employeeNumber,
+                    time: currentTime+1,
+                    companyName: self.logingAccount.companyName,
+                    limit:self.logingAccount.employeeLimit,
+                    pictureUrl:self.picture,
+                  })
+                  );
+                  self.updateAccount();
+              }).catch(function(error2) {
+                console.log(error2);
+              });
+          });
           
           if(this.logingAccount.employeeLimit === "一般使用者"){
             document.getElementById("accountManage").style.display = "none"; 
@@ -110,6 +143,17 @@ export default {
           document.getElementById("menu").style.visibility = "visible";
           document.getElementById("phoneMenu").style.visibility = "visible";
           // document.getElementById("breadcrumb").style.visibility = "visible";
+          // localStorage.setItem(
+          //   "token",
+          //   JSON.stringify({
+          //     id: this.logingAccount._id,
+          //     employeeNumber:this.logingAccount.employeeNumber,
+          //     time: currentTime+1,
+          //     companyName: this.logingAccount.companyName,
+          //     limit:this.logingAccount.employeeLimit,
+          //     pictureUrl:this.picture,
+          //   })
+          // );
           break;
         } else if (i == this.accountInfo.length - 1) {
           // alert('使用者帳號密碼錯誤!請重新登入')
@@ -136,45 +180,45 @@ export default {
         //   window.location.reload();
         // } //決定登入後要導到哪一頁
 
-        this.logingAccount.lastLoginDate = dateTime.recordDate();
-        this.logingAccount.lastLoginTime = dateTime.recordTime();
-        let updateUser = this.logingAccount;
-        let id = this.logingAccount._id;
-        axios
-        .put("https://hotelapi.im.nuk.edu.tw/api/account/" + id, updateUser)
-        .then((response) => {
-          console.log(response);
-          let record = "login";
-          let company = this.logingAccount.companyName;
-          this.login.employeeNumber = this.logingAccount.employeeNumber;
-          this.login.loginTime = dateTime.recordDate()+" "+ dateTime.recordTime();
-          console.log(this.login);
-          console.log(company);
-          axios
-            .put(
-              "https://hotelapi.im.nuk.edu.tw/api/history/" +
-                company +
-                "/" +
-                record,
-              this.login
-            )
-            .then((response2) => {
-              console.log(response2);
-              if (this.logingAccount.firstLogin) {
-              this.$router.push({ name: "changePassword" });
-              window.location.reload();
-              } else {
-                this.$router.push({ name: "competition" });
-                window.location.reload();
-              } //決定登入後要導到哪一頁
-              })
-            .catch((error) => {
-              console.log(error);
-            });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        // this.logingAccount.lastLoginDate = dateTime.recordDate();
+        // this.logingAccount.lastLoginTime = dateTime.recordTime();
+        // let updateUser = this.logingAccount;
+        // let id = this.logingAccount._id;
+        // axios
+        // .put("https://hotelapi.im.nuk.edu.tw/api/account/" + id, updateUser)
+        // .then((response) => {
+        //   console.log(response);
+        //   let record = "login";
+        //   let company = this.logingAccount.companyName;
+        //   this.login.employeeNumber = this.logingAccount.employeeNumber;
+        //   this.login.loginTime = dateTime.recordDate()+" "+ dateTime.recordTime();
+        //   console.log(this.login);
+        //   console.log(company);
+        //   axios
+        //     .put(
+        //       "https://hotelapi.im.nuk.edu.tw/api/history/" +
+        //         company +
+        //         "/" +
+        //         record,
+        //       this.login
+        //     )
+        //     .then((response2) => {
+        //       console.log(response2);
+        //       if (this.logingAccount.firstLogin) {
+        //       this.$router.push({ name: "changePassword" });
+        //       window.location.reload();
+        //       } else {
+        //         this.$router.push({ name: "competition" });
+        //         window.location.reload();
+        //       } //決定登入後要導到哪一頁
+        //       })
+        //     .catch((error) => {
+        //       console.log(error);
+        //     });
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        // });
       
     
     },
@@ -187,6 +231,7 @@ export default {
         .put("https://hotelapi.im.nuk.edu.tw/api/account/" + id, updateUser)
         .then((response) => {
           console.log(response);
+          this.loginRecord();
         })
         .catch((error) => {
           console.log(error);
@@ -209,6 +254,13 @@ export default {
         )
         .then((response) => {
           console.log(response);
+          if (this.logingAccount.firstLogin) {
+            this.$router.push({ name: "changePassword" });
+            window.location.reload();
+          } else {
+            this.$router.push({ name: "competition" });
+            window.location.reload();
+          } //決定登入後要導到哪一頁
         })
         .catch((error) => {
           console.log(error);
