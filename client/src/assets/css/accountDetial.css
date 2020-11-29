@@ -292,6 +292,9 @@ ul li .image-upload>img{
   #saveInfo,#cancleInfo{
     margin: 0;
   }
+  .accountDetailsBG{
+    display: flex;
+  }
 }
 @media (max-width: 450px) {
   .accountDetails li{
@@ -307,5 +310,11 @@ ul li .image-upload>img{
   .accountDetails ul li input,#limit{
     margin-left: 5%;
     width: 70%;
+  }
+  .accountDetailsBG{
+    flex-direction: column;
+  }
+  .DetailList{
+    width: 90%;
   }
 }

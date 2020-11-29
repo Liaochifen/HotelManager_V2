@@ -274,7 +274,6 @@ import axios from "axios";
 import $ from "../node_modules/jquery";
 import dateTime from "../src/assets/js/dateTime";
 import util from "./assets/js/utility";
-import firebase from 'firebase';
 
 export default {
   name: "App",
@@ -323,12 +322,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      const storageRef = firebase.storage().ref('小新.jpg');
-      storageRef.getDownloadURL().then(function(url) {
-        self.picture = url;
-      }).catch(function(error) {
-        console.log(error);
-      });
+      // const storageRef = firebase.storage().ref('小新.jpg');
+      // storageRef.getDownloadURL().then(function(url) {
+      //   self.picture = url;
+      // }).catch(function(error) {
+      //   console.log(error);
+      // });
       if ("indexedDB" in window) {
         console.log("Reading indexedDB...");
         util.readAllData("account").then(function (data) {
