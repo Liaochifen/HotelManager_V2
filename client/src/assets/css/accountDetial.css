@@ -129,15 +129,30 @@
   border-radius: 3px;
 }
 .accountDetails ul{
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  float: left;
   /* margin-top: 20px; */
 }
-.accountDetails li{
+.pictureList li{
+  padding: 20px 0px;
+  margin-bottom: 7px;
+}
+.DetailList li{
   padding: 20px 0px;
   margin-bottom: 0px;
   border-bottom: 0.3px solid rgb(236, 236, 236);
+}
+.pictureList{
+  margin-top: 15px;
+  width: 25%;
+  margin-left: 35px;
+}
+.pictureList .edit_btn{
+  margin-right: 40%;
+} 
+.DetailList {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
 }
 .accountDetails li:hover{
   cursor: pointer;
@@ -221,6 +236,12 @@
   margin-right: 20px;
   font-size: 16px;
   visibility: hidden;
+}
+ul li .image-upload>input {
+  display: none;
+}
+ul li .image-upload>img{
+  cursor: pointer;
 }
 @media (max-width: 768px) {
   .edit_btn img{

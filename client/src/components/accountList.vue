@@ -252,6 +252,7 @@ export default {
         lastLoginDate: "New User",
         lastLoginTime: "",
         firstLogin: true,
+        picture:"cat1.png",
       },
       columns: [
         {
@@ -722,6 +723,7 @@ export default {
       this.newAccount.lastLoginDate = "New User";
       this.newAccount.lastLoginTime = "";
       this.newAccount.firstLogin = true;
+      this.newAccount.picture = "cat1.png";
     },
     open: function () {
       document.getElementById("employeeNumber").required = true;
