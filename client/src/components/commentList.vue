@@ -19,6 +19,7 @@
           <img src="../assets/icon/edit.png"/>
         </button>
         <button @click="clearALL()" class="clearall">全部清除</button>
+        <button @click="openfilter_sort()" class="filter_sort_phone">分類</button>
       </div>
       <div class="edit">
         <div class="edit_flex">
@@ -109,7 +110,7 @@
         <div class="clear"></div>
     </div>
     <div class="dataArea">
-        <div class="filter">
+        <div class="filter" id="filter_sort_phone">
           <p class="filterP">分類</p>
           <ul>
             <li class="all">
@@ -1085,6 +1086,16 @@ export default {
         $('#comment_filter_phone').show()
       }
       
+    },
+    openfilter_sort(){
+      event.stopPropagation();
+      $("#filter_sort_phone").slideToggle("normal");
+      $(document).click(function (event) {
+        var area = $("#filter_sort_phone"); // 設定目標區域
+        if (!area.is(event.target) && area.has(event.target).length === 0) {
+          $("#filter_sort_phone").hide(); // 淡出消失
+        }
+      });
     },
     
   }
