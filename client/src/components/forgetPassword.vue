@@ -5,13 +5,8 @@
       <div class="clear"></div>
       <h1>忘記密碼</h1>
       <form v-on:submit.prevent="forget">
-        <label>帳號&nbsp;:&nbsp;</label>
-        <input
-          type="text"
-          v-model="employeeNumber"
-          required
-          placeholder="請輸入帳號"
-        />
+        <label>帳號</label>
+        <p><input type="text"  v-model="employeeNumber"  required  placeholder="請輸入帳號"/></p>
         <div class="clear"></div>
         <button type="submit">確&nbsp;認</button>
       </form>

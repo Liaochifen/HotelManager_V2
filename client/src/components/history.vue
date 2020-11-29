@@ -212,7 +212,7 @@
             <span v-else-if="personalFavFilter.length !== 0">
               <div v-for="(item, index) in personalFavFilter" :key="index+'favPer'" class="commentArea">
                 <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
-                <span v-if="item.modify === '移除'">
+                <span v-if="item.modify === '取消'">
                   <span class="commentHistoryContent">將{{item.company}}從我的最愛中{{item.modify}}</span>
                   <span class="commentTimeHistory">{{item.time}}</span>
                 </span>

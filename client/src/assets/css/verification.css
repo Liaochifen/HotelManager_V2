@@ -38,7 +38,7 @@
 
 .page button{
     all: unset;
-    width: 40px;
+    width: 50px;
     margin: 15% 32%;
     font-size: 16px;
     height: 30px;
@@ -50,6 +50,9 @@
     letter-spacing: 3px;
     text-align: center;
 }
+.page .cus{
+    width: 80px;
+}
 .send{
     float: left;
     margin-top: 40px;
@@ -58,10 +61,10 @@
 .send input{
     border-right:none ;
 }
-.send button{
+/* .send button{
     border-left:none ;
     height: 32px;
-}
+} */
 form button{
     text-align: center;
 }
