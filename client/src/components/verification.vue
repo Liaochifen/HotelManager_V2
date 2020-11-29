@@ -7,7 +7,7 @@
       <div class="clear"></div>
       <div class="send">
         <input type="text" readonly="true" v-model="userAccountDetail.email" />
-        <button v-on:click="sendEmail()">重新寄送</button>
+        <button v-on:click="sendEmail()" class="cus">重新寄送</button>
       </div>
       <div class="clear"></div>
       <form v-on:submit.prevent="confirm">

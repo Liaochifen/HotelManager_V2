@@ -51,6 +51,7 @@
       <button id="" v-on:click="findOther(0)">上一則</button>
       <button id="" v-on:click="findOther(1)">下一則</button>   
     </div> -->
+    <button id="logout_phone" @click="logout_phone()">登出</button>
     </div>
 
 <!-- upload測試 -->
@@ -180,11 +181,17 @@ export default {
       imageData:null,
       picture:null,
       uploadValue:0,
-      reload:false
+      reload:false,
+      window_width: document.documentElement.clientWidth,
+
     };
   },
   mounted() {
     let self = this;
+    var logining = localStorage.getItem("token");
+    var loginData = JSON.parse(logining);
+    var selfornot = loginData.id
+    
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
       .then((response) => {
@@ -232,6 +239,24 @@ export default {
           }
         });
       }
+      var _this = this
+      window.onresize = function () {
+        _this.window_width = document.documentElement.clientWidth 
+      }
+
+      if(self.userID === selfornot && document.documentElement.clientWidth < 768){
+        $('#logout_phone').css('display', 'block')
+      }
+
+  },
+  watch: {
+    'window_width': function (val) { 
+      if(val > 768){
+        this.columns = this.columns_computer
+      }else{
+        this.columns = this.columns_phone
+      }
+    }
   },
   methods: {
     updateAccount: function () {

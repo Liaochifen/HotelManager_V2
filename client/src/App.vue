@@ -2,79 +2,25 @@
   <div id="app" class="warp">
     <div class="header">
       <div class="headerContent">
-        <!-- <a class="showMenu" href="#"><img src="https://fakeimg.pl/15x15/" alt=""></a> -->
-        <!-- <img class="companyImg" src="https://fakeimg.pl/50x50/" alt=""> -->
-        <!-- <div class="company">
-                <p class="title">旅館評論管理系統</p>
-                <div class="clear"></div>
-            </div> -->
         <div class="menu" id="menu" >
           <p class="system">Hotel</p>
           <p class="system">System</p>
           <p class="functionList">功能列</p>
           <ul>
-            <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
             <li id="accountManage">
-              <router-link :to="{ name: 'accountList' }"
-                ><img class="icons"
-                  src="./assets/icon/accountlist.png"
-                  alt=""
-                /><span>帳號管理</span></router-link
+              <router-link :to="{ name: 'accountList' }"><img class="icons" src="./assets/icon/accountlist.png"  alt=""/><span>帳號管理</span></router-link
               >
             </li>
-            <!-- <img src="./assets/icon/comment.svg" class="icons" alt=""> -->
             <li> 
-              <router-link
-                :to="{
-                  name: 'competition',
-                }"
-                ><img class="icons"
-                  src="./assets/icon/comment.png"
-                  alt=""
-                /><span>評論管理</span></router-link
+              <router-link :to="{ name: 'competition', }" ><img class="icons"  src="./assets/icon/comment.png"  alt=""/><span>評論管理</span></router-link
               >
-              <!-- <router-link
-                :to="{
-                  name: 'competition'
-                }"
-                ><img
-                  src="https://fakeimg.pl/15x15/"
-                  alt=""
-                />評論管理</router-link
-              > -->
             </li>
             <li id="statisticalResults">
-              <router-link
-                :to="{
-                  name: 'statistic',
-                  params: { collections: companyName },
-                }"
-                ><img class="icons"
-                  src="./assets/icon/statistics.png"
-                  alt=""
-                /><span>統計結果</span></router-link
-              >
+              <router-link :to="{ name: 'statistic', params: { collections: companyName }, }">
+                <img class="icons"  src="./assets/icon/statistics.png"  alt=""/><span>統計結果</span></router-link>
             </li>
-            <!-- <li>
-              <router-link
-                :to="{
-                  name: 'competition',
-                  params: { collections: companyName },
-                }"
-                ><img
-                  src="https://fakeimg.pl/15x15/"
-                  alt=""
-                />競爭對手</router-link
-              >
-            </li> -->
-            <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
             <li>
-              <router-link
-                :to="{ name: 'history', params: { company: companyName } }"
-                ><img  class="icons"
-                  src="./assets/icon/history.png"
-                  alt=""
-                /><span>歷史紀錄</span></router-link
+              <router-link :to="{ name: 'history', params: { company: companyName } }"><img  class="icons" src="./assets/icon/history.png"  alt=""  /><span>歷史紀錄</span></router-link
               >
             </li>
             <div class="clear"></div>
@@ -118,19 +64,6 @@
                 />統計結果</router-link
               >
             </li>
-            <!-- <li>
-              <router-link
-                :to="{
-                  name: 'competition',
-                  params: { collections: companyName },
-                }"
-                ><img
-                  src="https://fakeimg.pl/15x15/"
-                  alt=""
-                />競爭對手</router-link
-              >
-            </li> -->
-            <!-- <img src="./assets/icon/info9.svg" class="icons" alt=""> -->
             <li>
               <router-link
                 :to="{ name: 'history', params: { company: companyName } }"
@@ -157,15 +90,6 @@
     </div>
     <div class="content">
       <div class="contentTop">
-        <!-- <a id="menubtn" class="showMenu" href="#"
-          ><img src="https://fakeimg.pl/15x15/" alt=""
-        /></a>
-        <div class="breadcrumb" id="breadcrumb">
-          <a class="breadcrumb-item" href="#">首頁</a>
-          <a class="breadcrumb-item" href="/commentlist">評論管理</a>
-          <a href="#">評論列表</a>
-          <div class="clear"></div>
-        </div> -->
         <div class="personalInfo" id="personalInfo">
           <img
             class="photo"
@@ -201,7 +125,6 @@
                 </button>
               </li>
             </ul>
-                <!-- <img src="https://fakeimg.pl/20x20/" alt="" /> -->
                 <button v-on:click="logouted()" class="bigheadLogout">登出</button>
           </div>
           <div class="clear"></div>
@@ -360,6 +283,8 @@ export default {
       $("#accountManagePhone").show();
       document.getElementById("limitWord").innerHTML = " ";
       document.getElementById("menu").style.visibility = "hidden";
+      $(".header").css('display', 'none');
+      $(".contentTop").css('display', 'none');
       document.getElementById("personalInfo").style.visibility = "hidden";
       document.getElementById("phoneMenu").style.visibility = "hidden";
       // document.getElementById("breadcrumb").style.visibility = "hidden";
@@ -390,6 +315,8 @@ export default {
       $("#accountManagePhone").show();
       document.getElementById("limitWord").innerHTML = " ";
       document.getElementById("menu").style.visibility = "hidden";
+      $(".header").css('display', 'none');
+      $(".contentTop").css('display', 'none');
       // document.getElementById("breadcrumb").style.visibility = "hidden";
       document.getElementById("personalInfo").style.visibility = "hidden";
       document.getElementById("phoneMenu").style.visibility = "hidden";
@@ -596,6 +523,7 @@ a {
   width: 10.5%;
   height: 100vh;
   float: left;
+  display: block;
 }
 
 .footer {
@@ -899,6 +827,7 @@ a {
 .left_menu {
   display: none;
 }
+
 @media (max-width: 768px) {
   .contentCenter{
     background: white;

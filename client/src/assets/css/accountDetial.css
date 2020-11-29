@@ -219,9 +219,13 @@
   padding: 10px 20px;
   color: white;
   letter-spacing: 3px;
+  margin-top: 30px;
   margin-right: 50px;
   font-size: 16px;
   visibility: hidden;
+}
+#logout_phone{
+  display: none;
 }
 #cancleInfo{
   all: unset;

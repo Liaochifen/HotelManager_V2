@@ -196,7 +196,7 @@ export default {
         modify: '',
         time: '',
         new: ''
-      }
+      },
       // addLabel: '',
       // editLabel: '',
       // currentPage: 1,
@@ -211,6 +211,7 @@ export default {
       self.companyName = loginData.companyName;
       self.employeeNumber = loginData.employeeNumber
     }
+    
     axios
       .get(
         "https://hotelapi.im.nuk.edu.tw/api/commentDetails/" +
@@ -272,7 +273,9 @@ export default {
         }
       });
     }
+    
   },
+  
   methods: {
     // getTags: function () {
     //   let self = this
