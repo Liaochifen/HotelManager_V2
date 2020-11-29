@@ -12,13 +12,14 @@
     <div class="history_list_phone">
       <button @click="changePage(0)" class="pageButton0 pageButtonStart">評論動態</button>
       <button @click="changePage(1)" class="pageButton1">個人動態</button>
-      <button @click="changePage(2)" class="pageButton2" id="userInfoRecord">帳號紀錄</button>
+      <button @click="changePage(2)" class="pageButton2 phone_none" id="userInfoRecord_phone">紀錄</button>
+      <button @click="history_filter_phone()" class="history_filter_phone"><img src="../assets/icon/filter.png"/></button>
     </div>
     <div class="clear"></div>
     <div class="historydataArea">
       <template>
         <span v-if="page === 0">
-          <ul>
+          <ul class="history_inner__phone">
             <li class="his_comment"><button @click="publicManage(0)" >評論狀態動態</button></li>
             <li class="his_tags"><button @click="publicManage(1)" >評論標籤動態</button></li>
             <!-- <li class="his_reply"><button @click="publicManage(2)" >評論回覆動態</button></li> -->
@@ -71,7 +72,7 @@
           <!-- </template> -->
         </span>
         <span v-else-if="page === 1">
-          <ul>
+          <ul class="history_inner__phone">
             <li><button @click="personalManage(0)">評論狀態動態</button></li>
             <li><button @click="personalManage(1)">評論標籤動態</button></li>
             <li><button @click="personalManage(2)">我的最愛動態</button></li>
@@ -132,7 +133,7 @@
           </div>
         </span>
         <span v-else-if="page === 2" >
-          <ul>
+          <ul class="history_inner__phone">
             <li><button  v-on:click="manager(0)">登入</button></li>
             <li><button  v-on:click="manager(1)">登出</button></li>
             <li><button  v-on:click="manager(2)">忘記密碼</button></li>
@@ -311,6 +312,7 @@ export default {
 
     if(JSON.parse(logining).limit === '後台管理者'){
       document.getElementById('userInfoRecord').style.visibility = 'visible';
+      document.getElementById('userInfoRecord_phone').style.visibility = 'visible';
     }
     // axios
     //   .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
@@ -462,7 +464,16 @@ export default {
       //   $('.his_tags').removeClass('bg')
       //   $('.his_reply').addClass('bg')
       // }
-    }
+    },history_filter_phone(){
+      event.stopPropagation();
+      $(".history_inner__phone").slideToggle("normal");
+      $(document).click(function (event) {
+        var area = $(".history_inner__phone"); // 設定目標區域
+        if (!area.is(event.target) && area.has(event.target).length === 0) {
+          $(".history_inner__phone").hide(); // 淡出消失
+        }
+      });
+    },
   },
 };
 </script>
