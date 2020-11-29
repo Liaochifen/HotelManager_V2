@@ -274,9 +274,6 @@ import axios from "axios";
 import $ from "../node_modules/jquery";
 import dateTime from "../src/assets/js/dateTime";
 import util from "./assets/js/utility";
-// import firebase from 'firebase/app';
-// import 'firebase/storage';
-
 
 export default {
   name: "App",

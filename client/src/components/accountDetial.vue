@@ -410,14 +410,14 @@ export default {
       // console.log(firebase.storage().ref('images/cat1.png'))
       
       // // var starsRef = storageRef.child('/cat1.png');
-      //抓圖片
-      // const storageRef = firebase.storage().ref('cat1.png');
-      // storageRef.getDownloadURL().then(function(url) {
-      //   console.log("url:"+url);
-      //   self.picture = url;
-      // }).catch(function(error) {
-      //   console.log(error);
-      // });
+      // 抓圖片
+      const storageRef = firebase.storage().ref('小新.jpg');
+      storageRef.getDownloadURL().then(function(url) {
+        console.log("url:"+url);
+        self.picture = url;
+      }).catch(function(error) {
+        console.log(error);
+      });
       //刪除
       // firebase.storage().ref('cat2.png').delete().then(function() {
       //   // File deleted successfully
@@ -433,10 +433,11 @@ export default {
       console.log("uploading");
       console.log(this.imageData);
       const storageRef = firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
-      storageRef.on(`state_changed`,snapshot=>{
-        this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-      },error=>{console.log(error.message)},
-      ()=>{this.uploadValue = 100;
+      storageRef.on(`state_changed`, snapshot=>{
+        this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
+      }, error => { console.log(error.message) },
+      () => { 
+        this.uploadValue = 100;
         storageRef.snapshot.ref.getDownloadURL().then((url)=> {
           console.log("url:"+url);
           this.picture = url ; 
@@ -444,7 +445,7 @@ export default {
         })
       });
       //刪除舊照片
-      firebase.storage().ref(oldPicture).delete().then(function() {
+      firebase.storage().ref().child(oldPicture).delete().then(function() {
         console.log("sucessful");
       }).catch(function(error) {
         console.log(error);

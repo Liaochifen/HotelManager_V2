@@ -112,6 +112,7 @@ export default {
           "token",
           JSON.stringify({
             id: this.userAccountDetail._id,
+            employeeNumber:this.logingAccount.employeeNumber,
             time: currentTime+1,
             companyName: this.userAccountDetail.companyName,
             limit:this.userAccountDetail.employeeLimit,

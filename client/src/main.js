@@ -66,15 +66,15 @@ Vue.use(VueGoodTablePlugin);
 Vue.use(ElementUI);
 library.add(faEye, faEyeSlash);
 
-var firebaseConfig = {
-  apiKey: "AIzaSyC0K00_BSYk1JPqoooTxf2v0VsnoOUWF_A",
-  authDomain: "hotel-system-image.firebaseapp.com",
-  databaseURL: "https://hotel-system-image.firebaseio.com",
-  projectId: "hotel-system-image",
-  storageBucket: "hotel-system-image.appspot.com",
-  messagingSenderId: "393061520511",
-  appId: "1:393061520511:web:7efaaa3644f0a779ca9b4a",
-  measurementId: "G-M3TTT5VVYX"
+const firebaseConfig = {
+    apiKey: "AIzaSyDDC3Jb0xT2yLlUu6pxH4J7H5OsWM3CTvE",
+    authDomain: "hotelmanager-848af.firebaseapp.com",
+    databaseURL: "https://hotelmanager-848af.firebaseio.com",
+    projectId: "hotelmanager-848af",
+    storageBucket: "hotelmanager-848af.appspot.com",
+    messagingSenderId: "860194928923",
+    appId: "1:860194928923:web:c911a34660c8d079e63bbe",
+    measurementId: "G-HXQ9KSSNG6"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -119,7 +119,7 @@ router.beforeEach((to, from, next) => {
         .then((responseData) => {
           localStorage.removeItem('token');
           console.log(responseData);
-          alert('連線愈時，請重新登入');
+          alert('連線逾時，請重新登入');
           next('/login');
           window.location.reload();
         }).catch((error2) => {
