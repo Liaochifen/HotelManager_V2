@@ -54,6 +54,7 @@
     </div> -->
     <!-- <button id="logout_phone" @click="logout_phone()">登出</button> -->
     </div>
+    <button class="edit_phone" @click="edit1()"><img src="../assets/icon/edit.png"></button>
 
 <!-- upload測試 -->
     <!-- <div class="upload">
@@ -307,6 +308,20 @@ export default {
       }
       document.getElementById("saveInfo").style.visibility = "visible";
       document.getElementById("cancleInfo").style.visibility = "visible";
+    },
+    edit1: function(){
+        document.getElementById("department").removeAttribute("readOnly");  
+        document.getElementById("department").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+        document.getElementById("userName").removeAttribute("readOnly");
+        document.getElementById("userName").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+        document.getElementById("email").removeAttribute("readOnly");
+        document.getElementById("email").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+         document.getElementById("password").removeAttribute("readOnly");
+        document.getElementById("password").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+        document.getElementById("limit").removeAttribute("disabled", false);
+        document.getElementById("limit").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 35px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+        document.getElementById("saveInfo").style.visibility = "visible";
+        document.getElementById("cancleInfo").style.visibility = "visible";
     },
     confirm:function(){
       if(this.oldUserName != this.userAccountDetail.userName){
