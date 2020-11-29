@@ -118,7 +118,7 @@ router.beforeEach((to, from, next) => {
         .then((responseData) => {
           localStorage.removeItem('token');
           console.log(responseData);
-          alert('連線愈時，請重新登入');
+          alert('連線逾時，請重新登入');
           next('/login');
           window.location.reload();
         }).catch((error2) => {
