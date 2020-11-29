@@ -247,6 +247,8 @@ export default {
 
       if(self.userID === selfornot && document.documentElement.clientWidth < 768){
         $('#logout_phone').css('display', 'block')
+      }else{
+        $('#logout_phone').css('display', 'none')
       }
 
   },
@@ -540,7 +542,7 @@ export default {
     },
     deleteOldPicture(oldPicture){
       var self = this;
-      if(oldPicture != '004.png'){
+      if(oldPicture !== '004.png' || oldPicture.length!==0){
         firebase.storage().ref().child(oldPicture).delete().then(function() {
           console.log("sucessful");
           self.updateAccount();
@@ -554,7 +556,7 @@ export default {
       
     },
     logout_phone(){
-
+      
     }
     // findOther: function(value){
     //   let self = this
