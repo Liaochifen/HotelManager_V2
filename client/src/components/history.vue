@@ -489,7 +489,6 @@ export default {
       //   $('.his_tags').removeClass('bg')
       //   $('.his_reply').addClass('bg')
       // }
-<<<<<<< HEAD
     },
     getPicture(){
       var self = this;
@@ -511,9 +510,8 @@ export default {
     },
     getPictureSrc(img){
       return this.userPicture[img];
-    }
-=======
-    },history_filter_phone(){
+    },
+    history_filter_phone(){
       event.stopPropagation();
       $(".history_inner__phone").slideToggle("normal");
       $(document).click(function (event) {
@@ -523,8 +521,11 @@ export default {
         }
       });
     },
->>>>>>> 50e6bfda4811c219da0e5c4a4a965de226772a20
-  },
-};
+
+    },
+    
+
+  };
+
 </script>
 <style scoped src= '../assets/css/history.css'></style>
