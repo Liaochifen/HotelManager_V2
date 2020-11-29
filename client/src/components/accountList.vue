@@ -441,8 +441,6 @@ export default {
             console.log("From cache", data);
             self.allHtols = data;
             for (var i in self.allHtols) {
-              console.log(self.allHtols[i].companyName);
-              console.log(self.logingAccount.companyName);
               if(self.allHtols[i].companyName === self.logingAccount.companyName){
                 self.hotels.push(self.allHtols[i]);
               }

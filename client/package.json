@@ -21,6 +21,7 @@
     "firebase": "^8.1.1",
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
+    "protobufjs": "~6.10.2",
     "register-service-worker": "^1.7.1",
     "svg-pan-zoom": "^3.6.1",
     "svgmap": "^1.5.0",
