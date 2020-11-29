@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-    <div class="MultiFilterArea">
+    <div id="MultiFilterArea" class="MultiFilterArea">
         <div slot="table-actions" class="slot_div">
           <template>
             <el-select v-model="typeChoosen"  placeholder="選擇評論類型"  @change="handleCheckedChange(0)" class="custom_el_select">
@@ -481,7 +481,7 @@ export default {
       var logining = localStorage.getItem("token");
       var loginData = JSON.parse(logining);
       self.companyName = loginData.companyName;
-      self.employeeNumber = loginData.id
+      self.employeeNumber = loginData.employeeNumber
     }
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/comment/" + self.companyName)
@@ -798,6 +798,8 @@ export default {
       $("#reportrange span").html(
         start.format("YYYY-MM-DD") + " - " + end.format("YYYY-MM-DD")
       );
+      $("#reportrange").css({ width: "160px" });
+      $("#reportrange span").css({ "font-size": "12px", width: "170px" });
       self.start = start;
       self.end = end;
       self.AllfilterFunction()

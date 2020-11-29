@@ -196,7 +196,7 @@ export default {
         modify: '',
         time: '',
         new: ''
-      }
+      },
       // addLabel: '',
       // editLabel: '',
       // currentPage: 1,
@@ -209,8 +209,9 @@ export default {
       var logining = localStorage.getItem("token");
       var loginData = JSON.parse(logining);
       self.companyName = loginData.companyName;
-      self.employeeNumber = loginData.id
+      self.employeeNumber = loginData.employeeNumber
     }
+    
     axios
       .get(
         "https://hotelapi.im.nuk.edu.tw/api/commentDetails/" +
@@ -272,7 +273,9 @@ export default {
         }
       });
     }
+    
   },
+  
   methods: {
     // getTags: function () {
     //   let self = this

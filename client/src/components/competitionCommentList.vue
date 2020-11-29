@@ -66,14 +66,16 @@
           <li class="all">
             <button @click="tagFilter('all')" :value="oneTag">
               <div class="labelDiv">
-                <span>全部</span><span class="num" >(1000)</span>
+                <!-- <span class="num" >(1000)</span> -->
+                <span>全部</span>
               </div>
             </button>
           </li>
           <li v-for="item in labelchoose" :key="item.field" :class="item.field">
             <button @click="tagFilter(item.field)">
               <div class="labelDiv">
-                <span>{{ item.label }}</span><span class="num">(1000)</span>
+                <!-- <span class="num">(1000)</span> -->
+                <span>{{ item.label }}</span>
               </div>
             </button>
           </li>
@@ -373,6 +375,7 @@ export default {
       $("#reportrange span").html("時間");
       return self.competitionCommentList;
     },
+    
     openFilter(){
       // let self = this;
       event.stopPropagation();
@@ -469,6 +472,8 @@ export default {
       $("#reportrange span").html(
         start.format("YYYY/MM/DD") + " - " + end.format("YYYY/MM/DD")
       );
+      $("#reportrange").css({ width: "160px" });
+      $("#reportrange span").css({ "font-size": "12px", width: "170px" });
       self.start = start;
       self.end = end;
       self.AllfilterFunction()

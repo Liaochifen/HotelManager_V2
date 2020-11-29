@@ -219,9 +219,13 @@
   padding: 10px 20px;
   color: white;
   letter-spacing: 3px;
+  margin-top: 30px;
   margin-right: 50px;
   font-size: 16px;
   visibility: hidden;
+}
+#logout_phone{
+  display: none;
 }
 #cancleInfo{
   all: unset;
@@ -294,7 +298,26 @@ ul li .image-upload>img{
   }
   .accountDetailsBG{
     display: flex;
+    flex-direction: column;
+    align-items: center;
   }
+  .pictureList{
+    margin: 0 0 30px;
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+  .pictureList .photo_edit_phone{
+    margin: 0 0 0 100px;
+    padding: 0;
+    text-align: center;
+  }
+  .pictureList .account_photo_phone img{
+    margin-right: auto;
+    margin-left: auto;
+    /* padding: 0 auto; */
+  }
+
 }
 @media (max-width: 450px) {
   .accountDetails li{
@@ -312,7 +335,7 @@ ul li .image-upload>img{
     width: 70%;
   }
   .accountDetailsBG{
-    flex-direction: column;
+    
   }
   .DetailList{
     width: 90%;

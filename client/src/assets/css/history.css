@@ -22,6 +22,9 @@
 #userInfoRecord{
     visibility: hidden;
 }
+#userInfoRecord_phone{
+    visibility: hidden;
+}
 .historydataArea{
     box-shadow: 0.5px 0.5px 1px #adadad;
     
@@ -60,6 +63,16 @@
 }
 .historydataArea ul li button:active{
     all: unset;
+}
+.customer_num img{
+    margin-right: 20px;
+}
+.customer_num span{
+    color: green;
+}
+.custom_modify{
+    color: gray;
+    font-size: 14px;
 }
 .bg{
     color: rgb(10, 145, 10);
@@ -113,6 +126,11 @@
     .page{
         /* margin-left: -36px; */
     } 
+    .historydataArea{
+        margin-top: 76px;
+        padding-bottom: 39px;
+        box-shadow: none;
+    }
     .historyContent{
         margin: 0;
         width: 100%;
@@ -124,9 +142,12 @@
     .history_list_phone{
         width: 100%;
         position: fixed;
-        top: 39px;
+        top: 40px;
         display: flex;
         justify-content: space-around;
+        background: white;
+        z-index: 1;
+        /* padding-bottom: 39px; */
     }
     .history_list_phone button{
         background: white;
@@ -137,7 +158,57 @@
         padding: 10px 0;
         flex: 1;
     }
-    .public_record{
+    .public_record,.personal_record,.backend_record{
         margin: 0;
+        height: 100%;
+        max-height: none;
+    }
+    .historydataArea .history_inner__phone{
+        display: none;
+        position: fixed;
+        z-index: 1;
+        bottom: 39px;
+        /* background: #000; */
+        border-radius: unset;
+        box-shadow: 0 -2px 4px rgb(148, 146, 146);
+        height: unset;
+        margin: 0;
+    }
+    .historydataArea .history_inner__phone li{
+        width: 100%;
+    }
+    .commentArea{
+        /* display: flex; */
+        /* flex-direction: column; */
+        padding-bottom: 30px;
+        padding-left:60px;
+    }
+    .commentTimeHistory{
+        bottom: 6%;
+        right: 2%;
+    }
+    .commentHistoryContent{
+        width: 60%;
+        line-height: 22px;
+    }
+    .customer_num img{
+        position: absolute;
+        left: 5%;
+        top: 40%;
+        margin: 0;
+    }
+    .history_list_phone .history_filter_phone{
+        position: fixed;
+        top: 8px;
+        right: 5%;
+        padding: 0;
+        margin: 0;
+        border: none;
+        outline: unset;
+        display: flex;
+        flex-direction: column;
+    }
+    .history_list_phone .history_filter_phone img{
+        width: 25px;
     }
 }
