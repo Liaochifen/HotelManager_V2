@@ -3,6 +3,7 @@
     <div class="contentCenter">
       <div class="page">
         <span>帳號詳細內容</span>
+        <button id="logout_phone" @click="logout_phone()">登出</button>
       </div>
     </div>
     <div class="accountDetails_outsidediv">
@@ -51,7 +52,7 @@
       <button id="" v-on:click="findOther(0)">上一則</button>
       <button id="" v-on:click="findOther(1)">下一則</button>   
     </div> -->
-    <button id="logout_phone" @click="logout_phone()">登出</button>
+    <!-- <button id="logout_phone" @click="logout_phone()">登出</button> -->
     </div>
 
 <!-- upload測試 -->
@@ -552,6 +553,9 @@ export default {
       }
       
     },
+    logout_phone(){
+
+    }
     // findOther: function(value){
     //   let self = this
     //   if(value === 1){

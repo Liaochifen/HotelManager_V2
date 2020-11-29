@@ -35,9 +35,10 @@
                   <p>無任何記錄</p>
                 </span>
                 <span v-else-if="commentFilter.length !== 0">
-                  <div v-for="(item, index) in commentFilter" :key="index+'con'" class="commentArea">
+                  <div v-for="(item, index) in commentFilter.slice().reverse()" :key="index+'con'" class="commentArea">
                   <!-- 放大頭照 -->
-                    <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+
+                    <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px" alt=""/><span>{{item.employeeNumber}}</span></span>
                     <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
                     <!-- 手機板變成在評論底下，縮小 -->
                     <span class="commentTimeHistory">{{item.time}}</span>
@@ -49,8 +50,8 @@
                   <p>無任何記錄</p>
                 </span>
                 <span v-else-if="tagsFilter.length !== 0">
-                  <div v-for="(item, index1) in tagsFilter" :key="index1+'tag'" class="commentArea">
-                    <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+                  <div v-for="(item, index1) in tagsFilter.slice().reverse()" :key="index1+'tag'" class="commentArea">
+                    <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px" alt=""/><span>{{item.employeeNumber}}</span></span>
                     <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                     <span class="commentTimeHistory">{{item.time}}</span>
                   </div>
@@ -83,7 +84,8 @@
             </span>
             <span v-else-if="personalCommentFilter.length !== 0">
               <div v-for="(item, index) in personalCommentFilter" :key="index+'conPer'" class="commentArea">
-                <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+
+                <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
               </div>
@@ -94,8 +96,8 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalTagFilter.length !== 0">
-              <div v-for="(item, index) in personalTagFilter" :key="index+'tagPer'" class="commentArea">
-                <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+              <div v-for="(item, index) in personalTagFilter.slice().reverse()" :key="index+'tagPer'" class="commentArea">
+                <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px" alt=""/><span>{{item.employeeNumber}}</span></span>
                     <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
               </div>
@@ -106,8 +108,8 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalFavFilter.length !== 0">
-              <div v-for="(item, index) in personalFavFilter" :key="index+'favPer'" class="commentArea">
-                <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+              <div v-for="(item, index) in personalFavFilter.slice().reverse()" :key="index+'favPer'" class="commentArea">
+                <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span v-if="item.modify === '取消'">
                   <span class="commentHistoryContent">將<router-link :to="{ name: 'competitionCommentList', params: { collections: item.company }}">{{item.hotelChineseName}}</router-link>從我的最愛中{{item.modify}}</span>
                   <span class="commentTimeHistory">{{item.time}}</span>
@@ -124,8 +126,9 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="replyFIlter.length !== 0">
-              <div v-for="(item, index1) in replyFIlter" :key="index1+'tag'" class="commentArea">
-                <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+              <div v-for="(item, index1) in replyFIlter.slice().reverse()" :key="index1+'tag'" class="commentArea">
+
+                <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px" alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>的回覆狀態從"{{item.old}}"{{item.modify}}成"{{item.new}}"</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
               </div>
@@ -145,21 +148,24 @@
           </ul>
           <div  v-if="userInfoPage === 0" class="backend_record">
             <div v-for="(item, loginIndex) in loginNew.slice().reverse()" :key="loginIndex+'login'" class="commentArea">
-              <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+
+              <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
               <span class="commentHistoryContent">登入</span>
               <span class="commentTimeHistory">{{item.loginTime}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 1" class="backend_record">
             <div v-for="(item, logoutIndex) in logoutNew.slice().reverse()" :key="logoutIndex+'logout'" class="commentArea">
-              <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+
+              <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
               <span class="commentHistoryContent">登出</span>
               <span class="commentTimeHistory">{{item.logoutTime}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 2" class="backend_record">
             <div v-for="(item, userIndex) in userNew.slice().reverse()" :key="userIndex+'pw'" class="commentArea">
-              <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+
+              <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
               <span class="commentHistoryContent">忘記密碼 驗證 
                 <span v-if="item.forgetPassword.verification === true">成功</span>
                 <span v-else>失敗</span>
@@ -169,14 +175,16 @@
           </div>
           <div  v-else-if="userInfoPage === 3" class="backend_record">
             <div v-for="(item, userDetailModifyIndex) in userDetailModifyNew.slice().reverse()" :key="userDetailModifyIndex+'acds'" class="commentArea">
-              <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+
+              <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/></span>
               <span class="commentHistoryContent"><span class="custom_modify">{{item.modifyInfo}} </span>{{item.modifyPerson}} 把 {{item.employeeNumber}} 由 {{item.old}} 改為 {{item.new}} </span>
               <span class="commentTimeHistory">{{item.time}}</span>
             </div>
           </div>
           <div  v-else-if="userInfoPage === 4" class="backend_record">
             <div v-for="(item, userListModifyIndex) in userListModifyNew.slice().reverse()" :key="userListModifyIndex+'mod'" class="commentArea">
-              <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+
+              <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
               <span class="commentHistoryContent">{{item.modify}} 使用者 {{item.employeeNumber}} </span>
               <span class="commentTimeHistory">{{item.time}}</span>
             </div>
@@ -186,8 +194,9 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalCommentFilter.length !== 0">
-              <div v-for="(item, index) in personalCommentFilter" :key="index+'conPer'" class="commentArea">
-                <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+              <div v-for="(item, index) in personalCommentFilter.slice().reverse()" :key="index+'conPer'" class="commentArea">
+
+                <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
               </div>
@@ -198,8 +207,8 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalTagFilter.length !== 0">
-              <div v-for="(item, index) in personalTagFilter" :key="index+'tagPer'" class="commentArea">
-                <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+              <div v-for="(item, index) in personalTagFilter.slice().reverse()" :key="index+'tagPer'" class="commentArea">
+                <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                     <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
               </div>
@@ -210,8 +219,9 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalFavFilter.length !== 0">
-              <div v-for="(item, index) in personalFavFilter" :key="index+'favPer'" class="commentArea">
-                <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+              <div v-for="(item, index) in personalFavFilter.slice().reverse()" :key="index+'favPer'" class="commentArea">
+
+                <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span v-if="item.modify === '取消'">
                   <span class="commentHistoryContent">將{{item.company}}從我的最愛中{{item.modify}}</span>
                   <span class="commentTimeHistory">{{item.time}}</span>
@@ -233,6 +243,8 @@
 <script>
 import axios from "axios";
 import $ from "jquery";
+import firebase from 'firebase/app';
+import 'firebase/storage';
 // import dateTime from "../assets/js/dateTime";
 
 export default {
@@ -300,6 +312,8 @@ export default {
           label: "大地酒店"
         }
       ],
+      userPicture:{},
+      allAccount:[],
     };
   },
   mounted() {
@@ -314,6 +328,17 @@ export default {
       document.getElementById('userInfoRecord').style.visibility = 'visible';
       document.getElementById('userInfoRecord_phone').style.visibility = 'visible';
     }
+    axios.get("https://hotelapi.im.nuk.edu.tw/api/account")
+    .then((response) => {
+      console.log(response);
+      this.allAccount = response.data;
+      this.getPicture();
+     
+      // this.userPicture.response.data[0].employeeNumber="text";
+      console.log(this.userPicture);
+    }).catch((error) => {
+        console.log(error);
+    });
     // axios
     //   .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
     //   .then((response) => {
@@ -464,7 +489,29 @@ export default {
       //   $('.his_tags').removeClass('bg')
       //   $('.his_reply').addClass('bg')
       // }
-    },history_filter_phone(){
+    },
+    getPicture(){
+      var self = this;
+      var i;
+      for( i=0 ; i<self.allAccount.length ; i++){
+        this.getPictureUrl(self.allAccount[i].employeeNumber,self.allAccount[i].picture);
+      }
+      console.log("picture");
+      console.log(this.userPicture);
+    },
+    getPictureUrl(user,picture){
+    var self = this;
+      const storageRef = firebase.storage().ref(picture);
+      storageRef.getDownloadURL().then(function(url) {
+        self.userPicture[user]=url;
+      }).catch(function(error) {
+        console.log(error);
+      });      
+    },
+    getPictureSrc(img){
+      return this.userPicture[img];
+    },
+    history_filter_phone(){
       event.stopPropagation();
       $(".history_inner__phone").slideToggle("normal");
       $(document).click(function (event) {
@@ -474,7 +521,11 @@ export default {
         }
       });
     },
-  },
-};
+
+    },
+    
+
+  };
+
 </script>
 <style scoped src= '../assets/css/history.css'></style>
