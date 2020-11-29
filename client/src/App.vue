@@ -169,7 +169,8 @@
         <div class="personalInfo" id="personalInfo">
           <img
             class="photo"
-            src="https://fakeimg.pl/20x20/"
+            :src="picture"
+            width="30px"
             alt=""
             v-on:click="personalState()"
           />
@@ -296,7 +297,7 @@ export default {
       var loginData = JSON.parse(localStorage.getItem("token"));
       self.companyName = loginData.companyName;
       self.userID = loginData.id;
-      
+      self.picture = loginData.pictureUrl;
       axios
         .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
         .then((response) => {
@@ -322,12 +323,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      // const storageRef = firebase.storage().ref('小新.jpg');
-      // storageRef.getDownloadURL().then(function(url) {
-      //   self.picture = url;
-      // }).catch(function(error) {
-      //   console.log(error);
-      // });
+
       if ("indexedDB" in window) {
         console.log("Reading indexedDB...");
         util.readAllData("account").then(function (data) {

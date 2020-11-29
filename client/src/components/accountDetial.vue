@@ -53,8 +53,8 @@
     </div> -->
     </div>
 
-
-    <div class="upload">
+<!-- upload測試 -->
+    <!-- <div class="upload">
       <input type="file"  accept="image/*" @change="previewImage">
     </div>
     <div class="schedule" >
@@ -65,8 +65,8 @@
     <div>
       <img :src="picture" alt="" class="preview">
 
-      <button @click="onUpload">Upload</button>
-    </div>
+      <button @click="previewImage">Upload</button>
+    </div> -->
   </div>
 </template>
   <!-- <div> -->
@@ -179,12 +179,12 @@ export default {
       next: 0,
       imageData:null,
       picture:null,
-      uploadValue:0
+      uploadValue:0,
+      reload:false
     };
   },
   mounted() {
     let self = this;
-    
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
       .then((response) => {
@@ -197,6 +197,7 @@ export default {
         self.oldEmployeeLimit = self.userAccountDetail.employeeLimit;
         self.oldDepartment = self.userAccountDetail.department;
         self.company = self.userAccountDetail.companyName;
+        this.getUserPicture(self.userAccountDetail.picture);
       })
       .catch((error) => {
         console.log(error);
@@ -224,7 +225,7 @@ export default {
                 self.oldEmployeeLimit = self.userAccountDetail.employeeLimit;
                 self.oldDepartment = self.userAccountDetail.department;
                 self.company = self.userAccountDetail.companyName;
-
+                self.picture = self.userAccountDetail.picture;
                 break;
               }
             }
@@ -242,6 +243,11 @@ export default {
           //this.userAccountDetail=updateUser;
           //寫在mounted的如果數據改會自動更著改且不會重新整理
           console.log(response);
+          if(this.reload){
+            this.reload = false;
+            // console.log("reload");
+            window.location.reload();
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -396,28 +402,58 @@ export default {
     accountPage: function(value){
       this.blockarea = value
     },
-    previewImage(event){
+    previewImage(){
+      //修改使用者圖片資料
+      // this.userAccountDetail.picture = '004.png';
+      // console.log(this.userAccountDetail);
+      // this.updateAccount();
+
       var self = this;
       self.uploadValue = 0;
-      self.picture = null;
-      console.log(event.target.files[0]);
-      // event.target.files[0].name = this.userAccountDetail.employeeNumber;
       self.imageData = event.target.files[0];
-      console.log("priview");
       console.log(event.target.files[0]);
-      console.log(this.imageData);
+      // var reader = new FileReader();
+      // reader.readAsDataURL(event.target.files[0]);
+      //picture的URL
+      var pictureURL = URL.createObjectURL(event.target.files[0]);
 
+      // this.$fire({
+      //   title: 'Sweet!',
+      //   text: 'Modal with a custom image.',
+      //   imageUrl: pictureURL,
+      //   imageWidth: 200,
+      //   // imageHeight: 200,
+      //   imageAlt: 'Custom image',
+      // })
+      this.$fire({
+        title: '你確定要換成這張照片嗎?',
+        // text: 'Modal with a custom image.',
+        imageUrl: pictureURL,
+        imageWidth: 200,
+        // imageHeight: 200,
+        imageAlt: 'Custom image',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '確定!!',
+        cancelButtonText: "我再想想",
+      }).then((result) => {
+        console.log(result);
+        if (result.value) {
+          self.onUpload();
+        }
+      })
       // console.log(firebase.storage().ref('images/cat1.png'))
       
       // // var starsRef = storageRef.child('/cat1.png');
       // 抓圖片
-      const storageRef = firebase.storage().ref('小新.jpg');
-      storageRef.getDownloadURL().then(function(url) {
-        console.log("url:"+url);
-        self.picture = url;
-      }).catch(function(error) {
-        console.log(error);
-      });
+      // const storageRef = firebase.storage().ref('小新.jpg');
+      // storageRef.getDownloadURL().then(function(url) {
+      //   console.log("url:"+url);
+      //   self.picture = url;
+      // }).catch(function(error) {
+      //   console.log(error);
+      // });
       //刪除
       // firebase.storage().ref('cat2.png').delete().then(function() {
       //   // File deleted successfully
@@ -428,10 +464,12 @@ export default {
       // });
     },
     onUpload(){
+      // var self = this;
       var oldPicture = this.userAccountDetail.picture;
+      this.recordUserDetailModify('更換圖片',oldPicture,this.imageData.name);
       this.picture = null;
-      console.log("uploading");
-      console.log(this.imageData);
+      // console.log("uploading");
+      // console.log(this.imageData);
       const storageRef = firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
       storageRef.on(`state_changed`, snapshot=>{
         this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
@@ -442,15 +480,48 @@ export default {
           console.log("url:"+url);
           this.picture = url ; 
           this.userAccountDetail.picture = this.imageData.name;
+          this.reload = true;
+          var loginData = JSON.parse(localStorage.getItem("token"));
+          loginData.pictureUrl = url;
+          localStorage.setItem(
+          "token",
+          JSON.stringify({
+            id: loginData.id,
+            employeeNumber:loginData.employeeNumber,
+            time: loginData.time,
+            companyName: loginData.companyName,
+            limit:loginData.limit,
+            pictureUrl:loginData.pictureUrl,
+          })
+          );
+          this.deleteOldPicture(oldPicture);
         })
       });
-      //刪除舊照片
-      firebase.storage().ref().child(oldPicture).delete().then(function() {
-        console.log("sucessful");
+      
+
+
+    },
+    getUserPicture(image){
+      // 抓圖片
+      var self = this;
+      const storageRef = firebase.storage().ref(image);
+      storageRef.getDownloadURL().then(function(url) {
+        console.log("url:"+url);
+        self.picture = url;
       }).catch(function(error) {
         console.log(error);
       });
-    }
+    },
+    deleteOldPicture(oldPicture){
+      var self = this;
+      firebase.storage().ref().child(oldPicture).delete().then(function() {
+        console.log("sucessful");
+        self.updateAccount();
+      }).catch(function(error) {
+        self.updateAccount();
+        console.log(error);
+      });
+    },
     // findOther: function(value){
     //   let self = this
     //   if(value === 1){
