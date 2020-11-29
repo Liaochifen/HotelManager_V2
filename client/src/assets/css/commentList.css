@@ -384,6 +384,9 @@ tr:hover td{
 .filter_sort_phone{
     display: none;
 }
+.contentCenter{
+    display: block !important;
+}
 @media (max-width: 768px) {
     .page{
         /* margin-left: -36px; */
