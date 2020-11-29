@@ -514,13 +514,18 @@ export default {
     },
     deleteOldPicture(oldPicture){
       var self = this;
-      firebase.storage().ref().child(oldPicture).delete().then(function() {
-        console.log("sucessful");
+      if(oldPicture != '004.png'){
+        firebase.storage().ref().child(oldPicture).delete().then(function() {
+          console.log("sucessful");
+          self.updateAccount();
+        }).catch(function(error) {
+          self.updateAccount();
+          console.log(error);
+        });
+      }else{
         self.updateAccount();
-      }).catch(function(error) {
-        self.updateAccount();
-        console.log(error);
-      });
+      }
+      
     },
     // findOther: function(value){
     //   let self = this
