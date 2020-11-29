@@ -36,7 +36,7 @@
                 <span v-else-if="commentFilter.length !== 0">
                   <div v-for="(item, index) in commentFilter" :key="index+'con'" class="commentArea">
                   <!-- 放大頭照 -->
-                  <!-- <p>{{item.employeeNumber}}</p> -->
+                    <p>{{item.employeeNumber}}</p>
                     <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
                     <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
                     <!-- 手機板變成在評論底下，縮小 -->
@@ -50,6 +50,7 @@
                 </span>
                 <span v-else-if="tagsFilter.length !== 0">
                   <div v-for="(item, index1) in tagsFilter" :key="index1+'tag'" class="commentArea">
+                    <p>{{item.employeeNumber}}</p>
                     <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
                     <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                     <span class="commentTimeHistory">{{item.time}}</span>
@@ -83,6 +84,7 @@
             </span>
             <span v-else-if="personalCommentFilter.length !== 0">
               <div v-for="(item, index) in personalCommentFilter" :key="index+'conPer'" class="commentArea">
+                <p>{{item.employeeNumber}}</p>
                 <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
                 <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
@@ -95,6 +97,7 @@
             </span>
             <span v-else-if="personalTagFilter.length !== 0">
               <div v-for="(item, index) in personalTagFilter" :key="index+'tagPer'" class="commentArea">
+                <p>{{item.employeeNumber}}</p>
                 <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
                     <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
@@ -107,6 +110,7 @@
             </span>
             <span v-else-if="personalFavFilter.length !== 0">
               <div v-for="(item, index) in personalFavFilter" :key="index+'favPer'" class="commentArea">
+                <p>{{item.employeeNumber}}</p>
                 <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
                 <span v-if="item.modify === '移除'">
                   <span class="commentHistoryContent">將<router-link :to="{ name: 'competitionCommentList', params: { collections: item.company }}">{{item.hotelChineseName}}</router-link>從我的最愛中{{item.modify}}</span>
@@ -125,6 +129,7 @@
             </span>
             <span v-else-if="replyFIlter.length !== 0">
               <div v-for="(item, index1) in replyFIlter" :key="index1+'tag'" class="commentArea">
+                <p>{{item.employeeNumber}}</p>
                 <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
                 <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>的回覆狀態從"{{item.old}}"{{item.modify}}成"{{item.new}}"</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
@@ -139,6 +144,9 @@
             <li><button  v-on:click="manager(2)">忘記密碼</button></li>
             <li><button  v-on:click="manager(3)">修改帳號資料</button></li>
             <li><button  v-on:click="manager(4)">新增刪除使用者</button></li>
+            <li><button  v-on:click="manager(5)">評論狀態修改</button></li>
+            <li><button  v-on:click="manager(6)">評論標籤修改</button></li>
+            <li><button  v-on:click="manager(7)">我的最愛修改</button></li>
           </ul>
           <div  v-if="userInfoPage === 0" class="backend_record">
             <div v-for="(item, loginIndex) in loginNew.slice().reverse()" :key="loginIndex+'login'" class="commentArea">
@@ -196,6 +204,7 @@
             </span>
             <span v-else-if="personalTagFilter.length !== 0">
               <div v-for="(item, index) in personalTagFilter" :key="index+'tagPer'" class="commentArea">
+                <p>{{item.employeeNumber}}</p>
                 <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
                     <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
@@ -208,6 +217,7 @@
             </span>
             <span v-else-if="personalFavFilter.length !== 0">
               <div v-for="(item, index) in personalFavFilter" :key="index+'favPer'" class="commentArea">
+                <p>{{item.employeeNumber}}</p>
                 <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
                 <span v-if="item.modify === '移除'">
                   <span class="commentHistoryContent">將{{item.company}}從我的最愛中{{item.modify}}</span>
@@ -337,6 +347,7 @@ export default {
         self.tagsFilter = self.historyData.tags;
         self.favoriteFilter = self.historyData.favorite
         self.replyFIlter = self.historyData.reply
+        console.log(self.userNew)
         // self.commentFilter.push({
         //   condition: self.historyData.condition,
         //   tags: self.historyData.tags

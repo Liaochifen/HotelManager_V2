@@ -506,7 +506,6 @@ export default {
       });
     }
 
-    console.log(self.commentData);
 
     var _this = this
     window.onresize = function () {

@@ -2,7 +2,7 @@
   <div>
     <div class="contentCenter">
       <div class="page">
-        <span>評論列表</span>
+        <span>競爭對手評論列表</span>
       </div>
       <div class="buttonFunArea">
         <button class="editButton" @click="openFilter()" id="comment_filter_phone">

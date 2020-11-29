@@ -464,6 +464,11 @@ export default {
     window.onresize = function () {
       _this.window_width = document.documentElement.clientWidth 
     }
+    if(document.documentElement.clientWidth > 768){
+        this.columns = this.columns_computer
+    }else{
+        this.columns = this.columns_phone
+    }
   },
   watch: {
     'window_width': function (val) { 
