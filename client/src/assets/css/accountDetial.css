@@ -247,6 +247,9 @@ ul li .image-upload>input {
 ul li .image-upload>img{
   cursor: pointer;
 }
+#logout_phone{
+  display: none;
+}
 @media (max-width: 768px) {
   .edit_btn img{
     display: block;
@@ -317,7 +320,13 @@ ul li .image-upload>img{
     margin-left: auto;
     /* padding: 0 auto; */
   }
-
+  #logout_phone{
+    display: block;
+    position: absolute;
+    top: 8px;
+    right: 5%;
+    /* z-index: 1; */
+  }
 }
 @media (max-width: 450px) {
   .accountDetails li{
