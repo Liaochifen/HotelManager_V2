@@ -35,7 +35,7 @@
                   <p>無任何記錄</p>
                 </span>
                 <span v-else-if="commentFilter.length !== 0">
-                  <div v-for="(item, index) in commentFilter" :key="index+'con'" class="commentArea">
+                  <div v-for="(item, index) in commentFilter.slice().reverse()" :key="index+'con'" class="commentArea">
                   <!-- 放大頭照 -->
 
                     <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px" alt=""/><span>{{item.employeeNumber}}</span></span>
@@ -50,7 +50,7 @@
                   <p>無任何記錄</p>
                 </span>
                 <span v-else-if="tagsFilter.length !== 0">
-                  <div v-for="(item, index1) in tagsFilter" :key="index1+'tag'" class="commentArea">
+                  <div v-for="(item, index1) in tagsFilter.slice().reverse()" :key="index1+'tag'" class="commentArea">
                     <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px" alt=""/><span>{{item.employeeNumber}}</span></span>
                     <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                     <span class="commentTimeHistory">{{item.time}}</span>
@@ -96,7 +96,7 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalTagFilter.length !== 0">
-              <div v-for="(item, index) in personalTagFilter" :key="index+'tagPer'" class="commentArea">
+              <div v-for="(item, index) in personalTagFilter.slice().reverse()" :key="index+'tagPer'" class="commentArea">
                 <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px" alt=""/><span>{{item.employeeNumber}}</span></span>
                     <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
@@ -108,8 +108,8 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalFavFilter.length !== 0">
-              <div v-for="(item, index) in personalFavFilter" :key="index+'favPer'" class="commentArea">
-                <span class="customer_num"><img src="https://fakeimg.pl/15x15/"  alt=""/><span>{{item.employeeNumber}}</span></span>
+              <div v-for="(item, index) in personalFavFilter.slice().reverse()" :key="index+'favPer'" class="commentArea">
+                <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span v-if="item.modify === '取消'">
                   <span class="commentHistoryContent">將<router-link :to="{ name: 'competitionCommentList', params: { collections: item.company }}">{{item.hotelChineseName}}</router-link>從我的最愛中{{item.modify}}</span>
                   <span class="commentTimeHistory">{{item.time}}</span>
@@ -126,9 +126,9 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="replyFIlter.length !== 0">
-              <div v-for="(item, index1) in replyFIlter" :key="index1+'tag'" class="commentArea">
+              <div v-for="(item, index1) in replyFIlter.slice().reverse()" :key="index1+'tag'" class="commentArea">
 
-                <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)"  alt=""/><span>{{item.employeeNumber}}</span></span>
+                <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px" alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>的回覆狀態從"{{item.old}}"{{item.modify}}成"{{item.new}}"</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
               </div>
@@ -194,7 +194,7 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalCommentFilter.length !== 0">
-              <div v-for="(item, index) in personalCommentFilter" :key="index+'conPer'" class="commentArea">
+              <div v-for="(item, index) in personalCommentFilter.slice().reverse()" :key="index+'conPer'" class="commentArea">
 
                 <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
@@ -207,7 +207,7 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalTagFilter.length !== 0">
-              <div v-for="(item, index) in personalTagFilter" :key="index+'tagPer'" class="commentArea">
+              <div v-for="(item, index) in personalTagFilter.slice().reverse()" :key="index+'tagPer'" class="commentArea">
                 <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                     <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>{{item.modify}}了"{{item.new}}"標籤</span>
                 <span class="commentTimeHistory">{{item.time}}</span>
@@ -219,7 +219,7 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalFavFilter.length !== 0">
-              <div v-for="(item, index) in personalFavFilter" :key="index+'favPer'" class="commentArea">
+              <div v-for="(item, index) in personalFavFilter.slice().reverse()" :key="index+'favPer'" class="commentArea">
 
                 <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span v-if="item.modify === '取消'">

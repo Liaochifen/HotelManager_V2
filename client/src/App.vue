@@ -377,6 +377,7 @@ export default {
       console.log(toPage);
       var logingData = JSON.parse(localStorage.getItem("token"));
       this.$router.push({ path: `/${toPage}/${logingData.id}` });
+      window.location.reload();
     },
   },
 };
