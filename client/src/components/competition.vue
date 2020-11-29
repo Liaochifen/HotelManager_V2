@@ -408,24 +408,24 @@ export default {
       if ("serviceWorker" in navigator) {
         var options = {
           body: "You successfully subscribed to our Notification service!",
-          icon: "img/icons/apple-touch-icon-76x76.png",
-          image: "img/icons/apple-touch-icon-76x76.png",
+          icon: "img/icons/icon-78x78.png",
+          // image: "img/icons/icon-78x78.png",
           dir: "ltr",
           lang: "zh-TW",
           vibrate: [100, 50, 200],
-          badge: "img/icons/apple-touch-icon-76x76.png",
+          badge: "img/icons/icon-78x78.png",
           tag: "confirm-notification",
           renotify: true,
           actions: [
             {
               action: "confirm",
               title: "Okay",
-              icon: "img/icons/apple-touch-icon-76x76.png",
+              // icon: "img/icons/icon-78x78.png",
             },
             {
               action: "cancel",
               title: "Cancel",
-              icon: "img/icons/apple-touch-icon-76x76.png",
+              // icon: "img/icons/icon-78x78.png",
             },
           ],
         };

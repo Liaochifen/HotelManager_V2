@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.5acfabdbcfc7e42387a753dd53344ff4.js"
+  "/precache-manifest.fa55312b4bb1b69002f9ca7b8807debe.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -31,9 +31,9 @@ var STATIC_FILES = [
   'https://fakeimg.pl/27x27/',
   'https://fakeimg.pl/50x50/',
   'https://fakeimg.pl/100x100/',
-  'https://hoteleye.im.nuk.edu.tw/img/icons/favicon-32x32.png',
-  'https://hoteleye.im.nuk.edu.tw/img/icons/favicon-16x16.png',
-  'https://hoteleye.im.nuk.edu.tw/img/icons/android-chrome-192x192.png'
+  'https://hoteleye.im.nuk.edu.tw/img/icons/icon-30x30.png',
+  'https://hoteleye.im.nuk.edu.tw/img/icons/icon-16x16.png',
+  'https://hoteleye.im.nuk.edu.tw/img/icons/icon-156x156.png'
 ]
 
 self.addEventListener('message', (event) => {
@@ -243,8 +243,8 @@ self.addEventListener('push', function (event) {
 
   var options = {
     body: data.content,
-    icon: './img/icons/apple-touch-icon-76x76.png',
-    badge: './img/icons/apple-touch-icon-76x76.png',
+    icon: './img/icons/icon-78x78.png',
+    badge: './img/icons/icon-78x78.png',
     data: {
       url: data.openUrl
     }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page" id="login_page">
-      <img class="photo" src="https://fakeimg.pl/100x100/" alt="" />
+      <img class="photo" src="../assets/icon/icon-118x118.png" alt="" />
       <div class="clear"></div>
       <h1>登入</h1>
       <!-- the submit event will no longer reload the page -->
