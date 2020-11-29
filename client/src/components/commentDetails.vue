@@ -68,7 +68,7 @@
             <!-- <label :for="[item]"></label> -->
             <!-- </div> -->
             <template>
-              <div class="tags" v-for="item in label_tags" :key="item.field">
+              <div class="tags" v-for="item in label_tags" :key="item.field+ 'tag'">
                 <el-button
                   ><button class="deleBtn" @click="deleTag(item.field)">x</button>
                   {{ item.label }}</el-button
@@ -79,7 +79,7 @@
           </div>
           <div class="addTagsArea">
             <el-select v-model="TagsAdd"  placeholder="請選擇標籤"  @change="submitAdd">
-              <el-option v-for="item in label_no_tags"  :key="item.field"  :value="item.field"  :placeholder="item.label"  >{{ item.label }}</el-option>
+              <el-option v-for="item in label_no_tags"  :key="item.field+ 'add_tags'"  :value="item.field"  :placeholder="item.label"  >{{ item.label }}</el-option>
             </el-select>
           </div>
           <div class="manageReplyDiv" v-if="commentData.labels">
@@ -248,6 +248,7 @@ export default {
     if ("indexedDB" in window) {
       console.log("Reading indexedDB...");
       util.readAllData("comment").then(function (data) {
+        console.log(data)
         if (!self.networkDataReceived) {
           console.log("From cache", data);
           for (var i in data) {
@@ -335,10 +336,36 @@ export default {
     conditionUpdate: function (data) {
       let self = this;
       if (data === 0) {
-        self.conditionModifytoHistory.old = data
-        self.commentData.labels.condition = 1;
+        this.$fire({
+              title: "是否將此評論狀態修改為'處理中'?",
+              // text: "刪除後將不可復原",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "是",
+              cancelButtonText: "否",
+            }).then((result) => {
+              if(result.value){
+                self.conditionModifytoHistory.old = data
+                self.commentData.labels.condition = 1;
+              }
+            })
       } else {
-        self.commentData.labels.condition = 2;
+        this.$fire({
+              title: "是否將此評論狀態修改為'已完成'?",
+              text: "修改後不可復原",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "是",
+              cancelButtonText: "否",
+        }).then((result) => {
+          if(result.value){
+            self.commentData.labels.condition = 2;
+          }
+        })
       }
       self.conditionModifytoHistory.new = self.commentData.labels.condition
       self.newComment = self.commentData;
@@ -384,7 +411,9 @@ export default {
             "/" +
             self.commentDetailsID,
           updateData
-        )
+        ).then((response) => {
+          console.log(response.data)
+        })
         .catch((err) => {
           console.log(err);
         });

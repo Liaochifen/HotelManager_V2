@@ -156,7 +156,8 @@ import axios from "axios";
 import $ from "jquery";
 import dateTime from "../assets/js/dateTime";
 import util from "../assets/js/utility";
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/storage';
 
 export default {
   name: "accountDetial",
@@ -183,6 +184,7 @@ export default {
   },
   mounted() {
     let self = this;
+    
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
       .then((response) => {

@@ -11,7 +11,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import VueSimpleAlert from 'vue-simple-alert'
 import infiniteScroll from 'vue-infinite-scroll'
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+
 // CSS
 import 'vue-good-table/dist/vue-good-table.css';
 import 'element-ui/lib/theme-chalk/index.css'

@@ -863,7 +863,7 @@ export default {
                 self.conditionModifytoHistory.new = item.labels.condition
                 self.newComment = item;
                 self.updateComment(id);
-                self.updateHistory()
+                self.updateHistory(0)
               }
             })
           } else {
@@ -882,7 +882,7 @@ export default {
                 self.conditionModifytoHistory.new = item.labels.condition
                 self.newComment = item;
                 self.updateComment(id);
-                self.updateHistory()
+                self.updateHistory(1)
               }
             })
           }
