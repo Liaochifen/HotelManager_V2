@@ -433,10 +433,11 @@ export default {
       console.log("uploading");
       console.log(this.imageData);
       const storageRef = firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
-      storageRef.on(`state_changed`,snapshot=>{
-        this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes)*100;
-      },error=>{console.log(error.message)},
-      ()=>{this.uploadValue = 100;
+      storageRef.on(`state_changed`, snapshot=>{
+        this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
+      }, error => { console.log(error.message) },
+      () => { 
+        this.uploadValue = 100;
         storageRef.snapshot.ref.getDownloadURL().then((url)=> {
           console.log("url:"+url);
           this.picture = url ; 
@@ -444,7 +445,7 @@ export default {
         })
       });
       //刪除舊照片
-      firebase.storage().ref(oldPicture).delete().then(function() {
+      firebase.storage().ref().child(oldPicture).delete().then(function() {
         console.log("sucessful");
       }).catch(function(error) {
         console.log(error);
