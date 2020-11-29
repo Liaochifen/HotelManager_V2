@@ -185,14 +185,19 @@ export default {
       uploadValue:0,
       reload:false,
       window_width: document.documentElement.clientWidth,
-
+      logingID : "",
+      logout: {
+        employeeNumber: "",
+        logoutTime: "",
+      },
     };
   },
   mounted() {
     let self = this;
     var logining = localStorage.getItem("token");
     var loginData = JSON.parse(logining);
-    var selfornot = loginData.id
+    var selfornot = loginData.id;
+    this.logingID = loginData.id
     
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
@@ -256,9 +261,16 @@ export default {
   watch: {
     'window_width': function (val) { 
       if(val > 768){
-        this.columns = this.columns_computer
+        this.columns = this.columns_computer;
+        if(this.userID === this.logingID){
+          $('#logout_phone').css('display', 'none')
+        }
+        
       }else{
-        this.columns = this.columns_phone
+        this.columns = this.columns_phone;
+        if(this.userID === this.logingID){
+          $('#logout_phone').css('display', 'block')
+        }
       }
     }
   },
@@ -571,8 +583,43 @@ export default {
       
     },
     logout_phone(){
-      
-    }
+      localStorage.removeItem("token");
+       this.logoutRecord();
+      $("#accountManage").show();
+      $("#statisticalResults").show();
+      $("#statisticalResultsPhone").show();
+      $("#accountManagePhone").show();
+      document.getElementById("limitWord").innerHTML = " ";
+      document.getElementById("menu").style.visibility = "hidden";
+      $(".header").css('display', 'none');
+      $(".contentTop").css('display', 'none');
+      // document.getElementById("breadcrumb").style.visibility = "hidden";
+      document.getElementById("personalInfo").style.visibility = "hidden";
+      document.getElementById("phoneMenu").style.visibility = "hidden";
+      this.$router.push("/login");
+    },
+    logoutRecord: function () {
+      let record = "logout";
+      let company = this.userAccountDetail.companyName;
+      this.logout.employeeNumber = this.userAccountDetail.employeeNumber;
+      this.logout.logoutTime =
+        dateTime.recordDate() + " " + dateTime.recordTime();
+      console.log(this.logout);
+      axios
+        .put(
+          "https://hotelapi.im.nuk.edu.tw/api/history/" +
+            company +
+            "/" +
+            record,
+          this.logout
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     // findOther: function(value){
     //   let self = this
     //   if(value === 1){
