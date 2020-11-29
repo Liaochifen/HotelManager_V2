@@ -112,7 +112,7 @@
               <div v-for="(item, index) in personalFavFilter" :key="index+'favPer'" class="commentArea">
                 <p>{{item.employeeNumber}}</p>
                 <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
-                <span v-if="item.modify === '移除'">
+                <span v-if="item.modify === '取消'">
                   <span class="commentHistoryContent">將<router-link :to="{ name: 'competitionCommentList', params: { collections: item.company }}">{{item.hotelChineseName}}</router-link>從我的最愛中{{item.modify}}</span>
                   <span class="commentTimeHistory">{{item.time}}</span>
                 </span>
@@ -315,7 +315,7 @@ export default {
     //  + value
     var logining = localStorage.getItem("token");
     // var userID = JSON.parse(logining).companyName;
-    self.employeeNumber = JSON.parse(logining).id
+    self.employeeNumber = JSON.parse(logining).employeeNumber
 
     if(JSON.parse(logining).limit === '後台管理者'){
       document.getElementById('userInfoRecord').style.visibility = 'visible';
@@ -347,7 +347,7 @@ export default {
         self.tagsFilter = self.historyData.tags;
         self.favoriteFilter = self.historyData.favorite
         self.replyFIlter = self.historyData.reply
-        console.log(self.userNew)
+        console.log(self.favoriteFilter)
         // self.commentFilter.push({
         //   condition: self.historyData.condition,
         //   tags: self.historyData.tags

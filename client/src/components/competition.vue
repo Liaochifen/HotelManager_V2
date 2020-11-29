@@ -254,7 +254,7 @@ export default {
     self.loginData = JSON.parse(logining);
     if (!self.companyName) {
       self.companyName = self.loginData.companyName
-      self.employeeNumber = self.loginData.id
+      self.employeeNumber = self.loginData.employeeNumber
     }
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.loginData.id)
