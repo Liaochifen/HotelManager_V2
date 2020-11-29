@@ -61,6 +61,16 @@
 .historydataArea ul li button:active{
     all: unset;
 }
+.customer_num img{
+    margin-right: 20px;
+}
+.customer_num span{
+    color: green;
+}
+.custom_modify{
+    color: gray;
+    font-size: 14px;
+}
 .bg{
     color: rgb(10, 145, 10);
 }
