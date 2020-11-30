@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.fa55312b4bb1b69002f9ca7b8807debe.js"
+  "/precache-manifest.a147c54c4e049bc8ca34c7d4385b50ef.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -23,17 +23,18 @@ importScripts('./utility.js');
 
 var CACHE_STATIC_NAME = 'static-v1';
 var CACHE_DYNAMIC_NAME = 'dynamic-v1';
-const CACHE_ORIGIN = 'test-precache-v2-https://hoteleye.im.nuk.edu.tw/';
+// const CACHE_ORIGIN = 'test-precache-v2-https://hoteleye.im.nuk.edu.tw/';
 
 var STATIC_FILES = [
-  'https://fakeimg.pl/15x15/',
-  'https://fakeimg.pl/20x20/',
-  'https://fakeimg.pl/27x27/',
-  'https://fakeimg.pl/50x50/',
-  'https://fakeimg.pl/100x100/',
-  'https://hoteleye.im.nuk.edu.tw/img/icons/icon-30x30.png',
-  'https://hoteleye.im.nuk.edu.tw/img/icons/icon-16x16.png',
-  'https://hoteleye.im.nuk.edu.tw/img/icons/icon-156x156.png'
+  '/img/icons/favicon-16x16.png',
+  '/img/icons/favicon-32x32.png',
+  '/img/icons/icon-24x24.png',
+  '/img/icons/icon-36x36.png',
+  '/img/icons/icon-48x48.png',
+  '/img/icons/icon-72x72.png',
+  '/img/icons/icon-96x96.png',
+  '/img/icons/icon-144x144.png',
+  '/img/icons/icon-192x192.png'
 ]
 
 self.addEventListener('message', (event) => {
@@ -243,8 +244,8 @@ self.addEventListener('push', function (event) {
 
   var options = {
     body: data.content,
-    icon: './img/icons/icon-78x78.png',
-    badge: './img/icons/icon-78x78.png',
+    icon: './img/icons/icon-72x72.png',
+    badge: './img/icons/icon-72x72.png',
     data: {
       url: data.openUrl
     }

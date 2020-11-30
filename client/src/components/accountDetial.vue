@@ -82,7 +82,7 @@
     <!-- <span class="personalInfoLastLogin">上次登入時間：{{userAccountDetail.lastLoginDate}}</span> -->
     <!-- <div class="detail">
       <div class="leftContent">
-        <a href="#"><img src="https://fakeimg.pl/125x125/" alt="" /></a>
+        <a href="#"><img src="../assets/icon/icon-144x144.png" alt="" /></a>
       </div>
 
       <div class="rightContent">

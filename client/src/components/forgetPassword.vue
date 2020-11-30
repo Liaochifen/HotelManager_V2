@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page forgetPW_phone">
-      <img class="photo" src="https://fakeimg.pl/100x100/" alt="" />
+      <img class="photo" src="../assets/icon/icon-96x96.png" alt="" />
       <div class="clear"></div>
       <h1>忘記密碼</h1>
       <form v-on:submit.prevent="forget">

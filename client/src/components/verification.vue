@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="page">
-      <img class="photo" src="https://fakeimg.pl/100x100/" alt="" />
+      <img class="photo" src="../assets/icon/icon-96x96.png" alt="" />
       <div class="clear"></div>
       <h1>已寄送驗證碼到此信箱</h1>
       <div class="clear"></div>

@@ -408,24 +408,24 @@ export default {
       if ("serviceWorker" in navigator) {
         var options = {
           body: "You successfully subscribed to our Notification service!",
-          icon: "img/icons/icon-78x78.png",
-          // image: "img/icons/icon-78x78.png",
+          icon: "img/icons/icon-72x72.png",
+          // image: "img/icons/icon-72x72.png",
           dir: "ltr",
           lang: "zh-TW",
           vibrate: [100, 50, 200],
-          badge: "img/icons/icon-78x78.png",
+          badge: "img/icons/icon-72x72.png",
           tag: "confirm-notification",
           renotify: true,
           actions: [
             {
               action: "confirm",
               title: "Okay",
-              // icon: "img/icons/icon-78x78.png",
+              // icon: "img/icons/icon-72x72.png",
             },
             {
               action: "cancel",
               title: "Cancel",
-              // icon: "img/icons/icon-78x78.png",
+              // icon: "img/icons/icon-72x72.png",
             },
           ],
         };
