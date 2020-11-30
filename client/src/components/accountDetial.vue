@@ -16,10 +16,15 @@
             <label for="file-input" class="edit_btn">
               <img src="../assets/icon/edit.png">
             </label>
+            <div class="clear"></div>
+            <label for="file-input" class="account_photo_phone">
+              <img :src="picture" width="180px" alt="">
+            </label>
             <input type="file" id="file-input" @change="previewImage" accept="image/png, image/jpeg" >
+            
           </div>
           </li >
-          <li class="account_photo_phone"><img :src="picture" width="180px" alt=""></li>
+          <!-- <li><button class="edit_btn" ><img src="../assets/icon/edit.png"><input type="file"  accept="image/*" ></button></li> -->
         </ul>
         <button class="edit_btn" @click="edit1()"><img src="../assets/icon/edit.png"></button>
         <ul class="DetailList">
@@ -510,7 +515,14 @@ export default {
         self.picture = url;
       }).catch(function(error) {
         console.log(error);
+        const storageRef2 = firebase.storage().ref('004.png');
+        storageRef2.getDownloadURL().then(function(url) { 
+        self.picture = url;
+        }).catch(function(error2) {
+          console.log(error2);
+        });
       });
+      
     },
     deleteOldPicture(oldPicture){
       var self = this;

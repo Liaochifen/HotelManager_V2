@@ -199,7 +199,8 @@ import axios from "axios";
 import $ from "../node_modules/jquery";
 import dateTime from "../src/assets/js/dateTime";
 import util from "./assets/js/utility";
-
+import firebase from 'firebase/app';
+import 'firebase/storage';
 export default {
   name: "App",
   data() {
@@ -222,6 +223,16 @@ export default {
       self.companyName = loginData.companyName;
       self.userID = loginData.id;
       self.picture = loginData.pictureUrl;
+      
+      if(loginData.pictureUrl === null || loginData.pictureUrl === ""){
+        const storageRef2 = firebase.storage().ref('004.png');
+        storageRef2.getDownloadURL().then(function(url) { 
+        self.picture = url;
+        }).catch(function(error) {
+          console.log(error);
+          self.picture = "https://fakeimg.pl/30x30/";
+        });
+      }
       axios
         .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
         .then((response) => {

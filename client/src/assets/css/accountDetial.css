@@ -308,6 +308,9 @@ ul li .image-upload>img{
 .clear{
   clear: both;
 }
+.pictureList .account_photo_phone img{
+  cursor: pointer;
+}
 @media (max-width: 768px) {
   .edit_btn img{
     display: block;
