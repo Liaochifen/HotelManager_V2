@@ -250,6 +250,9 @@ ul li .image-upload>img{
 #logout_phone{
   display: none;
 }
+.edit_phone{
+  display: none;
+}
 @media (max-width: 768px) {
   .edit_btn img{
     display: block;
@@ -274,7 +277,7 @@ ul li .image-upload>img{
   }
   .accountDetails ul li{
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     
   }
   .accountDetails ul li input{
@@ -326,6 +329,23 @@ ul li .image-upload>img{
     top: 8px;
     right: 5%;
     /* z-index: 1; */
+  }
+  .edit_phone{
+    display: block;
+    position: fixed;
+    top: 6px;
+    left: 5%;
+    z-index: 1;
+    width: 35px;
+    background: white;
+    border: none;
+    outline: none;
+  }
+  .edit_phone img{
+    width: 100%;
+  }
+  .edit_btn{
+    display: none;
   }
 }
 @media (max-width: 450px) {

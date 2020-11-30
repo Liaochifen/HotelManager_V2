@@ -54,6 +54,7 @@
     </div> -->
     <!-- <button id="logout_phone" @click="logout_phone()">登出</button> -->
     </div>
+    <button class="edit_phone" @click="edit1()"><img src="../assets/icon/edit.png"></button>
 
 <!-- upload測試 -->
     <!-- <div class="upload">
@@ -184,14 +185,19 @@ export default {
       uploadValue:0,
       reload:false,
       window_width: document.documentElement.clientWidth,
-
+      logingID : "",
+      logout: {
+        employeeNumber: "",
+        logoutTime: "",
+      },
     };
   },
   mounted() {
     let self = this;
     var logining = localStorage.getItem("token");
     var loginData = JSON.parse(logining);
-    var selfornot = loginData.id
+    var selfornot = loginData.id;
+    this.logingID = loginData.id
     
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
@@ -247,15 +253,24 @@ export default {
 
       if(self.userID === selfornot && document.documentElement.clientWidth < 768){
         $('#logout_phone').css('display', 'block')
+      }else{
+        $('#logout_phone').css('display', 'none')
       }
 
   },
   watch: {
     'window_width': function (val) { 
       if(val > 768){
-        this.columns = this.columns_computer
+        this.columns = this.columns_computer;
+        if(this.userID === this.logingID){
+          $('#logout_phone').css('display', 'none')
+        }
+        
       }else{
-        this.columns = this.columns_phone
+        this.columns = this.columns_phone;
+        if(this.userID === this.logingID){
+          $('#logout_phone').css('display', 'block')
+        }
       }
     }
   },
@@ -307,6 +322,20 @@ export default {
       }
       document.getElementById("saveInfo").style.visibility = "visible";
       document.getElementById("cancleInfo").style.visibility = "visible";
+    },
+    edit1: function(){
+        document.getElementById("department").removeAttribute("readOnly");  
+        document.getElementById("department").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+        document.getElementById("userName").removeAttribute("readOnly");
+        document.getElementById("userName").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+        document.getElementById("email").removeAttribute("readOnly");
+        document.getElementById("email").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+         document.getElementById("password").removeAttribute("readOnly");
+        document.getElementById("password").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 20px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+        document.getElementById("limit").removeAttribute("disabled", false);
+        document.getElementById("limit").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 185px; height: 35px; padding: 0.5%; border: 0.3px solid gray; border-radius: 3px;";
+        document.getElementById("saveInfo").style.visibility = "visible";
+        document.getElementById("cancleInfo").style.visibility = "visible";
     },
     confirm:function(){
       if(this.oldUserName != this.userAccountDetail.userName){
@@ -540,7 +569,7 @@ export default {
     },
     deleteOldPicture(oldPicture){
       var self = this;
-      if(oldPicture != '004.png'){
+      if(oldPicture !== '004.png' || oldPicture.length!==0){
         firebase.storage().ref().child(oldPicture).delete().then(function() {
           console.log("sucessful");
           self.updateAccount();
@@ -554,8 +583,43 @@ export default {
       
     },
     logout_phone(){
-
-    }
+      localStorage.removeItem("token");
+       this.logoutRecord();
+      $("#accountManage").show();
+      $("#statisticalResults").show();
+      $("#statisticalResultsPhone").show();
+      $("#accountManagePhone").show();
+      document.getElementById("limitWord").innerHTML = " ";
+      document.getElementById("menu").style.visibility = "hidden";
+      $(".header").css('display', 'none');
+      $(".contentTop").css('display', 'none');
+      // document.getElementById("breadcrumb").style.visibility = "hidden";
+      document.getElementById("personalInfo").style.visibility = "hidden";
+      document.getElementById("phoneMenu").style.visibility = "hidden";
+      this.$router.push("/login");
+    },
+    logoutRecord: function () {
+      let record = "logout";
+      let company = this.userAccountDetail.companyName;
+      this.logout.employeeNumber = this.userAccountDetail.employeeNumber;
+      this.logout.logoutTime =
+        dateTime.recordDate() + " " + dateTime.recordTime();
+      console.log(this.logout);
+      axios
+        .put(
+          "https://hotelapi.im.nuk.edu.tw/api/history/" +
+            company +
+            "/" +
+            record,
+          this.logout
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     // findOther: function(value){
     //   let self = this
     //   if(value === 1){

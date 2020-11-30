@@ -184,7 +184,8 @@
           >
         </li>
         <li>
-          <a href="#" v-on:click="link('accountDetial')"><img class="icons" src="./assets/icon/account.png" alt="" /></a>
+          <a href="#" v-on:click="link('accountDetial')">
+            <img class="icons" :src="picture" alt="" /></a>
         </li>
       </ul>
       

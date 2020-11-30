@@ -252,7 +252,7 @@ export default {
         lastLoginDate: "New User",
         lastLoginTime: "",
         firstLogin: true,
-        picture:"cat1.png",
+        picture:"004.png",
       },
       columns: [
         {
@@ -605,9 +605,10 @@ export default {
         } else if (i === this.hotels.length - 1) {
           axios
             .post("https://hotelapi.im.nuk.edu.tw/api/account", newUser)
-            .then(() => {
+            .then((reponse) => {
+              console.log(reponse);
               // this.accountList.push(newUser);
-              this.hotels.push(newUser);
+              this.hotels.push(reponse.data);
               self.addDepartment()
               // this.searchResults.push(newUser);
               this.$fire({
@@ -726,7 +727,7 @@ export default {
       this.newAccount.lastLoginDate = "New User";
       this.newAccount.lastLoginTime = "";
       this.newAccount.firstLogin = true;
-      this.newAccount.picture = "cat1.png";
+      this.newAccount.picture = "004.png";
     },
     open: function () {
       document.getElementById("employeeNumber").required = true;
