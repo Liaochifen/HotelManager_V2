@@ -16,11 +16,15 @@
             <label for="file-input" class="edit_btn">
               <img src="../assets/icon/edit.png">
             </label>
+            <div class="clear"></div>
+            <label for="file-input" class="account_photo_phone">
+              <img :src="picture" width="180px" alt="">
+            </label>
             <input type="file" id="file-input" @change="previewImage" accept="image/png, image/jpeg" >
+            
           </div>
           </li >
           <!-- <li><button class="edit_btn" ><img src="../assets/icon/edit.png"><input type="file"  accept="image/*" ></button></li> -->
-          <li class="account_photo_phone"><img :src="picture" width="180px" alt=""></li>
         </ul>
         <ul class="DetailList">
           <li><span class="span_info">使用者編號</span><input type="text" readonly v-model="userAccountDetail.employeeNumber"></li>
