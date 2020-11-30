@@ -569,7 +569,14 @@ export default {
         self.picture = url;
       }).catch(function(error) {
         console.log(error);
+        const storageRef2 = firebase.storage().ref('004.png');
+        storageRef2.getDownloadURL().then(function(url) { 
+        self.picture = url;
+        }).catch(function(error2) {
+          console.log(error2);
+        });
       });
+      
     },
     deleteOldPicture(oldPicture){
       var self = this;
