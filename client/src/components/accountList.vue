@@ -20,49 +20,52 @@
         <div class="clear"></div>
         <form v-on:submit.prevent="createAccount">
           <div class="input">
-            <input
-              id="employeeNumber"
-              type="text"
-              v-model="newAccount.employeeNumber"
-              required
-            />
-            <span>*員工編號&nbsp;:&nbsp;</span>
-            <!-- &nbsp; 不換行空格 -->
-            <div class="clear"></div>
-            <input
-              id="email"
-              type="email"
-              v-model="newAccount.email"
-              required
-            /><span>*信箱&nbsp;:&nbsp;</span>
-            <div class="clear"></div>
-            <input
-              id="password"
-              type="text"
-              v-model="newAccount.password"
-              required
-            /><span>*密碼&nbsp;: &nbsp;</span>
-            <div class="clear"></div>
-          </div>
-          <div class="input">
+            <p class="p_all">所屬單位</p>
             <select v-model="newAccount.department" class="addSelect">
               <option v-for="item in departments" :key="item.value" :value="item.field">{{item.field}}</option>
             </select>
-            <span>所屬單位&nbsp;: &nbsp;</span>
+            
             <div class="clear"></div>
+            <p class="p_all">員工權限</p>
             <select v-model="newAccount.employeeLimit" class="addSelect">
               <option>後台管理者</option>
               <option>主管使用者</option>
               <option>一般使用者</option>
             </select>
-            <span>員工權限&nbsp;: &nbsp;</span>
+            
             <div class="clear"></div>
+            <p class="p_all">*姓名</p>
             <input
               id="userName"
+              class="input_all"
               type="text"
               v-model="newAccount.userName"
               required
-            /><span>*姓名&nbsp;: &nbsp;</span>
+            />
+            <div class="clear"></div>
+          </div>
+          <div class="input">
+            <p class="p_all">*員工編號</p>
+            <input id="employeeNumber" class="input_all" type="text"       v-model="newAccount.employeeNumber"    required/>
+            <!-- &nbsp; 不換行空格 -->
+            <div class="clear"></div>
+            <p class="p_all">*信箱</p>
+            <input
+              id="email"
+              class="input_all"
+              type="email"
+              v-model="newAccount.email"
+              required
+            />
+            <div class="clear"></div>
+            <p class="p_all">*密碼</p>
+            <input
+              id="password"
+              class="input_all"
+              type="text"
+              v-model="newAccount.password"
+              required
+            />
             <div class="clear"></div>
           </div>
           <div class="clear"></div>
@@ -72,6 +75,7 @@
             </button>
             <div class="clear"></div>
           </div>
+          <div class="clear"></div>
         </form>
         <div class="add_btn" id="cancel">
           <button
@@ -83,13 +87,10 @@
           </button>
           <div class="clear"></div>
         </div>
+        <div class="clear"></div>
       </div>
       <div class="buttonFunArea">
         <div class="buttonArea">
-          <button class="editButton" @click="openFilter()" id="filter_phone">
-          <img src="../assets/icon/filter.png"/>
-          <span>篩選</span>
-          </button>
           <button class="editButton" v-on:click="open()" id="add_user">
             <img src="../assets/icon/add.png"/>
             <span>新增使用者</span>
@@ -107,17 +108,6 @@
         <div class="clear"></div>
       </div>
       <!-- 手機版的選單 -->
-<!-- <el-select
-              placeholder="評論狀態設定"
-              class="custom_el_select"
-              v-model="conditionModify"
-            >
-              <el-option
-                v-for="item in conditions"
-                :key="item.value + 'editComment'"
-                :value="item.field"
-              ></el-option>
-            </el-select> -->
       <div slot="table-actions" class="account_select_phone" id="account_select_phone">
         <!-- <div class="right_select"> -->
           <!-- <div class="dep">所屬單位</div>
@@ -374,9 +364,6 @@ export default {
         axios
           .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
           .then((response) => {
-            console.log(response);
-            console.log(promises);
-            console.log('From web', response.data);
             self.networkDataReceived = true;
             self.logingAccount = response.data;
             self.newAccount.companyName = this.logingAccount.companyName;
@@ -410,7 +397,6 @@ export default {
       axios
         .get("https://hotelapi.im.nuk.edu.tw/api/account")
         .then((response) => {
-          console.log('From web', response.data);
           self.networkDataReceivedAll = true;
           self.allHtols = response.data;
           for(var num=0; num< self.allHtols.length;num++){
@@ -513,19 +499,19 @@ export default {
         // console.log(this.checkedAccount._id);
       }
     },
-    openFilter(){
-      let self = this;
-      self.close()
-      event.stopPropagation();
-      $(".account_select_phone").slideToggle("normal");
-      $(document).click(function (event) {
-        var area = $(".account_select_phone"); // 設定目標區域
-        if (!area.is(event.target) && area.has(event.target).length === 0) {
-          // $('#divTop').slideUp('slow');  //滑動消失
-          $(".account_select_phone").hide(); // 淡出消失
-        }
-      });
-    },
+    // openFilter(){
+    //   let self = this;
+    //   self.close()
+    //   event.stopPropagation();
+    //   $(".account_select_phone").slideToggle("normal");
+    //   $(document).click(function (event) {
+    //     var area = $(".account_select_phone"); // 設定目標區域
+    //     if (!area.is(event.target) && area.has(event.target).length === 0) {
+    //       // $('#divTop').slideUp('slow');  //滑動消失
+    //       $(".account_select_phone").hide(); // 淡出消失
+    //     }
+    //   });
+    // },
     linkAccountDetial(params) {
       let nowAccount = params.row;
       this.$router.push({ path: `/accountDetial/${nowAccount._id}` });
@@ -738,7 +724,7 @@ export default {
       $('.mask').show();
       $('.phone_mask').show();
       $("#addNewUser").slideToggle("normal");
-      $(".account_select_phone").hide(500); // 淡出消失
+      // $(".account_select_phone").hide(500); // 淡出消失
 
       $(document).click(function (event) {
         var area = $("#addNewUser"); // 設定目標區域

@@ -1,32 +1,36 @@
 <template>
-  <div>
-    <div class="page" id="login_page">
-      <img class="photo" src="https://fakeimg.pl/100x100/" alt="" />
+  <div class="login_wrap">
+    <div class="login_page" id="login_page">
+      <img src="https://fakeimg.pl/100x100/" alt="" />
       <div class="clear"></div>
       <h1>登入</h1>
-      <!-- the submit event will no longer reload the page -->
-      <form v-on:submit.prevent="logging">
-        <label>帳號&nbsp;:&nbsp;</label>
-        <input
-          type="text"
-          v-model="userName"
-          required
-          placeholder="請輸入員工號碼"
-        />
-        <div class="clear"></div>
-        <label>密碼&nbsp;:&nbsp;</label>
-        <input
-          type="password"
-          v-model="passWord"
-          required
-          placeholder="請輸入密碼"
-        />
-        <div class="clear"></div>
-        <router-link :to="'../forgetPassword'" class="link">忘記密碼 ?</router-link>
-        <div class="btn">
-          <button type="submit">確&nbsp;認</button>
-        </div>
-      </form>
+      <div class="input_block">
+        <!-- the submit event will no longer reload the page -->
+        <form v-on:submit.prevent="logging">
+          <p>帳號</p>
+          <input
+            class="input_all"
+            type="text"
+            v-model="userName"
+            required
+            placeholder="請輸入員工號碼"
+          />
+          <div class="clear"></div>
+          <p>密碼</p>
+          <input
+            class="input_all"
+            type="password"
+            v-model="passWord"
+            required
+            placeholder="請輸入密碼"
+          />
+          <div class="clear"></div>
+          <div class="btn">
+            <button type="submit">確&nbsp;認</button>
+            <router-link :to="'../forgetPassword'" class="link">忘記密碼 ?</router-link>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>

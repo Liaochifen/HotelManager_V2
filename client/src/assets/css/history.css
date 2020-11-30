@@ -7,8 +7,21 @@
 
 .pageButton0, .pageButton1 ,.pageButton2{
     all: unset;
-    margin-right: 20px;
+    /* font-size: 16px; */
+    /* basic */
+    all: unset;
+    width: 75px;
     font-size: 16px;
+    height: 30px;
+    background-color: rgba(72, 133, 82, 0.877);
+    border: 0.5px solid rgb(196, 196, 196);
+    border-radius: 3px;
+    padding: 2px 15px;
+    color: white;
+    letter-spacing: 2px;
+    text-align: center;
+    /* custom */
+    margin-right: 20px;
 }
 .pageButtonStart{
     color: rgba(0, 81, 255, 0.712);
@@ -16,8 +29,8 @@
 }
 .pageButton0:hover, .pageButton1:hover,.pageButton2:hover{
     cursor: pointer;
-    color: rgba(0, 81, 255, 0.712);
-    border-bottom: 1px solid rgba(0, 81, 255, 0.712);
+    /* color: rgba(0, 81, 255, 0.712); */
+    /* border-bottom: 1px solid rgba(0, 81, 255, 0.712); */
 }
 #userInfoRecord{
     visibility: hidden;
@@ -71,7 +84,7 @@
     color: green;
 }
 .custom_modify{
-    color: gray;
+    color: rgb(148, 148, 148);
     font-size: 14px;
 }
 .bg{
@@ -107,8 +120,9 @@
     right: 1%;
 }
 .focus{
-    color: rgba(0, 81, 255, 0.712);
-    border-bottom: 1px solid rgba(0, 81, 255, 0.712);
+    background: rgb(29, 151, 125);
+    /* color: rgba(0, 81, 255, 0.712);
+    border-bottom: 1px solid rgba(0, 81, 255, 0.712); */
 }
 .clear{
     clear:both;

@@ -17,8 +17,13 @@
         </button>
         <button class="editButton" @click="editFun()" id="editButton_phone">
           <img src="../assets/icon/edit.png"/>
+          <span>編輯</span>
         </button>
-        <button @click="clearALL()" class="clearall">全部清除</button>
+        <button class="editButton clearALL" @click="clearALL()" >
+          <img src="../assets/icon/clear.png"/>
+          <span>全部清除</span>
+        </button>
+        <!-- <button @click="clearALL()" class="clearall">全部清除</button> -->
         <button @click="openfilter_sort()" class="filter_sort_phone">分類</button>
       </div>
       <div class="edit">
@@ -649,19 +654,19 @@ export default {
       $("#reportrange span").html("時間");
       return self.commentData;
     },
-    openFilter(){
-      // let self = this;
-      event.stopPropagation();
-      $(".MultiFilterArea").slideToggle("normal");
-      $(document).click(function (event) {
-        var area = $(".MultiFilterArea"); // 設定目標區域
-        var area1 = $(".daterangepicker"); // 設定目標區域
-        if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
-          // $('#divTop').slideUp('slow');  //滑動消失
-          $(".MultiFilterArea").hide(); // 淡出消失
-        }
-      });
-    },
+    // openFilter(){
+    //   // let self = this;
+    //   event.stopPropagation();
+    //   $(".MultiFilterArea").slideToggle("normal");
+    //   $(document).click(function (event) {
+    //     var area = $(".MultiFilterArea"); // 設定目標區域
+    //     var area1 = $(".daterangepicker"); // 設定目標區域
+    //     if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
+    //       // $('#divTop').slideUp('slow');  //滑動消失
+    //       $(".MultiFilterArea").hide(); // 淡出消失
+    //     }
+    //   });
+    // },
     handleCheckedChange(value) {
       let self = this;
       if (value === 0) {
@@ -916,19 +921,34 @@ export default {
       }
       self.conditionModifytoHistory.new = x
       if (x.length !== 0) {
-        self.$refs["commentdataTable"].selectedRows.forEach((item) => {
-          if(item.labels.condition === 2){
-            console.log(item.labels.condition)
-          }else{
-            self.conditionModifytoHistory.old = item.labels.condition
-            self.conditionModifytoHistory.commentID = item._id
-            self.conditionModifytoHistory.title = item.text.substr(0, 10) + "..."
-            item.labels.condition = x;
-            self.newComment = item;
-            self.updateComment(item._id);
-            self.updateHistory(0)
-          }
-        });
+        this.$fire({
+              title: "是否將此評論狀態修改為'" + value + "'?",
+              // text: "刪除後將不可復原",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "是",
+              cancelButtonText: "否",
+            }).then((result) => {
+              if(result.value){
+                self.$refs["commentdataTable"].selectedRows.forEach((item) => {
+                  if(item.labels.condition === 2){
+                    console.log(item.labels.condition)
+                  }else{
+
+                    self.conditionModifytoHistory.old = item.labels.condition
+                    self.conditionModifytoHistory.commentID = item._id
+                    self.conditionModifytoHistory.title = item.text.substr(0, 10) + "..."
+                    item.labels.condition = x;
+                    self.newComment = item;
+                    self.updateComment(item._id);
+                    self.updateHistory(0)
+                  }
+                });
+              }
+        })
+        self.conditionModify = ''
       }
       self.replyModifytoHistory.new = value1
       if (value1.length !== 0) {
@@ -1078,15 +1098,18 @@ export default {
       });
     },
     selectionChanged(params) {
+      let self = this;
       this.rowSelection = params.selectedRows;
-      if(this.rowSelection.length !== 0){
-        $('#editButton_phone').show()
-        $('#comment_filter_phone').hide()
-      }else{
-        $('#editButton_phone').hide()
-        $('#comment_filter_phone').show()
+      if(self.window_width < 768){
+          if(this.rowSelection.length !== 0 ){
+          console.log( self.window_width)
+          $('#editButton_phone').show()
+          $('#comment_filter_phone').hide()
+        }else{
+          $('#editButton_phone').hide()
+          $('#comment_filter_phone').show()
+        }
       }
-      
     },
     openfilter_sort(){
       event.stopPropagation();

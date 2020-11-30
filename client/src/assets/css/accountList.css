@@ -56,25 +56,31 @@ button:hover{
   box-shadow: 0px 3px 6px #00000029;
 } */
 .functionButton{
-  all: unset;
-  background: white;
-  height: 20px;
-  background-color: rgba(72, 133, 82, 0.877);
-  border: 0.5px solid rgb(196, 196, 196);
-  border-radius: 5px;
-  padding: 1% 2.5%;
-  color: white;
-  letter-spacing: 3px;
+    /* basic */
+    all: unset;
+    width: 50px;
+    font-size: 16px;
+    height: 30px;
+    background-color: rgba(72, 133, 82, 0.877);
+    border: 0.5px solid rgb(196, 196, 196);
+    border-radius: 3px;
+    padding: 2px 25px;
+    color: white;
+    letter-spacing: 2px;
+    text-align: center;
+    /* custom */
+    margin-bottom: 10px;
 }
+
 .addBTN{
   position: absolute;
   left: 35%;
-  bottom: 10%;
+  bottom: 5%;
 }
 .deleteBTN{
   position: absolute;
   right: 35%;
-  bottom: 10%;
+  bottom: 5%;
 }
 .buttonFunArea{
   width: 100%;
@@ -101,11 +107,12 @@ button:hover{
 	transition: all 0.5s;
 }
 .editButton img{
-  height: 24px;
+  height: 18px;
   object-fit: contain;
   margin: auto;
   justify-content: center; 
   margin-left: 5px;
+  margin-top: 2px;
 }
 .editButton span{
   margin-left: 10px;
@@ -129,29 +136,11 @@ button:hover{
 }
 .clearALL img{
   width: 28px;
-  height: 24px;
+  height: 16px;
+  margin-top: 4px;
 }
-/* .clearall{
-  all: unset;
-  display: inline-block;
-  height: 20px;
-  font-size: 12px;
-  padding: 10px 10px;
-  border-radius: 3px;
-  font-family: "Segoe UI";
-  letter-spacing: 1px;
-  border: 0.5px solid rgb(233, 233, 233);
-  background-color: #ffffff;
-  color: black;  
-  -webkit-transition: all 0.5s;
-	-moz-transition: all 0.5s;
-	transition: all 0.5s;
-}
-.clearall:hover{
-  background-color: rgba(181, 240, 191, 0.747);
-  position:relative;
-  bottom: 2px;
-} */
+
+
 .accountList  td{
   padding: 0px 5px;
   border-top:#656565 solid 1.5px ;
@@ -210,32 +199,32 @@ button:hover{
   margin-top: 18px;
 }
 .input{
-  float: right;
-  margin-top: 60px;
-  margin-right: 140px;
+  display: inline-block;
+  margin-top: 40px;
+  margin-left: 17%;
 }
-.input input{
+/* .input input{
   margin-bottom: 60px;
   float:right;
 }
 .input span{
   float:right;
-}
+} */
 /* #tableActionsBtn{
   margin-right: 330px;
   margin-left: 100px;
 } */
 .addSelect{
-  float:right;
-  width: 165px;
-  height: 23px;
+  /* float:right; */
+  width: 200px;
+  height: 30px;
   border: #707070 solid 1px;
   border-radius: 3px;
   font-family: "微軟正黑體";
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 .account_select_phone{
-  display: none;
+  /* display: none; */
   width: 30%;
   float: left;
   margin-right: 2.5%;
@@ -261,6 +250,26 @@ button:hover{
 }
 #contentCenter_phone{
   display: none;
+}
+.input_all{
+  width: 200px;
+  line-height: 20px;
+  border: 1px solid #a3a3a3;
+  border-radius: 3px;
+  margin-bottom: 40px;
+  padding: 5px;
+  font-size: 15px;
+  font-family: 微軟正黑體;
+  outline:none;
+}
+.input_all:focus{
+  border: 0.5px solid rgb(71, 152, 228);
+}
+.p_all{
+  width: 70px;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: gray;
 }
 @media (max-width: 768px) {
   .account_contentCenter{

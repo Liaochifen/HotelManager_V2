@@ -1,74 +1,84 @@
 .personalInfo{
     visibility: hidden;
 }
-.page{
-   width: 50%;
-    height: 500px;
+.veri_wrap{
+    display: block;
+    width: 100%;
+    margin-left: 5%;
+}
+.veri_page{
+    width: 50%;
     border-radius:10px;
-    margin-left: 20%;
+    margin-top: 10vh;
+    margin-left: auto;
+    margin-right: auto;
 }
-.page img{
-    float: left;
-    margin: 40px 0 40px 43%;
+.veri_page img{
+    display: block;
+    width: 100px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 20px;
 }
-.page h1{
-    font-size: 28px;
-    margin: auto;
-    font-weight: bolder;
-    text-align: center;
-}
-.page form{
-    float: left;
-    margin-left: 30%;
-}
-.page label{
-    font-size: 20px;
-    font-weight: bolder;
-}
-.page input{
+.veri_page h1{
     width: 200px;
-    border: 1px solid #707070;
+    margin-right: auto;
+    margin-left: auto;
+}
+.send, .veri_page .input_block{
+    width: 30%;
+    margin-left: auto;
+    margin-top: 40px;
+    margin-right: auto;
+}
+.veri_page .input_block{
+    margin-top: 60px;
+}
+.veri_page .input_all{
+    width: 200px;
+    line-height: 24px;
+    border: 1px solid #a3a3a3;
     border-radius: 3px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     padding: 5px;
     font-size: 15px;
     font-family: 微軟正黑體;
     outline:none;
 }
-
-.page button{
+.veri_page .input_all:focus{
+    border: 0.5px solid rgb(71, 152, 228);
+}
+.input_block p{
+    width: 90px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: gray;
+    /* font-weight: bolder; */
+}
+.btn{
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.btn1{
+    width: 65%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.veri_page button{
+    /* basic */
     all: unset;
     width: 50px;
-    margin: 15% 32%;
     font-size: 16px;
     height: 30px;
     background-color: rgba(72, 133, 82, 0.877);
     border: 0.5px solid rgb(196, 196, 196);
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 2px 25px;
     color: white;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-align: center;
 }
-.page .cus{
+.veri_page .cus{
     width: 80px;
-}
-.send{
-    float: left;
-    margin-top: 40px;
-    margin-left: 30%;
-}
-.send input{
-    border-right:none ;
-}
-/* .send button{
-    border-left:none ;
-    height: 32px;
-} */
-form button{
-    text-align: center;
-}
-form input{
-    margin-top: 5px;
-    
 }
