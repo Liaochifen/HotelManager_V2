@@ -911,6 +911,8 @@ export default {
           .forEach((item) => {
             self.RangeLabelData.push(item.time);
           });
+          self.positiveData(value);
+          self.negativeData(value);
       }
       Promise.all(promises).then(() => {
         this.Rankcollection = {
@@ -1045,8 +1047,6 @@ export default {
     // 正負評趨勢
     positiveData(value) {
       let self = this;
-      // var data = [];
-      // var max = Math.max.apply(null, this.getData(value))
       this.positiveDatacollection = {
         labels: self.RangeLabelData,
         datasets: [
@@ -1073,7 +1073,7 @@ export default {
                 // min: Math.max.apply(null, this.getData(value))-5,
                 stepSize: 1,
                 max: Math.max.apply(null, this.getData(value)) + 5,
-                min: Math.max.apply(null, this.getData(value)) - 5,
+                min: Math.min.apply(null, this.getData(value)) - 5,
               },
             },
           ],
@@ -1124,7 +1124,7 @@ export default {
                 // min: Math.max.apply(null, this.getData1(value))-5,
                 stepSize: 1,
                 max: Math.max.apply(null, this.getData1(value)) + 5,
-                min: Math.max.apply(null, this.getData1(value)) - 5,
+                min: Math.min.apply(null, this.getData1(value)) - 5,
               },
             },
           ],
