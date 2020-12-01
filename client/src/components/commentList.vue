@@ -67,6 +67,7 @@
       </div>
     </div>
     <div id="MultiFilterArea" class="MultiFilterArea">
+      <div class="MultiFilterArea_phone">
         <div slot="table-actions" class="slot_div">
           <template>
             <el-select v-model="typeChoosen"  placeholder="選擇評論類型"  @change="handleCheckedChange(0)" class="custom_el_select">
@@ -113,6 +114,7 @@
         
         
         <div class="clear"></div>
+      </div>
     </div>
     <div class="dataArea">
         <div class="filter" id="filter_sort_phone">
@@ -654,19 +656,19 @@ export default {
       $("#reportrange span").html("時間");
       return self.commentData;
     },
-    // openFilter(){
-    //   // let self = this;
-    //   event.stopPropagation();
-    //   $(".MultiFilterArea").slideToggle("normal");
-    //   $(document).click(function (event) {
-    //     var area = $(".MultiFilterArea"); // 設定目標區域
-    //     var area1 = $(".daterangepicker"); // 設定目標區域
-    //     if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
-    //       // $('#divTop').slideUp('slow');  //滑動消失
-    //       $(".MultiFilterArea").hide(); // 淡出消失
-    //     }
-    //   });
-    // },
+    openFilter(){
+      // let self = this;
+      event.stopPropagation();
+      $(".MultiFilterArea").slideToggle("normal");
+      $(document).click(function (event) {
+        var area = $(".MultiFilterArea"); // 設定目標區域
+        var area1 = $(".daterangepicker"); // 設定目標區域
+        if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
+          // $('#divTop').slideUp('slow');  //滑動消失
+          $(".MultiFilterArea").hide(); // 淡出消失
+        }
+      });
+    },
     handleCheckedChange(value) {
       let self = this;
       if (value === 0) {

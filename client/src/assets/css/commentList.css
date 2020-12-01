@@ -393,6 +393,9 @@ tr:hover td{
 .contentCenter{
     display: block !important;
 }
+.clearALL_competition{
+    right: 80px;
+}
 @media (max-width: 768px) {
     .page{
         /* margin-left: -36px; */
@@ -485,29 +488,36 @@ tr:hover td{
         padding: 0 15px;
         line-height: 35px;
     }
-    .clearall{
+    .clearALL{
         position: fixed;
-        top: 6px;
+        top: 5px;
+        left: 5%;
+        margin: 0;
+        padding: 0 5px;
+        height: 30px;
+        /* line-height: 25px; */
+        border: none;
+        box-sizing: border-box;
+    }
+    .clearALL span{
+        display: none;
+    }
+    .clearALL:hover{
+        position: fixed;
+        top: 5px;
         left: 5%;
         margin: 0;
         padding: 0 5px;
         height: 25px;
-        line-height: 25px;
-        border: 1px solid rgb(182, 180, 180);
+        /* line-height: 25px; */
+        border: none;
+        background: white;
+        border-radius: unset;
+        box-shadow: unset;
     }
-    .clearall:hover{
-        position: fixed;
-        top: 6px;
-        left: 5%;
-        margin: 0;
-        padding: 0 5px;
-        height: 25px;
-        line-height: 25px;
-        border: 1px solid rgb(122, 122, 122);
-    }
-    .clearall:active{
-        background: rgb(122,122,122);
-        color: white;
+    .clearALL:active{
+        background: white;
+        /* color: white; */
     }
     .filter_sort_phone{
         display: block;
@@ -525,6 +535,10 @@ tr:hover td{
         box-sizing: border-box;
         font-size: 12px;
     }
+    #filter_sort_phone ul{
+        display: flex;
+        flex-wrap: wrap;
+    }
     .dataArea{
         width: 100%;
         /* margin: 20px 0 0 ; */
@@ -541,7 +555,7 @@ tr:hover td{
     #comment_filter_phone{
         display: block;
         position: fixed;
-        top: 8px;
+        top: 5px;
         right: 5%;
         z-index: 1;
         padding: 0;
@@ -553,7 +567,7 @@ tr:hover td{
         /* all: unset; */
         background-color: white;
         position:fixed;
-        top: 8px;
+        top: 5px;
         right: 5%;
         /* left: unset; */
         width: 25px;
@@ -561,7 +575,7 @@ tr:hover td{
     #comment_filter_phone:active{
         all: unset;
         position:fixed;
-        top: 8px;
+        top: 5px;
         right: 5%;
         /* left: 0; */
         z-index: 1;
@@ -617,22 +631,32 @@ tr:hover td{
         width: 100%;
         z-index: 1;
         margin: 0;
-        padding: 0;
         border-radius: unset;
         box-shadow: 0 -2px 4px rgb(148, 146, 146);
+        
+    }
+    .MultiFilterArea_phone{
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         justify-content: space-around;
         align-items: center;
-        height: 200px;
-        padding: 10px 3% 15px;
+        height: 30vh;
+        padding: 10px 3% 20px;
         box-sizing: border-box;
     }
-
+    .MultiFilterArea_competition_phone{
+        height: 25vh;
+    }
+    .time_filter_phone{
+        /* order: -1; */
+    }
     .MultiFilterArea .slot_div{
-        width: 45%;
-        margin: 10px 0;
+        width: 40%;
+        margin: 10px;
+        padding: 1%;
+        box-sizing: border-box;
+        display: inline-block;
         /* order: 1; */
     }
     #MultiFilterArea{
@@ -657,9 +681,29 @@ tr:hover td{
     .el-table{
         margin: 0;
     }
+    #comment_condition_phone{
+        position: relative;
+    }
+    #comment_time_phone{
+        position: relative;
+    }
 }
 @media (max-width: 425px) {
     .display{
         display: none;
+    }
+    .MultiFilterArea_phone{
+        height: 35vh;
+    }
+    .MultiFilterArea_competition_phone{
+        height: 25vh;
+    }
+}
+@media (max-width: 375px){
+    .MultiFilterArea_phone{
+        height: 50vh;
+    }
+    .MultiFilterArea_competition_phone{
+        height: 35vh;
     }
 }
