@@ -219,7 +219,7 @@ button{
     }
     .hotel_name{
         color: #a89090;
-        font-family: cursive;
+        /* font-family: cursive; */
         font-weight: 900;
     }
     .phone {
