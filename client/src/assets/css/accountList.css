@@ -271,6 +271,9 @@ button:hover{
   margin-bottom: 5px;
   color: gray;
 }
+#filter_phone{
+  display: none;
+}
 @media (max-width: 768px) {
   .account_contentCenter{
     display: none;
@@ -296,6 +299,7 @@ button:hover{
     margin: 0 2.5%;
   }
   #filter_phone{
+    display: block;
     position: fixed;
     top: 8px;
     right: 5%;
@@ -342,6 +346,11 @@ button:hover{
   }
   #account_select_phone{
     display: none;
+    text-align: center;
+
+  }
+  #account_select_phone div{
+    margin: 5px;
   }
   .clearALL{
     position: fixed;

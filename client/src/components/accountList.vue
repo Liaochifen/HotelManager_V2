@@ -91,6 +91,10 @@
       </div>
       <div class="buttonFunArea">
         <div class="buttonArea">
+          <button class="editButton" @click="openFilter()" id="filter_phone">
+          <img src="../assets/icon/filter.png"/>
+          <span>篩選</span>
+          </button>
           <button class="editButton" v-on:click="open()" id="add_user">
             <img src="../assets/icon/add.png"/>
             <span>新增使用者</span>
@@ -499,19 +503,19 @@ export default {
         // console.log(this.checkedAccount._id);
       }
     },
-    // openFilter(){
-    //   let self = this;
-    //   self.close()
-    //   event.stopPropagation();
-    //   $(".account_select_phone").slideToggle("normal");
-    //   $(document).click(function (event) {
-    //     var area = $(".account_select_phone"); // 設定目標區域
-    //     if (!area.is(event.target) && area.has(event.target).length === 0) {
-    //       // $('#divTop').slideUp('slow');  //滑動消失
-    //       $(".account_select_phone").hide(); // 淡出消失
-    //     }
-    //   });
-    // },
+    openFilter(){
+      let self = this;
+      self.close()
+      event.stopPropagation();
+      $(".account_select_phone").slideToggle("normal");
+      $(document).click(function (event) {
+        var area = $(".account_select_phone"); // 設定目標區域
+        if (!area.is(event.target) && area.has(event.target).length === 0) {
+          // $('#divTop').slideUp('slow');  //滑動消失
+          $(".account_select_phone").hide(); // 淡出消失
+        }
+      });
+    },
     linkAccountDetial(params) {
       let nowAccount = params.row;
       this.$router.push({ path: `/accountDetial/${nowAccount._id}` });
