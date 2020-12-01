@@ -199,7 +199,8 @@ import axios from "axios";
 import $ from "../node_modules/jquery";
 import dateTime from "../src/assets/js/dateTime";
 import util from "./assets/js/utility";
-
+import firebase from 'firebase/app';
+import 'firebase/storage';
 export default {
   name: "App",
   data() {
@@ -222,6 +223,16 @@ export default {
       self.companyName = loginData.companyName;
       self.userID = loginData.id;
       self.picture = loginData.pictureUrl;
+      
+      if(loginData.pictureUrl === null || loginData.pictureUrl === ""){
+        const storageRef2 = firebase.storage().ref('004.png');
+        storageRef2.getDownloadURL().then(function(url) { 
+        self.picture = url;
+        }).catch(function(error) {
+          console.log(error);
+          self.picture = "https://fakeimg.pl/30x30/";
+        });
+      }
       axios
         .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
         .then((response) => {
@@ -599,9 +610,10 @@ a {
 
 /* Content */
 .content {
+  margin-right: auto;
+  margin-left: auto;
   float: left;
   width: 89.5%;
-  height: 100%;
 }
 
 .contentTop {
@@ -679,7 +691,7 @@ a {
 }
 .loginingInfo{
   width: 250px;
-  height: 270px;
+  height: 350px;
   position: absolute;
   z-index: 100000;
   top: 7%;
@@ -696,12 +708,18 @@ a {
   border-bottom: 0.3px solid rgb(204, 204, 204);
 }
 .nameEmail img{
-  float: left;
-  margin-left: 10px;
-  margin-right: 20px;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 20px;
+}
+.nameEmail ul{
+  width: 100%;
+
 }
 .nameEmail ul li{
-  padding-top: 5px;
+  padding-top: 5px;  
+  text-align: center;
 }
 .personalMenu{
   margin-top: 20px;
@@ -726,18 +744,20 @@ a {
   background: rgb(206, 206, 206);
 }
 .bigheadLogout{
-  all: unset;
-  width: 40px;
-  margin: 15% 32%;
-  font-size: 16px;
-  height: 30px;
-  background-color: rgba(72, 133, 82, 0.877);
-  border: 0.5px solid rgb(196, 196, 196);
-  border-radius: 5px;
-  padding: 2px 25px;
-  color: white;
-  letter-spacing: 3px;
-  text-align: center;
+   /* basic */
+    all: unset;
+    width: 50px;
+    font-size: 16px;
+    height: 30px;
+    background-color: rgba(72, 133, 82, 0.877);
+    border: 0.5px solid rgb(196, 196, 196);
+    border-radius: 3px;
+    padding: 2px 25px;
+    color: white;
+    letter-spacing: 2px;
+    text-align: center;
+    /* custom */
+    margin: 15% 32%;
 }
 .bigheadLogout:hover{
   cursor: pointer;

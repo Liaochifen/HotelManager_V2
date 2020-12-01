@@ -1,27 +1,34 @@
 <template>
-  <div>
-    <div class="page">
-      <img class="photo" src="../assets/icon/icon-96x96.png" alt="" />
+  <div class="veri_wrap">
+    <div class="veri_page">
+      <img src="../assets/icon/icon-96x96.png" alt="" />
       <div class="clear"></div>
       <h1>已寄送驗證碼到此信箱</h1>
       <div class="clear"></div>
       <div class="send">
-        <input type="text" readonly="true" v-model="userAccountDetail.email" />
-        <button v-on:click="sendEmail()" class="cus">重新寄送</button>
+        <input class="input_all" type="text" readonly="true" v-model="userAccountDetail.email" />
+        <div class="btn1">
+          <button v-on:click="sendEmail()" class="cus">重新寄送</button>
+        </div>
       </div>
       <div class="clear"></div>
-      <form v-on:submit.prevent="confirm">
-        <label>請輸入驗證碼&nbsp;:&nbsp;</label>
-        <div class="clear"></div>
-        <input
-          type="text"
-          v-model="check"
-          required
-          placeholder="請輸入驗證碼"
-        />
-        <div class="clear"></div>
-        <button type="submit">確&nbsp;認</button>
-      </form>
+      <div class="input_block">
+        <form v-on:submit.prevent="confirm">
+          <p>請輸入驗證碼</p>
+          <div class="clear"></div>
+          <input
+            class="input_all"
+            type="text"
+            v-model="check"
+            required
+            placeholder="請輸入驗證碼"
+          />
+          <div class="clear"></div>
+          <div class="btn">
+            <button type="submit">確認</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>

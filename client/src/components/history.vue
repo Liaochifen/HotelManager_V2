@@ -20,8 +20,8 @@
       <template>
         <span v-if="page === 0">
           <ul class="history_inner__phone">
-            <li class="his_comment"><button @click="publicManage(0)" >評論狀態動態</button></li>
-            <li class="his_tags"><button @click="publicManage(1)" >評論標籤動態</button></li>
+            <li class="his_comment" @click="publicManage(0)"><button>評論狀態動態</button></li>
+            <li class="his_tags" @click="publicManage(1)"><button>評論標籤動態</button></li>
             <!-- <li class="his_reply"><button @click="publicManage(2)" >評論回覆動態</button></li> -->
             <div class="clear"></div>
           </ul>
@@ -74,9 +74,9 @@
         </span>
         <span v-else-if="page === 1">
           <ul class="history_inner__phone">
-            <li><button @click="personalManage(0)">評論狀態動態</button></li>
-            <li><button @click="personalManage(1)">評論標籤動態</button></li>
-            <li><button @click="personalManage(2)">我的最愛動態</button></li>
+            <li @click="personalManage(0)"><button>評論狀態動態</button></li>
+            <li @click="personalManage(1)"><button>評論標籤動態</button></li>
+            <li @click="personalManage(2)"><button>我的最愛動態</button></li>
           </ul>
           <div v-if="personalPage === 0"  class="personal_record">
             <span v-if="personalCommentFilter.length === 0">
@@ -137,14 +137,14 @@
         </span>
         <span v-else-if="page === 2" >
           <ul class="history_inner__phone">
-            <li><button  v-on:click="manager(0)">登入</button></li>
-            <li><button  v-on:click="manager(1)">登出</button></li>
-            <li><button  v-on:click="manager(2)">忘記密碼</button></li>
-            <li><button  v-on:click="manager(3)">修改帳號資料</button></li>
-            <li><button  v-on:click="manager(4)">新增刪除使用者</button></li>
-            <li><button  v-on:click="manager(5)">評論狀態修改</button></li>
-            <li><button  v-on:click="manager(6)">評論標籤修改</button></li>
-            <li><button  v-on:click="manager(7)">我的最愛修改</button></li>
+            <li v-on:click="manager(0)"><button>登入</button></li>
+            <li v-on:click="manager(1)"><button>登出</button></li>
+            <li v-on:click="manager(2)"><button>忘記密碼</button></li>
+            <li v-on:click="manager(3)"><button>修改帳號資料</button></li>
+            <li v-on:click="manager(4)"><button>新增刪除使用者</button></li>
+            <li v-on:click="manager(5)"><button>評論狀態修改</button></li>
+            <li v-on:click="manager(6)"><button>評論標籤修改</button></li>
+            <li v-on:click="manager(7)"><button>我的最愛修改</button></li>
           </ul>
           <div  v-if="userInfoPage === 0" class="backend_record">
             <div v-for="(item, loginIndex) in loginNew.slice().reverse()" :key="loginIndex+'login'" class="commentArea">
@@ -218,16 +218,16 @@
             <span v-if="personalFavFilter.length === 0">
               <p>無任何記錄</p>
             </span>
+            
             <span v-else-if="personalFavFilter.length !== 0">
               <div v-for="(item, index) in personalFavFilter.slice().reverse()" :key="index+'favPer'" class="commentArea">
-
                 <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span v-if="item.modify === '取消'">
-                  <span class="commentHistoryContent">將{{item.company}}從我的最愛中{{item.modify}}</span>
+                  <span class="commentHistoryContent">將<router-link :to="{ name: 'competitionCommentList', params: { collections: item.company }}">{{item.hotelChineseName}}</router-link>從我的最愛中{{item.modify}}</span>
                   <span class="commentTimeHistory">{{item.time}}</span>
                 </span>
                 <span v-else-if="item.modify === '加入'">
-                  <span class="commentHistoryContent">將{{item.company}}{{item.modify}}我的最愛</span>
+                  <span class="commentHistoryContent">將<router-link :to="{ name: 'competitionCommentList', params: { collections: item.company }}">{{item.hotelChineseName}}</router-link>{{item.modify}}我的最愛</span>
                   <span class="commentTimeHistory">{{item.time}}</span>
                 </span>
               </div>
@@ -366,11 +366,6 @@ export default {
         self.tagsFilter = self.historyData.tags;
         self.favoriteFilter = self.historyData.favorite
         self.replyFIlter = self.historyData.reply
-        console.log(self.favoriteFilter)
-        // self.commentFilter.push({
-        //   condition: self.historyData.condition,
-        //   tags: self.historyData.tags
-        // })
         self.commentFilter.filter((item) => {
           if(item.employeeNumber === self.employeeNumber){
             self.personalCommentFilter.push(item)

@@ -911,6 +911,8 @@ export default {
           .forEach((item) => {
             self.RangeLabelData.push(item.time);
           });
+          self.positiveData(value);
+          self.negativeData(value);
       }
       Promise.all(promises).then(() => {
         this.Rankcollection = {
@@ -1045,8 +1047,6 @@ export default {
     // 正負評趨勢
     positiveData(value) {
       let self = this;
-      // var data = [];
-      // var max = Math.max.apply(null, this.getData(value))
       this.positiveDatacollection = {
         labels: self.RangeLabelData,
         datasets: [
@@ -1073,6 +1073,7 @@ export default {
                 // min: Math.max.apply(null, this.getData(value))-5,
                 stepSize: 1,
                 max: Math.max.apply(null, this.getData(value)) + 5,
+                min: Math.min.apply(null, this.getData(value)) - 5,
               },
             },
           ],
@@ -1123,6 +1124,7 @@ export default {
                 // min: Math.max.apply(null, this.getData1(value))-5,
                 stepSize: 1,
                 max: Math.max.apply(null, this.getData1(value)) + 5,
+                min: Math.min.apply(null, this.getData1(value)) - 5,
               },
             },
           ],
@@ -1257,13 +1259,17 @@ export default {
         datasets: [
           {
             backgroundColor: [
-              "#F75019",
-              "#178D8F",
-              "#3591B0",
-              "#872403",
-              "#AD3937",
-              "#F53431",
-              "#F53435",
+              "#001F3F",
+              "#0074D9",
+              "#7FDBFF",
+              "#39CCCC",
+              "#3D9970",
+              "#2ECC40",
+              "#FF4136",
+              "#85144B",
+              "#FF851B",
+              "#DDDDDD",
+              "#AAAAAA"
             ],
             data: self.getTripTypesData(value, data),
           },

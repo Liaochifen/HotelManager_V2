@@ -1,33 +1,59 @@
 .personalInfo{
     display: none;
 }
-.page{
-    width: 50%;
-    height: 500px;
-    border-radius:10px;
-    margin-left: 20%;
+
+.login_wrap{
+    display: block;
+    width: 100%;
+    margin-left: 5%;
 }
-.page img{
+.login_page{
+    width: 50%;
+    border-radius:10px;
+    margin-top: 10vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+.login_page img{
+    display: block;
+    width: 100px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 20px;
+}
+.login_page h1{
+    width: 40px;
+    margin-right: auto;
+    margin-left: auto;
+}
+/* .login_page img{
     float: left;
     margin: 40px 0 40px 43%;
 }
-.page h1{
+.login_page h1{
     font-size: 28px;
     margin: auto;
     font-weight: bolder;
     text-align: center;
-}
-.page form{
+} */
+
+.login_page .input_block{
+    width: 30%;
+    margin-left: auto;
     margin-top: 40px;
-    text-align: center;
+    margin-right: auto;
 }
-.page label{
-    font-size: 20px;
-    font-weight: bolder;
+.login_page p{
+    width: 40px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: gray;
+    /* font-weight: bolder; */
 }
-.page input{
+.login_page .input_all{
     width: 200px;
-    border: 1px solid #707070;
+    line-height: 24px;
+    border: 1px solid #a3a3a3;
     border-radius: 3px;
     margin-bottom: 40px;
     padding: 5px;
@@ -35,29 +61,36 @@
     font-family: 微軟正黑體;
     outline:none;
 }
-.link{
-  font-size: 16px;
-    text-decoration:underline;
-    margin-left: 33%;
-    float: left;
-    margin-top: 5px;
+.login_page .input_all:focus{
+    border: 0.5px solid rgb(71, 152, 228);
+}
+
+.btn{
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.btn .link{
+    margin-left: 15%;
+    border-bottom: 0.5px solid gray;
+    padding-bottom: 2px;
     color: #707070;
 }
-.page button{
+.login_page button{
+    /* basic */
     all: unset;
     width: 50px;
-    float: left;
-    /* margin: 15% 32%; */
-    margin-left: 30px;
     font-size: 16px;
     height: 30px;
     background-color: rgba(72, 133, 82, 0.877);
     border: 0.5px solid rgb(196, 196, 196);
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 2px 25px;
     color: white;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-align: center;
+    /* custom */
+    margin-bottom: 10px;
 }
 @media (max-width: 768px) {
     #login_page{

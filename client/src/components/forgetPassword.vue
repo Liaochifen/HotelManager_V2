@@ -1,15 +1,19 @@
 <template>
-  <div>
-    <div class="page forgetPW_phone">
-      <img class="photo" src="../assets/icon/icon-96x96.png" alt="" />
+  <div class="forgetpw_wrap">
+    <div class="forgetpw_page forgetPW_phone">
+      <img src="../assets/icon/icon-96x96.png" alt="" />
       <div class="clear"></div>
       <h1>忘記密碼</h1>
-      <form v-on:submit.prevent="forget">
-        <label>帳號</label>
-        <p><input type="text"  v-model="employeeNumber"  required  placeholder="請輸入帳號"/></p>
-        <div class="clear"></div>
-        <button type="submit">確&nbsp;認</button>
-      </form>
+      <div class="input_block">
+        <form v-on:submit.prevent="forget">
+          <p>帳號</p>
+          <input class="input_all" type="text"  v-model="employeeNumber"  required  placeholder="請輸入帳號"/>
+          <div class="clear"></div>
+          <div class="btn"> 
+            <button type="submit">確認</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
