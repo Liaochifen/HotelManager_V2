@@ -111,7 +111,7 @@ router.get('/comment/:collection', (req, res) => {
     console.log(req.body)
     q = require('../models/' + req.params.collection + 'Schema')
     q.find({})
-        .limit(10)
+        .limit(100)
         .sort({ update_at: -1 })
         .then(commentDatas => {
             res.json(commentDatas)
