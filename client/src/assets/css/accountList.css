@@ -357,37 +357,35 @@ button:hover{
   .clearALL{
     position: fixed;
     z-index: 1;
-    top: 6px;
+    top: 7px;
     left: 5%;
     margin: 0;
-    padding: 0 3px;
+    padding: 0 0px;
     height: 25px;
-    line-height: 25px;
     border: 1px solid rgb(182, 180, 180);
-    letter-spacing: 1px;
     font-size: 12px;
-    /* display:none; */
     width: auto;
+    box-sizing: border-box;
   }
   .clearALL img{
     display: none;
   }
   .clearALL:hover{
     position: fixed;
-    top: 6px;
+    z-index: 1;
+    top: 7px;
     left: 5%;
     margin: 0;
-    padding: 0 3px;
+    padding: 0 0px;
     height: 25px;
-    line-height: 25px;
-    border: 1px solid rgb(122, 122, 122);
-    background: white;
-    /* box-sizing: border-box; */
-    letter-spacing: 1px;
+    border: 1px solid rgb(182, 180, 180);
     font-size: 12px;
+    width: auto;
+    box-sizing: border-box;
+    background: white;
   }
   .clearALL:active{
-    background: rgb(122,122,122);
+    background: gray;
     color: white;
   }
   .insideContent{

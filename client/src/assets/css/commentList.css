@@ -455,16 +455,29 @@ tr:hover td{
         margin: 0;
         border: none;
     }
-    #editButton_phone:active{
-        all: unset;
+    #editButton_phone:hover{
+        display: none;
         position: fixed;
         top: 5px;
         right: 5%;
         padding: 0;
         margin: 0;
         border: none;
-        width: 20px;
-        height: 15px;
+        background: white;
+    }
+    #editButton_phone span{
+        display: none;
+    }
+    #editButton_phone:active{
+        all: unset;
+        position: fixed;
+        top: 5px;
+        right: 5%;
+        /* padding: 0; */
+        /* margin: 0; */
+        /* border: none; */
+        /* width: 20px; */
+        /* height: 15px; */
         /* background: #000; */
     }
     .edit{
@@ -488,36 +501,56 @@ tr:hover td{
         padding: 0 15px;
         line-height: 35px;
     }
-    .clearALL{
+    /* .clearALL{
         position: fixed;
         top: 5px;
         left: 5%;
         margin: 0;
         padding: 0 5px;
         height: 30px;
-        /* line-height: 25px; */
         border: none;
         box-sizing: border-box;
+    } */
+    .clearALL{
+        position: fixed;
+        z-index: 1;
+        top: 7px;
+        left: 5%;
+        margin: 0;
+        padding: 0 0px;
+        height: 25px;
+        border: 1px solid rgb(182, 180, 180);
+        font-size: 12px;
+        width: auto;
+        box-sizing: border-box;
+    }
+    .clearALL img{
+        display: none;
     }
     .clearALL span{
-        display: none;
+        line-height: 23px;
+        height: 25px;
+        margin: 0 5px;
+        width: 100%;
+        letter-spacing: 1px;
     }
     .clearALL:hover{
         position: fixed;
-        top: 5px;
+        z-index: 1;
+        top: 7px;
         left: 5%;
         margin: 0;
-        padding: 0 5px;
+        padding: 0 0px;
         height: 25px;
-        /* line-height: 25px; */
-        border: none;
+        border: 1px solid rgb(182, 180, 180);
+        font-size: 12px;
+        width: auto;
+        box-sizing: border-box;
         background: white;
-        border-radius: unset;
-        box-shadow: unset;
     }
     .clearALL:active{
-        background: white;
-        /* color: white; */
+        background: gray;
+        color: white;
     }
     .filter_sort_phone{
         display: block;
@@ -534,6 +567,10 @@ tr:hover td{
         outline: none;
         box-sizing: border-box;
         font-size: 12px;
+    }
+    .filter_sort_phone:active{
+        background: gray;
+        color: white;
     }
     #filter_sort_phone ul{
         display: flex;
