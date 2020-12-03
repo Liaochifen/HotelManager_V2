@@ -101,6 +101,17 @@
 #reportrange{
     display: inline-block;
     margin: 15px 5px;
+    width: 120px;
+    box-shadow: 0.5px 0.5px 1px #adadad;
+    border-radius: 2px;
+}
+#reportrange:active{
+    -webkit-box-shadow: 2px 2px 0px #adadad;
+    -moz-box-shadow: 2px 2px 0px #adadad;
+    box-shadow: 1px 1px 0px #adadad;
+    position:relative;
+    top:1px;
+    left:1px;
 }
 .timeSpan{
     font-size: 14px;
@@ -180,6 +191,7 @@
 }
 .cancle .el-button{
     padding: 7px 10px 5px 10px;
+    border-radius: 3px;
 }
 .daterangepicker .drp-calendar .left{
     display: none;

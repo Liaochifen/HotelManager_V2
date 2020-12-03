@@ -120,7 +120,7 @@
             <el-select
               v-model="chooseDepartment"
               class="selectBox"
-              @change="selection()"
+              @change="selection(0)"
               placeholder="請選擇部門"
             >
               <el-option value="全選">全選</el-option>
@@ -131,7 +131,7 @@
             <el-select
               v-model="chooseLimit"
               class="selectBox"
-              @change="selection()"
+              @change="selection(1)"
               placeholder="請選擇權限"
             >
               <el-option value="全選">全選</el-option>
@@ -216,6 +216,7 @@ import axios from "axios";
 import dateTime from "../assets/js/dateTime";
 import util from "../assets/js/utility";
 import $ from "jquery";
+// import { filter } from 'vue/types/umd';
 // import { filter } from 'vue/types/umd';
 
 export default {
@@ -341,7 +342,15 @@ export default {
       company: "",
       record: "UserListModify",
       deleteEmployee: [],
-      window_width: document.documentElement.clientWidth
+      window_width: document.documentElement.clientWidth,
+      isDepartment: false,
+      isLimit: false,
+      filterObj: {
+        department: '',
+        employeeLimit: ''
+      },
+      x: '',
+      y: '',
     };
   },
   mounted() {
@@ -475,6 +484,8 @@ export default {
       self.chooseDepartment = '';
       self.chooseLimit = ''
       self.accountList = self.hotels
+      self.x = ''
+      self.y = ''
     },
     addDepartment(){
       let self = this;
@@ -629,78 +640,44 @@ export default {
             .catch((error) => {
               console.log(error);
             });
-          // this.close();
         }
       }
-      // console.log(newUser);
     },
-    selection: function () {
+    selection: function (value) {
       let self = this
-      var arr = [];
-      if((self.chooseDepartment === '全選' || self.chooseDepartment === '')&& (self.chooseLimit === '全選' || self.chooseLimit === '')){
-        self.accountList = self.hotels  
-        return self.accountList
-      }else if(self.chooseDepartment.length !== 0 && self.chooseDepartment !== '全選'){
-        self.hotels.forEach((item) => {
-          if(item.department === self.chooseDepartment){
-            arr.push(item)
-          }
-        })
-        if(self.chooseLimit.length !== 0 && self.chooseLimit !== '全選'){
-          arr = arr.filter((item) => {
-            return item.employeeLimit === self.chooseLimit
-          })
+      var arr = []
+      if(value === 0){
+        if(self.chooseDepartment !== '全選'){
+          self.x = self.chooseDepartment
+        }else{
+          self.x = ''
         }
-        self.accountList = arr
-        return self.accountList
-      }else if(self.chooseDepartment.length !== 0 && self.chooseLimit !== '全選'){
-        self.hotels.forEach((item) => {
-          if(item.employeeLimit === self.chooseLimit){
-            arr.push(item)
-          }
-        })
-        if(self.chooseDepartment.length !== 0 && self.chooseDepartment !== '全選'){
-          arr = arr.filter((item) => {
-            return item.department === self.chooseDepartment
-          })
+      }else{
+        if(self.chooseLimit !== '全選'){
+          self.y = self.chooseLimit
+        }else{
+          self.y = ''
         }
-        self.accountList = arr
-        return self.accountList
       }
-
-     
-      // console.log(arr)
-      // return self.hotels.filter((item) => {
-      //   return filterKeys.every((key) => {
-      //     if (!filterObj[key].length) {
-      //       return true;
-      //     }
-      //     return !!~filterObj[key].indexOf(item.labels[key]);
-      //   });
-      // });
-      // for (j = 0; j < this.hotels.length; j++) {
-      //   if (
-      //     this.hotels[j].department == this.chooseDepartment &&
-      //     this.hotels[j].employeeLimit == this.chooseLimit
-      //   ) {
-      //     this.accountList.push(this.hotels[j]);
-      //   } else if (
-      //     this.hotels[j].department == this.chooseDepartment &&
-      //     this.chooseLimit == "請選擇"
-      //   ) {
-      //     this.accountList.push(this.hotels[j]);
-      //   } else if (
-      //     this.chooseDepartment == "請選擇" &&
-      //     this.hotels[j].employeeLimit == this.chooseLimit
-      //   ) {
-      //     this.accountList.push(this.hotels[j]);
-      //   } else if (
-      //     this.chooseDepartment == "請選擇" &&
-      //     this.chooseLimit == "請選擇"
-      //   ) {
-      //     this.accountList.push(this.hotels[j]);
-      //   }
-      // }
+      self.filterObj = {
+        employeeLimit: self.y,
+        department: self.x
+      }
+      arr = this.selectionFilter(self.filterObj)
+      self.accountList = arr
+      return self.accountList
+    },
+    selectionFilter(filterObj1){
+      let self = this
+      const filterKeys = Object.keys(filterObj1);
+      return self.hotels.filter((item) => {
+        return filterKeys.every((key) => {
+          if(!filterObj1[key].length){
+            return true;
+          }
+          return !!~filterObj1[key].indexOf(item[key])
+        })
+      })
     },
     close: function () {
       document.getElementById("addNewUser").style.display = "none";

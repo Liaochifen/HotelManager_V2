@@ -436,7 +436,7 @@ export default {
         self.websiteData = {
           data: {
             websiteNum: {
-              name: "Number per day",
+              name: "All",
               thousandSeparator: ",",
             },
           },
