@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.a147c54c4e049bc8ca34c7d4385b50ef.js"
+  "/precache-manifest.21a10cd5c827f29f904ce34bfbf47300.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -86,6 +86,14 @@ self.addEventListener('fetch', function (event) {
     var re = new RegExp('https://hotelapi.im.nuk.edu.tw/api/');
     var re_stat = new RegExp('https://hotelapi.im.nuk.edu.tw/stat?');
     var targetApi = event.request.url.match(new RegExp('\/api\/[a-zA-z]*'));
+    var statMonth = event.request.url.match(new RegExp('month=[0-9]*'));
+    if (statMonth) {
+        var month = statMonth[0].substring(6);
+        console.log(month);
+    }
+
+    console.log(event.request.url);
+
   if (event.request.url.match(re) || event.request.url.match(re_stat)) {
     var idbName = "";
     if (event.request.url.match(re)) {
@@ -93,16 +101,17 @@ self.addEventListener('fetch', function (event) {
       if (idbName === "commentDetails") {
           idbName = "comment"
       }
+      if (idbName === "statistic") {
+        idbName = "stat_all";
+      }
     } else if (event.request.url.match(re_stat)) {
       idbName = "stat";
     }
-    // console.log(event.request.url);
-    // console.log(targetApi[0]);
     console.log('[Service Worker] Match ' + event.request.url);
     event.respondWith(fetch(event.request)
       .then(function (res) {
        var clonedRes = res.clone();
-       if (idbName !== 'comment' && idbName !== 'account') {
+       if (idbName !== 'comment' && idbName !== 'account' && idbName !== 'stat') {
            clearAllData(idbName)
                .catch(function (err) {
                    console.log(err);
@@ -113,16 +122,21 @@ self.addEventListener('fetch', function (event) {
                if (data.length === undefined) {
                    if(idbName === 'competition') {
                        for (var key in data.data) {
-                           writeData(idbName, data.data[key])
+                           console.log(idbName);
+                           console.log(data.data[key]);
+                           writeData(idbName, data.data[key]);
                        }
                    }
-                   else {
-                       writeData(idbName, data)
-                   }
-               }
-               
+                   // else {
+                   //     console.log(idbName);
+                   //     console.log(data);
+                   //     writeData(idbName, data)
+                   // }
+               } 
                else {
                    for (var key in data) {
+                       console.log(idbName);
+                       console.log(data[key]);
                        writeData(idbName, data[key])
                    }
                }
