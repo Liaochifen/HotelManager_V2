@@ -57,7 +57,7 @@
           </div> -->
           <div class="add_btn">
             <button class="functionButton addBTN" id="tableActionsBtn" @click="editUpdate(conditionModify, replyModify)">確認</button>
-            <button class="functionButton deleteBTN" id="tableActionsBtn" @click="editCCancle()">取消</button>
+            <button class="functionButton deleteBTN" id="tableActionsBtn" @click="editCancle()">取消</button>
           <div class="clear"></div>
         </div>
           <!-- <button @click="editUpdate" class="confirmButton">確認</button> -->
@@ -121,7 +121,7 @@
           <p class="filterP">分類</p>
           <ul>
             <li class="all">
-              <button @click="tagFilter('all')" :value="oneTag">
+              <button @click="AllfilterFunction('all')" :value="oneTag">
                 <div class="labelDiv">
                   <!-- <span class="num">(1000)</span> -->
                   <span>全部</span>
@@ -129,7 +129,7 @@
               </button>
             </li>
             <li v-for="item in labelchoose" :key="item.field" :class="item.field">
-              <button @click="tagFilter(item.field)">
+              <button @click="AllfilterFunction(item.field)">
                 <div class="labelDiv">
                   <!-- <span class="num">(1000)</span> -->
                   <span>{{ item.label }}</span>
@@ -579,16 +579,20 @@ export default {
   //   this.loadMore()
   // },
   methods: {
-    AllfilterFunction: function(){
+    AllfilterFunction: function(tag){
       let self = this
       var score = document.getElementById("myRange").value
-      let arr = []
-      if(self.oneTag !== '' && self.oneTag !== 'all'){
-        arr = self.oneTagData
-      }else if(self.checkedtags.length !== 0){
-        arr = self.checkedFun(self.selectedArr, self.checkedtags)
+      let arr = self.selectedArr
+      console.log(tag)
+      if(!tag){
+        self.oneTag = ''
       }else{
-        arr = self.selectedArr
+        self.oneTag = tag
+      }
+      if(self.oneTag.length !== 0){
+        arr = this.tagFilter(arr, self.oneTag)
+      }else if(self.checkedtags.length !== 0){
+        arr = this.checkedFun(arr, self.checkedtags)
       }
       if(self.x.length !== 0 || self.y.length !== 0 || self.z.length !==0){
         arr = this.handleFilterData(arr, self.filterObj)
@@ -609,18 +613,13 @@ export default {
       self.y = '';
       self.z = '';
       self.oneTag = '';
-      self.oneTagData = '';
-      // this.TypescheckAll = null;
-      // this.ConditioncheckAll = null;
-      // this.ReplycheckAll = null;
-      // this.TypesIndeterminate = null;
-      // this.ConditionIndeterminate = null;
-      // this.ReplyIndeterminate = null;
-      // this.ishandleFilterData = false;
-      // this.isscoreFilterData = false;
       document.getElementById("myRange").value = 0
       document.getElementById('value').innerHTML = 0;
+      var moment = require("moment");
+      self.start = moment().subtract(24, "month");
+      self.end = moment();
       $(".all").removeClass("focus");
+      $(".custom").removeClass("focus");
       self.labelchoose.forEach((item) => {
         $("." + item.field).removeClass("focus");
       });
@@ -634,28 +633,28 @@ export default {
       self.replyModify = '';
       return self.commentData;
     },
-    clearALLInFilter() {
-      let self = this;
-      self.typeChoosen = '';
-      self.conditionChoosen = '';
-      self.replyChoosen = '';
-      self.x = '';
-      self.y = '';
-      self.z = '';
-      this.TypescheckAll = null;
-      this.ConditioncheckAll = null;
-      this.ReplycheckAll = null;
-      this.TypesIndeterminate = null;
-      this.ConditionIndeterminate = null;
-      this.ReplyIndeterminate = null;
-      this.ishandleFilterData = false;
-      this.isscoreFilterData = false;
-      document.getElementById("myRange").value = 0
-      document.getElementById('value').innerHTML = 0;
-      self.commentData = self.selectedArr;
-      $("#reportrange span").html("時間");
-      return self.commentData;
-    },
+    // clearALLInFilter() {
+    //   let self = this;
+    //   self.typeChoosen = '';
+    //   self.conditionChoosen = '';
+    //   self.replyChoosen = '';
+    //   self.x = '';
+    //   self.y = '';
+    //   self.z = '';
+    //   this.TypescheckAll = null;
+    //   this.ConditioncheckAll = null;
+    //   this.ReplycheckAll = null;
+    //   this.TypesIndeterminate = null;
+    //   this.ConditionIndeterminate = null;
+    //   this.ReplyIndeterminate = null;
+    //   this.ishandleFilterData = false;
+    //   this.isscoreFilterData = false;
+    //   document.getElementById("myRange").value = 0
+    //   document.getElementById('value').innerHTML = 0;
+    //   self.commentData = self.selectedArr;
+    //   $("#reportrange span").html("時間");
+    //   return self.commentData;
+    // },
     openFilter(){
       // let self = this;
       event.stopPropagation();
@@ -1045,11 +1044,9 @@ export default {
     // handleCurrentChange: function (currentPage) {
     //   this.currentPage = currentPage
     // },
-    tagFilter: function (tag) {
+    tagFilter: function (arr, tag) {
       let self = this;
       var arrq = [];
-      self.oneTag = tag;
-      self.clearALL();
       if (tag === "all") {
         self.checkedtags = [];
         // $("input[name='label_checked_col[]']").prop("checked", true);
@@ -1059,7 +1056,7 @@ export default {
         });
         // self.checkedtagsALL = false;
         $(".custom").removeClass("focus");
-        self.commentData = self.selectedArr;
+        self.commentData = arr;
         return self.commentData;
       } else {
         $(".all").removeClass("focus");
@@ -1071,7 +1068,7 @@ export default {
           }
         });
         $(".custom").removeClass("focus");
-        arrq = self.selectedArr.filter((item) => {
+        arrq = arr.filter((item) => {
           return item.labels[tag] === 1;
         });
         self.commentData = arrq;

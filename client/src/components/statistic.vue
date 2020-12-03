@@ -130,7 +130,7 @@
           <div class="statistic flex-1">
             <div>
               <p class="allP">負評趨勢</p>
-              <line-chart :chart-data="negativeDatacollection" :options="options" style="width: 96%; height: 80%; margin-right: 2%; margin-left: 2%; margin-bottom: 10px"></line-chart>
+              <line-chart :chart-data="negativeDatacollection" :options="options5" style="width: 96%; height: 80%; margin-right: 2%; margin-left: 2%; margin-bottom: 10px"></line-chart>
             </div>
           </div>
           <div class="statisticService flex-1">
@@ -172,7 +172,7 @@
       </div>
 </template>
 
-<script>
+<script >
 import axios from "axios";
 import $ from "jquery";
 import lineChart from "../assets/js/lineChart";
@@ -312,6 +312,7 @@ export default {
         },
       },
       options4:{},
+      options5:{},
       // labelX: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       labelX: [
         {
@@ -895,7 +896,6 @@ export default {
           .forEach((child) => {
             self.RangeLabelData.push(child.time);
           });
-          console.log(self.RankFilterData)
       } else {
         self.statisticAllData
           .filter((item) => {
@@ -1047,6 +1047,8 @@ export default {
     // 正負評趨勢
     positiveData(value) {
       let self = this;
+      this.positiveDatacollection = {}
+      this.options4 = {}
       this.positiveDatacollection = {
         labels: self.RangeLabelData,
         datasets: [
@@ -1072,8 +1074,8 @@ export default {
               ticks: {
                 // min: Math.max.apply(null, this.getData(value))-5,
                 stepSize: 1,
-                max: Math.max.apply(null, this.getData(value)) + 5,
-                min: Math.min.apply(null, this.getData(value)) - 5,
+                max: Math.max.apply(null, this.getData(value)) + 2,
+                // min: Math.min.apply(null, this.getData(value)) - 2,
               },
             },
           ],
@@ -1096,6 +1098,8 @@ export default {
     },
     negativeData(value) {
       let self = this;
+      this.negativeDatacollection = {}
+      this.option5 = {}
       // var data = [];
       // var max1 = Math.max.apply(null, this.getData1(value))
       this.negativeDatacollection = {
@@ -1114,17 +1118,16 @@ export default {
           },
         ],
       };
-      this.options = {
+      this.options5 = {
         responsive: true,
         maintainAspectRatio: false,
         scales: {
           yAxes: [
             {
               ticks: {
-                // min: Math.max.apply(null, this.getData1(value))-5,
                 stepSize: 1,
-                max: Math.max.apply(null, this.getData1(value)) + 5,
-                min: Math.min.apply(null, this.getData1(value)) - 5,
+                max: Math.max.apply(null, this.getData1(value)) + 2,
+                // min: Math.min.apply(null, this.getData1(value)) - 2,
               },
             },
           ],
@@ -1166,7 +1169,7 @@ export default {
           }
         });
       });
-      console.log(data1);
+      
       return data1;
     },
     getData1(value) {
@@ -1190,6 +1193,7 @@ export default {
           }
         });
       });
+      
       return data2;
     },
     // 各評論比例

@@ -70,7 +70,7 @@
         <p class="filterP">分類</p>
         <ul>
           <li class="all">
-            <button @click="tagFilter('all')" :value="oneTag">
+            <button @click="AllfilterFunction('all')" :value="oneTag">
               <div class="labelDiv">
                 <!-- <span class="num" >(1000)</span> -->
                 <span>全部</span>
@@ -78,7 +78,7 @@
             </button>
           </li>
           <li v-for="item in labelchoose" :key="item.field" :class="item.field">
-            <button @click="tagFilter(item.field)">
+            <button @click="AllfilterFunction(item.field)">
               <div class="labelDiv">
                 <!-- <span class="num">(1000)</span> -->
                 <span>{{ item.label }}</span>
@@ -325,38 +325,30 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-    // axios.get('/api/competitionCommentList/' + self.companyID).then(response => {
-    //   self.competitionCommentList = response.data
-    //   self.selectedArr = response.data
-    //   self.resourceFn(self.competitionCommentList)
-    //   console.log(self.competitionCommentList)
-    // }).catch((error) => {
-    //   console.log(error)
-    // })
-    // axios.get('/api/labelchoose').then(response => {
-    //   self.labelchoose = response.data
-    // }).catch((error) => {
-    //   console.log(error)
-    // })
     self.start = start;
     self.end = end;
   },
   methods: {
-        AllfilterFunction: function(){
+    AllfilterFunction: function(tag){
       let self = this
       var score = document.getElementById("myRange").value
-      let arr = []
-      if(self.oneTag !== '' && self.oneTag !== 'all'){
-        arr = self.oneTagData
-      }else if(self.checkedtags.length !== 0){
-        arr = self.checkedFun(self.selectedArr, self.checkedtags)
+      let arr = self.selectedArr
+      console.log(tag)
+      if(!tag){
+        self.oneTag = ''
       }else{
-        arr = self.selectedArr
+        self.oneTag = tag
+      }
+      console.log(tag)
+      console.log(self.oneTag)
+      if(self.oneTag.length !== 0){
+        arr = this.tagFilter(arr, self.oneTag)
+      }else if(self.checkedtags.length !== 0){
+        arr = this.checkedFun(arr, self.checkedtags)
       }
       if(self.x.length !== 0){
         arr = this.handleFilterData(arr, self.filterObj)
       }
-      console.log(arr)
       if(score !== '0'){
         arr = this. scoreFilter(arr)
       }
@@ -369,10 +361,13 @@ export default {
       self.typeChoosen = '';
       self.x = '';
       self.oneTag = '';
-      self.oneTagData = '';
       document.getElementById("myRange").value = 0
       document.getElementById('value').innerHTML = 0;
       $(".all").removeClass("focus");
+      $(".custom").removeClass("focus");
+      var moment = require("moment");
+      self.start = moment().subtract(24, "month");
+      self.end = moment();
       self.labelchoose.forEach((item) => {
         $("." + item.field).removeClass("focus");
       });
@@ -410,10 +405,10 @@ export default {
       self.filterObj = {
         pos_neg: self.x
       };
-      console.log(self.filterObj)
       self.AllfilterFunction();
     },
     handleFilterData(arr, filterObj1) {
+      console.log(arr)
       const filterKeys = Object.keys(filterObj1);
       return arr.filter((item) => {
         return filterKeys.every((key) => {
@@ -520,10 +515,9 @@ export default {
         t = $(this).scrollTop();
       });
     },
-    tagFilter: function (tag) {
+    tagFilter: function (arr, tag) {
       let self = this;
       var arrq = [];
-      self.oneTag = tag;
       if (tag === "all") {
         self.checkedtags = [];
         $(".all").addClass("focus");
@@ -531,7 +525,7 @@ export default {
           $("." + item.field).removeClass("focus");
         });
         $(".custom").removeClass("focus");
-        self.competitionCommentList = self.selectedArr;
+        self.competitionCommentList = arr;
         return self.competitionCommentList;
       } else {
         $(".all").removeClass("focus");
@@ -543,7 +537,7 @@ export default {
           }
         });
         $(".custom").removeClass("focus");
-        arrq = self.selectedArr.filter((item) => {
+        arrq = arr.filter((item) => {
           return item.labels[tag] === 1;
         });
         self.competitionCommentList = arrq;

@@ -9,9 +9,17 @@ button{
     width: 100%;
 }
 .buttonFunArea{
-    width: 200px;
-    margin-left: 91.5%;
+    width: 300px;
+    margin-left: 88%;
     margin-bottom: 15px;
+}
+.editButton:active{
+    -webkit-box-shadow: 2px 2px 0px #adadad;
+    -moz-box-shadow: 2px 2px 0px #adadad;
+    box-shadow: 1px 1px 0px #adadad;
+    position:relative;
+    top:1px;
+    left:1px;
 }
 .dataArea1{
     width: 80%;

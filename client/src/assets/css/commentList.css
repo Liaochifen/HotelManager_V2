@@ -127,7 +127,7 @@ button:hover{
 } */
 .MultiFilterArea{
     /* display: none; */
-    width:63%;
+    width:65%;
     margin-left: 1.5%;
     margin-bottom: 5px;
     /* border-right: 0.3px solid #cccccc; */
@@ -393,9 +393,9 @@ tr:hover td{
 .contentCenter{
     display: block !important;
 }
-.clearALL_competition{
+/* .clearALL_competition{
     right: 80px;
-}
+} */
 @media (max-width: 768px) {
     .page{
         /* margin-left: -36px; */
