@@ -407,7 +407,22 @@ label{
    .filterP1{
        margin: 2%;
    }
-
+   .addTagsBTN{
+       margin-left: 10%;
+       width: 23px;
+       height: 23px;
+       /* padding: 0 1%; */
+       /* line-height: 25px; */
+       text-align: center;
+       box-sizing: border-box;
+       border: 1px solid #DCDFE6;
+       border-radius: 50%;
+       position: relative;
+       top: -3px;
+   }
+   .addTagsBTN:active{
+       background: #b1b3b8;
+   }
    /* 競爭對手的評論詳細內容 */
    
 }

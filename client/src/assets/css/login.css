@@ -96,6 +96,7 @@
     #login_page{
         position: static;
         color: #000;
+        padding-bottom: 50px;
     }
     #login_page input{
         margin-top: 10px;
@@ -122,14 +123,17 @@
     .btn button{
         margin: 30px 0;
         float: none;
-        /* background: #c4c0c0; */
-        /* border: none; */
-        /* padding: 10px 25px 10px 25px; */
-        /* color: #FFF; */
-        /* box-shadow: 1px 1px 5px #B6B6B6; */
-        /* border-radius: 3px; */
-        /* text-shadow: 1px 1px 1px #6b6868; */
-        /* cursor: pointer; */
-        /* width: 90px; */
+    }
+    .login_wrap{
+        margin: 0;
+    }
+    .login_page .input_block{
+        width: 90%;
+        text-align: center;
+    }
+    .login_page .input_block p{
+        /* text-align: center; */
+        /* display: block; */
+        width: unset;
     }
 }

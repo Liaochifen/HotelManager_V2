@@ -271,6 +271,9 @@ button:hover{
   margin-bottom: 5px;
   color: gray;
 }
+#filter_phone{
+  display: none;
+}
 @media (max-width: 768px) {
   .account_contentCenter{
     display: none;
@@ -294,8 +297,11 @@ button:hover{
   #addNewUser{
     z-index: 2;
     margin: 0 2.5%;
+    padding: 0 5%;
+    box-sizing: border-box;
   }
   #filter_phone{
+    display: block;
     position: fixed;
     top: 8px;
     right: 5%;
@@ -342,6 +348,11 @@ button:hover{
   }
   #account_select_phone{
     display: none;
+    text-align: center;
+
+  }
+  #account_select_phone div{
+    margin: 5px;
   }
   .clearALL{
     position: fixed;
@@ -495,11 +506,14 @@ button:hover{
     padding: 0;
   }
   .input{
-    margin: 0 30% 0 0 ;
-    float: none;
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
+    margin-left: 0;
+    float: left;
+    width: 50%;
+    padding: 0 4%;
+    box-sizing: border-box;
+    /* display: flex; */
+    /* flex-direction: row-reverse; */
+    /* flex-wrap: wrap; */
     /* justify-content: flex-end; */
   }
   .input input{
@@ -568,18 +582,21 @@ button:hover{
 }
 @media (max-width: 600px) {
   .input{
-    margin: 0 20% 0 0 ;
+    /* margin: 0 20% 0 0 ; */
   }
   .input span{
     width: 20%;
   }
+  .addUser{
+    top: 5%;
+  }
 }
 @media (max-width: 425px) {
   .input input{
-    width: 160px;
+    width: 90%;
   }
   .addSelect{
-    width: 168px;
+    width: 90%;
   }
   .input span{
     width: auto;
@@ -587,6 +604,14 @@ button:hover{
   .display{
     display: none;
   }
-  
+  .addUser form{
+    display: flex;
+    flex-direction: column;
+  }
+  .input{
+    width: 100%;
+    padding: 0 10%;
+    margin-top: 10px;
+  }
   
 }

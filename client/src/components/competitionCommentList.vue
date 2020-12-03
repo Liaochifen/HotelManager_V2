@@ -8,57 +8,63 @@
         <button class="editButton" @click="openFilter()" id="comment_filter_phone">
           <img src="../assets/icon/filter.png"/>
         </button>
-        <button @click="clearALL()" class="clearall">全部清除</button>
+        <!-- <button @click="clearALL()" class="clearall">全部清除</button> -->
+        <button class="editButton clearALL clearALL_competition" @click="clearALL()" >
+          <img src="../assets/icon/clear.png"/>
+          <span>全部清除</span>
+        </button>
         <button @click="openfilter_sort()" class="filter_sort_phone">分類</button>
       </div>
     </div>
         <div class="MultiFilterArea">
-        <div slot="table-actions" class="slot_div">
-          <template>
-            <el-select v-model="typeChoosen"  placeholder="選擇評論類型"  @change="handleCheckedChange()" class="custom_el_select">
-              <el-option value="全選">全選</el-option>
-              <el-option v-for="child in types"  :key="child.value"  :value="child.field"></el-option>
-            </el-select>
-          </template>
-        </div>
-        <!-- <div slot="table-actions" class="slot_div">
-            <el-select v-model="conditionChoosen"  placeholder="選擇評論處理狀態" class="custom_el_select" @change="handleCheckedChange(1)">
-              <el-option value="全選">全選</el-option>
-              <el-option v-for="child in conditions"  :key="child.value"  :value="child.field" ></el-option>
-            </el-select>
-        </div> -->
-        <!-- <div slot="table-actions" class="slot_div">
-            <el-select v-model="replyChoosen"  placeholder="選擇評論回覆狀態"  @change="handleCheckedChange(2)" class="custom_el_select">
-              <el-option value="全選">全選</el-option>
-              <el-option v-for="child in reply"  :key="child.value"  :value="child.field"></el-option>
-            </el-select>
-        </div> -->
-        <div slot="table-actions" class="slot_div">
-          <div
-            id="reportrange"
-            style="
-              background: #fff;
-              cursor: pointer;
-              padding: 5px 10px;
-              border: 1px solid #dcdfe6;
-            "
-          >
-            <span @click="dateRange" class="timeSpan"
-              >時間
-            </span>
-          </div>
-        </div>
-        <div slot="table-actions" class="slot_div score_div">
-          <p class="filterTitle">評論分數</p>
-          <div class="slidecontainer">
-            <input type="range" min="0" max="5" step="0.1" value="0" class="slider" id="myRange" @input="scoreHtml" @propertychange="scoreHtml" @change="AllfilterFunction()">
-            <span id="value">0</span>
-          </div>
-        </div>
+          <div class="MultiFilterArea_phone MultiFilterArea_competition_phone">
+            <div slot="table-actions" class="slot_div">
+              <template>
+                <el-select v-model="typeChoosen"  placeholder="選擇評論類型"  @change="handleCheckedChange()" class="custom_el_select">
+                  <el-option value="全選">全選</el-option>
+                  <el-option v-for="child in types"  :key="child.value"  :value="child.field"></el-option>
+                </el-select>
+              </template>
+            </div>
+            <!-- <div slot="table-actions" class="slot_div">
+                <el-select v-model="conditionChoosen"  placeholder="選擇評論處理狀態" class="custom_el_select" @change="handleCheckedChange(1)">
+                  <el-option value="全選">全選</el-option>
+                  <el-option v-for="child in conditions"  :key="child.value"  :value="child.field" ></el-option>
+                </el-select>
+            </div> -->
+            <!-- <div slot="table-actions" class="slot_div">
+                <el-select v-model="replyChoosen"  placeholder="選擇評論回覆狀態"  @change="handleCheckedChange(2)" class="custom_el_select">
+                  <el-option value="全選">全選</el-option>
+                  <el-option v-for="child in reply"  :key="child.value"  :value="child.field"></el-option>
+                </el-select>
+            </div> -->
+            <div slot="table-actions" class="slot_div time_filter_phone">
+              <div
+                id="reportrange"
+                style="
+                  background: #fff;
+                  cursor: pointer;
+                  padding: 5px 10px;
+                  border: 1px solid #dcdfe6;
+                "
+              >
+                <span @click="dateRange" class="timeSpan"
+                  >時間
+                </span>
+              </div>
+            </div>
+            <div slot="table-actions" class="slot_div score_div">
+              <p class="filterTitle">評論分數</p>
+              <div class="slidecontainer">
+                <input type="range" min="0" max="5" step="0.1" value="0" class="slider" id="myRange" @input="scoreHtml" @propertychange="scoreHtml" @change="AllfilterFunction()">
+                <span id="value">0</span>
+              </div>
+            </div>
         
         
-        <div class="clear"></div>
-    </div>
+            <div class="clear"></div>
+          </div>
+        </div>
     <div class="dataArea">
       <div class="filter" id="filter_sort_phone">
         <p class="filterP">分類</p>
