@@ -91,8 +91,8 @@
         </div>
         <div class="filterTime">
           <p>篩選：</p>
-          <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #DCDFE6;" >
-            <span @click="dateRange" class="timeSpan">時間</span>
+          <div id="reportrange">
+            <span  @click="dateRange" class="timeSpan">時間</span>
           </div>
           <div id="showmonthMenu">
             <el-select placeholder="請選擇月份" v-model="chosenmonthData"  @change="callSingleDate()">
