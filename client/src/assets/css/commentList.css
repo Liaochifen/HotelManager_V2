@@ -7,11 +7,21 @@ button:hover{
     cursor: pointer;
 }
 .buttonFunArea{
-    width: 300px;
-    margin-left: 80%;
+    width: 100%;
+    margin-left: 2%;
     margin-bottom: 15px;
 }
-
+.but{
+    display: inline;
+    margin-left: 51.5%;
+    /* margin-left: 70%; */
+}
+.filterTime{
+    display: inline-block;
+    /* margin-left: 25px; */
+    font-size: 14px;
+    color: #8BA4BE;
+}
 .custom_el_select{
     width: 160px !important;
     height: 30px !important;
@@ -156,21 +166,25 @@ button:hover{
     font-size: 14px;
 }
 
-#reportrange{
+#reportrange, #reportrange1{
     width: 120px;
     padding: 1%;
     border-radius: 4px;
-    left: 190px;
+    display: inline-block;
+    margin-left: 5px;
+    /* left: 190px; */
 }
-
-.timeSpan{
+.slot_div_time span{
+    color: gray;
+}
+.timeSpan, .timeSpan1{
     width: 100px;
     display:block;
     /* line-height: 20px; */
     /* border: 1px solid #000; */
     /* vertical-align: middle; */
-    font-size: 16px;
-    line-height: 26px;
+    /* font-size: 16px; */
+    /* line-height: 26px; */
     vertical-align: middle;
     color: #C0C4CC;
     font-family: Arial;
@@ -296,6 +310,12 @@ button:hover{
 .slot_div{
     float: left;
     margin-right: 5px;
+}
+.slot_div_time{
+    width: 200px;
+    /* float: left; */
+    display: inline;
+    margin-right: 5px; 
 }
 
 tr:hover td{

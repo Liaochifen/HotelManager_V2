@@ -813,6 +813,7 @@ export default {
           },
           showCustomRangeLabel: false,
           alwaysShowCalendars: false,
+          dontShowCalendarsIfNotSelectedCustom: true
         },
         function (start, end) {
           $("#reportrange").on("apply.daterangepicker", function (ev, picker) {
@@ -1341,7 +1342,7 @@ export default {
 #showmonthMenu {
   display: none;
 }
-/* .daterangepicker {
+.daterangepicker {
   width: 140px;
   height: 160px;
 }
@@ -1353,9 +1354,11 @@ export default {
 }
 .daterangepicker.show-calendar .drp-buttons {
   display: none;
-} */
+}
 
-
+.daterangepicker.show-ranges.ltr .drp-calendar.left{
+  display: none !important;
+}
 .demo-wrapper {
   width: 97%;
   /* width: 400px; */
