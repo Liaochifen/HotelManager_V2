@@ -59,7 +59,7 @@
               <li class="flex-1">
                 <div>
                   <span class="subti">評分</span>
-                  <p>{{todayData.length && todayData[0].data.avg_rating}}
+                  <p>{{todayData.length && todayData[0].data.avg_rating/2}}
                     <span v-if="rise[3].value === 0">
                       <img src="../assets/icon/rise.png">
                     </span>

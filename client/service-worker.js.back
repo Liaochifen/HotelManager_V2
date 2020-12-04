@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.21a10cd5c827f29f904ce34bfbf47300.js"
+  "/precache-manifest.49e9a60d650cf070d656bc9fb6233362.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -86,13 +86,7 @@ self.addEventListener('fetch', function (event) {
     var re = new RegExp('https://hotelapi.im.nuk.edu.tw/api/');
     var re_stat = new RegExp('https://hotelapi.im.nuk.edu.tw/stat?');
     var targetApi = event.request.url.match(new RegExp('\/api\/[a-zA-z]*'));
-    var statMonth = event.request.url.match(new RegExp('month=[0-9]*'));
-    if (statMonth) {
-        var month = statMonth[0].substring(6);
-        console.log(month);
-    }
-
-    console.log(event.request.url);
+    // var statMonth = event.request.url.match(new RegExp('month=[0-9]*'));
 
   if (event.request.url.match(re) || event.request.url.match(re_stat)) {
     var idbName = "";
@@ -122,21 +116,12 @@ self.addEventListener('fetch', function (event) {
                if (data.length === undefined) {
                    if(idbName === 'competition') {
                        for (var key in data.data) {
-                           console.log(idbName);
-                           console.log(data.data[key]);
                            writeData(idbName, data.data[key]);
                        }
                    }
-                   // else {
-                   //     console.log(idbName);
-                   //     console.log(data);
-                   //     writeData(idbName, data)
-                   // }
                } 
                else {
                    for (var key in data) {
-                       console.log(idbName);
-                       console.log(data[key]);
                        writeData(idbName, data[key])
                    }
                }
