@@ -12,37 +12,39 @@
       </div>
       
       <div class="buttonFunArea">
-        <span class="filterTime">時間：</span>
-        <div slot="table-actions" class="slot_div_time time_filter_phone">
-          <span>從</span>
-          <div
-            id="reportrange"
-            style="
-              background: #fff;
-              cursor: pointer;
-              padding: 5px 10px;
-              border: 1px solid #dcdfe6;
-            "
-          >
-            <span @click="dateRange(0)" class="timeSpan"
-              >時間
-            </span>
+        <div class="filterTime_phone">
+          <span class="filterTime">時間：</span>
+          <div slot="table-actions" class="slot_div_time time_filter_phone">
+            <span>從</span>
+            <div
+              id="reportrange"
+              style="
+                background: #fff;
+                cursor: pointer;
+                padding: 5px 10px;
+                border: 1px solid #dcdfe6;
+              "
+            >
+              <span @click="dateRange(0)" class="timeSpan"
+                >時間
+              </span>
+            </div>
           </div>
-        </div>
-        <div slot="table-actions" class="slot_div_time time_filter_phone">
-          <span>到</span>
-          <div
-            id="reportrange1"
-            style="
-              background: #fff;
-              cursor: pointer;
-              padding: 5px 10px;
-              border: 1px solid #dcdfe6;
-            "
-          >
-            <span @click="dateRange(1)" class="timeSpan1"
-              >時間
-            </span>
+          <div slot="table-actions" class="slot_div_time time_filter_phone">
+            <span>到</span>
+            <div
+              id="reportrange1"
+              style="
+                background: #fff;
+                cursor: pointer;
+                padding: 5px 10px;
+                border: 1px solid #dcdfe6;
+              "
+            >
+              <span @click="dateRange(1)" class="timeSpan1"
+                >時間
+              </span>
+            </div>
           </div>
         </div>
         <div class="but">
