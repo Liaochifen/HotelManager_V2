@@ -663,6 +663,7 @@ export default {
         employeeLimit: self.y,
         department: self.x
       }
+      console.log(self.filterObj)
       arr = this.selectionFilter(self.filterObj)
       self.accountList = arr
       return self.accountList

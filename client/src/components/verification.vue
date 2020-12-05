@@ -26,6 +26,7 @@
           <div class="clear"></div>
           <div class="btn">
             <button type="submit">確認</button>
+            <!-- <button v-on:click="confirm()">確認</button> -->
           </div>
         </form>
       </div>
@@ -114,7 +115,7 @@ export default {
         // this.updateAccount();
         // this.loginRecord();
         var currentTime = new Date().getTime(); //取得從 1970-01-01 00:00:00 UTC 累計的毫秒數
-        this.recordLogingTime();
+        // this.recordLogingTime();
         console.log("currentTime"+currentTime)
         // localStorage.setItem('token', JSON.stringify({id:this.userID,time:currentTime}));
         // localStorage.setItem(
@@ -143,6 +144,7 @@ export default {
               pictureUrl:self.picture,
             })
             );
+            self.forgetPasswordRecord(true);
           }).catch(function(error) {
             console.log(error);
               const storageRef2 = firebase.storage().ref('004.png');
@@ -160,11 +162,12 @@ export default {
                     pictureUrl:self.picture,
                   })
                   );
+                  self.forgetPasswordRecord(true);
               }).catch(function(error2) {
                 console.log(error2);
               });
           });
-        this.forgetPasswordRecord(true);
+        // this.forgetPasswordRecord(true);
         // this.$router.push({ name: "changePassword" });
         // window.location.reload();
       } else {
@@ -219,10 +222,10 @@ export default {
           console.log(error);
         });
     },
-    recordLogingTime: function () {
-      this.userAccountDetail.lastLoginDate = dateTime.recordDate();
-      this.userAccountDetail.lastLoginTime = dateTime.recordTime();
-    },
+    // recordLogingTime: function () {
+    //   this.userAccountDetail.lastLoginDate = dateTime.recordDate();
+    //   this.userAccountDetail.lastLoginTime = dateTime.recordTime();
+    // },
     forgetPasswordRecord:function(verificate){
       var company = this.userAccountDetail.companyName;
       var record="user";
@@ -234,6 +237,8 @@ export default {
         .then((responseRecord) => {
           if(verificate){
             this.updateAccount();
+            console.log("verificate");
+            console.log(verificate);
           }
           console.log(responseRecord);
         })

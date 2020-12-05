@@ -12,17 +12,52 @@
       </div>
       
       <div class="buttonFunArea">
-        <button class="editButton" @click="openFilter()" id="comment_filter_phone">
-          <img src="../assets/icon/filter.png"/>
-        </button>
-        <button class="editButton" @click="editFun()" id="editButton_phone">
-          <img src="../assets/icon/edit.png"/>
-          <span>編輯</span>
-        </button>
-        <button class="editButton clearALL" @click="clearALL()" >
-          <img src="../assets/icon/clear.png"/>
-          <span>全部清除</span>
-        </button>
+        <span class="filterTime">時間：</span>
+        <div slot="table-actions" class="slot_div_time time_filter_phone">
+          <span>從</span>
+          <div
+            id="reportrange"
+            style="
+              background: #fff;
+              cursor: pointer;
+              padding: 5px 10px;
+              border: 1px solid #dcdfe6;
+            "
+          >
+            <span @click="dateRange(0)" class="timeSpan"
+              >時間
+            </span>
+          </div>
+        </div>
+        <div slot="table-actions" class="slot_div_time time_filter_phone">
+          <span>到</span>
+          <div
+            id="reportrange1"
+            style="
+              background: #fff;
+              cursor: pointer;
+              padding: 5px 10px;
+              border: 1px solid #dcdfe6;
+            "
+          >
+            <span @click="dateRange(1)" class="timeSpan1"
+              >時間
+            </span>
+          </div>
+        </div>
+        <div class="but">
+            <button class="editButton" @click="openFilter()" id="comment_filter_phone">
+            <img src="../assets/icon/filter.png"/>
+          </button>
+          <button class="editButton" @click="editFun()" id="editButton_phone">
+            <img src="../assets/icon/edit.png"/>
+            <span>編輯</span>
+          </button>
+          <button class="editButton clearALL" @click="clearALL()" >
+            <img src="../assets/icon/clear.png"/>
+            <span>全部清除</span>
+          </button>
+        </div>
         <!-- <button @click="clearALL()" class="clearall">全部清除</button> -->
         <button @click="openfilter_sort()" class="filter_sort_phone">分類</button>
       </div>
@@ -89,21 +124,7 @@
               <el-option v-for="child in reply"  :key="child.value"  :value="child.field"></el-option>
             </el-select>
         </div>
-        <div slot="table-actions" class="slot_div time_filter_phone">
-          <div
-            id="reportrange"
-            style="
-              background: #fff;
-              cursor: pointer;
-              padding: 5px 10px;
-              border: 1px solid #dcdfe6;
-            "
-          >
-            <span @click="dateRange" class="timeSpan"
-              >時間
-            </span>
-          </div>
-        </div>
+        
         <div slot="table-actions" class="slot_div score_div">
           <p class="filterTitle">評論分數</p>
           <div class="slidecontainer">
@@ -469,7 +490,8 @@ export default {
         reply: '',
       },
       window_width: document.documentElement.clientWidth,
-      
+      fromDate: false,
+      toDate: false
     };
   },
   // 在一個條件後面會跟著一個問號 (?)
@@ -583,7 +605,6 @@ export default {
       let self = this
       var score = document.getElementById("myRange").value
       let arr = self.selectedArr
-      console.log(tag)
       if(!tag){
         self.oneTag = ''
       }else{
@@ -629,6 +650,9 @@ export default {
       self.checkedtags = [];
       self.commentData = self.selectedArr;
       $("#reportrange span").html("時間");
+      $("#reportrange1 span").html("時間");
+      self.fromDate = false
+      self.toDate = false
       self.conditionModify = '';
       self.replyModify = '';
       return self.commentData;
@@ -778,6 +802,8 @@ export default {
     },
     timeFilter: function (arr, startData, endData) {
       // let self = this;
+      console.log(startData)
+      console.log(endData)
       arr = arr.filter((item) => {
         return (
           Date.parse(Object.values(item.times)[1]) >=
@@ -799,38 +825,92 @@ export default {
       })      
       return arr1;
     },
-    cb: function (start, end) {
+    cb: function (value, start, end) {
       var self = this;
-      $("#reportrange span").html(
-        start.format("YYYY-MM-DD") + " - " + end.format("YYYY-MM-DD")
-      );
-      $("#reportrange").css({ width: "160px" });
-      $("#reportrange span").css({ "font-size": "12px", width: "170px" });
-      self.start = start;
-      self.end = end;
-      self.AllfilterFunction()
+      if(value === 0){
+        self.fromDate = true
+        $("#reportrange .timeSpan").html(
+          start.format("YYYY-MM-DD")
+          // start.format("YYYY-MM-DD") + " - " + end.format("YYYY-MM-DD")
+        );
+        // $("#reportrange").css({ width: "160px" });
+        $("#reportrange timeSpan").css({ "font-size": "12px", width: "120px" });
+        self.start = start;
+      }else if(value === 1){
+        self.toDate = true
+        $("#reportrange1 .timeSpan1").html(
+          end.format("YYYY-MM-DD")
+          // start.format("YYYY-MM-DD") + " - " + end.format("YYYY-MM-DD")
+        );
+        // $("#reportrange").css({ width: "10px" });
+        $("#reportrange1 timeSpan1").css({ "font-size": "12px", width: "120px" });
+        self.end = end;
+      }
+      console.log(self.start)
+      console.log(self.end)
+      if(self.fromDate === true && self.toDate === true){
+        self.AllfilterFunction()
+      }
       // this.timeFilter(self.selectedArr, self.start, self.end);
     },
-    dateRange: function () {
+    dateRange: function (value) {
+      // var moment = require("moment");
+      var self = this;  
       var moment = require("moment");
-      var self = this;
-      var start = self.start;
-      var end = self.end;
-      $("#reportrange").daterangepicker(
+      var today = moment().subtract(1, "days");
+
+      // var start = self.start;
+      // var end = self.end;
+      // $("#reportrange").daterangepicker(
+      //   {
+      //     startDate: start,
+      //     endDate: end,
+      //     ranges: {
+      //       "Today": [moment(), moment()],
+      //       "Yesterday": [moment().subtract(1, "days"), moment()],
+      //       "Last Week": [moment().subtract(6, "days"), moment()],
+      //       "Last Month": [moment().subtract(30, "days"), moment()],
+      //       "Last Six Months": [moment().subtract(6, "month"), moment()],
+      //     },
+      //     showCustomRangeLabel: false
+      //   },
+      //   self.cb
+      // );
+      if(value === 0){
+        $('#reportrange').daterangepicker(
         {
-          startDate: start,
-          endDate: end,
-          ranges: {
-            "Today": [moment(), moment()],
-            "Yesterday": [moment().subtract(1, "days"), moment()],
-            "Last Week": [moment().subtract(6, "days"), moment()],
-            "Last Month": [moment().subtract(30, "days"), moment()],
-            "Last Six Months": [moment().subtract(6, "month"), moment()],
-          },
-          showCustomRangeLabel: false
+          singleDatePicker: true,
+          showDropdowns: true,
+          minYear: 1998,
+          maxDate: today,
         },
-        self.cb
-      );
+        // self.cb
+        function(start, end) {
+          if(value === 0){
+            self.cb(value, start, end)
+          }else{
+            self.cb(value, start, end)
+          }
+        })
+      }else{
+        $('#reportrange1').daterangepicker(
+        {
+          singleDatePicker: true,
+          showDropdowns: true,
+          minYear: 1998,
+          maxDate: today
+        },
+        // self.cb
+          function(start, end) {
+            if(value === 0){
+              self.cb(value, start, end)
+            }else{
+              self.cb(value, start, end)
+            }
+            }
+        )
+      }
+      
       var p = 0;
       var t = 0;
       var ori = 0;
