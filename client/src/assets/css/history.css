@@ -36,7 +36,7 @@
     visibility: hidden;
 }
 #userInfoRecord_phone{
-    visibility: hidden;
+    display: none;
 }
 .historydataArea{
     box-shadow: 0.5px 0.5px 1px #adadad;

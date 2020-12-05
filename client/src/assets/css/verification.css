@@ -82,3 +82,24 @@
 .veri_page .cus{
     width: 80px;
 }
+@media (max-width: 768px){
+    .veri_wrap{
+        margin: 0;
+    }
+    .veri_page{
+        width: 100%;
+        margin-top: 10vh;
+    }
+    .send{
+        width: 90%;
+        text-align: center;
+    }
+    .veri_page .input_block{
+        width: 90%;
+        text-align: center;
+    }
+    .input_block p{
+        display: none;
+    }
+
+}

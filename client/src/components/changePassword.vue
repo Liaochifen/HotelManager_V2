@@ -4,15 +4,19 @@
       <img class="photo" src="../assets/icon/icon-96x96.png" alt="" />
       <div class="clear"></div>
       <h1>登入成功!!請修改密碼!!</h1>
-      <form v-on:submit.prevent="confirm">
-        <label>新密碼&nbsp;:&nbsp;</label>
-        <input type="password" v-model="password" required />
-        <div class="clear"></div>
-        <label>再次輸入&nbsp;:&nbsp;</label>
-        <input type="password" v-model="password2" required />
-        <div class="clear"></div>
-        <button type="submit">確&nbsp;認</button>
-      </form>
+      <div class="input_block">
+        <form v-on:submit.prevent="confirm">
+          <p>新密碼</p>
+          <input class="input_all" type="password" v-model="password" required />
+          <div class="clear"></div>
+          <p>再次輸入</p>
+          <input class="input_all"  type="password" v-model="password2" required />
+          <div class="clear"></div>
+          <div class="btn">
+            <button type="submit">確認</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>

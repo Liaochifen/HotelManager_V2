@@ -9,9 +9,13 @@ button{
     width: 100%;
 }
 .buttonFunArea{
-    width: 300px;
-    margin-left: 88%;
+    width: 100%;
+    margin-left: 2%;
     margin-bottom: 15px;
+}
+.but{
+    display: inline;
+    margin-left: 58.5%;
 }
 .editButton:active{
     -webkit-box-shadow: 2px 2px 0px #adadad;

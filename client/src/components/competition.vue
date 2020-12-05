@@ -179,7 +179,7 @@ export default {
         },
         {
           label: "分數",
-          field: "avg_rating"
+          field: "avg_rating",
         }
         // {
         //   label: '排名',
