@@ -237,6 +237,7 @@ export default {
         {
           label: "正/負評",
           field: this.fieldFn,
+          sortable: false
         },
         {
           label: "時間",
@@ -245,6 +246,7 @@ export default {
         {
           label: "評論",
           field: this.fieldFn3,
+          sortable: false
         },
         {
           label: "評分",
@@ -254,6 +256,7 @@ export default {
         {
           label: "網站來源",
           field: "website",
+          sortable: false
         },
       ],
       titleField: "",
@@ -428,9 +431,9 @@ export default {
       }
     },
     fieldFn3(rowObj) {
-      if (rowObj.title === "") {
+      // if (rowObj.title === "") {
         rowObj.title = rowObj.text.substr(0, 10) + "...";
-      }
+      // }
     },
     scoreHtml: function(){
       var output = document.getElementById("myRange").value;

@@ -782,9 +782,9 @@ export default {
       }
     },
     fieldFn3(rowObj) {
-      if (rowObj.title === "") {
+      // if (rowObj.title === "") {
         rowObj.title = rowObj.text.substr(0, 10) + "...";
-      }
+      // }
     },
     // 分數篩選
     scoreHtml: function(){
