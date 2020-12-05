@@ -16,7 +16,8 @@
           <span class="subtitle">住客國家</span
           ><span class="spaceRight">{{ commentData.locale }}</span>
           <span class="subtitle">入住時間</span
-          ><span>{{commentData.length &&  commentData.times.checkin }}</span>
+          >
+          <!-- <span>{{commentData.length &&  commentData.times.checkin }}</span> -->
         <!-- </p> -->
         <!-- <p class="space"> -->
           <span class="spaceRight">{{ commentData.length && commentData.times.checkin }}</span>
