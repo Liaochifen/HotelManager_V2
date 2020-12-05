@@ -434,6 +434,7 @@ tr:hover td{
         position: fixed;
         width: 100%;
         top: 39px;
+        left: 0;
         height: 41px;
         display: flex;
         box-sizing: border-box;
@@ -457,13 +458,15 @@ tr:hover td{
         /* padding:5px 0; */
     }
     #reportrange,#reportrange1{
-        width: 125px;
+        width: unset;
         height: 30px;
         line-height: 30px;
         box-sizing: border-box;
+        padding: 5px 0 !important;
+        flex: 1;
     }
     .slot_div_time{
-        margin: 0;
+        margin: 0 2px 0 0;
         display: flex;
         align-items: center;
         
@@ -476,8 +479,12 @@ tr:hover td{
     }
     .slot_div_time span{
         margin-right: 3px;
+        width: unset;
         /* height: 31px; */
         /* line-height: 31px; */
+    }
+    .but{
+        margin-left: 0 !important;
     }
     /* 篩選器 */
     /* .selection_btn_phone{
@@ -772,7 +779,7 @@ tr:hover td{
         display: none;
     }
     #reportrange{
-        width: unset;
+        /* width: unset; */
     }
     .slidecontainer{
         text-align: center;
@@ -814,5 +821,8 @@ tr:hover td{
     }
     .MultiFilterArea_competition_phone{
         height: 35vh;
+    }
+    #reportrange,#reportrange1{
+        /* width: 110px; */
     }
 }
