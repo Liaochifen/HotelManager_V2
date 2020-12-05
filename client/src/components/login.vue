@@ -113,10 +113,7 @@ export default {
             self.updateAccount();
           }).catch(function(error) {
             console.log(error);
-              const storageRef2 = firebase.storage().ref('004.png');
-              storageRef2.getDownloadURL().then(function(url) {
-                console.log("url:"+url);
-                self.picture = url;
+            self.picture = "http://192.168.50.108:8080/img/icon-192x192.23773b6f.png";
                  localStorage.setItem(
                   "token",
                   JSON.stringify({
@@ -128,10 +125,15 @@ export default {
                     pictureUrl:self.picture,
                   })
                   );
-                  self.updateAccount();
-              }).catch(function(error2) {
-                console.log(error2);
-              });
+            self.updateAccount();
+              // const storageRef2 = firebase.storage().ref('004.png');
+              // storageRef2.getDownloadURL().then(function(url) {
+              //   console.log("url:"+url);
+                
+              //     self.updateAccount();
+              // }).catch(function(error2) {
+              //   console.log(error2);
+              // });
           });
           
           if(this.logingAccount.employeeLimit === "一般使用者"){
