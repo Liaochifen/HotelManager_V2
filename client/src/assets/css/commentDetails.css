@@ -372,6 +372,7 @@ label{
    }
    .Maincontent{
        height: unset;
+       width: 100%;
    }
    .ReplyAddress{
        display: flex;
@@ -424,7 +425,6 @@ label{
        background: #b1b3b8;
    }
    /* 競爭對手的評論詳細內容 */
-   
 }
 @media (max-width: 320px){
     .MainComment span{

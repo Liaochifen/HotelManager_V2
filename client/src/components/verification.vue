@@ -147,25 +147,38 @@ export default {
             self.forgetPasswordRecord(true);
           }).catch(function(error) {
             console.log(error);
-              const storageRef2 = firebase.storage().ref('004.png');
-              storageRef2.getDownloadURL().then(function(url) {
-                console.log("url:"+url);
-                self.picture = url;
+            self.picture = "http://192.168.50.108:8080/img/icon-192x192.23773b6f.png";
                  localStorage.setItem(
                   "token",
                   JSON.stringify({
-                    id: self.userAccountDetail._id,
-                    employeeNumber:self.userAccountDetail.employeeNumber,
+                    id: self.logingAccount._id,
+                    employeeNumber:self.logingAccount.employeeNumber,
                     time: currentTime+1,
-                    companyName: self.userAccountDetail.companyName,
-                    limit:self.userAccountDetail.employeeLimit,
+                    companyName: self.logingAccount.companyName,
+                    limit:self.logingAccount.employeeLimit,
                     pictureUrl:self.picture,
                   })
                   );
                   self.forgetPasswordRecord(true);
-              }).catch(function(error2) {
-                console.log(error2);
-              });
+              // const storageRef2 = firebase.storage().ref('004.png');
+              // storageRef2.getDownloadURL().then(function(url) {
+              //   console.log("url:"+url);
+              //   self.picture = url;
+              //    localStorage.setItem(
+              //     "token",
+              //     JSON.stringify({
+              //       id: self.userAccountDetail._id,
+              //       employeeNumber:self.userAccountDetail.employeeNumber,
+              //       time: currentTime+1,
+              //       companyName: self.userAccountDetail.companyName,
+              //       limit:self.userAccountDetail.employeeLimit,
+              //       pictureUrl:self.picture,
+              //     })
+              //     );
+              //     self.forgetPasswordRecord(true);
+              // }).catch(function(error2) {
+              //   console.log(error2);
+              // });
           });
         // this.forgetPasswordRecord(true);
         // this.$router.push({ name: "changePassword" });
