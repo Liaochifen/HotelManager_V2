@@ -12,37 +12,39 @@
       </div>
       
       <div class="buttonFunArea">
-        <span class="filterTime">時間：</span>
-        <div slot="table-actions" class="slot_div_time time_filter_phone">
-          <span>從</span>
-          <div
-            id="reportrange"
-            style="
-              background: #fff;
-              cursor: pointer;
-              padding: 5px 10px;
-              border: 1px solid #dcdfe6;
-            "
-          >
-            <span @click="dateRange(0)" class="timeSpan"
-              >時間
-            </span>
+        <div class="filterTime_phone">
+          <span class="filterTime">時間：</span>
+          <div slot="table-actions" class="slot_div_time time_filter_phone">
+            <span>從</span>
+            <div
+              id="reportrange"
+              style="
+                background: #fff;
+                cursor: pointer;
+                padding: 5px 10px;
+                border: 1px solid #dcdfe6;
+              "
+            >
+              <span @click="dateRange(0)" class="timeSpan"
+                >時間
+              </span>
+            </div>
           </div>
-        </div>
-        <div slot="table-actions" class="slot_div_time time_filter_phone">
-          <span>到</span>
-          <div
-            id="reportrange1"
-            style="
-              background: #fff;
-              cursor: pointer;
-              padding: 5px 10px;
-              border: 1px solid #dcdfe6;
-            "
-          >
-            <span @click="dateRange(1)" class="timeSpan1"
-              >時間
-            </span>
+          <div slot="table-actions" class="slot_div_time time_filter_phone">
+            <span>到</span>
+            <div
+              id="reportrange1"
+              style="
+                background: #fff;
+                cursor: pointer;
+                padding: 5px 10px;
+                border: 1px solid #dcdfe6;
+              "
+            >
+              <span @click="dateRange(1)" class="timeSpan1"
+                >時間
+              </span>
+            </div>
           </div>
         </div>
         <div class="but">
@@ -292,7 +294,7 @@ export default {
         },
         {
           label: "評分",
-          field: "rating",
+          field: this.fieldFn4,
           type: "number",
         },
         // ?
@@ -334,7 +336,7 @@ export default {
         },
         {
           label: "評分",
-          field: "rating",
+          field: this.fieldFn4,
           type: "number",
         },
         // ?
@@ -782,9 +784,12 @@ export default {
       }
     },
     fieldFn3(rowObj) {
-      if (rowObj.title === "") {
+      // if (rowObj.title === "") {
         rowObj.title = rowObj.text.substr(0, 10) + "...";
-      }
+      // }
+    },
+    fieldFn4(rowObj){
+      return rowObj.rating/2
     },
     // 分數篩選
     scoreHtml: function(){
@@ -802,8 +807,6 @@ export default {
     },
     timeFilter: function (arr, startData, endData) {
       // let self = this;
-      console.log(startData)
-      console.log(endData)
       arr = arr.filter((item) => {
         return (
           Date.parse(Object.values(item.times)[1]) >=
@@ -831,51 +834,26 @@ export default {
         self.fromDate = true
         $("#reportrange .timeSpan").html(
           start.format("YYYY-MM-DD")
-          // start.format("YYYY-MM-DD") + " - " + end.format("YYYY-MM-DD")
         );
-        // $("#reportrange").css({ width: "160px" });
         $("#reportrange timeSpan").css({ "font-size": "12px", width: "120px" });
         self.start = start;
       }else if(value === 1){
         self.toDate = true
         $("#reportrange1 .timeSpan1").html(
           end.format("YYYY-MM-DD")
-          // start.format("YYYY-MM-DD") + " - " + end.format("YYYY-MM-DD")
         );
-        // $("#reportrange").css({ width: "10px" });
         $("#reportrange1 timeSpan1").css({ "font-size": "12px", width: "120px" });
         self.end = end;
       }
-      console.log(self.start)
-      console.log(self.end)
       if(self.fromDate === true && self.toDate === true){
         self.AllfilterFunction()
       }
-      // this.timeFilter(self.selectedArr, self.start, self.end);
     },
     dateRange: function (value) {
       // var moment = require("moment");
       var self = this;  
       var moment = require("moment");
       var today = moment().subtract(1, "days");
-
-      // var start = self.start;
-      // var end = self.end;
-      // $("#reportrange").daterangepicker(
-      //   {
-      //     startDate: start,
-      //     endDate: end,
-      //     ranges: {
-      //       "Today": [moment(), moment()],
-      //       "Yesterday": [moment().subtract(1, "days"), moment()],
-      //       "Last Week": [moment().subtract(6, "days"), moment()],
-      //       "Last Month": [moment().subtract(30, "days"), moment()],
-      //       "Last Six Months": [moment().subtract(6, "month"), moment()],
-      //     },
-      //     showCustomRangeLabel: false
-      //   },
-      //   self.cb
-      // );
       if(value === 0){
         $('#reportrange').daterangepicker(
         {
@@ -884,7 +862,6 @@ export default {
           minYear: 1998,
           maxDate: today,
         },
-        // self.cb
         function(start, end) {
           if(value === 0){
             self.cb(value, start, end)
@@ -900,7 +877,6 @@ export default {
           minYear: 1998,
           maxDate: today
         },
-        // self.cb
           function(start, end) {
             if(value === 0){
               self.cb(value, start, end)

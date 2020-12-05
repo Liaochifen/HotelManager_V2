@@ -326,7 +326,7 @@ export default {
 
     if(JSON.parse(logining).limit === '後台管理者'){
       document.getElementById('userInfoRecord').style.visibility = 'visible';
-      document.getElementById('userInfoRecord_phone').style.visibility = 'visible';
+      document.getElementById('userInfoRecord_phone').style.display = 'block';
     }
     axios.get("https://hotelapi.im.nuk.edu.tw/api/account")
     .then((response) => {

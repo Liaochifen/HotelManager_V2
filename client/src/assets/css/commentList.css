@@ -427,6 +427,58 @@ tr:hover td{
         display: none;
         background: #000;
     }
+
+    /* 時間篩選 */
+    .filterTime_phone{
+        background: rgb(255, 255, 255);
+        position: fixed;
+        width: 100%;
+        top: 39px;
+        height: 41px;
+        display: flex;
+        box-sizing: border-box;
+        padding: 5px;
+        border-top: 1px solid rgb(196, 193, 193);
+        /* align-items: center; */
+        /* line-height: 40px; */
+    }
+    .filterTime{
+        width: 16%;
+        display: block;
+        height: 31px;
+        line-height: 31px;
+        /* flex: 2; */
+    }
+    .time_filter_phone{
+        width: 42%;
+        height:31px;
+        box-sizing: border-box;
+        line-height: 31px;
+        /* padding:5px 0; */
+    }
+    #reportrange,#reportrange1{
+        width: 125px;
+        height: 30px;
+        line-height: 30px;
+        box-sizing: border-box;
+    }
+    .slot_div_time{
+        margin: 0;
+        display: flex;
+        align-items: center;
+        
+    }
+    .timeSpan,.timeSpan1{
+        height: 20px;
+        box-sizing: border-box;
+        padding: 0;
+        line-height: 20px;
+    }
+    .slot_div_time span{
+        margin-right: 3px;
+        /* height: 31px; */
+        /* line-height: 31px; */
+    }
     /* 篩選器 */
     /* .selection_btn_phone{
         display: block;
@@ -603,7 +655,7 @@ tr:hover td{
         padding-bottom: 39px;
         z-index: 0;
         position: relative;
-        top: 39px;
+        top: 80px;
     }
     .dataRightArea{
         width: 100%;
