@@ -325,7 +325,7 @@ export default {
     var logining = localStorage.getItem("token");
     // var userID = JSON.parse(logining).companyName;
     self.employeeNumber = JSON.parse(logining).employeeNumber
-
+    
     // if(JSON.parse(logining).limit === '後台管理者'){
     //   document.getElementById('userInfoRecord').style.visibility = 'visible';
     //   document.getElementById('userInfoRecord_phone').style.display = 'block';
@@ -410,10 +410,11 @@ export default {
         })
         self.changePage(0)
         self.publicManage(0)
-        
-        $(".pageButton0").removeClass("pageButtonStart");
-        $(".pageButton0").addClass("focus");
-        $('.his_comment').addClass('bg')
+        self.renderComponent = 0;
+          if(JSON.parse(logining).limit === '後台管理者'){
+            document.getElementById('userInfoRecord').style.visibility = 'visible';
+            document.getElementById('userInfoRecord_phone').style.display = 'block';
+          }
       })
       .catch((error) => {
         console.log(error);
@@ -517,19 +518,20 @@ export default {
           self.picturefirst = false;
           self.changePage(0)
           self.publicManage(1);
-          
-          var logining = localStorage.getItem("token");
-          if(JSON.parse(logining).limit !== '後台管理者'){
-            document.getElementById('userInfoRecord').style.visibility = 'hidden';
-            document.getElementById('userInfoRecord_phone').style.display = 'none';
-          }
           self.renderComponent = 0;
+          var logining = localStorage.getItem("token");
+          if(JSON.parse(logining).limit === '後台管理者'){
+            document.getElementById('userInfoRecord').style.visibility = 'visible';
+            document.getElementById('userInfoRecord_phone').style.display = 'block';
+          }
+          $(".pageButton0").addClass("focus");
+          $(".pageButton0").removeClass("pageButtonStart");
           self.changePage(0)
           self.publicManage(0);
           $(".pageButton0").removeClass("pageButtonStart");
         $(".pageButton0").addClass("focus");
        }
-        
+
       }).catch(function(error) {
         console.log(error);
         self.pictureIndex = self.pictureIndex +1; 
@@ -539,24 +541,22 @@ export default {
           self.picturefirst = false;
           self.changePage(0)
           self.publicManage(1);
-          
+          self.renderComponent = 0;
           var logining = localStorage.getItem("token");
           if(JSON.parse(logining).limit === '後台管理者'){
-            document.getElementById('userInfoRecord').style.visibility = 'hidden';
-            document.getElementById('userInfoRecord_phone').style.display = 'none';
+            document.getElementById('userInfoRecord').style.visibility = 'visible';
+            document.getElementById('userInfoRecord_phone').style.display = 'block';
           }
-          self.renderComponent = 0;
+          $(".pageButton0").addClass("focus");
+          $(".pageButton0").removeClass("pageButtonStart");
           self.changePage(0)
           self.publicManage(0);
           $(".pageButton0").removeClass("pageButtonStart");
         $(".pageButton0").addClass("focus");
        }
       });
-      // $(".pageButton0").addClass("focus");
-      // $(".pageButton0").removeClass("pageButtonStart");
-      // $(".pageButton1").removeClass("focus");
-      // $(".pageButton2").removeClass("focus");
-      // $('.his_comment').addClass('bg')
+        self.changePage(0)
+        self.publicManage(0);
     },
     getPictureSrc(img){
       if(!this.userPicture[img]){
