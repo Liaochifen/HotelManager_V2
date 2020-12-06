@@ -33,10 +33,10 @@
     /* border-bottom: 1px solid rgba(0, 81, 255, 0.712); */
 }
 #userInfoRecord{
-    visibility: hidden;
+    visibility: visible;
 }
 #userInfoRecord_phone{
-    display: none;
+    display: block;
 }
 .historydataArea{
     box-shadow: 0.5px 0.5px 1px #adadad;

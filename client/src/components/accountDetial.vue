@@ -111,6 +111,7 @@ export default {
     this.logingID = loginData.id
     self.departments = [];
     var result = new Set();
+    var promise = []
     // var allHtols = []
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
@@ -130,12 +131,14 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-      
-    axios
-        .get("https://hotelapi.im.nuk.edu.tw/api/account")
-        .then((response) => {
-          var allHtols = response.data;
-          var hotels = []
+      var allHtols = [];
+    promise.push(
+      axios.get("https://hotelapi.im.nuk.edu.tw/api/account").then((response) => {
+        allHtols = response.data;
+      })
+    )
+    Promise.all(promise).then(() => {
+      var hotels = []
           for(var num=0; num< allHtols.length;num++){
             if(allHtols[num].companyName === self.userAccountDetail.companyName){
               var inHotels = false;
@@ -153,10 +156,33 @@ export default {
           hotels.forEach((item) => {
             result.has(item.department) ? '' : self.departments.push({field: item.department, value: item._id}) && result.add(item.department)
           })
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    })
+    // axios
+    //     .get("https://hotelapi.im.nuk.edu.tw/api/account")
+    //     .then((response) => {
+    //       var allHtols = response.data;
+    //       var hotels = []
+    //       for(var num=0; num< allHtols.length;num++){
+    //         if(allHtols[num].companyName === self.userAccountDetail.companyName){
+    //           var inHotels = false;
+    //           for (var i in hotels) {
+    //             if (hotels[i]._id === allHtols[num]._id){
+    //               inHotels = true;
+    //               break;
+    //             }
+    //           }
+    //           if (!inHotels) {
+    //             hotels.push(allHtols[num]);
+    //           }
+    //         } 
+    //       }
+    //       hotels.forEach((item) => {
+    //         result.has(item.department) ? '' : self.departments.push({field: item.department, value: item._id}) && result.add(item.department)
+    //       })
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
       
       // const storageRef = firebase.storage().ref('cat1.png');
       // storageRef.getDownloadURL().then(function(url) {
