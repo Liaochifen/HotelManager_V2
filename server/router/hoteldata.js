@@ -109,9 +109,10 @@ router.get('/statistic/:time', (req, res) => {
 
 router.get('/comment/:collection', (req, res) => {
     console.log(req.body)
-    var mysort = { "times.comment": -1 };
+//     var mysort = { "times.comment": -1 };
+    var mysort = { "_id": -1 };
     q = require('../models/' + req.params.collection + 'Schema')
-    q.find({})
+    q.find({"website":{$ne: "Booking"}})
         .limit(100)
         .sort(mysort)
         // .sort({ update_at: -1 })

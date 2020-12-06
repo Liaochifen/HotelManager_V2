@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.49e9a60d650cf070d656bc9fb6233362.js"
+  "/precache-manifest.f57edcd10e89a2865ffe2306955795d2.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -122,7 +122,7 @@ self.addEventListener('fetch', function (event) {
                } 
                else {
                    for (var key in data) {
-                       writeData(idbName, data[key])
+                       writeData(idbName, data[key]);
                    }
                }
            })

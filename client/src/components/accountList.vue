@@ -573,6 +573,8 @@ export default {
                 console.log("delete successed:");
                 console.log(this.checkedAccount);
               });
+
+            util.deleteItemFromData("account", self.checkedAccount[k]);
           }
           this.$fire({
             title: "Success !!",
