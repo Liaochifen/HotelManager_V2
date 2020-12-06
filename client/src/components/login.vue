@@ -26,7 +26,7 @@
           />
           <div class="clear"></div>
           <div class="btn">
-            <button type="submit">確&nbsp;認</button>
+            <button type="submit">確認</button>
             <router-link :to="'../forgetPassword'" class="link">忘記密碼 ?</router-link>
           </div>
         </form>
