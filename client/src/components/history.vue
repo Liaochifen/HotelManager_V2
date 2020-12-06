@@ -1,6 +1,6 @@
-<template>
-  <div class="historyContent">
-    <div class="contentCenter">
+<template >
+  <div class="historyContent"  v-if="renderComponent === 0">
+    <div class="contentCenter" >
       <div class="page">
         <span>歷史紀錄</span>
       </div>
@@ -37,7 +37,6 @@
                 <span v-else-if="commentFilter.length !== 0">
                   <div v-for="(item, index) in commentFilter.slice().reverse()" :key="index+'con'" class="commentArea">
                   <!-- 放大頭照 -->
-
                     <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px" alt=""/><span>{{item.employeeNumber}}</span></span>
                     <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
                     <!-- 手機板變成在評論底下，縮小 -->
@@ -83,7 +82,7 @@
               <p>無任何記錄</p>
             </span>
             <span v-else-if="personalCommentFilter.length !== 0">
-              <div v-for="(item, index) in personalCommentFilter" :key="index+'conPer'" class="commentArea">
+              <div v-for="(item, index) in personalCommentFilter.slice().reverse()" :key="index+'conPer'" class="commentArea">
 
                 <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px"  alt=""/><span>{{item.employeeNumber}}</span></span>
                 <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
@@ -314,6 +313,9 @@ export default {
       ],
       userPicture:{},
       allAccount:[],
+      renderComponent: 1,
+      pictureIndex:0,
+      picturefirst:true,
     };
   },
   mounted() {
@@ -324,15 +326,15 @@ export default {
     // var userID = JSON.parse(logining).companyName;
     self.employeeNumber = JSON.parse(logining).employeeNumber
 
-    if(JSON.parse(logining).limit === '後台管理者'){
-      document.getElementById('userInfoRecord').style.visibility = 'visible';
-      document.getElementById('userInfoRecord_phone').style.display = 'block';
-    }
+    // if(JSON.parse(logining).limit === '後台管理者'){
+    //   document.getElementById('userInfoRecord').style.visibility = 'visible';
+    //   document.getElementById('userInfoRecord_phone').style.display = 'block';
+    // }
     axios.get("https://hotelapi.im.nuk.edu.tw/api/account")
     .then((response) => {
       console.log(response);
-      this.allAccount = response.data;
-      this.getPicture();
+      self.allAccount = response.data;
+      self.getPicture();
      
       // this.userPicture.response.data[0].employeeNumber="text";
       console.log(this.userPicture);
@@ -408,6 +410,10 @@ export default {
         })
         self.changePage(0)
         self.publicManage(0)
+        
+        $(".pageButton0").removeClass("pageButtonStart");
+        $(".pageButton0").addClass("focus");
+        $('.his_comment').addClass('bg')
       })
       .catch((error) => {
         console.log(error);
@@ -493,18 +499,72 @@ export default {
       }
       console.log("picture");
       console.log(this.userPicture);
+      // window.location.reload();
     },
     getPictureUrl(user,picture){
-    var self = this;
+      console.log("getPictureUrl");
+      var self = this;
+      
       const storageRef = firebase.storage().ref(picture);
       storageRef.getDownloadURL().then(function(url) {
+        self.pictureIndex = self.pictureIndex +1; 
+        console.log(url);
         self.userPicture[user]=url;
+        console.log(self.pictureIndex)
+        console.log(self.allAccount.length)
+        if(self.pictureIndex === self.allAccount.length && self.picturefirst){
+          console.log("first");
+          self.picturefirst = false;
+          self.changePage(0)
+          self.publicManage(1);
+          
+          var logining = localStorage.getItem("token");
+          if(JSON.parse(logining).limit !== '後台管理者'){
+            document.getElementById('userInfoRecord').style.visibility = 'hidden';
+            document.getElementById('userInfoRecord_phone').style.display = 'none';
+          }
+          self.renderComponent = 0;
+          self.changePage(0)
+          self.publicManage(0);
+          $(".pageButton0").removeClass("pageButtonStart");
+        $(".pageButton0").addClass("focus");
+       }
+        
       }).catch(function(error) {
         console.log(error);
-      });      
+        self.pictureIndex = self.pictureIndex +1; 
+        self.userPicture[user]="http://192.168.50.108:8080/img/icon-192x192.23773b6f.png";
+        if(self.pictureIndex === self.allAccount.length && self.picturefirst){
+          console.log("first");
+          self.picturefirst = false;
+          self.changePage(0)
+          self.publicManage(1);
+          
+          var logining = localStorage.getItem("token");
+          if(JSON.parse(logining).limit === '後台管理者'){
+            document.getElementById('userInfoRecord').style.visibility = 'hidden';
+            document.getElementById('userInfoRecord_phone').style.display = 'none';
+          }
+          self.renderComponent = 0;
+          self.changePage(0)
+          self.publicManage(0);
+          $(".pageButton0").removeClass("pageButtonStart");
+        $(".pageButton0").addClass("focus");
+       }
+      });
+      // $(".pageButton0").addClass("focus");
+      // $(".pageButton0").removeClass("pageButtonStart");
+      // $(".pageButton1").removeClass("focus");
+      // $(".pageButton2").removeClass("focus");
+      // $('.his_comment').addClass('bg')
     },
     getPictureSrc(img){
-      return this.userPicture[img];
+      if(!this.userPicture[img]){
+        return "http://192.168.50.108:8080/img/icon-192x192.23773b6f.png";
+      }else{
+        return this.userPicture[img];
+      }
+      
     },
     history_filter_phone(){
       event.stopPropagation();
