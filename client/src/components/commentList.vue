@@ -809,9 +809,9 @@ export default {
       // let self = this;
       arr = arr.filter((item) => {
         return (
-          Date.parse(Object.values(item.times)[1]) >=
+          Date.parse(item.times.comment) >=
             Date.parse(startData._d) &&
-          Date.parse(Object.values(item.times)[1]) <= Date.parse(endData._d)
+          Date.parse(item.times.comment) <= Date.parse(endData._d)
         );
       });
       return arr;
@@ -845,8 +845,12 @@ export default {
         $("#reportrange1 timeSpan1").css({ "font-size": "12px", width: "120px" });
         self.end = end;
       }
-      if(self.fromDate === true && self.toDate === true){
-        self.AllfilterFunction()
+      if(self.fromDate === true){
+        if(self.toDate === true){
+          self.AllfilterFunction()
+        }else{
+          console.log(self.toDate)
+        }
       }
     },
     dateRange: function (value) {
