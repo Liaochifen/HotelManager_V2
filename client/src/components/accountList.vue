@@ -105,7 +105,7 @@
           </button>
           <button class="editButton clearALL" @click="clearALL()" >
             <img src="../assets/icon/clear.png"/>
-            <span>全部清除</span>
+            <span>清除篩選</span>
           </button>
           <div class="clear"></div>
         </div>

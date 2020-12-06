@@ -113,7 +113,7 @@ export default {
             self.updateAccount();
           }).catch(function(error) {
             console.log(error);
-            self.picture = "http://192.168.50.108:8080/img/icon-192x192.23773b6f.png";
+            self.picture = "/img/icons/icon-192x192.png";
                  localStorage.setItem(
                   "token",
                   JSON.stringify({
