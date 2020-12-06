@@ -352,6 +352,10 @@ export default {
               if(result.value){
                 self.conditionModifytoHistory.old = data
                 self.commentData.labels.condition = 1;
+                self.conditionModifytoHistory.new = self.commentData.labels.condition
+                self.newComment = self.commentData;
+                self.updateComment();
+                self.updateHistory(0)
               }
             })
       } else {
@@ -367,13 +371,17 @@ export default {
         }).then((result) => {
           if(result.value){
             self.commentData.labels.condition = 2;
+            self.conditionModifytoHistory.new = self.commentData.labels.condition
+            self.newComment = self.commentData;
+            self.updateComment();
+            self.updateHistory(0)
           }
         })
       }
-      self.conditionModifytoHistory.new = self.commentData.labels.condition
-      self.newComment = self.commentData;
-      self.updateComment();
-      self.updateHistory(0)
+      // self.conditionModifytoHistory.new = self.commentData.labels.condition
+      // self.newComment = self.commentData;
+      // self.updateComment();
+      // self.updateHistory(0)
     },
     // replyUpdate: function (data) {
     //   let self = this
@@ -407,19 +415,39 @@ export default {
     updateComment: function () {
       let self = this;
       let updateData = self.newComment;
-      axios
-        .put(
-          "https://hotelapi.im.nuk.edu.tw/api/comment/" +
-            self.companyName +
-            "/" +
-            self.commentDetailsID,
-          updateData
-        ).then((response) => {
-          console.log(response.data)
-        })
-        .catch((err) => {
-          console.log(err);
+
+      if ("serviceWorker" in navigator && "SyncManager" in window) {
+        navigator.serviceWorker.ready.then(function (sw) {
+          var post = {
+            id: self.commentDetailsID,
+            data: updateData,
+            companyName: self.companyName,
+          };
+
+          util
+            .writeData("sync-comment-update", post)
+            .then(function () {
+              return sw.sync.register("sync-comment-update");
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
         });
+      } else {
+        axios
+          .put(
+            "https://hotelapi.im.nuk.edu.tw/api/comment/" +
+              self.companyName +
+              "/" +
+              self.commentDetailsID,
+            updateData
+          ).then((response) => {
+            console.log(response.data)
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     },
     updateHistory: function(value, value1){
       let self = this

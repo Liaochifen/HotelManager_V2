@@ -515,7 +515,7 @@ export default {
         self.picture = url;
       }).catch(function(error) {
         console.log(error);
-        self.picture = "http://192.168.50.108:8080/img/icon-192x192.23773b6f.png";
+        self.picture = "/img/icons/icon-192x192.png";
         // const storageRef2 = firebase.storage().ref('004.png');
         // storageRef2.getDownloadURL().then(function(url) { 
         // self.picture = url;

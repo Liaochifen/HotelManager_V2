@@ -14,6 +14,12 @@ var dbPromise = idb.open('account', 1, function (db) {
     if (!db.objectStoreNames.contains('competition')) {
         db.createObjectStore('competition', { keyPath: 'hotelName' });
     }
+    //if (!db.objectStoreNames.contains('stat')) {
+    //    db.createObjectStore('stat', { keyPath: '_id' });
+    //}
+    if (!db.objectStoreNames.contains('stat_all')) {
+        db.createObjectStore('stat_all', { keyPath: '_id' });
+    }
 });
 
 

@@ -57,10 +57,10 @@
           </button>
           <button class="editButton clearALL" @click="clearALL()" >
             <img src="../assets/icon/clear.png"/>
-            <span>全部清除</span>
+            <span>清除篩選</span>
           </button>
         </div>
-        <!-- <button @click="clearALL()" class="clearall">全部清除</button> -->
+        <!-- <button @click="clearALL()" class="clearall">清除篩選</button> -->
         <button @click="openfilter_sort()" class="filter_sort_phone">分類</button>
       </div>
       <div class="edit">
