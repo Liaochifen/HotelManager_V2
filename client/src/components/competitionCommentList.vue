@@ -277,8 +277,30 @@ export default {
           sortable: false
         },
         {
+          label: "評論",
+          field: this.fieldFn3,
+          sortable: false
+        },
+        {
+          label: "評分",
+          field: this.fieldFn4,
+          type: "number",
+        },
+        {
           label: "時間",
           field: "times.comment",
+        },
+        {
+          label: "網站來源",
+          field: "website",
+          sortable: false
+        }
+      ],
+      columns_computer: [
+        {
+          label: "正/負評",
+          field: this.fieldFn,
+          sortable: false
         },
         {
           label: "評論",
@@ -291,10 +313,35 @@ export default {
           type: "number",
         },
         {
+          label: "時間",
+          field: "times.comment",
+        },
+        {
           label: "網站來源",
           field: "website",
           sortable: false
+        }
+      ],
+      columns_phone: [
+        {
+          label: "正/負評",
+          field: this.fieldFn,
+          sortable: false
         },
+        {
+          label: "評論",
+          field: this.fieldFn3,
+          sortable: false
+        },
+        {
+          label: "評分",
+          field: this.fieldFn4,
+          type: "number",
+        },
+        {
+          label: "時間",
+          field: "times.comment",
+        }
       ],
       titleField: "",
       labelchoose: [
@@ -350,7 +397,8 @@ export default {
         pos_neg: ''
       },
       fromDate: false,
-      toDate: false
+      toDate: false,
+      window_width: document.documentElement.clientWidth,
     };
   },
   mounted() {
@@ -369,7 +417,24 @@ export default {
       });
     self.start = start;
     self.end = end;
-    
+    var _this = this
+    window.onresize = function () {
+      _this.window_width = document.documentElement.clientWidth 
+    }
+    if(document.documentElement.clientWidth > 768){
+        this.columns = this.columns_computer
+    }else{
+        this.columns = this.columns_phone
+    }
+  },
+  watch: {
+    'window_width': function (val) { 
+      if(val > 768){
+        this.columns = this.columns_computer
+      }else{
+        this.columns = this.columns_phone
+      }
+    }
   },
   methods: {
     AllfilterFunction: function(tag){
@@ -507,9 +572,9 @@ export default {
       // let self = this;
       arr = arr.filter((item) => {
         return (
-          Date.parse(Object.values(item.times)[1]) >=
+          Date.parse(item.times.comment) >=
             Date.parse(startData._d) &&
-          Date.parse(Object.values(item.times)[1]) <= Date.parse(endData._d)
+          Date.parse(item.times.comment) <= Date.parse(endData._d)
         );
       });
       return arr;
@@ -531,8 +596,12 @@ export default {
         $("#reportrange1 timeSpan1").css({ "font-size": "12px", width: "120px" });
         self.end = end;
       }
-      if(self.fromDate === true && self.toDate === true){
-        self.AllfilterFunction()
+      if(self.fromDate === true){
+        if(self.toDate === true){
+          self.AllfilterFunction()
+        }else{
+          console.log(self.toDate)
+        }
       }
     },
     dateRange: function (value) {
