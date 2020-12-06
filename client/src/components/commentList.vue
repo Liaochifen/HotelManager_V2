@@ -789,7 +789,11 @@ export default {
       // }
     },
     fieldFn4(rowObj){
-      return rowObj.rating/2
+      if(rowObj.rating > 5){
+        return rowObj.rating/2
+      }else{
+        return rowObj.rating
+      }
     },
     // 分數篩選
     scoreHtml: function(){
