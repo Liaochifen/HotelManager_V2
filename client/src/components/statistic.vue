@@ -59,7 +59,7 @@
               <li class="flex-1">
                 <div>
                   <span class="subti">評分</span>
-                  <p>{{todayData.length && todayData[0].data.avg_rating}}
+                  <p>{{todayData.length && todayData[0].data.avg_rating/2}}
                     <span v-if="rise[3].value === 0">
                       <img src="../assets/icon/rise.png">
                     </span>
@@ -1021,7 +1021,7 @@ export default {
           labels: ["正評", "負評"],
           datasets: [
             {
-              backgroundColor: ["#F75019", "#178D8F"],
+              backgroundColor: ["green", "red"],
               // 用data[]取 , 要以什麼為基準??
               data: self.getCommentData(value, data),
             },

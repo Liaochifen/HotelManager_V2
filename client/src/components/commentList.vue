@@ -57,10 +57,10 @@
           </button>
           <button class="editButton clearALL" @click="clearALL()" >
             <img src="../assets/icon/clear.png"/>
-            <span>全部清除</span>
+            <span>清除篩選</span>
           </button>
         </div>
-        <!-- <button @click="clearALL()" class="clearall">全部清除</button> -->
+        <!-- <button @click="clearALL()" class="clearall">清除篩選</button> -->
         <button @click="openfilter_sort()" class="filter_sort_phone">分類</button>
       </div>
       <div class="edit">
@@ -789,7 +789,11 @@ export default {
       // }
     },
     fieldFn4(rowObj){
-      return rowObj.rating/2
+      if(rowObj.rating > 5){
+        return rowObj.rating/2
+      }else{
+        return rowObj.rating
+      }
     },
     // 分數篩選
     scoreHtml: function(){
@@ -809,9 +813,9 @@ export default {
       // let self = this;
       arr = arr.filter((item) => {
         return (
-          Date.parse(Object.values(item.times)[1]) >=
+          Date.parse(item.times.comment) >=
             Date.parse(startData._d) &&
-          Date.parse(Object.values(item.times)[1]) <= Date.parse(endData._d)
+          Date.parse(item.times.comment) <= Date.parse(endData._d)
         );
       });
       return arr;
@@ -845,8 +849,12 @@ export default {
         $("#reportrange1 timeSpan1").css({ "font-size": "12px", width: "120px" });
         self.end = end;
       }
-      if(self.fromDate === true && self.toDate === true){
-        self.AllfilterFunction()
+      if(self.fromDate === true){
+        if(self.toDate === true){
+          self.AllfilterFunction()
+        }else{
+          console.log(self.toDate)
+        }
       }
     },
     dateRange: function (value) {

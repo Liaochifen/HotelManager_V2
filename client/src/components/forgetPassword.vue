@@ -1,7 +1,7 @@
 <template>
   <div class="forgetpw_wrap">
     <div class="forgetpw_page forgetPW_phone">
-      <img src="https://fakeimg.pl/100x100/" alt="" />
+      <img src="../assets/icon/icon-96x96.png" alt="" />
       <div class="clear"></div>
       <h1>忘記密碼</h1>
       <div class="input_block">

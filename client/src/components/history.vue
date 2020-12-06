@@ -62,7 +62,7 @@
                 </span>
                 <span v-else-if="replyFIlter.length !== 0">
                   <div v-for="(item, index1) in replyFIlter" :key="index1+'tag'" class="commentArea">
-                    <span><img src="https://fakeimg.pl/15x15/"  alt=""/></span>
+                    <span><img src="../assets/icon/icon-24x24.png"  alt=""/></span>
                     <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>的回覆狀態從"{{item.old}}"{{item.modify}}成"{{item.new}}"</span>
                     <span class="commentTimeHistory">{{item.time}}</span>
                   </div>

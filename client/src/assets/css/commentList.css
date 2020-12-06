@@ -13,7 +13,8 @@ button:hover{
 }
 .but{
     display: inline;
-    margin-left: 51.5%;
+    float: right;
+    margin-right: 3%;
     /* margin-left: 70%; */
 }
 .filterTime{
@@ -440,6 +441,7 @@ tr:hover td{
         box-sizing: border-box;
         padding: 5px;
         border-top: 1px solid rgb(196, 193, 193);
+        /* z-index: 0; */
         /* align-items: center; */
         /* line-height: 40px; */
     }
@@ -590,7 +592,7 @@ tr:hover td{
         border: none;
         box-sizing: border-box;
     } */
-    .clearALL{
+    .but .clearALL{
         position: fixed;
         z-index: 1;
         top: 7px;
@@ -603,17 +605,17 @@ tr:hover td{
         width: auto;
         box-sizing: border-box;
     }
-    .clearALL img{
+    .but .clearALL img{
         display: none;
     }
-    .clearALL span{
+    .but .clearALL span{
         line-height: 23px;
         height: 25px;
         margin: 0 5px;
         width: 100%;
         letter-spacing: 1px;
     }
-    .clearALL:hover{
+    .but .clearALL:hover{
         position: fixed;
         z-index: 1;
         top: 7px;
@@ -626,8 +628,18 @@ tr:hover td{
         width: auto;
         box-sizing: border-box;
         background: white;
+        /* background: gray;
+        color: white; */
     }
     .clearALL:active{
+        position: fixed;
+        z-index: 1;
+        top: 7px;
+        left: 5%;
+        background: white;
+        /* margin: 0; */
+        /* padding: 0 0px; */
+        /* height: 25px; */
         background: gray;
         color: white;
     }
@@ -702,11 +714,12 @@ tr:hover td{
         margin: 0;
         position:fixed;
         z-index: 11;
-        top: 39px;
+        top: 80px;
         width: 100%;
         height: unset;
         border-radius: unset;
         border: unset;
+        border-top: 1px solid rgb(196, 193, 193);
         box-shadow: 0 2px 4px rgb(148, 146, 146);
         display: none;
         box-sizing: border-box;

@@ -1,7 +1,7 @@
 <template>
   <div class="veri_wrap">
     <div class="veri_page">
-      <img src="https://fakeimg.pl/100x100/" alt="" />
+      <img src="../assets/icon/icon-96x96.png" alt="" />
       <div class="clear"></div>
       <h1>已寄送驗證碼到此信箱</h1>
       <div class="clear"></div>
@@ -147,7 +147,7 @@ export default {
             self.forgetPasswordRecord(true);
           }).catch(function(error) {
             console.log(error);
-            self.picture = "http://192.168.50.108:8080/img/icon-192x192.23773b6f.png";
+            self.picture = "/img/icons/icon-192x192.png";
                  localStorage.setItem(
                   "token",
                   JSON.stringify({

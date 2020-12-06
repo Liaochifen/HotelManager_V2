@@ -109,10 +109,12 @@ router.get('/statistic/:time', (req, res) => {
 
 router.get('/comment/:collection', (req, res) => {
     console.log(req.body)
+    var mysort = { "times.comment": -1 };
     q = require('../models/' + req.params.collection + 'Schema')
     q.find({})
-        .limit(10)
-        .sort({ update_at: -1 })
+        .limit(100)
+        .sort(mysort)
+        // .sort({ update_at: -1 })
         .then(commentDatas => {
             res.json(commentDatas)
         }).catch(err => {

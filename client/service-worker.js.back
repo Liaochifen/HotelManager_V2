@@ -13,7 +13,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 importScripts(
-  "/precache-manifest.5acfabdbcfc7e42387a753dd53344ff4.js"
+  "/precache-manifest.49e9a60d650cf070d656bc9fb6233362.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "test"});
@@ -23,17 +23,18 @@ importScripts('./utility.js');
 
 var CACHE_STATIC_NAME = 'static-v1';
 var CACHE_DYNAMIC_NAME = 'dynamic-v1';
-const CACHE_ORIGIN = 'test-precache-v2-https://hoteleye.im.nuk.edu.tw/';
+// const CACHE_ORIGIN = 'test-precache-v2-https://hoteleye.im.nuk.edu.tw/';
 
 var STATIC_FILES = [
-  'https://fakeimg.pl/15x15/',
-  'https://fakeimg.pl/20x20/',
-  'https://fakeimg.pl/27x27/',
-  'https://fakeimg.pl/50x50/',
-  'https://fakeimg.pl/100x100/',
-  'https://hoteleye.im.nuk.edu.tw/img/icons/favicon-32x32.png',
-  'https://hoteleye.im.nuk.edu.tw/img/icons/favicon-16x16.png',
-  'https://hoteleye.im.nuk.edu.tw/img/icons/android-chrome-192x192.png'
+  '/img/icons/favicon-16x16.png',
+  '/img/icons/favicon-32x32.png',
+  '/img/icons/icon-24x24.png',
+  '/img/icons/icon-36x36.png',
+  '/img/icons/icon-48x48.png',
+  '/img/icons/icon-72x72.png',
+  '/img/icons/icon-96x96.png',
+  '/img/icons/icon-144x144.png',
+  '/img/icons/icon-192x192.png'
 ]
 
 self.addEventListener('message', (event) => {
@@ -85,6 +86,8 @@ self.addEventListener('fetch', function (event) {
     var re = new RegExp('https://hotelapi.im.nuk.edu.tw/api/');
     var re_stat = new RegExp('https://hotelapi.im.nuk.edu.tw/stat?');
     var targetApi = event.request.url.match(new RegExp('\/api\/[a-zA-z]*'));
+    // var statMonth = event.request.url.match(new RegExp('month=[0-9]*'));
+
   if (event.request.url.match(re) || event.request.url.match(re_stat)) {
     var idbName = "";
     if (event.request.url.match(re)) {
@@ -92,16 +95,17 @@ self.addEventListener('fetch', function (event) {
       if (idbName === "commentDetails") {
           idbName = "comment"
       }
+      if (idbName === "statistic") {
+        idbName = "stat_all";
+      }
     } else if (event.request.url.match(re_stat)) {
       idbName = "stat";
     }
-    // console.log(event.request.url);
-    // console.log(targetApi[0]);
     console.log('[Service Worker] Match ' + event.request.url);
     event.respondWith(fetch(event.request)
       .then(function (res) {
        var clonedRes = res.clone();
-       if (idbName !== 'comment' && idbName !== 'account') {
+       if (idbName !== 'comment' && idbName !== 'account' && idbName !== 'stat') {
            clearAllData(idbName)
                .catch(function (err) {
                    console.log(err);
@@ -112,14 +116,10 @@ self.addEventListener('fetch', function (event) {
                if (data.length === undefined) {
                    if(idbName === 'competition') {
                        for (var key in data.data) {
-                           writeData(idbName, data.data[key])
+                           writeData(idbName, data.data[key]);
                        }
                    }
-                   else {
-                       writeData(idbName, data)
-                   }
-               }
-               
+               } 
                else {
                    for (var key in data) {
                        writeData(idbName, data[key])
@@ -243,8 +243,8 @@ self.addEventListener('push', function (event) {
 
   var options = {
     body: data.content,
-    icon: './img/icons/apple-touch-icon-76x76.png',
-    badge: './img/icons/apple-touch-icon-76x76.png',
+    icon: './img/icons/icon-72x72.png',
+    badge: './img/icons/icon-72x72.png',
     data: {
       url: data.openUrl
     }
