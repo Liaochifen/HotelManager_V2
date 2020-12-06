@@ -1021,7 +1021,7 @@ export default {
           labels: ["正評", "負評"],
           datasets: [
             {
-              backgroundColor: ["#178D8F", "#F75019"],
+              backgroundColor: ["green", "red"],
               // 用data[]取 , 要以什麼為基準??
               data: self.getCommentData(value, data),
             },
