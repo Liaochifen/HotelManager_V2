@@ -541,7 +541,11 @@ export default {
       // }
     },
     fieldFn4(rowObj){
-      return rowObj.rating/2
+      if(rowObj.website === 'Agoda'|| rowObj.website === 'Hotels'|| rowObj.website === 'Booking'){
+        return rowObj.rating/2
+      }else{
+        return rowObj.rating
+      }
     },
     scoreHtml: function(){
       var output = document.getElementById("myRange").value;

@@ -789,7 +789,7 @@ export default {
       // }
     },
     fieldFn4(rowObj){
-      if(rowObj.rating > 5){
+      if(rowObj.website === 'Agoda'|| rowObj.website === 'Hotels'|| rowObj.website === 'Booking'){
         return rowObj.rating/2
       }else{
         return rowObj.rating
