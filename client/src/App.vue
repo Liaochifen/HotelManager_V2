@@ -199,8 +199,6 @@ import axios from "axios";
 import $ from "../node_modules/jquery";
 import dateTime from "../src/assets/js/dateTime";
 import util from "./assets/js/utility";
-// import firebase from 'firebase/app';
-// import 'firebase/storage';
 export default {
   name: "App",
   data() {
@@ -764,59 +762,6 @@ a {
     justify-content: center; 
 }
 
-/* .personalInfo {
-  float: right;
-  padding-right: 30px;
-}
-.personalInfo p {
-  float: right;
-  margin-right: 10px;
-}
-.loginingInfo {
-  background-color: #fff;
-  padding-top: 20px;
-  font-size: 16px;
-  top: 7%;
-  right: 2%;
-  color: black;
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  border: #cac7c7 solid 0.5px;
-  border-radius: 5px;
-  box-shadow: 1px 2px 2px 1px #a0a0a02f;
-  z-index: 100;
-}
-#logining {
-  display: none;
-}
-.loginingInfo .nameEmail {
-  padding-bottom: 20px;
-  width: 240px;
-  margin: auto;
-  border-bottom: #707070 solid 0.5px;
-}
-.nameEmail img {
-  float: left;
-}
-.nameEmail li {
-  float: left;
-  padding: 5px 5px 5px 10px;
-}
-.personalMenu {
-  font-size: 18px;
-  margin-top: 30px;
-}
-.personalMenu ul {
-  margin-left: 35px;
-}
-.personalMenu li {
-  margin-top: 30px;
-  vertical-align: middle;
-}
-.personalMenu img {
-  margin-right: 15px;
-} */
 .logoutInfo {
   background-color: #fff;
   padding-top: 20px;
@@ -830,7 +775,6 @@ a {
   border: #cac7c7 solid 0.5px;
 }
 #logoutInfo {
-  /* visibility: hidden; */
   display: none;
 }
 
@@ -857,27 +801,18 @@ a {
   .page {
     font-size: 18px;
     margin: 0;
-    
-    /* z-index: 1; */
-    /* top: 12px; */
-    /* left: 50%; */
   }
   .header {
-    /* height: 0; */
-    /* position: relative; */
-    /* z-index: 2; */
     display: none;
   }
   .headerContent {
     display: inline;
-    /* background-color: rgb(47, 58, 76); */
     background-color: #fff;
     width: 100%;
     height: 0;
     padding: 0;
     position: relative;
     z-index: 1;
-    /* display: none; */
   }
   .icons{
     margin-top: 5px;
@@ -887,15 +822,11 @@ a {
   .content {
     width: 100%;
     padding: 0;
-    /* position: absolute; */
-    /* top: 39px; */
-    /* bottom: 40px; */
     z-index: 1;
   }
   .contentTop {
     position: fixed;
     top: 0;
-    /* background-color: rgb(47, 58, 76); */
     background-color: #fff;
     height: 39px;
     margin: 0;
@@ -930,7 +861,6 @@ a {
     display: none;
   }
   .showMenu {
-    /* display: block; */
     display: none;
     width: 20%;
     line-height: 39px;
@@ -953,7 +883,6 @@ a {
   }
   .left_menu {
     display: block;
-    /* background-color: rgb(47, 58, 76); */
     background-color: #fff;
     color: white;
     height: 100%;
@@ -998,18 +927,12 @@ a {
   .footer{
     position: fixed;
     width: 100%;
-    /* position: relative; */
     z-index: 1;
     bottom: 0;
     height: 39px;
   }
   .phoneMenu {
     width: 100%;
-    /* display: block; */
-    
-    /* bottom: 0; */
-    /* text-align: center; */
-    /* background-color: rgb(47, 58, 76); */
     background-color: #fff;
     border-top: 0.3px solid rgb(221, 221, 221);
     display: flex;

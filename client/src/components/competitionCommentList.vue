@@ -43,7 +43,6 @@
               <button class="editButton" @click="openFilter()" id="comment_filter_phone">
                 <img src="../assets/icon/filter.png"/>
               </button>
-              <!-- <button @click="clearALL()" class="clearall">清除篩選</button> -->
               <button class="editButton clearALL clearALL_competition" @click="clearALL()" >
                 <img src="../assets/icon/clear.png"/>
                 <span>清除篩選</span>
@@ -63,33 +62,6 @@
                 </el-select>
               </template>
             </div>
-            <!-- <div slot="table-actions" class="slot_div">
-                <el-select v-model="conditionChoosen"  placeholder="選擇評論處理狀態" class="custom_el_select" @change="handleCheckedChange(1)">
-                  <el-option value="全選">全選</el-option>
-                  <el-option v-for="child in conditions"  :key="child.value"  :value="child.field" ></el-option>
-                </el-select>
-            </div> -->
-            <!-- <div slot="table-actions" class="slot_div">
-                <el-select v-model="replyChoosen"  placeholder="選擇評論回覆狀態"  @change="handleCheckedChange(2)" class="custom_el_select">
-                  <el-option value="全選">全選</el-option>
-                  <el-option v-for="child in reply"  :key="child.value"  :value="child.field"></el-option>
-                </el-select>
-            </div> -->
-            <!-- <div slot="table-actions" class="slot_div time_filter_phone">
-              <div
-                id="reportrange"
-                style="
-                  background: #fff;
-                  cursor: pointer;
-                  padding: 5px 10px;
-                  border: 1px solid #dcdfe6;
-                "
-              >
-                <span @click="dateRange" class="timeSpan"
-                  >時間
-                </span>
-              </div>
-            </div> -->
             <div slot="table-actions" class="slot_div score_div">
               <p class="filterTitle">評論分數</p>
               <div class="slidecontainer">
@@ -109,7 +81,6 @@
           <li class="all">
             <button @click="AllfilterFunction('all')" :value="oneTag">
               <div class="labelDiv">
-                <!-- <span class="num" >(1000)</span> -->
                 <span>全部</span>
               </div>
             </button>
@@ -117,7 +88,6 @@
           <li v-for="item in labelchoose" :key="item.field" :class="item.field">
             <button @click="AllfilterFunction(item.field)">
               <div class="labelDiv">
-                <!-- <span class="num">(1000)</span> -->
                 <span>{{ item.label }}</span>
               </div>
             </button>
@@ -149,7 +119,6 @@
         <div class="clear"></div>
       </div>
       <div class="dataRightArea">
-          <!-- @on-selected-rows-change="selectionChanged" -->
         <vue-good-table
           max-height="600px"
           :fixed-header="true"
@@ -183,72 +152,12 @@
                 >{{ props.row.title }}</router-link
               >
             </template>
-            <!-- <template v-else-if="props.column.field === 'resource'">
-                <a :href="props.row.resource[0].url" target="_blanket">{{props.row.resource[1].resourceName}}</a>
-              </template> -->
           </template>
         </vue-good-table>
         <div class="clear"></div>
       </div>
       <div class="clear"></div>
     </div>
-    <!-- <div class="filter">
-      <ul>
-        <li class="all">
-          <button @click="tagFilter('all')">
-            <div class="labelDiv">
-              <img src="https://fakeimg.pl/20x20/" alt="" />
-              <span>全部</span>
-            </div>
-          </button>
-        </li>
-        <li v-for="item in labelchoose" :key="item.field" :class="item.field">
-          <button @click="tagFilter(item.field)">
-            <div class="labelDiv">
-              <img src="https://fakeimg.pl/20x20/" alt="" />
-              <span>{{ item.label }}</span>
-            </div>
-          </button>
-        </li>
-        <li>
-          <button @click="tagCustom()">
-            <div class="labelDiv">
-              <img src="https://fakeimg.pl/20x20/" alt="" />
-              <span>自訂</span>
-            </div>
-          </button>
-        </li>
-      </ul>
-      <div class="clear"></div>
-      <div class="labelchooseArea">
-        <div class="labelchoose">
-          <input
-            type="checkbox"
-            name="label_all"
-            v-model="checkedtagsALL"
-            @change="checkedALLFilter(checkedtagsALL)"
-            id="checkALL"
-          />
-          <label for="checkALL">全選</label>
-          <div class="clear"></div>
-        </div>
-        <div class="labelchoose" v-for="item in labelchoose" :key="item.field">
-          <input
-            type="checkbox"
-            name="label_checked_col[]"
-            :id="[item.field]"
-            :value="item.field"
-            v-model="checkedtags"
-            @change="checkedALLFilter(checkedtags)"
-          />
-          <label :for="[item.field]">{{ item.label }}</label>
-          <div class="clear"></div>
-        </div>
-        <div class="clear"></div>
-      </div>
-      <div class="clear"></div>
-    </div> -->
-
   </div>
 </template>
 
@@ -486,14 +395,12 @@ export default {
     },
     
     openFilter(){
-      // let self = this;
       event.stopPropagation();
       $(".MultiFilterArea").slideToggle("normal");
       $(document).click(function (event) {
         var area = $(".MultiFilterArea"); // 設定目標區域
         var area1 = $(".daterangepicker"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
-          // $('#divTop').slideUp('slow');  //滑動消失
           $(".MultiFilterArea").hide(500); // 淡出消失
         }
       });
@@ -536,9 +443,7 @@ export default {
       }
     },
     fieldFn3(rowObj) {
-      // if (rowObj.title === "") {
         rowObj.title = rowObj.text.substr(0, 10) + "...";
-      // }
     },
     fieldFn4(rowObj){
       if(rowObj.website === 'Agoda'|| rowObj.website === 'Hotels'|| rowObj.website === 'Booking'){
@@ -573,7 +478,6 @@ export default {
       return arr1;
     },
     timeFilter: function (arr, startData, endData) {
-      // let self = this;
       arr = arr.filter((item) => {
         return (
           Date.parse(item.times.comment) >=
@@ -609,7 +513,6 @@ export default {
       }
     },
     dateRange: function (value) {
-      // var moment = require("moment");
       var self = this;  
       var moment = require("moment");
       var today = moment().subtract(1, "days");

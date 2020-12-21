@@ -26,16 +26,7 @@
     margin-right: auto;
     margin-left: auto;
 }
-/* .login_page img{
-    float: left;
-    margin: 40px 0 40px 43%;
-}
-.login_page h1{
-    font-size: 28px;
-    margin: auto;
-    font-weight: bolder;
-    text-align: center;
-} */
+
 
 .login_page .input_block{
     width: 30%;
@@ -100,11 +91,8 @@
     #login_page input{
         margin-top: 10px;
     }
-    #login_page button{
-        /* margin-top: 20px; */
-    }
+
     #login_page{
-        /* background: #000; */
         width: 100%;
         margin: 0;
         margin-top: 20%;
@@ -131,8 +119,6 @@
         text-align: center;
     }
     .login_page .input_block p{
-        /* text-align: center; */
-        /* display: block; */
         width: unset;
     }
 }

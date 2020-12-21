@@ -9,16 +9,7 @@ button:hover{
   font-size: 16px;
   line-height: 21px;
 }
-/* .selectBox{  
-  margin-right: 50px;
-  margin-left: 5px;
-  margin-top: 5px;
-  width: 120px;
-  height: 25px;
-  border-radius: 3px;
-  border-color: #707070;
-  font-family: "微軟正黑體";
-} */
+
 .selectBox{
   width: 160px !important;
   height: 30px !important;
@@ -39,22 +30,6 @@ button:hover{
   margin-left: 70px;
 }
 
-/* .functionButton{
-  float: right;
-  width: 55px;
-  height: 22px;
-  cursor:pointer;
-  background-color: #E6E6E6;
-  border: #828282 solid 0.5px ;
-  border-radius: 3px;
-  font-size: 14px;
-  color: #8C8C8C;
-  margin-left: 10px;
-  margin-right: 15px;
-  margin-top: 5px;
-  font-family: "微軟正黑體";
-  box-shadow: 0px 3px 6px #00000029;
-} */
 .functionButton{
     /* basic */
     all: unset;
@@ -84,7 +59,6 @@ button:hover{
 }
 .buttonFunArea{
   width: 100%;
-  /* margin-left: 66%; */
   margin-bottom: 10px;
 }
 .buttonArea{
@@ -95,7 +69,6 @@ button:hover{
   position: relative;
   right: 0px;
   background: white;
-  /* width: 100px; */
   height: 20px;
   padding: 10px 5px;
   margin-right: 10px;
@@ -154,15 +127,12 @@ button:hover{
   color:black;
 }
 .accountList  tr:hover a{
-  /* background-color: #656565; */
   color: red;
 }
 .vueGoodTable{
   width: 97%;
   margin-left: 20px;
-  /* margin-top: 20px; */
   position: relative;
-  /* display: none; */
   z-index: 1000;
 }
 /* increasing User */
@@ -180,7 +150,6 @@ button:hover{
 }
 #addNewUser{
   display: none;
-  /* visibility:hidden; */
   z-index:1000;
 }
 .addAccount{
@@ -203,19 +172,8 @@ button:hover{
   margin-top: 40px;
   margin-left: 17%;
 }
-/* .input input{
-  margin-bottom: 60px;
-  float:right;
-}
-.input span{
-  float:right;
-} */
-/* #tableActionsBtn{
-  margin-right: 330px;
-  margin-left: 100px;
-} */
+
 .addSelect{
-  /* float:right; */
   width: 200px;
   height: 30px;
   border: #707070 solid 1px;
@@ -224,7 +182,6 @@ button:hover{
   margin-bottom: 40px;
 }
 .account_select_phone{
-  /* display: none; */
   width: 30%;
   float: left;
   margin-right: 2.5%;
@@ -241,7 +198,6 @@ button:hover{
   height: 100vh;
   top: 0px;
   left: 0px;
-  /* right: 15px; */
   background: rgba(230, 230, 230, 0.726);
   z-index: 500;
 }
@@ -285,7 +241,6 @@ button:hover{
     display: none !important;
   }
   .phone_mask{
-    /* display: block; */
     height: 100%;
     width: 100%;
     position: fixed;
@@ -314,7 +269,6 @@ button:hover{
     display: none;
   }
   #filter_phone:hover{
-    /* all: unset; */
     background-color: white;
     position:fixed;
     top: 8px;
@@ -326,7 +280,6 @@ button:hover{
     position:fixed;
     top: 8px;
     right: 5%;
-    /* left: 0; */
     z-index: 1;
   }
   .buttonFunArea{
@@ -390,7 +343,6 @@ button:hover{
   }
   .insideContent{
     width: 100%;
-    /* margin: 50px 0; */
   }
   #delete{
     position: fixed;
@@ -405,7 +357,6 @@ button:hover{
     display: none;
   }
   #delete:hover{
-    /* all: unset; */
     background-color: white;
     position:fixed;
     top: 8px;
@@ -417,7 +368,6 @@ button:hover{
     position:fixed;
     top: 8px;
     right: 5%;
-    /* left: 0; */
     z-index: 1;
   }
   .display_ipad{
@@ -426,14 +376,11 @@ button:hover{
   .vueGoodTable{
     width: 100%;
     margin: 0;
-    /* background: #000; */
-    /* display: none; */
     position: relative;
     z-index: 0;
     top: 39px;
     margin:auto;
     padding-bottom: 39px;
-    /* max-height:none; */
   }
   .account_select{
     display: none;
@@ -445,8 +392,6 @@ button:hover{
     margin: 0;
     z-index: 0;
   }
-  /* 篩選＋按鈕 */
- 
   
   .left_btn{
     background: #F4F5F8;
@@ -481,7 +426,6 @@ button:hover{
     position: fixed;
     height: auto;
     background: #FFF;
-    /* padding: 30px 30px 20px 30px; */
     box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;
     -webkit-box-shadow: rgba(187, 187, 187, 1) 0 0px 20px -1px;
     font: 12px Arial, Helvetica, sans-serif;
@@ -490,7 +434,6 @@ button:hover{
     -webkit-border-radius: 10px;
   }
   .addUser form{
-    /* background: #000; */
     border-top: 1px dashed rgb(231, 231, 231);
     box-sizing: border-box;
     padding: 10px 0;
@@ -509,15 +452,10 @@ button:hover{
     width: 50%;
     padding: 0 4%;
     box-sizing: border-box;
-    /* display: flex; */
-    /* flex-direction: row-reverse; */
-    /* flex-wrap: wrap; */
-    /* justify-content: flex-end; */
   }
   .input input{
     margin: 10px 0;
     width: 200px;
-    /* margin-left: 5px; */
     border: 1px solid #e5e5e5;
 	  background: #fbfbfb;
   }
@@ -579,9 +517,6 @@ button:hover{
   }
 }
 @media (max-width: 600px) {
-  .input{
-    /* margin: 0 20% 0 0 ; */
-  }
   .input span{
     width: 20%;
   }

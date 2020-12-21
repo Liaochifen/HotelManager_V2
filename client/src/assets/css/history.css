@@ -7,8 +7,6 @@
 
 .pageButton0, .pageButton1 ,.pageButton2{
     all: unset;
-    /* font-size: 16px; */
-    /* basic */
     all: unset;
     width: 75px;
     font-size: 16px;
@@ -29,8 +27,6 @@
 }
 .pageButton0:hover, .pageButton1:hover,.pageButton2:hover{
     cursor: pointer;
-    /* color: rgba(0, 81, 255, 0.712); */
-    /* border-bottom: 1px solid rgba(0, 81, 255, 0.712); */
 }
 #userInfoRecord{
     visibility: hidden;
@@ -40,17 +36,12 @@
 }
 .historydataArea{
     box-shadow: 0.5px 0.5px 1px #adadad;
-    
-    /* box-shadow: 0.5px 0.5px 1px #adadad; */
 }
 .historydataArea ul{
     width: 100%;
     margin-top: 30px;
-    /* margin-bottom: 30px; */
     background-color: #fff;
     height: 50px;
-    /* border: 0.3px solid rgb(219, 219, 219); */
-    /* border-bottom: none; */
     border-radius: 3px;
 }
 
@@ -100,7 +91,6 @@
     padding: 1%;
 }
 .commentArea{
-    /* margin-top: 20px; */
     padding-top: 20px;
     padding-bottom: 20px;
     border-bottom: 0.3px solid rgb(201, 201, 201);
@@ -121,8 +111,6 @@
 }
 .focus{
     background: rgb(29, 151, 125);
-    /* color: rgba(0, 81, 255, 0.712);
-    border-bottom: 1px solid rgba(0, 81, 255, 0.712); */
 }
 .clear{
     clear:both;
@@ -137,9 +125,7 @@
     .contentCenter{
         display: block;
     }  
-    .page{
-        /* margin-left: -36px; */
-    } 
+
     .historydataArea{
         margin-top: 76px;
         padding-bottom: 39px;
@@ -148,7 +134,6 @@
     .historyContent{
         margin: 0;
         width: 100%;
-        /* margin-top: 76px; */
     }
     .phone_none{
         display: none;
@@ -161,18 +146,14 @@
         justify-content: space-around;
         background: white;
         z-index: 1;
-        /* padding-bottom: 39px; */
     }
     .history_list_phone button{
-        /* background: white; */
         display: block;
-        /* width: 34%; */
         margin: 0;
         text-align: center;
         padding: 5px 0;
         flex: 1;
         border: unset;
-        /* border-radius: unset; */
     }
     .public_record,.personal_record,.backend_record{
         margin: 0;
@@ -184,7 +165,6 @@
         position: fixed;
         z-index: 1;
         bottom: 39px;
-        /* background: #000; */
         border-radius: unset;
         box-shadow: 0 -2px 4px rgb(148, 146, 146);
         height: unset;
@@ -194,8 +174,6 @@
         width: 100%;
     }
     .commentArea{
-        /* display: flex; */
-        /* flex-direction: column; */
         padding-bottom: 30px;
         padding-left:60px;
     }

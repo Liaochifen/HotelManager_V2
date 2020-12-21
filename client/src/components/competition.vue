@@ -15,7 +15,6 @@
                       <router-link :to="{name: fn(item.hotelName), params: {collections: item.hotelName}}">
                       <div class="details">
                         <img :src="require(`../assets/icon/${item.hotelName}.jpg`)" style="width: 180px; height: 160px; object-fit: cover;"/>
-                        <!-- <img src="`../assets/icon/${item.hotelName}.jpg`"/> -->
                         <div class="companyInfo">
                           <p class="name">{{item.hotelChineseName}}<span class='rank'>({{item.rank}})</span></p>
                           <div class="ratings">
@@ -36,7 +35,6 @@
                 </template>
                 <template v-else-if="item.hotelName !== companyName">
                     <div class="eachCompany">
-                      <!-- <div class="rank">{{item.rank}}</div> -->
                       <span v-if="item.favorite === true" class="favoriteArea">
                       <input type="checkbox" class="checkbox" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn"/>
                         <span class="btn-box">
@@ -44,7 +42,6 @@
                         </span>
                       </span>
                       <span v-else-if="item.favorite === false" class="favoriteArea">
-                      <!-- :name="[props.row.companyID]" :value="[props.row.companyID]"  -->
                       <input type="checkbox" class="checkbox" :name="item.hotelName" :value="item.hotelName" v-model="favoriteList" @change="favoriteFn($event)"/>
                         <span class="btn-box">
                           <span class="btn"></span>
@@ -73,78 +70,6 @@
             </span>    
           </template>
         </div>
-
-        <!-- <template>
-          <span>
-            <vue-good-table
-              ref="competitionTable"
-              class="el-table"
-              styleClass="vgt-table striped"
-              :row-style-class="rowStyleClassFn"
-              :rows="companyData"
-              :columns="columns"
-              @on-selected-rows-change="selectionChanged"
-              :search-options="{ enabled: true }"
-              :select-options="{ enabled: true , selectOnCheckboxOnly: true,}"
-            >
-              <template slot="table-row" slot-scope="props">
-                <template v-if="props.column.field === 'favorite'">
-                  <template>
-                    <span v-if="props.row.favorite === true">
-                       :value="[props.row.companyID]"
-                      <input
-                        type="checkbox"
-                        class="checkbox"
-                        :value="props.row.hotelName"
-                        v-model="favoriteList"
-                        @change="favoriteFn"
-                      />
-                      <span class="btn-box">
-                        <span class="btn1"></span>
-                      </span>
-                    </span>
-                    <span v-else-if="props.row.favorite === false">
-                       :name="[props.row.companyID]" :value="[props.row.companyID]" 
-                      <input
-                        type="checkbox"
-                        class="checkbox"
-                        :name="props.row.hotelName"
-                        :value="props.row.hotelName"
-                        v-model="favoriteList"
-                        @change="favoriteFn($event)"
-                      />
-                      <span class="btn-box">
-                        <span class="btn"></span>
-                      </span>
-                    </span>
-                  </template>
-                </template>
-                <template v-else-if="props.column.label === '公司名稱'">
-                  <span v-if="props.row.hotelName === companyName">
-                    <router-link
-                      :to="{
-                        name: 'commentList',
-                        params: { collections: props.row.hotelName },
-                      }"
-                      >{{props.row.hotelName}}</router-link
-                    >
-                  </span>
-                  <span v-else-if="props.row.hotelName !== companyName">
-                    <router-link
-                      :to="{
-                        name: 'competitionCommentList',
-                        params: { collections: props.row.hotelName },
-                      }"
-                      >{{props.row.hotelName}}</router-link
-                    >
-                  </span>
-                  
-                </template>
-              </template>
-            </vue-good-table>
-          </span>
-        </template> -->
-
       <div class="clear"></div>
     </div>
     <div class="clear"></div>
@@ -154,13 +79,11 @@
 <script>
 import axios from "axios";
 import dateTime from "../assets/js/dateTime";
-// import $ from "jquery";
 import util from "../assets/js/utility";
 
 export default {
   name: "competition",
   components: {
-    // "vue-good-table": require("vue-good-table").VueGoodTable,
   },
   data() {
     return {
@@ -174,17 +97,11 @@ export default {
         {
           label: "公司名稱",
           field: "hotelName"
-          // field: this.fieldFn,
-          // html: true
         },
         {
           label: "分數",
           field: "avg_rating",
         }
-        // {
-        //   label: '排名',
-        //   field: 'ranking'
-        // }
       ],
       companyList: [
         {
@@ -295,22 +212,9 @@ export default {
             }
           })
         })
-        // console.log(self.companyData)
-        // self.$refs["commentdataTable"].forEach((item) => {
-        //   if(item.hotelName === self.companyName){
-        //     $('')
-        //   }
-        // })
-        // self.selectedArr = self.companyData.data.filter((item) => {
-        //   return item.hotelName !== self.companyName;
-        // });
-        // self.companyData = self.selectedArr;
         self.rating();
         self.favorite();
         self.favoriteList = self.account.favorite;
-        // self.trrr();
-
-        // self.fieldFn();
       });
 
     if ("indexedDB" in window) {
@@ -409,7 +313,6 @@ export default {
         var options = {
           body: "You successfully subscribed to our Notification service!",
           icon: "img/icons/icon-72x72.png",
-          // image: "img/icons/icon-72x72.png",
           dir: "ltr",
           lang: "zh-TW",
           vibrate: [100, 50, 200],
@@ -420,12 +323,10 @@ export default {
             {
               action: "confirm",
               title: "Okay",
-              // icon: "img/icons/icon-72x72.png",
             },
             {
               action: "cancel",
               title: "Cancel",
-              // icon: "img/icons/icon-72x72.png",
             },
           ],
         };
@@ -442,25 +343,10 @@ export default {
         return 'competitionCommentList'
       }
     },
-    // fieldFn(){
-    //   let self = this
-    //   var x = ''
-    //   // self.companyList.filter((item) => {
-    //   //   if(item.field === rowObj.hotelName){
-    //   //     x = item.label
-    //   //   }
-    //   // })
-    //   // return x
-    //   // return '<router-link :to="{name: ' + "'competitionCommentList'" + ', params: {collections:' + rowObj.hotelName + '}}">' + x + '</router-link>'
-    // },
     rowStyleClassFn: function(row){
       let self = this;
       return row.hotelName === self.companyName ? 'selfCompany' : '';
     },
-    // trrr: function(){
-    //   var q = document.getElementsByClassName('selfCompany');
-    //   q.item[0].style.backgroundColor = 'green'; 
-    // },
     favorite: function () {
       let self = this;
       self.companyData.forEach((item) => {
@@ -479,10 +365,6 @@ export default {
       self.companyData.sort(function(x,y){
         return x.hotelName === self.companyName ? -1 : y.hotelName === self.companyName ? 1:0
       })
-
-      // var ele = document.getElementsByClassName('full_star')
-      // var widthX = 
-      // ele.css('width', )
     },
     favoriteFn: function ($event) {
       let self = this;
@@ -513,7 +395,6 @@ export default {
       self.companyData.sort(function(x,y){
         return x.hotelName === self.companyName ? -1 : y.hotelName === self.companyName ? 1:0
       })
-      // self.updateHistory()
     },
     rating: function () {
       let self = this;

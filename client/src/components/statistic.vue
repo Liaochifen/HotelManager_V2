@@ -179,7 +179,6 @@ import lineChart from "../assets/js/lineChart";
 import barChart from "../assets/js/barChart";
 import doughnutChart from "../assets/js/doughnutChart";
 import svgMap from "../assets/js/map";
-// import ChartDataLabels from 'chartjs-plugin-datalabels'
 
 export default {
   name: "statistic",
@@ -193,7 +192,6 @@ export default {
       loginData: null,
       timeout: null,
       companyName: "",
-      // time: 'August',
       statisticAllData: [],
       statisticData: [],
       start: "",
@@ -235,8 +233,6 @@ export default {
           value: 1,
         },
       ],
-
-      // statisticRank: [],
       Rankcollection: {},
       Commentcollection: {},
       positiveDatacollection: {},
@@ -245,7 +241,6 @@ export default {
       webCommentcollection: {},
       tripTypecollection: {},
       countrycollection: {},
-      // option再想一下
       options: null,
       options1: {
         plugins: {
@@ -308,12 +303,10 @@ export default {
             fontSize: 14,
             fontFamily: "微軟正黑體",
           },
-          // 可以加onclick
         },
       },
       options4:{},
       options5:{},
-      // labelX: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       labelX: [
         {
           value: "01",
@@ -377,7 +370,6 @@ export default {
       this.$router.push({ name: "competition" });
     }
     let self = this;
-    // var time = [];
     var arr = [];
     let promises = [];
     var moment = require("moment");
@@ -649,16 +641,9 @@ export default {
         self.ServiceData();
         self.webCommentData(3, self.statisticData);
     })
-    // axios
-    //   .get("https://hotelapi.im.nuk.edu.tw/api/statistic")
-    //   .then((response) => {
-    //     self.statisticAllData = response.data;
-        
       .catch((error) => {
         console.log(error);
       });
-
-    // this.renderChart(this.chartdata, this.options)
   },
   methods: {
     cancle() {
@@ -790,8 +775,6 @@ export default {
       this.commentData(value);
       this.positiveData(value);
       this.negativeData(value);
-
-      // this.fillData(value)
     },
     dateRange: function () {
       var moment = require("moment");
@@ -833,7 +816,6 @@ export default {
     // 總排名趨勢
     RankData(value) {
       let self = this;
-      // var arr = [];
       var monthLabel = [];
       let promises = [];
       var time = "";
@@ -849,7 +831,6 @@ export default {
               self.RankFilterData.push(item);
               return item;
             }
-            // return moment(item.time)._d.getMonth() === time
           })
           .forEach((child) => {
             self.RangeLabelData.push(child.time);
@@ -879,7 +860,6 @@ export default {
           self.RangeLabelData = monthLabel;
           self.positiveData(value);
           self.negativeData(value);
-          // self.fillData(value)
         });
       } else if (value === 2) {
         var x = self.months.filter((item) => {
@@ -907,7 +887,6 @@ export default {
               self.RankFilterData.push(item);
               return item;
             }
-            // return (Date.parse(item.time) >= Date.parse(self.start._d)) && (Date.parse(item.time) <= Date.parse(self.end._d))
           })
           .forEach((item) => {
             self.RangeLabelData.push(item.time);
@@ -994,7 +973,6 @@ export default {
       let self = this;
       let promises = [];
       var data = [];
-      // var moment = require("moment");
       if (value === 2) {
         var x = self.months.filter((item) => {
           return item.field === self.chosenmonthData;
@@ -1022,7 +1000,6 @@ export default {
           datasets: [
             {
               backgroundColor: ["green", "red"],
-              // 用data[]取 , 要以什麼為基準??
               data: self.getCommentData(value, data),
             },
           ],
@@ -1031,9 +1008,6 @@ export default {
     },
     getCommentData(value, data) {
       let self = this;
-      // let promises = [];
-      // var data = []
-      // var moment = require("moment");
       if (value === 2) {
         data = self.getSelfCompany(data);
         return [data.labels.positive, data.labels.negative];
@@ -1073,10 +1047,8 @@ export default {
           yAxes: [
             {
               ticks: {
-                // min: Math.max.apply(null, this.getData(value))-5,
                 stepSize: 1,
                 max: Math.max.apply(null, this.getData(value)) + 2,
-                // min: Math.min.apply(null, this.getData(value)) - 2,
               },
             },
           ],
@@ -1101,8 +1073,6 @@ export default {
       let self = this;
       this.negativeDatacollection = {}
       this.option5 = {}
-      // var data = [];
-      // var max1 = Math.max.apply(null, this.getData1(value))
       this.negativeDatacollection = {
         labels: self.RangeLabelData,
         datasets: [
@@ -1128,7 +1098,6 @@ export default {
               ticks: {
                 stepSize: 1,
                 max: Math.max.apply(null, this.getData1(value)) + 2,
-                // min: Math.min.apply(null, this.getData1(value)) - 2,
               },
             },
           ],
@@ -1205,7 +1174,6 @@ export default {
         datasets: [
           {
             label: "評論則數",
-            // stack: 'Stack 0',
             barPercentage: 0.6,
             backgroundColor: "gray",
             data: this.getService(),
@@ -1242,22 +1210,6 @@ export default {
             data: self.getWebsiteData(value, data),
           },
         ],
-        // plugins: [{
-        //   beforeInit: function(chart, options){
-        //             console.log(chart)
-        //             var data = chart.data.datasets[0].data;
-      //       var isAllZero = data.reduce((a, b) => a + b) > 0 ? false : true;
-      //       console.log(isAllZero)
-
-      //       if (!isAllZero) return;
-      //       // when all data values are zero...
-      //       // chart.data.datasets[0].data = data.map((e, i) => i > 0 ? 0 : 1); //add one segment
-      //       // chart.data.datasets[0].backgroundColor = '#d2dee2'; //change bg color
-      //       // chart.data.datasets[0].borderWidth = 0; //no border
-      //       // chart.options.tooltips = false; //disable tooltips
-      //       // chart.options.legend.onClick = null; //disable legend click
-          // }
-        // }]
       };
       this.tripTypecollection = {
         labels: self.labelX3,
@@ -1312,12 +1264,6 @@ export default {
         return data1;
       }
     },
-    // createMap() {
-    //   new svgMap({
-    //     targetElementID: "svgMapGPD",
-    //     data: self.websiteData,
-    //   });
-    // },
   },
   created: function () {
     var self = this;
@@ -1330,9 +1276,6 @@ export default {
     }, 3000);
   },
   beforeDestroy: function () {
-    //換到別頁的時候把timeout清掉
-    // alert("beforeDestroy");
-    // console.log("beforeDestroy");
     clearTimeout(this.timeout);
   },
 };
@@ -1361,12 +1304,9 @@ export default {
 }
 .demo-wrapper {
   width: 97%;
-  /* width: 400px; */
   height: 100%;
   background: white;
   padding: 0px;
-  /* padding-left: 2%; */
-  /* padding: 2%; */
 }
 .demo-container{
   width: 100%;
@@ -1376,7 +1316,6 @@ export default {
 }
 #svgMapGPD {
   width: 96%;
-  /* width: 400px; */
 }
 
 .svgMap-map-image {

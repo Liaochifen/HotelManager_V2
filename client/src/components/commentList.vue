@@ -2,11 +2,6 @@
 
   <div>
     <div class="contentCenter" id="maindiv">
-      <!-- <span class="selection_btn_phone" @click="filter_phone">篩選</span>
-      <div class="selection_phone">
-        <span class="select_btn1" @click="filter_phone">篩選一</span>
-        <span class="select_btn2" @click="filter_phone">篩選二</span>
-      </div> -->
       <div class="page">
         <span>評論列表</span>
       </div>
@@ -60,7 +55,6 @@
             <span>清除篩選</span>
           </button>
         </div>
-        <!-- <button @click="clearALL()" class="clearall">清除篩選</button> -->
         <button @click="openfilter_sort()" class="filter_sort_phone">分類</button>
       </div>
       <div class="edit">
@@ -79,26 +73,11 @@
             </el-select>
             <div class="clear"></div>
           </div>
-          <!-- <div class="slot_div">
-            <el-select
-              placeholder="回覆狀態設定"
-              class="custom_el_select"
-              v-model="replyModify"
-            >
-              <el-option
-                v-for="item in reply"
-                :key="item.value + 'editreply'"
-                :value="item.field"
-              ></el-option>
-            </el-select>
-          </div> -->
           <div class="add_btn">
             <button class="functionButton addBTN" id="tableActionsBtn" @click="editUpdate(conditionModify, replyModify)">確認</button>
             <button class="functionButton deleteBTN" id="tableActionsBtn" @click="editCancle()">取消</button>
           <div class="clear"></div>
         </div>
-          <!-- <button @click="editUpdate" class="confirmButton">確認</button> -->
-          <!-- <button @click="editCancle" class="confirmButton">取消</button> -->
           <div class="clear"></div>
         </div>
       </div>
@@ -146,7 +125,6 @@
             <li class="all">
               <button @click="AllfilterFunction('all')" :value="oneTag">
                 <div class="labelDiv">
-                  <!-- <span class="num">(1000)</span> -->
                   <span>全部</span>
                 </div>
               </button>
@@ -154,7 +132,6 @@
             <li v-for="item in labelchoose" :key="item.field" :class="item.field">
               <button @click="AllfilterFunction(item.field)">
                 <div class="labelDiv">
-                  <!-- <span class="num">(1000)</span> -->
                   <span>{{ item.label }}</span>
                 </div>
               </button>
@@ -297,7 +274,6 @@ export default {
           field: this.fieldFn4,
           type: "number",
         },
-        // ?
         {
           label: "時間",
           field: "times.comment",
@@ -339,7 +315,6 @@ export default {
           field: this.fieldFn4,
           type: "number",
         },
-        // ?
         {
           label: "時間",
           field: "times.comment",
@@ -373,20 +348,6 @@ export default {
           field: "times.comment",
         }
       ],
-      // limit: 10,
-      // busy: false,
-      // currentPage: 1,
-      // pagesize: 10,
-      // filter area
-      // ishandleFilterData: false,
-      // isscoreFilterData: false,
-      // TypescheckAll: false,
-      // ConditioncheckAll: false,
-      // ReplycheckAll: false,
-      // 選取數量為不確定:true
-      // TypesIndeterminate: null,
-      // ConditionIndeterminate: null,
-      // ReplyIndeterminate: null,
       titleField: "",
       labelchoose: [
         {
@@ -436,7 +397,6 @@ export default {
           field: "已完成",
         },
       ],
-      // 在label裡了
       types: [
         {
           value: 0,
@@ -496,11 +456,6 @@ export default {
       toDate: false
     };
   },
-  // 在一個條件後面會跟著一個問號 (?)
-  // 如果條件是 truthy，在冒號(:)前的表達式會被執行
-  // 如果條件是 false，在冒號後面的表達式會被執行
-  // 這個運算子常常被用來當作 if 的簡潔寫法
-  // condition ? exprIfTrue : exprIfFalse
   mounted() {
     let self = this;
     var moment = require("moment");
@@ -558,50 +513,6 @@ export default {
       }
     }
   },
-  // 剩多重篩選&分數
-  // computed: {
-
-  // },
-    // ALLFilterFunction () {
-    //   var self = this
-    //   if (self.count === 0) {
-    //     self.count++
-    //   } else {
-    //     let arr = []
-    //     if (self.oneTag.length !== 0) {
-    //       var arr1 = self.oneTagData
-    //       arr = this.handleFilterData()
-    //     }
-    //   }
-    // },
-    // ALLFilterFunction () {
-    //   var self = this
-    //   if (self.count === 0) {
-    //     self.count++
-    //   } else {
-    //     let arr = []
-    //     if (self.oneTag !== '' && self.oneTag !== 'all') {
-    //       var arr1 = self.oneTagData
-    //       arr = this.conditionFilter(arr1, self.conditionChoosen)
-    //       arr = this.timeFilter(arr, self.start, self.end)
-    //       if (self.checkedtagsALL === true || self.checkedtags.length !== 0) {
-    //         arr = self.checkedFun(arr, self.checkedtags)
-    //       }
-    //       self.commentData = arr
-    //     } else {
-    //       arr = this.conditionFilter(self.selectedArr, self.conditionChoosen)
-    //       arr = this.timeFilter(arr, self.start, self.end)
-    //       if (self.checkedtagsALL === true || self.checkedtags.length !== 0) {
-    //         arr = self.checkedFun(arr, self.checkedtags)
-    //       }
-    //       self.commentData = arr
-    //     }
-    //   }
-    //   return self.commentData
-  // },
-  // created(){
-  //   this.loadMore()
-  // },
   methods: {
     AllfilterFunction: function(tag){
       let self = this
@@ -659,37 +570,14 @@ export default {
       self.replyModify = '';
       return self.commentData;
     },
-    // clearALLInFilter() {
-    //   let self = this;
-    //   self.typeChoosen = '';
-    //   self.conditionChoosen = '';
-    //   self.replyChoosen = '';
-    //   self.x = '';
-    //   self.y = '';
-    //   self.z = '';
-    //   this.TypescheckAll = null;
-    //   this.ConditioncheckAll = null;
-    //   this.ReplycheckAll = null;
-    //   this.TypesIndeterminate = null;
-    //   this.ConditionIndeterminate = null;
-    //   this.ReplyIndeterminate = null;
-    //   this.ishandleFilterData = false;
-    //   this.isscoreFilterData = false;
-    //   document.getElementById("myRange").value = 0
-    //   document.getElementById('value').innerHTML = 0;
-    //   self.commentData = self.selectedArr;
-    //   $("#reportrange span").html("時間");
-    //   return self.commentData;
-    // },
+    
     openFilter(){
-      // let self = this;
       event.stopPropagation();
       $(".MultiFilterArea").slideToggle("normal");
       $(document).click(function (event) {
         var area = $(".MultiFilterArea"); // 設定目標區域
         var area1 = $(".daterangepicker"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0 && !area1.is(event.target) && area1.has(event.target).length === 0) {
-          // $('#divTop').slideUp('slow');  //滑動消失
           $(".MultiFilterArea").hide(); // 淡出消失
         }
       });
@@ -738,19 +626,8 @@ export default {
       self.AllfilterFunction();
     },
     handleFilterData(arr, filterObj1) {
-      // let self = this;
-      // var arr1 = [];
-      // self.ishandleFilterData = true
-      // if (self.oneTag.length !== 0 && self.oneTag !== 'all') {
-      //   arr1 = self.selectedArr.filter((item) => {
-      //     return item.labels[self.oneTag] === 1;
-      //   });
-      // } else {
-      //   arr1 = self.selectedArr;
-      // }
       const filterKeys = Object.keys(filterObj1);
       return arr.filter((item) => {
-        // self.ishandleFilterData = false
         return filterKeys.every((key) => {
           if (!filterObj1[key].length) {
             return true;
@@ -784,9 +661,7 @@ export default {
       }
     },
     fieldFn3(rowObj) {
-      // if (rowObj.title === "") {
         rowObj.title = rowObj.text.substr(0, 10) + "...";
-      // }
     },
     fieldFn4(rowObj){
       if(rowObj.website === 'Agoda'|| rowObj.website === 'Hotels'|| rowObj.website === 'Booking'){
@@ -810,7 +685,6 @@ export default {
       return self.commentData;
     },
     timeFilter: function (arr, startData, endData) {
-      // let self = this;
       arr = arr.filter((item) => {
         return (
           Date.parse(item.times.comment) >=
@@ -858,7 +732,6 @@ export default {
       }
     },
     dateRange: function (value) {
-      // var moment = require("moment");
       var self = this;  
       var moment = require("moment");
       var today = moment().subtract(1, "days");
@@ -913,7 +786,6 @@ export default {
     },
     conditionUpdate: function (id) {
       let self = this;
-      // foreach改成filter
       self.commentData.filter((item) => {
         if (item._id === id) {
           self.conditionModifytoHistory.commentID = id
@@ -922,7 +794,6 @@ export default {
           if (item.labels.condition === 0) {
             this.$fire({
               title: "是否將此評論狀態修改為'處理中'?",
-              // text: "刪除後將不可復原",
               type: "warning",
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
@@ -963,13 +834,11 @@ export default {
       return self.commentData;
     },
     editFun: function () {
-      // let self = this
       event.stopPropagation();
       $(".edit").slideToggle("normal");
       $(document).click(function (event) {
         var area = $(".edit"); // 設定目標區域
         if (!area.is(event.target) && area.has(event.target).length === 0) {
-          // $('#divTop').slideUp('slow');  //滑動消失
           $(".edit").hide(); // 淡出消失
         }
       });
@@ -988,7 +857,6 @@ export default {
       if (x.length !== 0) {
         this.$fire({
               title: "是否將此評論狀態修改為'" + value + "'?",
-              // text: "刪除後將不可復原",
               type: "warning",
               showCancelButton: true,
               confirmButtonColor: "#3085d6",
@@ -1102,23 +970,15 @@ export default {
       self.replyModify = '';
       $(".edit").hide(100); // 淡出消失
     },
-    // handleSizeChange: function (size) {
-    //   this.pagesize = size
-    // },
-    // handleCurrentChange: function (currentPage) {
-    //   this.currentPage = currentPage
-    // },
     tagFilter: function (arr, tag) {
       let self = this;
       var arrq = [];
       if (tag === "all") {
         self.checkedtags = [];
-        // $("input[name='label_checked_col[]']").prop("checked", true);
         $(".all").addClass("focus");
         self.labelchoose.forEach((item) => {
           $("." + item.field).removeClass("focus");
         });
-        // self.checkedtagsALL = false;
         $(".custom").removeClass("focus");
         self.commentData = arr;
         return self.commentData;
@@ -1139,7 +999,6 @@ export default {
         self.checkedtags = [];
         $("input[name='label_checked_col[]']").prop("checked", false);
         $("input[name='label_all']").prop("checked", false);
-        // self.checkedtagsALL = false;
         return self.commentData;
       }
     },

@@ -15,11 +15,9 @@ button:hover{
     display: inline;
     float: right;
     margin-right: 3%;
-    /* margin-left: 70%; */
 }
 .filterTime{
     display: inline-block;
-    /* margin-left: 25px; */
     font-size: 14px;
     color: #8BA4BE;
 }
@@ -34,23 +32,12 @@ button:hover{
 .el-input__inner{
     height: 30px !important;
 }
-/* .editArea{
-    display: inline-block;
-    position: relative;
-    margin-left: 84%;
-    width: 40px;
-    height: 35px;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 2px;
-    border: 0.5px solid rgb(187, 187, 187)
-} */
+
 .editButton{
     all: unset;
     position: relative;
     right: 0px;
     background: white;
-    /* width: 100px; */
     height: 20px;
     padding: 10px 5px;
     margin-right: 10px;
@@ -76,75 +63,28 @@ button:hover{
     vertical-align: top;
     text-align: center;
   }
-/* .editButton .editSpan{
-    float: right;
-    padding: 5px 5px 5px 3px;
-} */
-/* .editArea:hover{
-    cursor: pointer;
-    background-color: rgba(149, 188, 255, 0.425);
-} */
-/* .edit{
-    display: none;
-    position: absolute;
-    width: 180px;
-    right: 20px;
-    margin-top: 10px;
-    padding: 1%;
-    background-color: #ffffff;
-    border: 0.3px solid rgba(182, 182, 182, 0.76);
-    border-radius: 3px;
-    z-index: 1000;
-} */
+
 .edit{
     display: none;
-    /* width:94.5%; */
     width: 25%;
     float: right;
-    /* margin-left: 1.5%; */
     margin-right: 2%;
     margin-bottom: 10px;
-    /* padding: 1%; */
-    /* background: rgb(255, 255, 255); */
-    /* border: 0.3px solid rgb(233, 233, 233); */
 }
-/* 
-.edit p{
-    margin-top: 10px;
-    margin-left: 5px;
-    font-size: 16px;
-} */
-/* .edit div{
-    display: inline-block;
-} */
+
 .confirmButton{
     margin-left: 20px;
     margin-top: 15px;
     margin-bottom: 5px;
-    /* margin-right: 15px; */
     padding: 4px 10px;
     border-radius: 3px;
     border: 1px solid rgb(201, 201, 201);
 }
-/* .MultiFilterArea{
-    float: left;
-    width: 10%;
-    margin-right: 15px;
-    height: 100vh;
-    padding: 1%;
-    background-color: #F4F5F8;
-    border-radius: 3px;
-    border: 1px solid rgb(226, 226, 226);
-} */
+
 .MultiFilterArea{
-    /* display: none; */
     width:65%;
     margin-left: 1.5%;
     margin-bottom: 5px;
-    /* border-right: 0.3px solid #cccccc; */
-    /* padding: 1%; */
-    /* background: rgb(255, 255, 255); */
-    /* border: 0.3px solid rgb(233, 233, 233); */
 }
 
 
@@ -157,13 +97,11 @@ button:hover{
   margin-top: 4px;
 }
 .el-checkbox{
-    /* color: white; */
     margin-left: 15px;
 }
 
 
 .filterTitle{
-    /* margin: 25px 0px 10px 5px; */
     font-size: 14px;
 }
 
@@ -173,7 +111,6 @@ button:hover{
     border-radius: 4px;
     display: inline-block;
     margin-left: 5px;
-    /* left: 190px; */
 }
 .slot_div_time span{
     color: gray;
@@ -181,30 +118,19 @@ button:hover{
 .timeSpan, .timeSpan1{
     width: 100px;
     display:block;
-    /* line-height: 20px; */
-    /* border: 1px solid #000; */
-    /* vertical-align: middle; */
-    /* font-size: 16px; */
-    /* line-height: 26px; */
     vertical-align: middle;
     color: #C0C4CC;
     font-family: Arial;
     letter-spacing: 1px;
     padding-top: 2px;
-    /* padding-top: 3px; */
 }
 
 .dataRightArea{
     float: left;
     width: 88%;
     margin-bottom: 20px;
-    /* margin-left: 1%; */
 }
 
-/* .filter{
-    width: 100%;
-    margin-left: 1.5%;
-} */
 .filter{
     float: left;
     width: 9%;
@@ -244,7 +170,6 @@ button:hover{
     margin-right: 10px;
 }
 .labelDiv span{
-    /* all: unset; */
     font-size: 16px;
 }
 .labelDiv .num{
@@ -276,16 +201,6 @@ button:hover{
     margin-right: 10px;
 }
 
-/* .addBTN{
-    position: absolute;
-    left: 35%;
-    bottom: 10%;
-}
-.deleteBTN{
-    position: absolute;
-    right: 35%;
-    bottom: 10%;
-} */
 .filter li:hover{
     cursor: pointer;
     border-radius: 3px;
@@ -314,7 +229,6 @@ button:hover{
 }
 .slot_div_time{
     width: 200px;
-    /* float: left; */
     display: inline;
     margin-right: 5px; 
 }
@@ -376,8 +290,6 @@ tr:hover td{
     left:1px;
 }
 .replyButton{
-    /* background-color: #ffffffc5; */
-    /* color: rgb(90, 88, 88); */
     padding: 7px;
     border-radius: 3px;
     box-shadow: 0.5px 0.5px 2px #adadad;
@@ -402,9 +314,7 @@ tr:hover td{
 .el-table a{
     color: rgb(39, 30, 165);
 }
-/* .selection_phone,.select_btn,.selection_btn_phone{
-    display: none;
-} */
+
 #comment_filter_phone{
     display: none;
 }
@@ -414,13 +324,9 @@ tr:hover td{
 .contentCenter{
     display: block !important;
 }
-/* .clearALL_competition{
-    right: 80px;
-} */
+
 @media (max-width: 768px) {
-    .page{
-        /* margin-left: -36px; */
-    }
+
     .vgt-fixed-header{
         z-index: 0;
     }
@@ -441,23 +347,18 @@ tr:hover td{
         box-sizing: border-box;
         padding: 5px;
         border-top: 1px solid rgb(196, 193, 193);
-        /* z-index: 0; */
-        /* align-items: center; */
-        /* line-height: 40px; */
     }
     .filterTime{
         width: 16%;
         display: block;
         height: 31px;
         line-height: 31px;
-        /* flex: 2; */
     }
     .time_filter_phone{
         width: 42%;
         height:31px;
         box-sizing: border-box;
         line-height: 31px;
-        /* padding:5px 0; */
     }
     #reportrange,#reportrange1{
         width: unset;
@@ -482,48 +383,11 @@ tr:hover td{
     .slot_div_time span{
         margin-right: 3px;
         width: unset;
-        /* height: 31px; */
-        /* line-height: 31px; */
     }
     .but{
         margin-left: 0 !important;
     }
-    /* 篩選器 */
-    /* .selection_btn_phone{
-        display: block;
-        position: fixed;
-        right: 20px;
-        top: 13px;
-        z-index: 2;
-        color: white;
-    }
-    .selection_btn_phone:hover{
-        cursor: pointer;
-    }
-    .selection_phone {
-        color: white;
-        height: 100%;
-        width: 100%;
-        z-index: 2;
-        position: fixed;
-        top: 39px;
-        background: rgb(218, 226, 236);
-    }
-    .selection_phone span{
-        background-color: rgba(47, 58, 76);
-        display: block;
-        font-size: 20px;
-        width: 50%;
-        float: left;
-        padding: 8px 0;
-        text-align: center;
-    }
-    .selection_phone.active {
-        background-color: rgba(47, 58, 76, 1);
-        display: block;
-        position: fixed;
-        top: 38px;
-    } */
+   
     .buttonFunArea{
         margin: 0;
     }
@@ -554,12 +418,6 @@ tr:hover td{
         position: fixed;
         top: 5px;
         right: 5%;
-        /* padding: 0; */
-        /* margin: 0; */
-        /* border: none; */
-        /* width: 20px; */
-        /* height: 15px; */
-        /* background: #000; */
     }
     .edit{
         background: white;
@@ -570,7 +428,6 @@ tr:hover td{
         position: fixed;
         bottom: 39px;
         right: 0;
-        /* box-shadow: 0px -5px 5px black; */
         box-shadow: 0 -2px 4px rgb(148, 146, 146);
     }
     .edit_flex{
@@ -582,16 +439,6 @@ tr:hover td{
         padding: 0 15px;
         line-height: 35px;
     }
-    /* .clearALL{
-        position: fixed;
-        top: 5px;
-        left: 5%;
-        margin: 0;
-        padding: 0 5px;
-        height: 30px;
-        border: none;
-        box-sizing: border-box;
-    } */
     .but .clearALL{
         position: fixed;
         z-index: 1;
@@ -628,8 +475,6 @@ tr:hover td{
         width: auto;
         box-sizing: border-box;
         background: white;
-        /* background: gray;
-        color: white; */
     }
     .clearALL:active{
         position: fixed;
@@ -637,9 +482,6 @@ tr:hover td{
         top: 7px;
         left: 5%;
         background: white;
-        /* margin: 0; */
-        /* padding: 0 0px; */
-        /* height: 25px; */
         background: gray;
         color: white;
     }
@@ -669,7 +511,6 @@ tr:hover td{
     }
     .dataArea{
         width: 100%;
-        /* margin: 20px 0 0 ; */
         margin: 0;
         padding-bottom: 39px;
         z-index: 0;
@@ -692,12 +533,10 @@ tr:hover td{
         width: 25px;
     }
     #comment_filter_phone:hover{
-        /* all: unset; */
         background-color: white;
         position:fixed;
         top: 5px;
         right: 5%;
-        /* left: unset; */
         width: 25px;
     }
     #comment_filter_phone:active{
@@ -705,7 +544,6 @@ tr:hover td{
         position:fixed;
         top: 5px;
         right: 5%;
-        /* left: 0; */
         z-index: 1;
         width: 25px;
     }
@@ -745,12 +583,6 @@ tr:hover td{
         border: none;
         color: #000;
     }
-    /* .filter .all,.filter .custom{
-        width: 100%;
-    } */
-    /* .filter.active{
-        display: block;
-    } */
 
     .MultiFilterArea{
         background: white;
@@ -777,23 +609,18 @@ tr:hover td{
     .MultiFilterArea_competition_phone{
         height: 25vh;
     }
-    .time_filter_phone{
-        /* order: -1; */
-    }
+
     .MultiFilterArea .slot_div{
         width: 40%;
         margin: 10px;
         padding: 1%;
         box-sizing: border-box;
         display: inline-block;
-        /* order: 1; */
     }
     #MultiFilterArea{
         display: none;
     }
-    #reportrange{
-        /* width: unset; */
-    }
+
     .slidecontainer{
         text-align: center;
     }
@@ -835,7 +662,5 @@ tr:hover td{
     .MultiFilterArea_competition_phone{
         height: 35vh;
     }
-    #reportrange,#reportrange1{
-        /* width: 110px; */
-    }
+
 }

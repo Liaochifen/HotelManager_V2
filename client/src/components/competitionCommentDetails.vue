@@ -54,11 +54,6 @@
         <div class="MultiFilterArea1">
           <div class="manageTags compet">
             <p class="filterP1 compet_filterP1">標籤</p>
-            <!-- <div class="labelchoose1" v-for="item in commentData.tags" :key="item._id"> -->
-            <!-- <input type="text" name="label_tags" disabled="true" :value="item" class="tagInput"> -->
-            <!--  @click="deleteTags(item)" -->
-            <!-- <label :for="[item]"></label> -->
-            <!-- </div> -->
             <template>
               <div class="tags" v-for="item in label_tags" :key="item.field">
                 <el-button>{{ item.label }}</el-button>
@@ -68,37 +63,6 @@
           <div class="clear"></div>
         </div>
       </div>
-      <!-- <div class="MultiFilterArea1"> -->
-      <!-- <p class="filterP1">標籤：</p>
-          <div class="labelchoose1" v-for="item in commentData.tags" :key="item._id">
-            <input type="text" name="label_tags" disabled="true" :value="item" class="tagInput">
-              <label :for="[item]"></label>
-          </div>
-          <p class="score"><span>評分：</span>{{commentData.score}}</p>
-          <p class="info"><span>來源：</span>{{commentData.resource[1].resourceName}}</p>
-          <p class="time">{{commentData.time}}</p>
-          <div class="clear"></div>
-          <div class="labelArea">
-            <div class="labelchoose2">
-              <input type="checkbox" name="label_all" v-model="checkedtagsALL" @change="checkedALLFilter(checkedtagsALL)" id="checkALL">
-                <label for="checkALL">全選</label>
-            </div>
-            <div class="labelchoose2" v-for="item in labelchoose" :key="item._id">
-              <input type="checkbox" name="label_checked_col[]" :id="[item.tag]" :value="item.tag" v-model="checkedtags" @change="checkedALLFilter(checkedtags)" >
-                <label :for="[item.tag]">{{item.tag}}</label>
-            </div>
-            <div class="clear"></div>
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="dataMainArea">
-          <p>{{commentData.content}}</p>
-        </div>
-        <div class="address">
-            <p class="addressPeople">處理者：XXX</p>
-            <p class="addresstime">處理時間：2020/08/08</p>
-          </div>
-        <div class="clear"></div> -->
     </div>
   </div>
 </template>
@@ -152,7 +116,6 @@ export default {
   },
   mounted() {
     let self = this;
-    // console.log(self.commentDetailsID)
     axios
       .get(
         "https://hotelapi.im.nuk.edu.tw/api/commentDetails/" +

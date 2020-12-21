@@ -22,13 +22,9 @@
           <ul class="history_inner__phone">
             <li class="his_comment" @click="publicManage(0)"><button>評論狀態動態</button></li>
             <li class="his_tags" @click="publicManage(1)"><button>評論標籤動態</button></li>
-            <!-- <li class="his_reply"><button @click="publicManage(2)" >評論回覆動態</button></li> -->
             <div class="clear"></div>
           </ul>
           <div class="clear"></div>
-          <!-- <template> -->
-            <!-- <div> -->
-              <!-- .condition -->
               <div v-if="publicPage === 0" class="public_record">
                 <div class="clear"></div>
                 <span v-if="commentFilter.length === 0">
@@ -36,10 +32,8 @@
                 </span>
                 <span v-else-if="commentFilter.length !== 0">
                   <div v-for="(item, index) in commentFilter.slice().reverse()" :key="index+'con'" class="commentArea">
-                  <!-- 放大頭照 -->
                     <span class="customer_num"><img :src="getPictureSrc(`${item.employeeNumber}`)" width="25px" alt=""/><span>{{item.employeeNumber}}</span></span>
                     <span class="commentHistoryContent">將評論 <router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link> 由{{item.old}}{{item.modify}}成{{item.new}}</span>
-                    <!-- 手機板變成在評論底下，縮小 -->
                     <span class="commentTimeHistory">{{item.time}}</span>
                   </div>
                 </span>
@@ -56,20 +50,6 @@
                   </div>
                 </span>
               </div>
-              <!-- <div v-else-if="publicPage === 2" class="public_record"> 
-                <span v-if="replyFIlter.length === 0">
-                  <p>無任何記錄</p>
-                </span>
-                <span v-else-if="replyFIlter.length !== 0">
-                  <div v-for="(item, index1) in replyFIlter" :key="index1+'tag'" class="commentArea">
-                    <span><img src="../assets/icon/icon-24x24.png"  alt=""/></span>
-                    <span class="commentHistoryContent">將評論<router-link :to="{ name: 'commentDetails', params: { _id: item.commentID } }">{{item.title}}</router-link>的回覆狀態從"{{item.old}}"{{item.modify}}成"{{item.new}}"</span>
-                    <span class="commentTimeHistory">{{item.time}}</span>
-                  </div>
-                </span>
-              </div> -->
-            <!-- </div> -->
-          <!-- </template> -->
         </span>
         <span v-else-if="page === 1">
           <ul class="history_inner__phone">
@@ -244,7 +224,6 @@ import axios from "axios";
 import $ from "jquery";
 import firebase from 'firebase/app';
 import 'firebase/storage';
-// import dateTime from "../assets/js/dateTime";
 
 export default {
   name: "history",
@@ -320,37 +299,17 @@ export default {
   },
   mounted() {
     let self = this;
-    // var value = 0;
-    //  + value
     var logining = localStorage.getItem("token");
-    // var userID = JSON.parse(logining).companyName;
     self.employeeNumber = JSON.parse(logining).employeeNumber
-    
-    // if(JSON.parse(logining).limit === '後台管理者'){
-    //   document.getElementById('userInfoRecord').style.visibility = 'visible';
-    //   document.getElementById('userInfoRecord_phone').style.display = 'block';
-    // }
     axios.get("https://hotelapi.im.nuk.edu.tw/api/account")
     .then((response) => {
       console.log(response);
       self.allAccount = response.data;
       self.getPicture();
-     
-      // this.userPicture.response.data[0].employeeNumber="text";
       console.log(this.userPicture);
     }).catch((error) => {
         console.log(error);
     });
-    // axios
-    //   .get("https://hotelapi.im.nuk.edu.tw/api/account/" + userID)
-    //   .then((response) => {
-    //     if(response.limit === '後台管理員' ){
-    //       document.getElementById("userInfoRecord").style.visibility = "visible";
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     axios
       .get(
         "https://hotelapi.im.nuk.edu.tw/api/history/" +
