@@ -443,31 +443,6 @@ export default {
         $(".pageButton0").removeClass("focus");
       }
     },
-    // record: function () {
-    //   let record = "logout";
-    //   var logining = localStorage.getItem("token");
-    //   axios
-    //     .put(
-    //       "https://hotelapi.im.nuk.edu.tw/api/history/" +
-    //         JSON.parse(logining).companyName +
-    //         "/" +
-    //         record,
-    //       this.logout
-    //     )
-    //     .then((response) => {
-    //       console.log(response);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
-    // DateTime: function () {
-    //   var date, Time;
-    //   date = dateTime.recordDate();
-    //   console.log(date);
-    //   Time = dateTime.recordTime();
-    //   console.log(Time);
-    // },
 
     manager:function(page){
       this.userInfoPage = page;
@@ -486,11 +461,6 @@ export default {
         $('.his_tags').addClass('bg')
         $('.his_reply').removeClass('bg')
       }
-      // }else{
-      //   $('.his_comment').removeClass('bg')
-      //   $('.his_tags').removeClass('bg')
-      //   $('.his_reply').addClass('bg')
-      // }
     },
     getPicture(){
       var self = this;
@@ -498,9 +468,6 @@ export default {
       for( i=0 ; i<self.allAccount.length ; i++){
         this.getPictureUrl(self.allAccount[i].employeeNumber,self.allAccount[i].picture);
       }
-      console.log("picture");
-      console.log(this.userPicture);
-      // window.location.reload();
     },
     getPictureUrl(user,picture){
       console.log("getPictureUrl");
@@ -535,9 +502,8 @@ export default {
       }).catch(function(error) {
         console.log(error);
         self.pictureIndex = self.pictureIndex +1; 
-        self.userPicture[user]="http://192.168.50.108:8080/img/icon-192x192.23773b6f.png";
+        self.userPicture[user]="/img/icons/icon-192x192.png";
         if(self.pictureIndex === self.allAccount.length && self.picturefirst){
-          console.log("first");
           self.picturefirst = false;
           self.changePage(0)
           self.publicManage(1);
@@ -560,7 +526,7 @@ export default {
     },
     getPictureSrc(img){
       if(!this.userPicture[img]){
-        return "http://192.168.50.108:8080/img/icon-192x192.23773b6f.png";
+        return "/img/icons/icon-192x192.png";
       }else{
         return this.userPicture[img];
       }

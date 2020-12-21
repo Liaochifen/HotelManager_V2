@@ -216,8 +216,6 @@ import axios from "axios";
 import dateTime from "../assets/js/dateTime";
 import util from "../assets/js/utility";
 import $ from "jquery";
-// import { filter } from 'vue/types/umd';
-// import { filter } from 'vue/types/umd';
 
 export default {
   name: "accountList",
@@ -451,14 +449,6 @@ export default {
       }
     })
 
-    // var num;
-    // for(num=0; num< this.allHtols.length;num++){
-    //   if(this.allHtols[num].companyName === this.logingAccount.companyName){
-    //     self.hotels.push(this.allHtols[num]);
-    //   }
-    //   self.accountList = self.hotels;
-    // }
-
     var _this = this
     window.onresize = function () {
       _this.window_width = document.documentElement.clientWidth 
@@ -573,6 +563,8 @@ export default {
                 console.log("delete successed:");
                 console.log(this.checkedAccount);
               });
+
+            util.deleteItemFromData("account", self.checkedAccount[k]);
           }
           this.$fire({
             title: "Success !!",
@@ -741,19 +733,6 @@ export default {
       
     }
   }
-  // compoted:{
-  //   countID:function(){
-  //     let i;
-  //     this.maxID=this.hotels[0].id;
-  //     for(i=0;i<this.hotels.length;i++){
-  //       if(this.hotels[i].id > this.maxID){
-  //         this.maxID=this.hotels[i].id;
-  //       }
-  //     }
-  //     return this.maxID;
-  //     console.log(this.maxID);
-  //   }
-  // }
 };
 </script>
 

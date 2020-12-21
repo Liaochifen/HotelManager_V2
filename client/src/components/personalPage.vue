@@ -5,7 +5,6 @@
         <span>帳號詳細內容</span>
       </div>
     </div>
-    <!-- <span class="personalInfoLastLogin">上次登入時間：{{userAccountDetail.lastLoginDate}}</span> -->
     <div class="wrap">
       <div class="accountPersonalMenu">
         <ul>
@@ -48,14 +47,9 @@
               <span id="passwordIcon" v-on:click="changePassword" v-if="pass_type === 'password'"><font-awesome-icon icon="eye"/></span>
               <span id="passwordIcon" v-on:click="changePassword" v-else><font-awesome-icon icon="eye-slash"/></span>
           </div>
-          <!-- <button id="saveInfo" v-on:click="confirm()">儲存</button> -->
           <div class="clear"></div>
         </div>
       </div>
     </div>
-    <!-- <div class="changePassword">
-    </div> -->
-    <!-- <div class="history">
-    </div> -->
   </div>
 </template>

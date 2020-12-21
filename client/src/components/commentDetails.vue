@@ -7,45 +7,45 @@
     </div>
     <div class="dataArea">
       <div class="dataBG">
-        <template v-if="commentData.website === 'Agoda' || commentData.website === 'Hotels' || commentData.website === 'Booking'">
-          <p class="CommentTtle">{{ commentData.title }}</p>
-          <div class="MainComment">
-            <span class="subtitle">評分</span>
-            <span class="spaceRight">{{commentData.rating/2}}</span>
-            <span class="subtitle">評論日期</span
-            ><span class="spaceRight">{{ commentData.length && commentData.times.comment}}</span>
-            <span class="subtitle">住客國家</span
-            ><span class="spaceRight">{{ commentData.locale }}</span>
-            <span class="subtitle">入住時間</span
-            ><span class="spaceRight">{{ commentData.length && commentData.times.checkin }}</span>
-            <span class="subtitle">房型</span
-            ><span class="spaceRight">{{ commentData.room_type }}</span>
-            <span class="subtitle">來源網站</span
-            ><span>{{ commentData.website }}</span>
-            <div class="Maincontent">
-              <span class="commentContent">{{ commentData.text }}</span>
-            </div>
+      <template v-if="commentData.website === 'Adoga' || commentData.website === 'Hotels' || commentData.website === 'Booking'">
+        <p class="CommentTtle">{{ commentData.title }}</p>
+        <div class="MainComment">
+          <span class="subtitle">評分</span
+          ><span class="spaceRight">{{ commentData.rating/2 }}</span>
+          <span class="subtitle">評論日期</span
+          ><span class="spaceRight">{{ commentData.length && commentData.times.comment}}</span>
+          <span class="subtitle">住客國家</span
+          ><span class="spaceRight">{{ commentData.locale }}</span>
+          <span class="subtitle">入住時間</span
+          ><span class="spaceRight">{{ commentData.length && commentData.times.checkin }}</span>
+          <span class="subtitle">房型</span
+          ><span class="spaceRight">{{ commentData.room_type }}</span>
+          <span class="subtitle">來源網站</span
+          ><span>{{ commentData.website }}</span>
+          <div class="Maincontent">
+            <span class="commentContent">{{ commentData.text }}</span>
           </div>
+        </div>
         </template>
-        <template v-else>
-          <p class="CommentTtle">{{ commentData.title }}</p>
-          <div class="MainComment">
-            <span class="subtitle">評分</span>
-            <span class="spaceRight">{{commentData.rating/2}}</span>
-            <span class="subtitle">評論日期</span
-            ><span class="spaceRight">{{ commentData.length && commentData.times.comment}}</span>
-            <span class="subtitle">住客國家</span
-            ><span class="spaceRight">{{ commentData.locale }}</span>
-            <span class="subtitle">入住時間</span
-            ><span class="spaceRight">{{ commentData.length && commentData.times.checkin }}</span>
-            <span class="subtitle">房型</span
-            ><span class="spaceRight">{{ commentData.room_type }}</span>
-            <span class="subtitle">來源網站</span
-            ><span>{{ commentData.website }}</span>
-            <div class="Maincontent">
-              <span class="commentContent">{{ commentData.text }}</span>
-            </div>
+      <template v-else>
+        <p class="CommentTtle">{{ commentData.title }}</p>
+        <div class="MainComment">
+          <span class="subtitle">評分</span
+          ><span class="spaceRight">{{ commentData.rating }}</span>
+          <span class="subtitle">評論日期</span
+          ><span class="spaceRight">{{ commentData.length && commentData.times.comment}}</span>
+          <span class="subtitle">住客國家</span
+          ><span class="spaceRight">{{ commentData.locale }}</span>
+          <span class="subtitle">入住時間</span
+          ><span class="spaceRight">{{ commentData.length && commentData.times.checkin }}</span>
+          <span class="subtitle">房型</span
+          ><span class="spaceRight">{{ commentData.room_type }}</span>
+          <span class="subtitle">來源網站</span
+          ><span>{{ commentData.website }}</span>
+          <div class="Maincontent">
+            <span class="commentContent">{{ commentData.text }}</span>
           </div>
+        </div>
         </template>
       </div>
 
@@ -272,7 +272,6 @@ export default {
     if ("indexedDB" in window) {
       console.log("Reading indexedDB...");
       util.readAllData("comment").then(function (data) {
-        console.log(data)
         if (!self.networkDataReceived) {
           console.log("From cache", data);
           for (var i in data) {

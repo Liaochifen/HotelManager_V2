@@ -26,7 +26,6 @@
           <div class="clear"></div>
           <div class="btn">
             <button type="submit">確認</button>
-            <!-- <button v-on:click="confirm()">確認</button> -->
           </div>
         </form>
       </div>
@@ -64,8 +63,6 @@ export default {
   },
   mounted() {
     let self = this;
-    // this.certification = Math.round(Math.random()*1000000);    //取六位整數
-    // console.log(self.certification);
     axios
       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
       .then((response) => {
@@ -87,12 +84,6 @@ export default {
         user_email: this.userAccountDetail.email, //this.userAccountDetail.email
         message: this.certification,
       };
-      // emailjs.sendForm('gmail', 'template_ih27sAiz', emailData, 'user_claUepgayYZIqK8g01tnK')
-      // .then((result) => {
-      //     console.log('SUCCESS!', result.status, result.text);
-      // }, (error) => {
-      //     console.log('FAILED...', error);
-      // });
       emailjs
         .send(
           "gmail",
@@ -112,22 +103,9 @@ export default {
     confirm() {
       if (this.check == this.certification) {
         var self = this;
-        // this.updateAccount();
-        // this.loginRecord();
         var currentTime = new Date().getTime(); //取得從 1970-01-01 00:00:00 UTC 累計的毫秒數
-        // this.recordLogingTime();
         console.log("currentTime"+currentTime)
-        // localStorage.setItem('token', JSON.stringify({id:this.userID,time:currentTime}));
-        // localStorage.setItem(
-        //   "token",
-        //   JSON.stringify({
-        //     id: this.userAccountDetail._id,
-        //     employeeNumber:this.logingAccount.employeeNumber,
-        //     time: currentTime+1,
-        //     companyName: this.userAccountDetail.companyName,
-        //     limit:this.userAccountDetail.employeeLimit,
-        //   })
-        // );
+
         // 抓圖片
           const storageRef = firebase.storage().ref(this.userAccountDetail.picture);
           storageRef.getDownloadURL().then(function(url) {
@@ -160,31 +138,8 @@ export default {
                   })
                   );
                   self.forgetPasswordRecord(true);
-              // const storageRef2 = firebase.storage().ref('004.png');
-              // storageRef2.getDownloadURL().then(function(url) {
-              //   console.log("url:"+url);
-              //   self.picture = url;
-              //    localStorage.setItem(
-              //     "token",
-              //     JSON.stringify({
-              //       id: self.userAccountDetail._id,
-              //       employeeNumber:self.userAccountDetail.employeeNumber,
-              //       time: currentTime+1,
-              //       companyName: self.userAccountDetail.companyName,
-              //       limit:self.userAccountDetail.employeeLimit,
-              //       pictureUrl:self.picture,
-              //     })
-              //     );
-              //     self.forgetPasswordRecord(true);
-              // }).catch(function(error2) {
-              //   console.log(error2);
-              // });
           });
-        // this.forgetPasswordRecord(true);
-        // this.$router.push({ name: "changePassword" });
-        // window.location.reload();
       } else {
-        //alert('驗證碼錯誤!!請重新輸入或點選『重新寄送』按鈕');
         this.forgetPasswordRecord(false);
         this.$fire({
           title: "Error !!",
@@ -235,10 +190,6 @@ export default {
           console.log(error);
         });
     },
-    // recordLogingTime: function () {
-    //   this.userAccountDetail.lastLoginDate = dateTime.recordDate();
-    //   this.userAccountDetail.lastLoginTime = dateTime.recordTime();
-    // },
     forgetPasswordRecord:function(verificate){
       var company = this.userAccountDetail.companyName;
       var record="user";
