@@ -7,24 +7,46 @@
     </div>
     <div class="dataArea">
       <div class="dataBG">
-        <p class="CommentTtle">{{ commentData.title }}</p>
-        <div class="MainComment">
-          <span class="subtitle">評分</span
-          ><span class="spaceRight">{{ commentData.rating }}</span>
-          <span class="subtitle">評論日期</span
-          ><span class="spaceRight">{{ commentData.length && commentData.times.comment}}</span>
-          <span class="subtitle">住客國家</span
-          ><span class="spaceRight">{{ commentData.locale }}</span>
-          <span class="subtitle">入住時間</span
-          ><span class="spaceRight">{{ commentData.length && commentData.times.checkin }}</span>
-          <span class="subtitle">房型</span
-          ><span class="spaceRight">{{ commentData.room_type }}</span>
-          <span class="subtitle">來源網站</span
-          ><span>{{ commentData.website }}</span>
-          <div class="Maincontent">
-            <span class="commentContent">{{ commentData.text }}</span>
+        <template v-if="commentData.website === 'Agoda' || commentData.website === 'Hotels' || commentData.website === 'Booking'">
+          <p class="CommentTtle">{{ commentData.title }}</p>
+          <div class="MainComment">
+            <span class="subtitle">評分</span>
+            <span class="spaceRight">{{commentData.rating/2}}</span>
+            <span class="subtitle">評論日期</span
+            ><span class="spaceRight">{{ commentData.length && commentData.times.comment}}</span>
+            <span class="subtitle">住客國家</span
+            ><span class="spaceRight">{{ commentData.locale }}</span>
+            <span class="subtitle">入住時間</span
+            ><span class="spaceRight">{{ commentData.length && commentData.times.checkin }}</span>
+            <span class="subtitle">房型</span
+            ><span class="spaceRight">{{ commentData.room_type }}</span>
+            <span class="subtitle">來源網站</span
+            ><span>{{ commentData.website }}</span>
+            <div class="Maincontent">
+              <span class="commentContent">{{ commentData.text }}</span>
+            </div>
           </div>
-        </div>
+        </template>
+        <template v-else>
+          <p class="CommentTtle">{{ commentData.title }}</p>
+          <div class="MainComment">
+            <span class="subtitle">評分</span>
+            <span class="spaceRight">{{commentData.rating/2}}</span>
+            <span class="subtitle">評論日期</span
+            ><span class="spaceRight">{{ commentData.length && commentData.times.comment}}</span>
+            <span class="subtitle">住客國家</span
+            ><span class="spaceRight">{{ commentData.locale }}</span>
+            <span class="subtitle">入住時間</span
+            ><span class="spaceRight">{{ commentData.length && commentData.times.checkin }}</span>
+            <span class="subtitle">房型</span
+            ><span class="spaceRight">{{ commentData.room_type }}</span>
+            <span class="subtitle">來源網站</span
+            ><span>{{ commentData.website }}</span>
+            <div class="Maincontent">
+              <span class="commentContent">{{ commentData.text }}</span>
+            </div>
+          </div>
+        </template>
       </div>
 
       <div class="ReplyAddress">
@@ -222,6 +244,7 @@ export default {
       .then((response) => {
         self.commentData = response.data;
         self.newComment = response.data;
+        console.log(self.commentData)
         if (self.commentData.title === "") {
           self.commentData.title = self.commentData.text.substr(0, 10) + "...";
         }
