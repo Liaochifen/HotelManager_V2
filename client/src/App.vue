@@ -226,13 +226,6 @@ export default {
       
       if(loginData.pictureUrl === null || loginData.pictureUrl === ""){
         self.picture = "/img/icons/icon-192x192.png";
-        // const storageRef2 = firebase.storage().ref('004.png');
-        // storageRef2.getDownloadURL().then(function(url) { 
-        // self.picture = url;
-        // }).catch(function(error) {
-        //   console.log(error);
-        //   self.picture = "https://fakeimg.pl/30x30/";
-        // });
       }
       axios
         .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID)
@@ -282,7 +275,6 @@ export default {
                 document.getElementById("limitWord").innerHTML = self.userAccountDetail.employeeLimit;
                 document.getElementById("menu").style.visibility = "visible";
                 document.getElementById("phoneMenu").style.visibility = "visible";
-                // document.getElementById("breadcrumb").style.visibility = "visible";
                 break;
               }
             }
@@ -300,7 +292,6 @@ export default {
       $(".contentTop").css('display', 'none');
       document.getElementById("personalInfo").style.visibility = "hidden";
       document.getElementById("phoneMenu").style.visibility = "hidden";
-      // document.getElementById("breadcrumb").style.visibility = "hidden";
     }
   },
   methods: {
@@ -330,7 +321,6 @@ export default {
       document.getElementById("menu").style.visibility = "hidden";
       $(".header").css('display', 'none');
       $(".contentTop").css('display', 'none');
-      // document.getElementById("breadcrumb").style.visibility = "hidden";
       document.getElementById("personalInfo").style.visibility = "hidden";
       document.getElementById("phoneMenu").style.visibility = "hidden";
       this.$router.push("/login");

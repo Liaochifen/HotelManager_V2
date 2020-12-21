@@ -79,19 +79,6 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
-// var loginData = JSON.parse(localStorage.getItem('token'))
-// if (localStorage.getItem('token')) {
-//   companyName = loginData.companyName;
-//   userID = loginData.id;
-//   axios.get('https://hotelapi.im.nuk.edu.tw/api/account/' + userID).then((response) => {
-//     userAccountDetail = response.data;
-//     logout.employeeNumber = userAccountDetail.employeeNumber;
-//   }).catch((error) => {
-//     console.log(error);
-//   })
-// }
-
 //檢查是否為登入狀態
 router.beforeEach((to, from, next) => {
   // 判斷token是否存在

@@ -157,41 +157,6 @@ export default {
             result.has(item.department) ? '' : self.departments.push({field: item.department, value: item._id}) && result.add(item.department)
           })
     })
-    // axios
-    //     .get("https://hotelapi.im.nuk.edu.tw/api/account")
-    //     .then((response) => {
-    //       var allHtols = response.data;
-    //       var hotels = []
-    //       for(var num=0; num< allHtols.length;num++){
-    //         if(allHtols[num].companyName === self.userAccountDetail.companyName){
-    //           var inHotels = false;
-    //           for (var i in hotels) {
-    //             if (hotels[i]._id === allHtols[num]._id){
-    //               inHotels = true;
-    //               break;
-    //             }
-    //           }
-    //           if (!inHotels) {
-    //             hotels.push(allHtols[num]);
-    //           }
-    //         } 
-    //       }
-    //       hotels.forEach((item) => {
-    //         result.has(item.department) ? '' : self.departments.push({field: item.department, value: item._id}) && result.add(item.department)
-    //       })
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-      
-      // const storageRef = firebase.storage().ref('cat1.png');
-      // storageRef.getDownloadURL().then(function(url) {
-      //   console.log("url:"+url);
-      //   self.picture = url;
-      // }).catch(function(error) {
-      //   console.log(error);
-      // });
-
       if ("indexedDB" in window) {
         console.log("Reading indexedDB...");
         util.readAllData("account").then(function (data) {
@@ -272,28 +237,6 @@ export default {
         this.pass_type = "password";
       }
     },
-    // edit:function(value){
-    //   if(value === 0){
-    //     document.getElementById("department").removeAttribute("readOnly");
-    //     document.getElementById("department").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 200px; line-height: 24px; border: 1px solid #a3a3a3; border-radius: 3px; padding: 5px; font-size: 15px; font-family: 微軟正黑體;outline:none;";
-    //   }else if(value === 1){
-    //     document.getElementById("userName").removeAttribute("readOnly");
-    //     document.getElementById("userName").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 200px; line-height: 24px; border: 1px solid #a3a3a3; border-radius: 3px; padding: 5px; font-size: 15px; font-family: 微軟正黑體;outline:none;";
-    //   }else if(value === 2){
-    //     document.getElementById("email").removeAttribute("readOnly");
-    //     document.getElementById("email").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 200px; line-height: 24px; border: 1px solid #a3a3a3; border-radius: 3px; padding: 5px; font-size: 15px; font-family: 微軟正黑體;outline:none;";
-    //   }else if(value === 3){
-    //     document.getElementById("password").removeAttribute("readOnly");
-    //     document.getElementById("password").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 200px; line-height: 24px; border: 1px solid #a3a3a3; border-radius: 3px; padding: 5px; font-size: 15px; font-family: 微軟正黑體;outline:none;";
-    //   }else if(value === 4){
-    //     if(self.userID !== self.selfornot){
-    //       document.getElementById("limit").removeAttribute("disabled", false);
-    //       document.getElementById("limit").style.cssText = "cursor: auto; position: relative; z-index: 100; width: 200px; line-height: 24px; border: 1px solid #a3a3a3; border-radius: 3px; padding: 5px; font-size: 15px; font-family: 微軟正黑體;outline:none;";
-    //     }
-    //   }
-    //   document.getElementById("saveInfo").style.visibility = "visible";
-    //   document.getElementById("cancleInfo").style.visibility = "visible";
-    // },
     edit1: function(){
       let self = this
         document.getElementById("department").removeAttribute("disabled", false);
@@ -434,28 +377,11 @@ export default {
       this.blockarea = value
     },
     previewImage(){
-      //修改使用者圖片資料
-      // this.userAccountDetail.picture = '004.png';
-      // console.log(this.userAccountDetail);
-      // this.updateAccount();
-
       var self = this;
       self.uploadValue = 0;
       self.imageData = event.target.files[0];
       console.log(event.target.files[0]);
-      // var reader = new FileReader();
-      // reader.readAsDataURL(event.target.files[0]);
-      //picture的URL
       var pictureURL = URL.createObjectURL(event.target.files[0]);
-
-      // this.$fire({
-      //   title: 'Sweet!',
-      //   text: 'Modal with a custom image.',
-      //   imageUrl: pictureURL,
-      //   imageWidth: 200,
-      //   // imageHeight: 200,
-      //   imageAlt: 'Custom image',
-      // })
       this.$fire({
         title: '你確定要換成這張照片嗎?',
         // text: 'Modal with a custom image.',
@@ -474,33 +400,12 @@ export default {
           self.onUpload();
         }
       })
-      // console.log(firebase.storage().ref('images/cat1.png'))
-      
-      // // var starsRef = storageRef.child('/cat1.png');
-      // 抓圖片
-      // const storageRef = firebase.storage().ref('小新.jpg');
-      // storageRef.getDownloadURL().then(function(url) {
-      //   console.log("url:"+url);
-      //   self.picture = url;
-      // }).catch(function(error) {
-      //   console.log(error);
-      // });
-      //刪除
-      // firebase.storage().ref('cat2.png').delete().then(function() {
-      //   // File deleted successfully
-      //   console.log("sucessful");
-      // }).catch(function(error) {
-      //   console.log(error);
-      //   // Uh-oh, an error occurred!
-      // });
     },
     onUpload(){
       // var self = this;
       var oldPicture = this.userAccountDetail.picture;
       this.recordUserDetailModify('更換圖片',oldPicture,this.imageData.name);
       this.picture = null;
-      // console.log("uploading");
-      // console.log(this.imageData);
       const storageRef = firebase.storage().ref(`${this.imageData.name}`).put(this.imageData);
       storageRef.on(`state_changed`, snapshot=>{
         this.uploadValue = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
@@ -542,12 +447,6 @@ export default {
       }).catch(function(error) {
         console.log(error);
         self.picture = "/img/icons/icon-192x192.png";
-        // const storageRef2 = firebase.storage().ref('004.png');
-        // storageRef2.getDownloadURL().then(function(url) { 
-        // self.picture = url;
-        // }).catch(function(error2) {
-        //   console.log(error2);
-        // });
       });
       
     },
@@ -604,31 +503,10 @@ export default {
           console.log(error);
         });
     },
-    // findOther: function(value){
-    //   let self = this
-    //   if(value === 1){
-    //     axios
-    //       .get("https://hotelapi.im.nuk.edu.tw/api/account/" + self.userID + '/' + value)
-    //       .then((response) => {
-    //         console.log(response.data)
-    //         self.userAccountDetail = response.data;
-    //         self.oldPassword = self.userAccountDetail.password;
-    //         self.oldEmail = self.userAccountDetail.email;
-    //         self.oldUserName = self.userAccountDetail.userName;
-    //         self.oldEmployeeLimit = self.userAccountDetail.employeeLimit;
-    //         self.oldDepartment = self.userAccountDetail.department;
-    //         self.company = self.userAccountDetail.companyName;
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //       });
-    //     }
-    // },
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped src= '../assets/css/accountDetial.css'></style>
 <style scoped>
 img.preview{
